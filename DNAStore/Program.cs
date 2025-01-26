@@ -22,5 +22,6 @@ foreach(string lineToRead in File.ReadLines(Path.Combine(Directory.GetCurrentDir
 }
 
 
+// Let's create a Fasta Object
 
 

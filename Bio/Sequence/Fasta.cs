@@ -5,9 +5,9 @@ public class Fasta : IFasta
     public string Name { get; }
     public string RawSequence { get; }
 
-    public Fasta()
+    public Fasta(string name, string rawSequence)
     {
-        Name = "name";
-        RawSequence = "rawSequence";
+        Name = name;
+        RawSequence = rawSequence;
     }
 }
