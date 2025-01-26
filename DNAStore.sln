@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore", "DNAStore.csproj", "{99D188DA-F129-449E-93D1-033D13BA1301}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore", "DNAStore\DNAStore.csproj", "{99D188DA-F129-449E-93D1-033D13BA1301}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bio", "Bio\Bio.csproj", "{0A3AD033-10BC-454E-90CC-07292D823FD1}"
 EndProject

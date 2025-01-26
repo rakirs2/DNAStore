@@ -11,4 +11,8 @@
     <Folder Include="data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bio\Bio.csproj" />
+  </ItemGroup>
+
 </Project>

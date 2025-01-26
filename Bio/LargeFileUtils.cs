@@ -1,5 +1,4 @@
 ﻿namespace Bio.Utils;
-using System.IO;
 
 public static class LargeFileUtils
 {
