@@ -12,7 +12,9 @@ namespace Bio.Sequence.Tests
     public class FastaTests
     {
         private const string _someName = "some Name";
-        private const string _someIllegitimateSequence = "asdfaasdf";
+        private const string _someIllegitimateSequence = "aaccttg";
+        private readonly Dictionary<char, int> _expectedSequenceCounts = new Dictionary<char, int> { { 'a', 2 }, { 'c', 2 }, { 't', 2 }, { 'g', 1 } };
+
 
         [TestMethod]
         public void FastaConstructor()
@@ -21,6 +23,7 @@ namespace Bio.Sequence.Tests
             Assert.IsNotNull(someFasta);
             Assert.AreEqual(someFasta.Name, _someName);
             Assert.AreEqual(someFasta.RawSequence, _someIllegitimateSequence);
+            Assert.IsTrue(someFasta.Frequencies.Count == _expectedSequenceCounts.Count && !someFasta.Frequencies.Except(_expectedSequenceCounts).Any());
         }
     }
 }
