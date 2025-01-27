@@ -19,7 +19,7 @@ namespace Bio.Sequence.Tests
         private readonly Dictionary<char, int> _expectedSequenceCounts = new Dictionary<char, int> { { 'a', 2 }, { 'c', 2 }, { 't', 2 }, { 'g', 1 } };
 
         private readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(),
-            "../../../../BioTests/Sequence/TestData/crab.fasta");
+            "../../../../BioTests/Sequence/TestData/crab1.fasta");
 
         [TestMethod]
         public void FastaConstructor()
