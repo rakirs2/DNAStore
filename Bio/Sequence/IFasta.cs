@@ -7,4 +7,5 @@ public interface IFasta
     int XorHash { get; }
     public Dictionary<char, int> Frequencies { get; }
     public string ToJson();
+    IEnumerable<string> SplitInHalf();
 }

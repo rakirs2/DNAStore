@@ -71,4 +71,10 @@ public class Fasta : IFasta
             }
         }
     }
+
+    public IEnumerable<string> SplitInHalf()
+    {
+        int halfWay = RawSequence.Length / 2;
+        return [RawSequence[..halfWay], RawSequence[halfWay..]];
+    }
 }

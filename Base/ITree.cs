@@ -4,6 +4,8 @@
     {
         int Height { get; }
 
+        int Count { get; }
+
         void Insert(T type);
 
         void Remove(T type);

@@ -47,5 +47,15 @@ namespace Bio.Sequence.Tests
             var newFasta = Fasta.GetFromFile(FilePath);
             Assert.AreEqual(someFasta, newFasta);
         }
+
+        [TestMethod]
+        public void SplitAndVerify()
+        {
+            var someFasta = new Fasta(SomeName, SomeIllegitimateSequence);
+            var output = someFasta.SplitInHalf();
+            // TODO: might be worth adding a utility for this
+            var rejoinedSequence = String.Join("", output);
+            Assert.AreEqual(someFasta.RawSequence, rejoinedSequence);
+        }
     }
 }
