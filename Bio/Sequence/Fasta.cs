@@ -27,6 +27,11 @@ public class Fasta : IFasta
         return JsonSerializer.Serialize(this);
     }
 
+    public void Compress()
+    {
+        throw new NotImplementedException();
+    }
+
     public int XorHash { get; }
 
     public void Save(string filePath)
