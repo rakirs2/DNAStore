@@ -1,3 +1,4 @@
+using Bio.Fasta;
 using System.Text.Json;
 
 namespace Bio.Sequence;
@@ -6,7 +7,9 @@ public class Fasta : IFasta
 {
     public string Name { get; }
     public string RawSequence { get; }
-    public Dictionary<char,int> Frequencies { get; } = new();
+    public Dictionary<char, int> Frequencies { get; } = new();
+
+    public SequenceType Type { get; }
     public string ToJson()
     {
         return JsonSerializer.Serialize(this);
@@ -58,17 +61,20 @@ public class Fasta : IFasta
     {
         Name = name;
         RawSequence = rawSequence;
+        Type = SequenceType.DNASequence;
         foreach (char c in RawSequence)
         {
             XorHash = XorHash ^ c;
-            if (Frequencies.ContainsKey(c))
-            {
-                Frequencies[c] += 1;
-            }
-            else
-            {
-                Frequencies[c] = 1;
-            }
+            // TODO: there's probably some optimization here for how long we check
+            if (Type == SequenceType.DNASequence)
+                if (Frequencies.ContainsKey(c))
+                {
+                    Frequencies[c] += 1;
+                }
+                else
+                {
+                    Frequencies[c] = 1;
+                }
         }
     }
 

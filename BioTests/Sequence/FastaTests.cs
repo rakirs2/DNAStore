@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bio.Sequence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bio.Sequence.Tests
+﻿namespace Bio.Sequence.Tests
 {
     [TestClass]
     public class FastaTests
@@ -14,8 +6,9 @@ namespace Bio.Sequence.Tests
         private const string SomeName = "some Name";
         private const string SomeIllegitimateSequence = "aaccttg";
 
+        // TODO: I need a more robust test on this. Copying an pasting the string is not the solution
         private const string JsonValue =
-            "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"Frequencies\":{\"a\":2,\"c\":2,\"t\":2,\"g\":1},\"XorHash\":103}";
+            "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"Frequencies\":{\"a\":2,\"c\":2,\"t\":2,\"g\":1},\"Type\":0,\"XorHash\":103}";
         private readonly Dictionary<char, int> _expectedSequenceCounts = new Dictionary<char, int> { { 'a', 2 }, { 'c', 2 }, { 't', 2 }, { 'g', 1 } };
 
         private readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(),
