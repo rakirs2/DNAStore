@@ -42,7 +42,16 @@ namespace Bio.Tests
         }
 
         [TestMethod]
-        public void AmbiguousCharactersReturnsFalse()
+        public void IsProteinSequenceDifferentiatorCaseSensitive()
+        {
+            foreach (char c in KnownProteinSequenceDifferentiators)
+            {
+                Assert.IsTrue(Utils.IsKnownProteinSequenceDifferentiator(char.ToLowerInvariant(c)));
+            }
+        }
+
+        [TestMethod]
+        public void IsProteinSequenceDifferentiatorAmbiguousCharactersReturnsFalse()
         {
             Assert.IsFalse(Utils.IsKnownProteinSequenceDifferentiator('u'));
         }
