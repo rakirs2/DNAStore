@@ -31,7 +31,7 @@ public class SequenceHelpersTests
     {
         foreach (char c in KnownProteinSequenceDifferentiators)
         {
-            Assert.IsTrue(SequenceHelpers.IsKnownProteinSequenceDifferentiator(c));
+            Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(c));
         }
     }
 
@@ -40,13 +40,13 @@ public class SequenceHelpersTests
     {
         foreach (char c in KnownProteinSequenceDifferentiators)
         {
-            Assert.IsTrue(SequenceHelpers.IsKnownProteinSequenceDifferentiator(char.ToLowerInvariant(c)));
+            Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(char.ToLowerInvariant(c)));
         }
     }
 
     [TestMethod]
     public void IsProteinSequenceDifferentiatorAmbiguousCharactersReturnsFalse()
     {
-        Assert.IsFalse(SequenceHelpers.IsKnownProteinSequenceDifferentiator('u'));
+        Assert.IsFalse(SequenceHelpers.IsKnownProteinDifferentiator('u'));
     }
 }
