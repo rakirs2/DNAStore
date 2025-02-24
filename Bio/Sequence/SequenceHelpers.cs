@@ -10,7 +10,7 @@ namespace Bio.Sequence
     {
         public static bool IsKnownRNADifferentiator(char c) => RNAMarkers.Contains(char.ToUpperInvariant(c));
 
-        public static bool IsKnownProteinSequenceDifferentiator(char c) => ProteinMarkers.Contains(char.ToUpperInvariant(c));
+        public static bool IsKnownProteinDifferentiator(char c) => ProteinMarkers.Contains(char.ToUpperInvariant(c));
 
         /*
             RNA/DNA

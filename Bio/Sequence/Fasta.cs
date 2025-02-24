@@ -9,11 +9,36 @@ public class Fasta : IFasta
         Name = name;
         RawSequence = rawSequence;
         ContentType = ContentType.Unknown;
+        bool isPossibleRNA = false;
         foreach (char c in RawSequence)
         {
+            if (ContentType == ContentType.Unknown)
+            {
+                if (!isPossibleRNA)
+                {
+                    isPossibleRNA = SequenceHelpers.IsKnownRNADifferentiator(c);
+                }
+
+                if (SequenceHelpers.IsKnownProteinDifferentiator(c))
+                {
+                    ContentType = ContentType.Protein;
+                }
+            }
             XorHash ^= c;
             if (!Frequencies.TryAdd(c, 1))
                 Frequencies[c] += 1;
+        }
+
+        if (ContentType == ContentType.Unknown)
+        {
+            if (isPossibleRNA)
+            {
+                ContentType = ContentType.RNA;
+            }
+            else
+            {;
+                ContentType = ContentType.DNA;
+            }
         }
     }
 
