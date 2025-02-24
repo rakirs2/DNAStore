@@ -39,6 +39,6 @@ public class FastaTests
         var newFasta = Fasta.GetFromFile(_filePath);
         Assert.AreEqual(someFasta, newFasta);
     }
-    
-    
+
+
 }
