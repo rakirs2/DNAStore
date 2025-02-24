@@ -21,6 +21,7 @@ public class Fasta : IFasta
     public string Name { get; }
     public string RawSequence { get; }
     public Dictionary<char, int> Frequencies { get; } = new();
+    public int XorHash { get; }
 
     public string ToJson()
     {
@@ -32,7 +33,6 @@ public class Fasta : IFasta
         throw new NotImplementedException();
     }
 
-    public int XorHash { get; }
 
     public void Save(string filePath)
     {
@@ -41,7 +41,7 @@ public class Fasta : IFasta
 
     public static Fasta? GetFromFile(string filePath)
     {
-        TextReader reader = null;
+        TextReader? reader = null;
         try
         {
             reader = new StreamReader(filePath);
@@ -55,11 +55,14 @@ public class Fasta : IFasta
         }
     }
 
+    // TODO: this is rife for errors down the line
     public override bool Equals(object? obj)
     {
         try
         {
-            var fasta = (Fasta)obj;
+            var fasta = obj as Fasta;
+
+            // TODO: fix later
             return fasta.Name.Equals(Name) && XorHash.Equals(fasta.XorHash);
         }
         catch
