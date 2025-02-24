@@ -8,38 +8,32 @@ public class Fasta : IFasta
     {
         Name = name;
         RawSequence = rawSequence;
+        // This is, imo, bad. It's ok for now but it will need to be refactored
+        // Additionally, this is getting to the point where I'd rather a static fasta method returned a type of each
+        // rather than what it's doing now
         ContentType = ContentType.Unknown;
         bool isPossibleRNA = false;
         foreach (char c in RawSequence)
         {
             if (ContentType == ContentType.Unknown)
             {
+                // If we know there's a single value that passes the RNA vs DNA comparison, we no longer need to run it
+                // It's just an uridine check, but for a person without domain knowledge this may help.
                 if (!isPossibleRNA)
-                {
                     isPossibleRNA = SequenceHelpers.IsKnownRNADifferentiator(c);
-                }
 
                 if (SequenceHelpers.IsKnownProteinDifferentiator(c))
-                {
                     ContentType = ContentType.Protein;
-                }
             }
+
             XorHash ^= c;
             if (!Frequencies.TryAdd(c, 1))
                 Frequencies[c] += 1;
         }
 
-        if (ContentType == ContentType.Unknown)
-        {
-            if (isPossibleRNA)
-            {
-                ContentType = ContentType.RNA;
-            }
-            else
-            {;
-                ContentType = ContentType.DNA;
-            }
-        }
+        // If it's already defined, we're good
+        if (ContentType != ContentType.Unknown) return;
+        ContentType = isPossibleRNA ? ContentType.RNA : ContentType.DNA;
     }
 
     public string Name { get; }

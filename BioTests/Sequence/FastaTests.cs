@@ -6,7 +6,6 @@ namespace BioTests.Sequence;
 public class FastaTests
 {
     private const string SomeName = "some Name";
-
     private const string SomeIllegitimateDNASequence = "aaccttg";
     private const string SomeIllegitimateRNASequence = "aaccuug";
     private const string SomeIllegitimateProteinSequence = "mhntvwcstv hlklpdmyss nsslngnnlt fssnspfcsf esnstsskdd hnihssfplt";
