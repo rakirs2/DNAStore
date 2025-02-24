@@ -1,15 +1,24 @@
-﻿namespace Bio.Sequence.Tests;
+﻿using Bio.Sequence;
+
+namespace BioTests.Sequence;
 
 [TestClass]
 public class FastaTests
 {
     private const string SomeName = "some Name";
+
     private const string SomeIllegitimateSequence = "aaccttg";
+    private const string SomeIllegitimateRNASequence = "aaccuug";
+    private const string SomeIllegitimateProteinSequence = "aaccuug";
+
     // TODO: figure out something more robust with this
     private const string JsonValue =
         "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"Frequencies\":{\"a\":2,\"c\":2,\"t\":2,\"g\":1},\"XorHash\":103,\"ContentType\":0}";
+
     private readonly Dictionary<char, int> _expectedSequenceCounts =
         new() { { 'a', 2 }, { 'c', 2 }, { 't', 2 }, { 'g', 1 } };
+
+    // TODO: we should update this to be a guid
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
         "../../../../BioTests/Sequence/TestData/crab1.fasta");
 
@@ -41,5 +50,24 @@ public class FastaTests
         Assert.AreEqual(someFasta, newFasta);
     }
 
+    [TestMethod]
+    public void OpenDNAFasta()
+    {
+        var someFasta = new Fasta(SomeName, SomeIllegitimateSequence);
+        Assert.AreEqual(ContentType.DNA, someFasta.ContentType);
+    }
 
+    [TestMethod]
+    public void OpenRNAFasta()
+    {
+        var someFasta = new Fasta(SomeName, SomeIllegitimateSequence);
+        Assert.AreEqual(ContentType.RNA, someFasta.ContentType);
+    }
+
+    [TestMethod]
+    public void OpenProteinFasta()
+    {
+        var someFasta = new Fasta(SomeName, SomeIllegitimateSequence);
+        Assert.AreEqual(ContentType.Protein, someFasta.ContentType);
+    }
 }
