@@ -5,8 +5,9 @@ public class FastaTests
 {
     private const string SomeName = "some Name";
     private const string SomeIllegitimateSequence = "aaccttg";
+    // TODO: figure out something more robust with this
     private const string JsonValue =
-        "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"Frequencies\":{\"a\":2,\"c\":2,\"t\":2,\"g\":1},\"XorHash\":103}";
+        "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"Frequencies\":{\"a\":2,\"c\":2,\"t\":2,\"g\":1},\"XorHash\":103,\"ContentType\":0}";
     private readonly Dictionary<char, int> _expectedSequenceCounts =
         new() { { 'a', 2 }, { 'c', 2 }, { 't', 2 }, { 'g', 1 } };
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),

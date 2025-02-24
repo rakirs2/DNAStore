@@ -8,13 +8,12 @@ public class Fasta : IFasta
     {
         Name = name;
         RawSequence = rawSequence;
+        ContentType = ContentType.Unknown;
         foreach (char c in RawSequence)
         {
-            XorHash = XorHash ^ c;
-            if (Frequencies.ContainsKey(c))
+            XorHash ^= c;
+            if (!Frequencies.TryAdd(c, 1))
                 Frequencies[c] += 1;
-            else
-                Frequencies[c] = 1;
         }
     }
 
@@ -22,6 +21,7 @@ public class Fasta : IFasta
     public string RawSequence { get; }
     public Dictionary<char, int> Frequencies { get; } = new();
     public int XorHash { get; }
+    public ContentType ContentType {get;}
 
     public string ToJson()
     {

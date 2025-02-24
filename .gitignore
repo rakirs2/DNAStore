@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 data/ncbi_dataset
+BioTests/Sequence/TestData
