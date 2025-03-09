@@ -1,6 +1,6 @@
 # DNAStore
 
-This project is a long, long overdue idea I've had since working on the FileStore team in SharePoint. Effectively, I hope/believe that DNA can be broken down and analzyed hierarchically simliar to how the FileStore team does it in SharePoint.
+This project is a long, long overdue idea I've had. Effectively, I hope/believe that DNA can be broken down and analzyed hierarchically.
 
 The theory here is that a more powerful machine can then come through a corpus of this data and analyze either the summary of a given set of underlying data or go deeper into the raw data-- whether it be protein expression or the DNA/RNA sequence underneath.
 
