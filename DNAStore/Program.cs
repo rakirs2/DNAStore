@@ -2,8 +2,6 @@
 
 Console.WriteLine("Hello, World!");
 
-var byteArray = new byte[1024];
-
 var lineNum = 0;
 var lineNumbers = new List<int>();
 foreach (string lineToRead in File.ReadLines(Path.Combine(Directory.GetCurrentDirectory(),

@@ -9,7 +9,9 @@ public class FastaTests
 
     private const string SomeIllegitimateDNASequence = "aaccttg";
     private const string SomeIllegitimateRNASequence = "aaccuug";
-    private const string SomeIllegitimateProteinSequence = "mhntvwcstv hlklpdmyss nsslngnnlt fssnspfcsf esnstsskdd hnihssfplt";
+
+    private const string SomeIllegitimateProteinSequence =
+        "mhntvwcstv hlklpdmyss nsslngnnlt fssnspfcsf esnstsskdd hnihssfplt";
 
     // TODO: figure out something more robust with this
     private const string JsonValue =
