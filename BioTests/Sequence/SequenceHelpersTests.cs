@@ -7,7 +7,9 @@ public class SequenceHelpersTests
 {
     // TODO there might be a corruptoin angle with all of these as well. For now, focus just on making sure
     // these methods work
-    private static HashSet<char> KnownProteinSequenceDifferentiators = new HashSet<char>() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
+    private static HashSet<char> KnownProteinSequenceDifferentiators =
+        new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
+
     [TestMethod]
     public void IsRNADifferentiatorFalse()
     {
@@ -29,19 +31,15 @@ public class SequenceHelpersTests
     [TestMethod]
     public void IsProteinSequenceDifferentiator()
     {
-        foreach (char c in KnownProteinSequenceDifferentiators)
-        {
+        foreach (var c in KnownProteinSequenceDifferentiators)
             Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(c));
-        }
     }
 
     [TestMethod]
     public void IsProteinSequenceDifferentiatorCaseSensitive()
     {
-        foreach (char c in KnownProteinSequenceDifferentiators)
-        {
+        foreach (var c in KnownProteinSequenceDifferentiators)
             Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(char.ToLowerInvariant(c)));
-        }
     }
 
     [TestMethod]

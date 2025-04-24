@@ -31,7 +31,9 @@ public class Fasta : IFasta
 
     public string Name { get; }
     public string RawSequence { get; }
+    // TODO this should be refactored
     public Dictionary<char, int> Frequencies { get; } = new();
+    // TODO this is wrong
     public int XorHash { get; }
     public ContentType ContentType {get;}
 
