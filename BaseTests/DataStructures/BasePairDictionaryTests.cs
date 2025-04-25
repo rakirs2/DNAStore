@@ -1,6 +1,6 @@
 ﻿using Bio.Sequence;
 
-namespace BioTests.Sequence
+namespace BaseTests.DataStructures
 {
     [TestClass]
     public class BasePairDictionaryTests
