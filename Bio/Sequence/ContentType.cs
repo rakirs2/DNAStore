@@ -1,10 +1,9 @@
-﻿namespace Bio.Sequence
+﻿namespace Bio.Sequence;
+
+public enum ContentType
 {
-    public enum ContentType
-    {
-        Unknown,
-        DNA,
-        RNA,
-        Protein
-    }
+    Unknown,
+    DNA,
+    RNA,
+    Protein
 }

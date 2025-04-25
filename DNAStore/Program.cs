@@ -4,7 +4,7 @@ Console.WriteLine("Hello, World!");
 
 var lineNum = 0;
 var lineNumbers = new List<int>();
-foreach (string lineToRead in File.ReadLines(Path.Combine(Directory.GetCurrentDirectory(),
+foreach (var lineToRead in File.ReadLines(Path.Combine(Directory.GetCurrentDirectory(),
              "../../../../data/otherdata/crab.fasta")))
 {
     // Printing the file contents 

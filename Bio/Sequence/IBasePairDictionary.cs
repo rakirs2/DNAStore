@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bio.Sequence
+namespace Bio.Sequence;
+
+// Should be input only for now
+internal interface IBasePairDictionary
 {
-    // Should be input only for now
-    internal interface IBasePairDictionary
-    {
-        // TODO type<T>
-        void Add(char c);
-    }
+    // TODO type<T>
+    void Add(char c);
 }

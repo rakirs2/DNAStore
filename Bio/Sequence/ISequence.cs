@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bio.Sequence
+namespace Bio.Sequence;
+
+public interface ISequence
 {
-    public interface ISequence
-    {
-        long Length { get; }
-        string RawSequence { get; }
-    }
+    long Length { get; }
+    string RawSequence { get; }
 }

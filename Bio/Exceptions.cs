@@ -4,13 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bio
+namespace Bio;
+
+[Serializable]
+public class SequenceExceptions : Exception
 {
-    [Serializable]
-    public class SequenceExceptions : Exception
+    public SequenceExceptions() : base()
     {
-        public SequenceExceptions() : base() { }
-        public SequenceExceptions(string message) : base(message) { }
-        public SequenceExceptions(string message, Exception inner) : base(message, inner) { }
+    }
+
+    public SequenceExceptions(string message) : base(message)
+    {
+    }
+
+    public SequenceExceptions(string message, Exception inner) : base(message, inner)
+    {
     }
 }

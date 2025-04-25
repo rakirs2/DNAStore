@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BioTests
+namespace BioTests;
+
+internal class GeneratorTests
 {
-    internal class GeneratorTests
-    {
-    }
 }

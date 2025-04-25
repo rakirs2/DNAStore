@@ -9,8 +9,8 @@ public class Fasta : IFasta
         Name = name;
         RawSequence = rawSequence;
         ContentType = ContentType.Unknown;
-        bool isPossibleRNA = false;
-        foreach (char c in RawSequence)
+        var isPossibleRNA = false;
+        foreach (var c in RawSequence)
         {
             if (ContentType == ContentType.Unknown)
             {
@@ -20,6 +20,7 @@ public class Fasta : IFasta
                 if (SequenceHelpers.IsKnownProteinDifferentiator(c))
                     ContentType = ContentType.Protein;
             }
+
             XorHash ^= c;
             if (!Frequencies.TryAdd(c, 1))
                 Frequencies[c] += 1;
@@ -30,12 +31,15 @@ public class Fasta : IFasta
     }
 
     public string Name { get; }
+
     public string RawSequence { get; }
+
     // TODO this should be refactored
     public Dictionary<char, int> Frequencies { get; } = new();
+
     // TODO this is wrong
     public int XorHash { get; }
-    public ContentType ContentType {get;}
+    public ContentType ContentType { get; }
 
     public string ToJson()
     {
@@ -59,7 +63,7 @@ public class Fasta : IFasta
         try
         {
             reader = new StreamReader(filePath);
-            string fileContents = reader.ReadToEnd();
+            var fileContents = reader.ReadToEnd();
             return JsonSerializer.Deserialize<Fasta>(fileContents);
         }
         finally
