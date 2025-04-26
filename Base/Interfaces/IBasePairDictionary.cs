@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bio.Sequence;
 
-public interface ISequence
+// Should be input only for now
+internal interface IBasePairDictionary
 {
-    long Length { get; }
-    string RawSequence { get; }
+    // TODO type<T>
+    void Add(char c);
 }

@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bio.Sequence
+namespace Bio.Sequence;
+
+public interface IGenerator
 {
-    public interface IGenerator
-    {
-        /// <summary>
-        /// Create a sequence of a given type
-        /// </summary>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        ISequence Create(long length);
-    }
+    /// <summary>
+    /// Create a sequence of a given type
+    /// </summary>
+    /// <param name="length"></param>
+    /// <returns></returns>
+    ISequence Create(long length);
 }
