@@ -6,15 +6,14 @@
 /// </summary>
 public class BasePairDictionary
 {
-    public long Count => count;
+    public long Count { get; private set; }
 
-    //TODO: there might be some perf optimizations here because we've only have so many base bairs -- might be faster to not use the hashmap search
+    //TODO: there might be some perf optimizations here because we've only have so many base base pairs -- might be faster to not use the hashmap search
     public void Add(char c)
     {
-        // TODO: isn't there some optimization
         if (!_dictionary.TryAdd(c, 1)) _dictionary[c] += 1;
 
-        count++;
+        Count++;
     }
 
     public long GetFrequency(char c)
@@ -26,6 +25,5 @@ public class BasePairDictionary
             return 0;
     }
 
-    private long count = 0;
     private readonly Dictionary<char, long> _dictionary = new();
 }
