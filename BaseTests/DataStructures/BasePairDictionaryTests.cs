@@ -1,4 +1,4 @@
-﻿using Bio.Sequence;
+﻿using Base.DataStructures;
 
 namespace BaseTests.DataStructures;
 

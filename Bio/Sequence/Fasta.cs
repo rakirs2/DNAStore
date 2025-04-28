@@ -81,7 +81,7 @@ public class Fasta : IFasta
             var fasta = obj as Fasta;
 
             // TODO: fix later
-            return fasta.Name.Equals(Name) && XorHash.Equals(fasta.XorHash);
+            return fasta != null && fasta.Name.Equals(Name) && XorHash.Equals(fasta.XorHash);
         }
         catch
         {

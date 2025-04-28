@@ -1,4 +1,4 @@
-﻿namespace Bio.Sequence;
+﻿namespace Base.DataStructures;
 
 /// <summary>
 /// A basic counter for the total number of base pairs on a given sequence.
