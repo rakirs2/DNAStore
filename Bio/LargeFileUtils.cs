@@ -1,4 +1,4 @@
-﻿namespace Bio.Utils;
+﻿namespace Bio;
 
 public static class LargeFileUtils
 {

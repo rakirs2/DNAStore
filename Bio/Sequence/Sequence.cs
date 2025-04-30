@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Base.DataStructures;
 
 namespace Bio.Sequence;
 
@@ -13,7 +9,10 @@ public abstract class Sequence : ISequence
 
     protected Sequence(string rawSequence)
     {
+        RawSequence = rawSequence;
+
         foreach (var basePair in rawSequence)
+            // TODO: virtual member call in constructor is an issue? why?
             if (IsValid(basePair))
                 Counts.Add(basePair);
             else
