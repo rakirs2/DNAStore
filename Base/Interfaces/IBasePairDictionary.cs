@@ -1,8 +1,8 @@
 ﻿namespace Base.Interfaces;
 
 // Should be input only for now
-internal interface IBasePairDictionary
+public interface IBasePairDictionary
 {
-    // TODO type<T>
     void Add(char c);
+    public long Count { get; }
 }
