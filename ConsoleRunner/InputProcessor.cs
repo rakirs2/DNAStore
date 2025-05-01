@@ -7,21 +7,21 @@
             switch (request)
             {
                 case "analyzeString":
-                {
-                    // TODO: static constructors probably
-                    return new SequenceAnalysis();
-                }
+                    {
+                        // TODO: static constructors probably
+                        return new SequenceAnalysis();
+                    }
                     break;
                 case "why":
-                {
-                    return new EasterEgg();
-                }
+                    {
+                        return new EasterEgg();
+                    }
 
                 default:
-                {
-                    // probably safe to do it this way
-                    return new SequenceAnalysis();
-                }
+                    {
+                        // probably safe to do it this way
+                        return new SequenceAnalysis();
+                    }
             }
         }
     }
