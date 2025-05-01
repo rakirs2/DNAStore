@@ -4,10 +4,6 @@ namespace ConsoleRunner
 {
     internal class SequenceAnalysis : IExecutor
     {
-        public SequenceAnalysis()
-        {
-        }
-
         public void Run()
         {
             GetInputs();
@@ -26,7 +22,7 @@ namespace ConsoleRunner
 
         private void OutputResult()
         {
-            Console.WriteLine(_anySequence.Counts);
+            Console.WriteLine(_anySequence?.Counts);
         }
 
         private AnySequence? _anySequence;

@@ -11,6 +11,11 @@
                     // TODO: static constructors probably
                     return new SequenceAnalysis();
                 }
+                    break;
+                case "why":
+                {
+                    return new EasterEgg();
+                }
 
                 default:
                 {
