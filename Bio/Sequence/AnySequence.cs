@@ -3,10 +3,10 @@
 namespace Bio.Sequence;
 
 /// <summary>
-/// Base class for any sequence. This is the main driver for all types of analysis where we do not
+/// Base class for any sequence. This is the main driver for all types of analysis where the program does not
 /// know what type of string we are analyzing.
 ///
-/// TODO: this should eventually have 1 creator which can take in a string and returns the cor
+/// TODO: this should eventually have 1 static creator which can take in a string and returns the implied typing
 /// </summary>
 public class AnySequence : ISequence
 {
