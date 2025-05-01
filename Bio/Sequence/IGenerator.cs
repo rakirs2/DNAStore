@@ -1,4 +1,6 @@
-﻿namespace Bio.Sequence;
+﻿using Bio.Sequence.Types;
+
+namespace Bio.Sequence;
 
 public interface IGenerator
 {

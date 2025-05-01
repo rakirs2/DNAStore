@@ -1,9 +1,10 @@
-﻿using Bio.Sequence;
+﻿using Bio.Sequence.Types;
 
 namespace ConsoleRunner
 {
     internal class SequenceAnalysis : IExecutor
     {
+        // TODO: Run should have a timer around it-- one more level of abstraction
         public void Run()
         {
             GetInputs();

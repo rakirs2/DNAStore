@@ -2,14 +2,25 @@
 
 public class SequenceHelpers
 {
+    // TODO: might be worth using a different string comparator if perf ever becomes an issue.
     public static bool IsKnownRNADifferentiator(char c)
     {
-        return RNAMarkers.Contains(char.ToUpperInvariant(c));
+        return DistinctRNAMarkers.Contains(char.ToUpperInvariant(c));
     }
 
     public static bool IsKnownProteinDifferentiator(char c)
     {
-        return ProteinMarkers.Contains(char.ToUpperInvariant(c));
+        return DistinctProteinMarkers.Contains(char.ToUpperInvariant(c));
+    }
+
+    public static bool IsValidRNA(char c)
+    {
+        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
+    }
+
+    public static bool IsValidDNA(char c)
+    {
+        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
     }
 
     /*
@@ -40,6 +51,8 @@ public class SequenceHelpers
     // Note, U Can be shared. So we need to check, "contains U"
      */
     // TODO: PotentialBottleneck perf bottleneck.
-    private static readonly HashSet<char> RNAMarkers = new() { 'U' };
-    private static readonly HashSet<char> ProteinMarkers = new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
+    private static readonly HashSet<char> DistinctRNAMarkers = new() { 'U' };
+    private static readonly HashSet<char> AllRNAMarkers = new() { 'U', 'A', 'C', 'G', 'N' };
+    private static readonly HashSet<char> AllDNAMarkers = new() { 'T', 'A', 'C', 'G', 'N' };
+    private static readonly HashSet<char> DistinctProteinMarkers = new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 }
