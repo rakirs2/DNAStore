@@ -4,25 +4,27 @@
     {
         public static IExecutor GetExecutor(string? request)
         {
+            IExecutor output;
+            // TODO: static constructors probably
+            // TODO: reconsider style on this
             switch (request)
             {
+
                 case "analyzeString":
-                    {
-                        // TODO: static constructors probably
-                        return new SequenceAnalysis();
-                    }
+                    output = new SequenceAnalysis();
                     break;
+
                 case "why":
-                    {
-                        return new EasterEgg();
-                    }
+                    output = new EasterEgg();
+                    break;
 
                 default:
-                    {
-                        // probably safe to do it this way
-                        return new SequenceAnalysis();
-                    }
+                    // probably safe to do it this way
+                    output = new SequenceAnalysis();
+                    break;
+
             }
+            return output;
         }
     }
 }
