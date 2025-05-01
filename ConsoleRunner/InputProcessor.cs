@@ -13,6 +13,9 @@
                     output = new SequenceAnalysis();
                     break;
 
+                case "DNAtoRNA":
+                    output = new TranscibeDna();
+                    break;
                 case "why":
                     output = new EasterEgg();
                     break;

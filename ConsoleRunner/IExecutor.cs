@@ -3,7 +3,7 @@
     internal interface IExecutor
     {
         /// <summary>
-        /// Executes the request
+        /// Executes the request.
         /// </summary>
         void Run();
     }

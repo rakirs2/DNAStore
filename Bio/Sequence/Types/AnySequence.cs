@@ -1,6 +1,6 @@
 ﻿using Base.DataStructures;
 
-namespace Bio.Sequence;
+namespace Bio.Sequence.Types;
 
 /// <summary>
 /// Base class for any sequence. This is the main driver for all types of analysis where the program does not
@@ -19,18 +19,29 @@ public class AnySequence : ISequence
 
         foreach (var basePair in rawSequence)
             // TODO: virtual member call in constructor is an issue? why?
+            // Ah it's a design flaw on my part -- what's a better way to do this
+            // abstract, 
+            
             if (IsValid(basePair))
+            {
                 Counts.Add(basePair);
+            }
             else
+            {
                 throw new Exception();
+            }
 
         Length = RawSequence.Length;
     }
 
     public BasePairDictionary Counts = new();
 
-    // Runs before each value, ensure that the sequence upon store is valid for a given typing
-    protected bool IsValid(char bp)
+    /// <summary>
+    /// This is a pretty simple cleanup t
+    /// </summary>
+    /// <param name="bp"></param>
+    /// <returns></returns>
+    protected virtual bool IsValid(char bp)
     {
         return true;
     }

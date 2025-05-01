@@ -5,8 +5,7 @@ namespace BioTests.Sequence;
 [TestClass()]
 public class SequenceHelpersTests
 {
-    // TODO there might be a corruptoin angle with all of these as well. For now, focus just on making sure
-    // these methods work
+    // TODO: there might be a corruptoin angle with all of these as well. For now, focus just on making sure these methods work
     private static HashSet<char> KnownProteinSequenceDifferentiators =
         new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 
@@ -17,13 +16,13 @@ public class SequenceHelpersTests
     }
 
     [TestMethod]
-    public void IsRNADifferentatiorTrue()
+    public void IsRNADifferentiatorTrue()
     {
         Assert.IsTrue(SequenceHelpers.IsKnownRNADifferentiator('U'));
     }
 
     [TestMethod]
-    public void IsRNADifferentatiorCaseSensitive()
+    public void IsRNADifferentiatorCaseSensitive()
     {
         Assert.IsTrue(SequenceHelpers.IsKnownRNADifferentiator('u'));
     }

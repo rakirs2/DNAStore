@@ -1,6 +1,6 @@
-﻿using Bio.Sequence;
+﻿using Bio.Sequence.Types;
 
-namespace BioTests.Sequence
+namespace BioTests.Sequence.Types
 {
     [TestClass]
     public class AnySequenceTests
