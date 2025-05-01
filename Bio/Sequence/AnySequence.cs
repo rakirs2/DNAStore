@@ -10,8 +10,8 @@ namespace Bio.Sequence;
 /// </summary>
 public class AnySequence : ISequence
 {
-    public long Length { get; private set; }
-    public string RawSequence { get; private set; }
+    public long Length { get; }
+    public string RawSequence { get; }
 
     public AnySequence(string rawSequence)
     {
@@ -23,6 +23,8 @@ public class AnySequence : ISequence
                 Counts.Add(basePair);
             else
                 throw new Exception();
+
+        Length = RawSequence.Length;
     }
 
     public BasePairDictionary Counts = new();
