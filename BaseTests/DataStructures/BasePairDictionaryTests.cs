@@ -33,4 +33,14 @@ public class BasePairDictionaryTests
         Assert.AreEqual(2, basePairDictionary.GetFrequency('c'));
         Assert.AreEqual(1, basePairDictionary.GetFrequency('d'));
     }
+
+    [TestMethod]
+    public void OverrideOfToString()
+    {
+        var basePairDictionary = new BasePairDictionary();
+        basePairDictionary.Add('c');
+        basePairDictionary.Add('c');
+        basePairDictionary.Add('d');
+        Assert.AreEqual("c: 2;d: 1;", basePairDictionary.ToString());
+    }
 }

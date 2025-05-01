@@ -2,12 +2,18 @@
 
 namespace Bio.Sequence;
 
-public abstract class Sequence : ISequence
+/// <summary>
+/// Base class for any sequence. This is the main driver for all types of analysis where we do not
+/// know what type of string we are analyzing.
+///
+/// TODO: this should eventually have 1 creator which can take in a string and returns the cor
+/// </summary>
+public class AnySequence : ISequence
 {
     public long Length { get; private set; }
     public string RawSequence { get; private set; }
 
-    protected Sequence(string rawSequence)
+    public AnySequence(string rawSequence)
     {
         RawSequence = rawSequence;
 
@@ -22,5 +28,8 @@ public abstract class Sequence : ISequence
     public BasePairDictionary Counts = new();
 
     // Runs before each value, ensure that the sequence upon store is valid for a given typing
-    protected abstract bool IsValid(char bp);
+    protected bool IsValid(char bp)
+    {
+        return true;
+    }
 }
