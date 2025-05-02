@@ -7,14 +7,19 @@
             IExecutor output;
             // TODO: static constructors probably
             // TODO: reconsider style on this
+            // TODO: case sensitivity
+            // TODO: probably should have flexibility within each execution
+            // TODO: surely there's a clean way to autopopulate all of this
             switch (request)
             {
                 case "analyzeString":
                     output = new SequenceAnalysis();
                     break;
-
                 case "DNAtoRNA":
                     output = new TranscibeDna();
+                    break;
+                case "DNAComplement":
+                    output = new Complement();
                     break;
                 case "why":
                     output = new EasterEgg();
