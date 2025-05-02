@@ -1,6 +1,8 @@
+using Bio.Sequence;
 using System.Text.Json;
+using Base.DataStructures;
 
-namespace Bio.Sequence;
+namespace Bio.IO;
 
 public class Fasta : IFasta
 {
@@ -9,6 +11,8 @@ public class Fasta : IFasta
         Name = name;
         RawSequence = rawSequence;
         ContentType = ContentType.Unknown;
+        BasePairDictionary = new BasePairDictionary();
+
         var isPossibleRNA = false;
         foreach (var c in RawSequence)
         {
@@ -21,9 +25,7 @@ public class Fasta : IFasta
                     ContentType = ContentType.Protein;
             }
 
-            XorHash ^= c;
-            if (!Frequencies.TryAdd(c, 1))
-                Frequencies[c] += 1;
+            BasePairDictionary.Add(c);
         }
 
         if (ContentType != ContentType.Unknown) return;
@@ -33,12 +35,9 @@ public class Fasta : IFasta
     public string Name { get; }
 
     public string RawSequence { get; }
+    public BasePairDictionary BasePairDictionary { get; }
+    public long Length { get; }
 
-    // TODO this should be refactored
-    public Dictionary<char, int> Frequencies { get; } = new();
-
-    // TODO this is wrong
-    public int XorHash { get; }
     public ContentType ContentType { get; }
 
     public string ToJson()
@@ -81,16 +80,11 @@ public class Fasta : IFasta
             var fasta = obj as Fasta;
 
             // TODO: fix later
-            return fasta != null && fasta.Name.Equals(Name) && XorHash.Equals(fasta.XorHash);
+            return fasta != null && fasta.Name.Equals(Name);
         }
         catch
         {
             return false;
         }
-    }
-
-    public override int GetHashCode()
-    {
-        return XorHash;
     }
 }

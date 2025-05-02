@@ -1,6 +1,7 @@
-﻿using Bio.Sequence;
+﻿using Bio.IO;
+using Bio.Sequence;
 
-namespace BioTests.Sequence;
+namespace BioTests.IO;
 
 [TestClass]
 public class FastaTests
@@ -15,10 +16,7 @@ public class FastaTests
 
     // TODO: figure out something more robust with this
     private const string JsonValue =
-        "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"Frequencies\":{\"a\":2,\"c\":2,\"t\":2,\"g\":1},\"XorHash\":103,\"ContentType\":1}";
-
-    private readonly Dictionary<char, int> _expectedSequenceCounts =
-        new() { { 'a', 2 }, { 'c', 2 }, { 't', 2 }, { 'g', 1 } };
+        "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"BasePairDictionary\":{\"Count\":7},\"Length\":0,\"ContentType\":1}";
 
     // TODO: we should update this to be a guid
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
@@ -31,9 +29,6 @@ public class FastaTests
         Assert.IsNotNull(someFasta);
         Assert.AreEqual(SomeName, someFasta.Name);
         Assert.AreEqual(SomeIllegitimateDNASequence, someFasta.RawSequence);
-        Assert.AreEqual(103, someFasta.XorHash);
-        Assert.IsTrue(someFasta.Frequencies.Count == _expectedSequenceCounts.Count &&
-                      !someFasta.Frequencies.Except(_expectedSequenceCounts).Any());
     }
 
     [TestMethod]

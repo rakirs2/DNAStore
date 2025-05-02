@@ -1,12 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bio.Sequence.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bio.Sequence.Types;
 
-namespace Bio.Sequence.Types.Tests
+namespace BioTests.Sequence.Types
 {
     [TestClass]
     public class DNASequenceTests
