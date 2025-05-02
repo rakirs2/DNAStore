@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Bio.Math
+{
+    /// <summary>
+    /// Most of these sequence Analysis are some combination of dynamic programming and string searches
+    /// The dynamic programming things can just be stored here.
+    /// </summary>
+    public static class Helpers
+    {
+        /// <summary>
+        /// Probably bruteforceable but there are other problems later on with generation death and decay
+        /// that will need memory.
+        ///
+        /// The population begins in the first month with a pair of newborn rabbits.
+        /// Rabbits reach reproductive age after one month.
+        /// In any given month, every rabbit of reproductive age mates with another rabbit of reproductive age.
+        /// Exactly one month after two rabbits mate, they produce one male and one female rabbit.
+        /// Rabbits never die or stop reproducing.
+        /// </summary>
+        public static long GenerationalGrowth(int numGenerations, int growthPerGeneration) 
+        {
+            var totalNewRabbits = new long[numGenerations];
+            long mature = 0;
+            totalNewRabbits[0] = 1;
+            totalNewRabbits[1] = 0;
+            
+
+            // We can just keep track of the number of rabbits generated
+
+            for (int i = 2; i <numGenerations; i++)
+            {
+                mature += totalNewRabbits[i - 2];
+                totalNewRabbits[i] = mature * growthPerGeneration;
+            }
+
+            // 1, 1, 3, 3, 12
+            return totalNewRabbits.Sum();
+        }
+    }
+}

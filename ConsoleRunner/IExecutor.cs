@@ -1,6 +1,6 @@
 ﻿namespace ConsoleRunner
 {
-    internal interface IExecutor
+    public interface IExecutor
     {
         /// <summary>
         /// Executes the request.

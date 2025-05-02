@@ -18,5 +18,14 @@ namespace Bio.Sequence.Types.Tests
             var rnaSequence = sequence.TranscribeToRNA();
             Assert.AreEqual("GAUGGAACUUGACUACGUAAAUU", rnaSequence.RawSequence);
         }
+
+        [TestMethod]
+        public void ReverseComplementTest()
+        {
+            var sequence = new DNASequence("AAAACCCGGT");
+            var complement = sequence.ToReverseComplement();
+            Assert.AreEqual("ACCGGGTTTT", complement.RawSequence);
+        }
+
     }
 }
