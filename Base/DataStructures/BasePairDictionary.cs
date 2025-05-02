@@ -5,6 +5,9 @@ namespace Base.DataStructures;
 /// <summary>
 /// A basic counter for the total number of base pairs on a given sequence.
 /// Also tracks total number of bps in the class
+///
+/// TODO: this should just be a character dictionary which extends into a basepair dictionary for RNA and DNA
+/// and a protein dictionary for others
 /// </summary>
 public class BasePairDictionary : IBasePairDictionary
 {
