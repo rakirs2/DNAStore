@@ -1,4 +1,6 @@
-﻿namespace ConsoleRunner;
+﻿using ConsoleRunner.Executors;
+
+namespace ConsoleRunner;
 
 internal static class InputProcessor
 {
@@ -10,6 +12,7 @@ internal static class InputProcessor
         // TODO: case sensitivity
         // TODO: probably should have flexibility within each execution
         // TODO: surely there's a clean way to autopopulate all of this
+        // TODO: pretty sure there's a clean design pattern in the book for console apps. Might be worth exploring
         switch (request)
         {
             case "analyzeString":

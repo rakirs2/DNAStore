@@ -1,4 +1,4 @@
-﻿namespace ConsoleRunner;
+﻿namespace ConsoleRunner.Executors;
 
 public interface IExecutor
 {
