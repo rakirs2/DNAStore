@@ -40,5 +40,4 @@ public static class Helpers
     {
         return System.Math.Abs(a - b) <= epsilon;
     }
-
 }

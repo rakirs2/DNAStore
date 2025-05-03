@@ -1,6 +1,6 @@
 ﻿using Bio.Sequence.Types;
 
-namespace ConsoleRunner;
+namespace ConsoleRunner.Executors;
 
 public class TranscibeDna : IExecutor
 {

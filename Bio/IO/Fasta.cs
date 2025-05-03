@@ -44,9 +44,10 @@ public class Fasta : IFasta
         get
         {
             // TODO: this is a hack that can get refactored. I need to determine if I can safely assume that everything can be converted to uppercase
-            var totalGC = BasePairDictionary.GetFrequency('G') + BasePairDictionary.GetFrequency('g') + BasePairDictionary.GetFrequency('C') + BasePairDictionary.GetFrequency('c');
+            var totalGC = BasePairDictionary.GetFrequency('G') + BasePairDictionary.GetFrequency('g') +
+                          BasePairDictionary.GetFrequency('C') + BasePairDictionary.GetFrequency('c');
             var totalBp = BasePairDictionary.Count;
-            return (double) totalGC / totalBp;
+            return (double)totalGC / totalBp;
         }
     }
 

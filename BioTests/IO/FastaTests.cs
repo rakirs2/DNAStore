@@ -25,6 +25,7 @@ public class FastaTests
 
     private readonly string _multipleFastaPath = Path.Combine(Directory.GetCurrentDirectory(),
         "../../../../BioTests/Sequence/TestData/MultipleFasta.fasta");
+
     [TestMethod]
     public void FastaConstructor()
     {
@@ -81,7 +82,7 @@ public class FastaTests
     [TestMethod]
     public void GetMaxGCContentTest()
     {
-        IList<Fasta> fastas = FastaParser.Read(_multipleFastaPath);
+        var fastas = FastaParser.Read(_multipleFastaPath);
         var highest = Fasta.GetMaxGCContent(fastas);
         Assert.IsTrue(Bio.Math.Helpers.DoublesEqualWithinRange(60.919540, highest.GCContent * 100));
     }

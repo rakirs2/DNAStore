@@ -1,10 +1,21 @@
 ﻿using System.Text;
 
-namespace ConsoleRunner;
+namespace ConsoleRunner.Executors;
 
-public class EasterEgg : IExecutor
+public class EasterEgg : BaseExecutor
 {
-    public void Run()
+    /// <summary>
+    /// TODO: for a different day, let's make a new executor here to get rid of these ugly overrides
+    /// </summary>
+    protected override void CalculateResult()
+    {
+    }
+
+    protected override void GetInputs()
+    {
+    }
+
+    protected override void OutputResult()
     {
         StringBuilder theWhy = new();
         theWhy.Append("Welcome to DNA Store, a C# based implementation of everything bioinformatics related. ");
