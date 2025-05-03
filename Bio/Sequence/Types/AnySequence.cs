@@ -1,4 +1,5 @@
-﻿using Base.DataStructures;
+﻿using System.Runtime.CompilerServices;
+using Base.DataStructures;
 
 namespace Bio.Sequence.Types;
 
@@ -31,6 +32,33 @@ public class AnySequence : ISequence
     }
 
     public BasePairDictionary Counts = new();
+
+    /// <summary>
+    /// Returns the hamming distance, the difference between any string at any given point.
+    /// Hamming distance requires both sequences to be the same length.
+    /// </summary>
+    /// <remarks>
+    /// This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
+    /// Also, hamming distance to hash difference seems intriguing if nothing else
+    /// </remarks>
+    public static long HammingDistance(AnySequence a, AnySequence b)
+    {
+        if (a.Length != b.Length)
+        {
+            throw new InvalidDataException("Lengths must match");
+        }
+
+        var result = 0;
+        for (int i = 0; i < a.Length; i++)
+        {
+            if (a.RawSequence[i] != b.RawSequence[i])
+            {
+                result++;
+            }
+        }
+
+        return result;
+    }
 
     /// <summary>
     /// This is a pretty simple cleanup t

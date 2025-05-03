@@ -24,6 +24,9 @@ internal static class InputProcessor
             case "GCContent":
                 output = new GCContent();
                 break;
+            case "Hamming":
+                output = new Hamming();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;
