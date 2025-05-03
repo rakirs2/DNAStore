@@ -1,10 +1,9 @@
-﻿namespace ConsoleRunner
+﻿namespace ConsoleRunner;
+
+public interface IExecutor
 {
-    public interface IExecutor
-    {
-        /// <summary>
-        /// Executes the request.
-        /// </summary>
-        void Run();
-    }
+    /// <summary>
+    /// Executes the request.
+    /// </summary>
+    void Run();
 }

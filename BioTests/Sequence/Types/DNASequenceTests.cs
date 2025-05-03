@@ -1,25 +1,23 @@
 ﻿using Bio.Sequence.Types;
 
-namespace BioTests.Sequence.Types
+namespace BioTests.Sequence.Types;
+
+[TestClass]
+public class DNASequenceTests
 {
-    [TestClass]
-    public class DNASequenceTests
+    [TestMethod]
+    public void TranscribeToRNATest()
     {
-        [TestMethod]
-        public void TranscribeToRNATest()
-        {
-            var sequence = new DNASequence("GATGGAACTTGACTACGTAAATT");
-            var rnaSequence = sequence.TranscribeToRNA();
-            Assert.AreEqual("GAUGGAACUUGACUACGUAAAUU", rnaSequence.RawSequence);
-        }
+        var sequence = new DNASequence("GATGGAACTTGACTACGTAAATT");
+        var rnaSequence = sequence.TranscribeToRNA();
+        Assert.AreEqual("GAUGGAACUUGACUACGUAAAUU", rnaSequence.RawSequence);
+    }
 
-        [TestMethod]
-        public void ReverseComplementTest()
-        {
-            var sequence = new DNASequence("AAAACCCGGT");
-            var complement = sequence.ToReverseComplement();
-            Assert.AreEqual("ACCGGGTTTT", complement.RawSequence);
-        }
-
+    [TestMethod]
+    public void ReverseComplementTest()
+    {
+        var sequence = new DNASequence("AAAACCCGGT");
+        var complement = sequence.ToReverseComplement();
+        Assert.AreEqual("ACCGGGTTTT", complement.RawSequence);
     }
 }
