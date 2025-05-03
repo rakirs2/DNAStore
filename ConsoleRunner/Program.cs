@@ -1,13 +1,13 @@
 ﻿using ConsoleRunner;
 
 
-string? currentInput = "notExist";
+var currentInput = "notExist";
 
 while (currentInput != "exit")
 {
     Console.WriteLine("What would you like to do");
     Console.WriteLine("Current options are to: 'analyzeString'");
     currentInput = Console.ReadLine();
-    IExecutor executor = InputProcessor.GetExecutor(currentInput);
+    var executor = InputProcessor.GetExecutor(currentInput);
     executor.Run();
 }

@@ -1,39 +1,38 @@
-﻿namespace ConsoleRunner
+﻿namespace ConsoleRunner;
+
+internal static class InputProcessor
 {
-    internal static class InputProcessor
+    public static IExecutor GetExecutor(string? request)
     {
-        public static IExecutor GetExecutor(string? request)
+        IExecutor output;
+        // TODO: static constructors probably
+        // TODO: reconsider style on this
+        // TODO: case sensitivity
+        // TODO: probably should have flexibility within each execution
+        // TODO: surely there's a clean way to autopopulate all of this
+        switch (request)
         {
-            IExecutor output;
-            // TODO: static constructors probably
-            // TODO: reconsider style on this
-            // TODO: case sensitivity
-            // TODO: probably should have flexibility within each execution
-            // TODO: surely there's a clean way to autopopulate all of this
-            switch (request)
-            {
-                case "analyzeString":
-                    output = new SequenceAnalysis();
-                    break;
-                case "DNAtoRNA":
-                    output = new TranscibeDna();
-                    break;
-                case "DNAComplement":
-                    output = new Complement();
-                    break;
-                case "why":
-                    output = new EasterEgg();
-                    break;
+            case "analyzeString":
+                output = new SequenceAnalysis();
+                break;
+            case "DNAtoRNA":
+                output = new TranscibeDna();
+                break;
+            case "DNAComplement":
+                output = new Complement();
+                break;
+            case "why":
+                output = new EasterEgg();
+                break;
 
-                default:
-                    // probably safe to do it this way
-                    output = new SequenceAnalysis();
-                    break;
+            default:
+                // probably safe to do it this way
+                output = new SequenceAnalysis();
+                break;
 
-                // TODO: clean up the exit pathway
-
-            }
-            return output;
+            // TODO: clean up the exit pathway
         }
+
+        return output;
     }
 }

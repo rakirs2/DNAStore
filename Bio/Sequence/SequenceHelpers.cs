@@ -54,5 +54,7 @@ public class SequenceHelpers
     private static readonly HashSet<char> DistinctRNAMarkers = new() { 'U' };
     private static readonly HashSet<char> AllRNAMarkers = new() { 'U', 'A', 'C', 'G', 'N' };
     private static readonly HashSet<char> AllDNAMarkers = new() { 'T', 'A', 'C', 'G', 'N' };
-    private static readonly HashSet<char> DistinctProteinMarkers = new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
+
+    private static readonly HashSet<char>
+        DistinctProteinMarkers = new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 }

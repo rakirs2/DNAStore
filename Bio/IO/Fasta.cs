@@ -56,6 +56,11 @@ public class Fasta : IFasta
         File.WriteAllText(filePath, ToJson());
     }
 
+    /// <summary>
+    /// Potentially dubious method. Let's see wheere it goes.
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
     public static Fasta? GetFromFile(string filePath)
     {
         TextReader? reader = null;

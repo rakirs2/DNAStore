@@ -21,15 +21,11 @@ public class AnySequence : ISequence
             // TODO: virtual member call in constructor is an issue? why?
             // Ah it's a design flaw on my part -- what's a better way to do this
             // abstract, 
-            
+
             if (IsValid(basePair))
-            {
                 Counts.Add(basePair);
-            }
             else
-            {
                 throw new Exception();
-            }
 
         Length = RawSequence.Length;
     }
