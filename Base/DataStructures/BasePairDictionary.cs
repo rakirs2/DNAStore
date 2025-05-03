@@ -21,6 +21,7 @@ public class BasePairDictionary : IBasePairDictionary
         Count++;
     }
 
+    // TODO: consider making this a direct access
     public long GetFrequency(char c)
     {
         return _dictionary.GetValueOrDefault(c, 0);

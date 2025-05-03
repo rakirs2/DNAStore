@@ -38,6 +38,18 @@ public class Fasta : IFasta
     public BasePairDictionary BasePairDictionary { get; }
     public long Length { get; }
 
+    // TODO: consider moving this to a nucleotide class. Or maybe a generic 
+    public double GCContent
+    {
+        get
+        {
+            // TODO: this is a hack that can get refactored. I need to determine if I can safely assume that everything can be converted to uppercase
+            var totalGC = BasePairDictionary.GetFrequency('G') + BasePairDictionary.GetFrequency('g') + BasePairDictionary.GetFrequency('C') + BasePairDictionary.GetFrequency('c');
+            var totalBp = BasePairDictionary.Count;
+            return (double) totalGC / totalBp;
+        }
+    }
+
     public ContentType ContentType { get; }
 
     public string ToJson()

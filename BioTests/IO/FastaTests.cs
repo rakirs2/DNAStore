@@ -67,4 +67,11 @@ public class FastaTests
         var someFasta = new Fasta(SomeName, SomeIllegitimateProteinSequence);
         Assert.AreEqual(ContentType.Protein, someFasta.ContentType);
     }
+
+    [TestMethod]
+    public void FastaGCContent()
+    {
+        var someFasta = new Fasta(SomeName, SomeIllegitimateDNASequence);
+        Assert.IsTrue(Bio.Math.Helpers.DoublesEqualWithinRange(someFasta.GCContent, 0.4285));
+    }
 }

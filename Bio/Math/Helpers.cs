@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bio.Math;
+﻿namespace Bio.Math;
 
 /// <summary>
 /// Most of these sequence Analysis are some combination of dynamic programming and string searches
@@ -42,4 +35,10 @@ public static class Helpers
         // 1, 1, 3, 3, 12
         return totalNewRabbits.Sum();
     }
+
+    public static bool DoublesEqualWithinRange(double a, double b, double epsilon = 0.001)
+    {
+        return System.Math.Abs(a - b) <= epsilon;
+    }
+
 }
