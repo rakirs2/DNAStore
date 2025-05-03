@@ -9,11 +9,11 @@ namespace Bio.IO;
 
 public static class FastaParser
 {
-    public static List<IFasta> Read(string filePath)
+    public static IList<Fasta> Read(string filePath)
     {
         var name = "";
         var currentSequence = "";
-        List<IFasta> output = [];
+        IList<Fasta> output = [];
         // Not sure about best practice here -- but I think we can be relatively optimistic about the incoming format
         // Realistically, we do not want to deal with bad formatting 
         foreach (var line in File.ReadLines(filePath))

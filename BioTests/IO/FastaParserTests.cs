@@ -61,7 +61,7 @@ public class FastaParserTests
         private readonly string _expectedSequence;
     }
 
-    private void Verify(IList<IFasta> input, IList<ExpectedFasta> expected)
+    private void Verify(IList<Fasta> input, IList<ExpectedFasta> expected)
     {
         for (var i = 0; i < input.Count; i++) expected[i].Verify(input[i]);
     }

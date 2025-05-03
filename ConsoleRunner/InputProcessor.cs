@@ -21,6 +21,9 @@ internal static class InputProcessor
             case "DNAComplement":
                 output = new Complement();
                 break;
+            case "GCContent":
+                output = new GCContent();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;
