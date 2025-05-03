@@ -1,4 +1,5 @@
-﻿using Bio.IO;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Bio.IO;
 using Bio.Sequence;
 
 namespace BioTests.IO;
@@ -22,6 +23,8 @@ public class FastaTests
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
         "../../../../BioTests/Sequence/TestData/crab1.fasta");
 
+    private readonly string _multipleFastaPath = Path.Combine(Directory.GetCurrentDirectory(),
+        "../../../../BioTests/Sequence/TestData/MultipleFasta.fasta");
     [TestMethod]
     public void FastaConstructor()
     {
@@ -73,5 +76,13 @@ public class FastaTests
     {
         var someFasta = new Fasta(SomeName, SomeIllegitimateDNASequence);
         Assert.IsTrue(Bio.Math.Helpers.DoublesEqualWithinRange(someFasta.GCContent, 0.4285));
+    }
+
+    [TestMethod]
+    public void GetMaxGCContentTest()
+    {
+        IList<Fasta> fastas = FastaParser.Read(_multipleFastaPath);
+        var highest = Fasta.GetMaxGCContent(fastas);
+        Assert.IsTrue(Bio.Math.Helpers.DoublesEqualWithinRange(60.919540, highest.GCContent * 100));
     }
 }

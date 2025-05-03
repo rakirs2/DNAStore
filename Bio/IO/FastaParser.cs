@@ -32,9 +32,9 @@ public static class FastaParser
             }
             else
             {
-                // This is terrible form. I doubt I'll run into perf bottlenecks locally. But there is a likely a point at large genomies where
-                // this can be optimized to a string builder.
-                // Maybe we can infer from the size of the file whether or not we should use string.concat/builder etc.
+                // This is terrible form. I doubt I'll run into perf bottlenecks locally.
+                // But there is a likely a point at large genomics where this can be optimized to a string builder.
+                // Maybe we can infer from the size of the file if we should use string.concat/builder etc.
                 currentSequence += line;
             }
 

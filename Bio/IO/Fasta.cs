@@ -104,4 +104,9 @@ public class Fasta : IFasta
             return false;
         }
     }
+
+    public static Fasta GetMaxGCContent(IList<Fasta> fastas)
+    {
+        return fastas.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
+    }
 }

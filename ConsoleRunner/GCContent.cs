@@ -24,12 +24,12 @@ namespace ConsoleRunner
 
         private void CalculateResult()
         {
-            Fasta biggest = fastas.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
+            largestGCContent = fastas.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
         }
 
         private void OutputResult()
         {
-            Console.WriteLine($"{largestGCContent.Name}\nGCContent:{largestGCContent.GCContent}");
+            Console.WriteLine($"{largestGCContent.Name}\n{largestGCContent.GCContent*100}");
         }
 
         private IList<Fasta> fastas;
