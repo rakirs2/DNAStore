@@ -1,5 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using Base.DataStructures;
+﻿using Base.DataStructures;
+using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 

@@ -1,5 +1,4 @@
 ﻿using Bio.IO;
-using Bio.Sequence.Types;
 
 namespace ConsoleRunner.Executors;
 

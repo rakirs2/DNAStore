@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bio.IO;
+﻿using Bio.IO;
 using Bio.Sequence;
 
 namespace BioTests.IO;

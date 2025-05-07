@@ -1,6 +1,8 @@
-﻿namespace Bio.Sequence.Types;
+﻿using Bio.Sequence.Interfaces;
 
-public class RNASequence : AnySequence
+namespace Bio.Sequence.Types;
+
+public class RNASequence : AnySequence, IRNA
 {
     public RNASequence(string rawSequence) : base(rawSequence)
     {
@@ -9,5 +11,10 @@ public class RNASequence : AnySequence
     protected override bool IsValid(char c)
     {
         return SequenceHelpers.IsValidRNA(c);
+    }
+
+    public string GetExpectedProteinString()
+    {
+        return SequenceHelpers.ConvertStringToProtein(RawSequence);
     }
 }
