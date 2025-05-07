@@ -35,10 +35,19 @@ public class SequenceHelpers
 
         StringBuilder convertedRNA = new StringBuilder();
         int i = 0;
-        while (i < input.Length)
+        bool hitStop = false;
+        while (i < input.Length && !hitStop)
         {
-            convertedRNA.Append(RNAToProteinConverter(input.Substring(i, 3)));
-            i += 3;
+            var temp = RNAToProteinConverter(input.Substring(i, 3));
+            if (temp.Length == 1)
+            {
+                convertedRNA.Append(temp);
+                i += 3;
+            }
+            else
+            {
+                hitStop = true;
+            }
         }
 
         return convertedRNA.ToString();

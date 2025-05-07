@@ -12,4 +12,9 @@ public class RNASequence : AnySequence, IRNA
     {
         return SequenceHelpers.IsValidRNA(c);
     }
+
+    public string GetExpectedProteinString()
+    {
+        return SequenceHelpers.ConvertStringToProtein(RawSequence);
+    }
 }

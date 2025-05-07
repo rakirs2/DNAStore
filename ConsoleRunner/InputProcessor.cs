@@ -30,6 +30,9 @@ internal static class InputProcessor
             case "Hamming":
                 output = new Hamming();
                 break;
+            case "translateRNA":
+                output = new TranslateRNA();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;
