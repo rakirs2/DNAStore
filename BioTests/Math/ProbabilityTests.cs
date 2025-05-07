@@ -1,15 +1,13 @@
 ﻿using Bio.Math;
-using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
 
-namespace BioTests.Math
+namespace BioTests.Math;
+
+[TestClass]
+public class ProbabilityTests
 {
-    [TestClass]
-    public class ProbabilityTests
+    [TestMethod]
+    public void PercentDominantTest()
     {
-        [TestMethod]
-        public void PercentDominantTest()
-        {
-            var something = Probability.PercentDominant(2, 2, 2);
-        }
+        var something = Probability.PercentDominant(2, 2, 2);
     }
 }

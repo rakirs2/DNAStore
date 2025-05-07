@@ -28,14 +28,11 @@ public class SequenceHelpers
     // Maybe this belongs on the codon class
     public static string ConvertStringToProtein(string input)
     {
-        if (input.Length % 3 != 0)
-        {
-            throw new InvalidDataException("String must have length mod 3");
-        }
+        if (input.Length % 3 != 0) throw new InvalidDataException("String must have length mod 3");
 
-        StringBuilder convertedRNA = new StringBuilder();
-        int i = 0;
-        bool hitStop = false;
+        var convertedRNA = new StringBuilder();
+        var i = 0;
+        var hitStop = false;
         while (i < input.Length && !hitStop)
         {
             var temp = RNAToProteinConverter(input.Substring(i, 3));
@@ -55,7 +52,7 @@ public class SequenceHelpers
 
     public static string RNAToProteinConverter(string codon)
     {
-        if (RNAToProteinCode.TryGetValue(codon, out string? value))
+        if (RNAToProteinCode.TryGetValue(codon, out var value))
             return value;
 
         throw new InvalidDataException("Value does not exist");

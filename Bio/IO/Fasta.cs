@@ -1,6 +1,6 @@
+using Base.DataStructures;
 using Bio.Sequence;
 using System.Text.Json;
-using Base.DataStructures;
 
 namespace Bio.IO;
 

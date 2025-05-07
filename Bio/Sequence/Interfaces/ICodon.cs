@@ -1,10 +1,9 @@
-﻿namespace Bio.Sequence.Interfaces
-{
-    public interface ICodon
-    {
-        string RawRna { get; }
+﻿namespace Bio.Sequence.Interfaces;
 
-        // TODO: eventually maybe this should return a static Amino Acid class?
-        string ExpectedProtein { get; }
-    }
+public interface ICodon
+{
+    string RawRna { get; }
+
+    // TODO: eventually maybe this should return a static Amino Acid class?
+    string ExpectedProtein { get; }
 }
