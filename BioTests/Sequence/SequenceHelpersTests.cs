@@ -2,7 +2,7 @@
 
 namespace BioTests.Sequence;
 
-[TestClass()]
+[TestClass]
 public class SequenceHelpersTests
 {
     // TODO: there might be a corruptoin angle with all of these as well. For now, focus just on making sure these methods work
@@ -45,5 +45,95 @@ public class SequenceHelpersTests
     public void IsProteinSequenceDifferentiatorAmbiguousCharactersReturnsFalse()
     {
         Assert.IsFalse(SequenceHelpers.IsKnownProteinDifferentiator('u'));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidDataException))]
+    public void InvalidCodonLength()
+    {
+        SequenceHelpers.RNAToProteinConverter("A");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidDataException))]
+    public void BadCodonLowercase()
+    {
+        SequenceHelpers.RNAToProteinConverter("aaa");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidDataException))]
+    public void BadCodonEmptyString()
+    {
+        SequenceHelpers.RNAToProteinConverter("");
+    }
+
+    [TestMethod]
+    public void ValidCodes()
+    {
+        Assert.AreEqual("F", SequenceHelpers.RNAToProteinConverter("UUU"));
+        Assert.AreEqual("L", SequenceHelpers.RNAToProteinConverter("CUU"));
+        Assert.AreEqual("I", SequenceHelpers.RNAToProteinConverter("AUU"));
+        Assert.AreEqual("V", SequenceHelpers.RNAToProteinConverter("GUU"));
+        Assert.AreEqual("F", SequenceHelpers.RNAToProteinConverter("UUC"));
+        Assert.AreEqual("L", SequenceHelpers.RNAToProteinConverter("CUC"));
+        Assert.AreEqual("I", SequenceHelpers.RNAToProteinConverter("AUC"));
+        Assert.AreEqual("V", SequenceHelpers.RNAToProteinConverter("GUC"));
+        Assert.AreEqual("L", SequenceHelpers.RNAToProteinConverter("UUA"));
+        Assert.AreEqual("L", SequenceHelpers.RNAToProteinConverter("CUA"));
+        Assert.AreEqual("I", SequenceHelpers.RNAToProteinConverter("AUA"));
+        Assert.AreEqual("V", SequenceHelpers.RNAToProteinConverter("GUA"));
+        Assert.AreEqual("L", SequenceHelpers.RNAToProteinConverter("UUG"));
+        Assert.AreEqual("L", SequenceHelpers.RNAToProteinConverter("CUG"));
+        Assert.AreEqual("M", SequenceHelpers.RNAToProteinConverter("AUG"));
+        Assert.AreEqual("V", SequenceHelpers.RNAToProteinConverter("GUG"));
+        Assert.AreEqual("S", SequenceHelpers.RNAToProteinConverter("UCU"));
+        Assert.AreEqual("P", SequenceHelpers.RNAToProteinConverter("CCU"));
+        Assert.AreEqual("T", SequenceHelpers.RNAToProteinConverter("ACU"));
+        Assert.AreEqual("A", SequenceHelpers.RNAToProteinConverter("GCU"));
+        Assert.AreEqual("S", SequenceHelpers.RNAToProteinConverter("UCC"));
+        Assert.AreEqual("P", SequenceHelpers.RNAToProteinConverter("CCC"));
+        Assert.AreEqual("T", SequenceHelpers.RNAToProteinConverter("ACC"));
+        Assert.AreEqual("A", SequenceHelpers.RNAToProteinConverter("GCC"));
+        Assert.AreEqual("S", SequenceHelpers.RNAToProteinConverter("UCA"));
+        Assert.AreEqual("P", SequenceHelpers.RNAToProteinConverter("CCA"));
+        Assert.AreEqual("T", SequenceHelpers.RNAToProteinConverter("ACA"));
+        Assert.AreEqual("A", SequenceHelpers.RNAToProteinConverter("GCA"));
+        Assert.AreEqual("S", SequenceHelpers.RNAToProteinConverter("UCG"));
+        Assert.AreEqual("P", SequenceHelpers.RNAToProteinConverter("CCG"));
+        Assert.AreEqual("T", SequenceHelpers.RNAToProteinConverter("ACG"));
+        Assert.AreEqual("A", SequenceHelpers.RNAToProteinConverter("GCG"));
+        Assert.AreEqual("Y", SequenceHelpers.RNAToProteinConverter("UAU"));
+        Assert.AreEqual("H", SequenceHelpers.RNAToProteinConverter("CAU"));
+        Assert.AreEqual("N", SequenceHelpers.RNAToProteinConverter("AAU"));
+        Assert.AreEqual("D", SequenceHelpers.RNAToProteinConverter("GAU"));
+        Assert.AreEqual("Y", SequenceHelpers.RNAToProteinConverter("UAC"));
+        Assert.AreEqual("H", SequenceHelpers.RNAToProteinConverter("CAC"));
+        Assert.AreEqual("N", SequenceHelpers.RNAToProteinConverter("AAC"));
+        Assert.AreEqual("D", SequenceHelpers.RNAToProteinConverter("GAC"));
+        Assert.AreEqual("Stop", SequenceHelpers.RNAToProteinConverter("UAA"));
+        Assert.AreEqual("Q", SequenceHelpers.RNAToProteinConverter("CAA"));
+        Assert.AreEqual("K", SequenceHelpers.RNAToProteinConverter("AAA"));
+        Assert.AreEqual("E", SequenceHelpers.RNAToProteinConverter("GAA"));
+        Assert.AreEqual("Stop", SequenceHelpers.RNAToProteinConverter("UAG"));
+        Assert.AreEqual("Q", SequenceHelpers.RNAToProteinConverter("CAG"));
+        Assert.AreEqual("K", SequenceHelpers.RNAToProteinConverter("AAG"));
+        Assert.AreEqual("E", SequenceHelpers.RNAToProteinConverter("GAG"));
+        Assert.AreEqual("C", SequenceHelpers.RNAToProteinConverter("UGU"));
+        Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("CGU"));
+        Assert.AreEqual("S", SequenceHelpers.RNAToProteinConverter("AGU"));
+        Assert.AreEqual("G", SequenceHelpers.RNAToProteinConverter("GGU"));
+        Assert.AreEqual("C", SequenceHelpers.RNAToProteinConverter("UGC"));
+        Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("CGC"));
+        Assert.AreEqual("S", SequenceHelpers.RNAToProteinConverter("AGC"));
+        Assert.AreEqual("G", SequenceHelpers.RNAToProteinConverter("GGC"));
+        Assert.AreEqual("Stop", SequenceHelpers.RNAToProteinConverter("UGA"));
+        Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("CGA"));
+        Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("AGA"));
+        Assert.AreEqual("G", SequenceHelpers.RNAToProteinConverter("GGA"));
+        Assert.AreEqual("W", SequenceHelpers.RNAToProteinConverter("UGG"));
+        Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("CGG"));
+        Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("AGG"));
+        Assert.AreEqual("G", SequenceHelpers.RNAToProteinConverter("GGG"));
     }
 }
