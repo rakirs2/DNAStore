@@ -15,7 +15,7 @@ public interface ISequence
     string RawSequence { get; }
 
     /// <summary>
-    /// Returns all first index locations of 
+    /// Returns all locations of a given motif 
     /// </summary>
     long[] MotifLocations(AnySequence motif, bool isZeroIndex = false);
 }
