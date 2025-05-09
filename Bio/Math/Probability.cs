@@ -11,21 +11,30 @@ public static class Probability
     /// <remarks>
     /// This is a raw Mendelian Genetics calculator</remarks>
     /// <returns></returns>
-    public static double PercentDominant(uint dominant, uint hetero, uint recessive)
+    public static double PercentDominant(uint k, uint m, uint n)
     {
-        var total = dominant + hetero + recessive;
-        // Assume 2 genes, X and Y;
+        var total = k + m + n;
+        var totalCombinations = 4 * nCr(total, 2);
+        var dominant = 4 * nCr(k, 2) + 4 * k * m + 4 * k * n + 3 * nCr(m, 2) + 2 * m * n;
 
-        // We want 1 - P(X == recessive AND Y == recessive);
-        // 
+        return (double) dominant / totalCombinations;
+    }
 
-        // P(X = recessive) = P(Recessive) + 1/2(P(Hetero))
-        // P(Y = Recessive) = P(Recessive) + 1/2(P(Hetero))
+    public static long nCr(uint n, uint r)
+    {
+        return Factorial(n) / (Factorial(r) * Factorial(n - r));
+    }
 
-        // Each person has 2 genes. Dominant as XX, hetero has Xx or xX and recessive has xx
+    public static long nPr(uint n, uint r)
+    {
+        // naive: return Factorial(n) / Factorial(n - r);
+        return Factorial(n) / Factorial(n - r);
+    }
 
-        // To get dominant, you only need to know the probability to two recessive individuals can get together
-        // and the probability that 2 hetero individuals get together
-        return 1 - System.Math.Pow((double)recessive / total, 2) - System.Math.Pow((double)hetero / total, 2) / 4;
+    public static long Factorial(uint i)
+    {
+        if (i <= 1)
+            return 1;
+        return i * Factorial(i - 1);
     }
 }

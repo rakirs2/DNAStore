@@ -33,6 +33,9 @@ internal static class InputProcessor
             case "translateRNA":
                 output = new TranslateRNA();
                 break;
+            case "percentDominant":
+                output = new PercentDominant();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;
