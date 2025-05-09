@@ -1,24 +1,29 @@
-﻿namespace BioTests.Analysis.Types
+﻿using Bio.IO;
+
+namespace BioTests.Analysis.Types
 {
     [TestClass()]
     public class ProfileMatrixTests
     {
-        //[TestMethod()]
-        //public void ProfileMatrixTest()
-        //{
-        //    Assert.Fail();
-        //}
+        private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
+            "../../../../BioTests/TestData/ProfileMatrixData.fasta");
 
-        //[TestMethod()]
-        //public void GetProfileStringTest()
-        //{
-        //    Assert.Fail();
-        //}
+        [TestMethod()]
+        public void ProfileMatrixTest()
+        {
+            var result = FastaParser.Read(_filePath);
+        }
 
-        //[TestMethod()]
-        //public void GetCleanOutputTest()
-        //{
-        //    Assert.Fail();
-        //}
+        [TestMethod()]
+        public void GetProfileStringTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void GetCleanOutputTest()
+        {
+            Assert.Fail();
+        }
     }
 }

@@ -32,6 +32,12 @@ public class Fasta : IFasta
         ContentType = isPossibleRNA ? ContentType.RNA : ContentType.DNA;
     }
 
+    public override string ToString()
+    {
+        return Name;
+    }
+
+    // TODO: override Hashcode and equals
     public string Name { get; }
 
     public string RawSequence { get; }

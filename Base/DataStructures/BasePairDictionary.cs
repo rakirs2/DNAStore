@@ -1,4 +1,5 @@
-﻿using Base.Interfaces;
+﻿using System.Security.Cryptography.X509Certificates;
+using Base.Interfaces;
 
 namespace Base.DataStructures;
 
@@ -12,6 +13,9 @@ namespace Base.DataStructures;
 public class BasePairDictionary : IBasePairDictionary
 {
     public long Count { get; private set; }
+
+    public char HighestFrequencyBasePair { get;}
+    public long HighestFrequencyBasePairCount { get; }
 
     //TODO: there might be some perf optimizations here because we've only have so many base pairs -- might be faster to not use the hashmap search
     public void Add(char c)
@@ -36,6 +40,8 @@ public class BasePairDictionary : IBasePairDictionary
 
         return outputString;
     }
+
+    // TODO: get max quantity --> maybe worth heapifying?
 
     private readonly Dictionary<char, long> _dictionary = new();
 }
