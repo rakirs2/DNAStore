@@ -1,6 +1,6 @@
 ﻿using Bio.Sequence.Types;
 
-namespace ConsoleRunner.Executors;
+namespace DNAStore.Executors;
 
 public class TranslateRNA : BaseExecutor
 {

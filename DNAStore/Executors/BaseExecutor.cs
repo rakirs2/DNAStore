@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ConsoleRunner.Executors;
+namespace DNAStore.Executors;
 
 public abstract class BaseExecutor : IExecutor
 {

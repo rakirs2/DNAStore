@@ -1,21 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using ConsoleRunner;
 
-Console.WriteLine("Hello, World!");
 
-var lineNum = 0;
-var lineNumbers = new List<int>();
-foreach (var lineToRead in File.ReadLines(Path.Combine(Directory.GetCurrentDirectory(),
-             "../../../../data/otherdata/crab.fasta")))
+var currentInput = "notExist";
+
+while (currentInput != "exit")
 {
-    // Printing the file contents 
-    if (lineToRead.Contains('>'))
-    {
-        Console.WriteLine(lineToRead);
-        lineNumbers.Add(lineNum);
-    }
-
-    lineNum++;
+    Console.WriteLine("What would you like to do");
+    Console.WriteLine("Current options are to: 'analyzeString'");
+    currentInput = Console.ReadLine();
+    var executor = InputProcessor.GetExecutor(currentInput);
+    executor.Run();
 }
-
-
-// Let's create a Fasta Object

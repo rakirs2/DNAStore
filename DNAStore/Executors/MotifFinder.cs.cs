@@ -1,7 +1,7 @@
-using System.Text;
+﻿using System.Text;
 using Bio.Sequence.Types;
 
-namespace ConsoleRunner.Executors;
+namespace DNAStore.Executors;
 
 public class MotifFinder : BaseExecutor
 {
@@ -25,5 +25,5 @@ public class MotifFinder : BaseExecutor
 
     private AnySequence a;
     private AnySequence b;
-    private long[] result ;
+    private long[] result;
 }
