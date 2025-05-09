@@ -1,4 +1,4 @@
-﻿namespace ConsoleRunner.Executors;
+﻿namespace DNAStore.Executors;
 
 public interface IExecutor
 {
