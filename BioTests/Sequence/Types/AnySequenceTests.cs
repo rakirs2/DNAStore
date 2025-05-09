@@ -1,4 +1,5 @@
 ﻿using Bio.Sequence.Types;
+using System.Linq;
 
 namespace BioTests.Sequence.Types;
 
@@ -38,5 +39,35 @@ public class AnySequenceTests
         var b = new AnySequence("CATCGTAATGACGGCCT");
         var result = AnySequence.HammingDistance(a, b);
         Assert.AreEqual(7, result);
+    }
+    
+    [TestMethod]
+    public void OneIndexSimpleTest()
+    {
+        var a = new AnySequence("GAGCCTACTAACGGGAT");
+        var b = new AnySequence("GAG");
+        var result = a.MotifLocations(b);
+        var expected = new long[] { 1 };
+        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+    }
+    
+    [TestMethod]
+    public void ZeroIndexSimpleTest()
+    {
+        var a = new AnySequence("GAGCCTACTAACGGGAT");
+        var b = new AnySequence("GAG");
+        var result = a.MotifLocations(b, isZeroIndex: true);
+        var expected = new long[] { 0 };
+        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+    }
+    
+    [TestMethod]
+    public void OneIndexExample()
+    {
+        var a = new AnySequence("GATATATGCATATACTT");
+        var b = new AnySequence("ATAT");
+        var result = a.MotifLocations(b);
+        var expected = new long[] { 2, 4, 10};
+        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
     }
 }

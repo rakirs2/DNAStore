@@ -1,4 +1,6 @@
-﻿namespace Bio.Sequence.Interfaces;
+﻿using Bio.Sequence.Types;
+
+namespace Bio.Sequence.Interfaces;
 
 public interface ISequence
 {
@@ -11,4 +13,9 @@ public interface ISequence
     /// The full sequence getting stored.
     /// </summary>
     string RawSequence { get; }
+
+    /// <summary>
+    /// Returns all first index locations of 
+    /// </summary>
+    long[] MotifLocations(AnySequence motif, bool isZeroIndex = false);
 }
