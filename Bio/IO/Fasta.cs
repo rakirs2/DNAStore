@@ -42,7 +42,8 @@ public class Fasta : IFasta
 
     public string RawSequence { get; }
     public BasePairDictionary BasePairDictionary { get; }
-    public long Length { get; }
+
+    public long Length => RawSequence.Length;
 
     // TODO: consider moving this to a nucleotide class. Or maybe a generic 
     public double GCContent

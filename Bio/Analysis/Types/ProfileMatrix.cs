@@ -1,7 +1,7 @@
 ﻿using Base.DataStructures;
+using Bio.Analysis.Interfaces;
 using Bio.IO;
 using Bio.Sequence.Types;
-using BioTests.Analysis.Interfaces;
 
 namespace Bio.Analysis.Types;
 
@@ -11,17 +11,26 @@ public class ProfileMatrix : IProfileMatrix
     public ProfileMatrix(IList<Fasta> inputs)
     {
         // TODO null, 0 length
-        Length = inputs[0].Length;
-        
+        LengthOfSequences = inputs[0].RawSequence.Length;
+        listOfFrequencies = new List<BasePairDictionary>();
+
+        for (long i = 0; i < LengthOfSequences; i++)
+        {
+            listOfFrequencies.Add(new BasePairDictionary());
+        }
+
         foreach (var input in inputs)
         {
             for (int i = 0; i < input.Length; i++)
             {
+                listOfFrequencies[i].Add(input.RawSequence[i]);
             }
         }
+
+        QuantityAnalyzed = inputs.Count;
     }
 
-    public long Length { get; private set; }
+    public long LengthOfSequences { get; }
     public long QuantityAnalyzed { get; }
     public AnySequence GetProfileString()
     {
@@ -33,5 +42,5 @@ public class ProfileMatrix : IProfileMatrix
         throw new NotImplementedException();
     }
 
-    private List<BasePairDictionary> listOfFrequencies;
+    private readonly List<BasePairDictionary> listOfFrequencies;
 }

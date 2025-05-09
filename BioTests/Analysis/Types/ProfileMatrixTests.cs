@@ -1,4 +1,5 @@
-﻿using Bio.IO;
+﻿using Bio.Analysis.Types;
+using Bio.IO;
 
 namespace BioTests.Analysis.Types
 {
@@ -8,22 +9,12 @@ namespace BioTests.Analysis.Types
         private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
             "../../../../BioTests/TestData/ProfileMatrixData.fasta");
 
-        [TestMethod()]
+        [TestMethod]
         public void ProfileMatrixTest()
         {
-            var result = FastaParser.Read(_filePath);
-        }
-
-        [TestMethod()]
-        public void GetProfileStringTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void GetCleanOutputTest()
-        {
-            Assert.Fail();
+            var result = new ProfileMatrix(FastaParser.Read(_filePath));
+            Assert.AreEqual(7, result.QuantityAnalyzed);
+            Assert.AreEqual(8, result.LengthOfSequences);
         }
     }
 }

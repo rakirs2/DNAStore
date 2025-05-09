@@ -16,7 +16,7 @@ public class FastaTests
 
     // TODO: figure out something more robust with this
     private const string JsonValue =
-        "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"BasePairDictionary\":{\"Count\":7},\"Length\":0,\"GCContent\":0.42857142857142855,\"ContentType\":1}";
+        "{\"Name\":\"some Name\",\"RawSequence\":\"aaccttg\",\"BasePairDictionary\":{\"Count\":7,\"HighestFrequencyBasePair\":\"a\",\"HighestFrequencyBasePairCount\":2},\"Length\":7,\"GCContent\":0.42857142857142855,\"ContentType\":1}";
 
     // TODO: we should update this to be a guid
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),

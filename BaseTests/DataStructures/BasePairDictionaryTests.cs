@@ -1,5 +1,6 @@
 ﻿using Base.DataStructures;
 
+
 namespace BaseTests.DataStructures;
 
 [TestClass]
@@ -33,6 +34,23 @@ public class BasePairDictionaryTests
         Assert.AreEqual(2, basePairDictionary.GetFrequency('c'));
         Assert.AreEqual(1, basePairDictionary.GetFrequency('d'));
     }
+
+
+    [TestMethod]
+    public void HighestFrequencyTest()
+    {
+        var basePairDictionary = new BasePairDictionary();
+        basePairDictionary.Add('c');
+        basePairDictionary.Add('c');
+        basePairDictionary.Add('d');
+        Assert.AreEqual('c', basePairDictionary.HighestFrequencyBasePair);
+        Assert.AreEqual(2, basePairDictionary.HighestFrequencyBasePairCount);
+        basePairDictionary.Add('d');
+        basePairDictionary.Add('d');
+        Assert.AreEqual('d', basePairDictionary.HighestFrequencyBasePair);
+        Assert.AreEqual(3, basePairDictionary.HighestFrequencyBasePairCount);
+    }
+
 
     [TestMethod]
     public void OverrideOfToString()
