@@ -42,10 +42,12 @@ internal static class InputProcessor
             case "ProfileMatrix":
                 output = new ProfileMatrixExecutor();
                 break;
+            case "ProteinWeight":
+                output = new ProteinWeight();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;
-
             default:
                 // probably safe to do it this way
                 output = new SequenceAnalysis();

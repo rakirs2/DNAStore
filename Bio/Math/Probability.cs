@@ -1,7 +1,7 @@
 ﻿namespace Bio.Math;
 
 // TODO: find a new namespace that's not math
-
+// Consider BioMath as a new project?
 public static class Probability
 {
     /// <summary>

@@ -8,10 +8,10 @@ The long term goal here is to take a human genome (say 1 gb of data) or a large 
 
 
 TODOS:
-- [ ] Count Nucleotides
-- [ ] DNA to RNA conversion
-- [ ] Complement a strand of DNA
 - [ ] Hyper optimistic CRISPR
 - [ ] Visualizer
  
 Done:
+- [x] Count Nucleotides
+- [x] DNA to RNA conversion
+- [x] Complement a strand of DNA

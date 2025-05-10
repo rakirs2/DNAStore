@@ -3,8 +3,7 @@
 public interface IProtein
 {
     /// <summary>
-    /// Uses the underlying raw string to get the protein string
+    /// Returns the molecular weight of a given protein
     /// </summary>
-    /// <returns></returns>
-    public string GetExpectedProteinString();
+    public double MolecularWeight { get; }
 }
