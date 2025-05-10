@@ -1,4 +1,7 @@
-﻿using Base.DataStructures;
+﻿using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
+using System.Text;
+using Base.DataStructures;
 using Bio.Analysis.Interfaces;
 using Bio.IO;
 using Bio.Sequence.Types;
@@ -24,6 +27,7 @@ public class ProfileMatrix : IProfileMatrix
             for (int i = 0; i < input.Length; i++)
             {
                 listOfFrequencies[i].Add(input.RawSequence[i]);
+                listOfChars.Add(input.RawSequence[i]);
             }
         }
 
@@ -31,16 +35,48 @@ public class ProfileMatrix : IProfileMatrix
     }
 
     public long LengthOfSequences { get; }
+
     public long QuantityAnalyzed { get; }
-    public AnySequence GetProfileString()
+
+    public AnySequence GetProfileSequence()
     {
-        throw new NotImplementedException();
+        // TODO: if this ever gets called repeatedly, cache it
+        StringBuilder stringBuilder = new StringBuilder();
+        foreach (var basePairDictionary in listOfFrequencies)
+        {
+            stringBuilder.Append(basePairDictionary.HighestFrequencyBasePair);
+        }
+
+        return new AnySequence(stringBuilder.ToString());
     }
 
+    public string FrequencyMatrix()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        var characters = listOfChars.ToArray();
+        Array.Sort(characters);
+        foreach (var bp in characters)
+        {
+            stringBuilder.Append(bp + ":");
+            for (int i = 0; i < LengthOfSequences; i++)
+            {
+                stringBuilder.Append(" " + listOfFrequencies[i].GetFrequency(bp));
+            }
+            stringBuilder.Append("\n");
+        }
+
+        return stringBuilder.ToString();
+    }
     public string GetCleanOutput()
     {
-        throw new NotImplementedException();
+        var sequence = GetProfileSequence();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append(sequence.RawSequence);
+        stringBuilder.Append("\n");
+
+        return stringBuilder.ToString();
     }
 
+    private readonly HashSet<char> listOfChars = new HashSet<char>();
     private readonly List<BasePairDictionary> listOfFrequencies;
 }

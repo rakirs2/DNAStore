@@ -40,6 +40,9 @@ internal static class InputProcessor
             case "motifFinder":
                 output = new MotifFinder();
                 break;
+            case "ProfileMatrix":
+                output = new ProfileMatrixExecutor();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;

@@ -19,7 +19,7 @@ namespace Bio.Analysis.Interfaces
         /// Ties are broken with the last highest number
         /// </summary>
         /// <returns></returns>
-        AnySequence GetProfileString();
+        AnySequence GetProfileSequence();
 
 
         /// <summary>
