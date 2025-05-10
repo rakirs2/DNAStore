@@ -13,19 +13,17 @@ public class AnySequence : ISequence
 {
     public long Length { get; }
     public string RawSequence { get; }
+
     public long[] MotifLocations(AnySequence motif, bool isZeroIndex = false)
     {
         var modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
-        for (int i = 0; i < Length - motif.Length; i++)
-        {
+        for (var i = 0; i < Length - motif.Length; i++)
             // TODO: make everything an int?
             // TODO: do I need to make this a long implementation -- does that even help?
             if (RawSequence.Substring(i, (int)motif.Length) == motif.RawSequence)
-            {
-                output.Add(i+ modifier);
-            }
-        }
+                output.Add(i + modifier);
+
         return output.ToArray();
     }
 

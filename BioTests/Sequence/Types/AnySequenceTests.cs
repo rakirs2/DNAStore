@@ -40,7 +40,7 @@ public class AnySequenceTests
         var result = AnySequence.HammingDistance(a, b);
         Assert.AreEqual(7, result);
     }
-    
+
     [TestMethod]
     public void OneIndexSimpleTest()
     {
@@ -50,24 +50,24 @@ public class AnySequenceTests
         var expected = new long[] { 1 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
     }
-    
+
     [TestMethod]
     public void ZeroIndexSimpleTest()
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
         var b = new AnySequence("GAG");
-        var result = a.MotifLocations(b, isZeroIndex: true);
+        var result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
     }
-    
+
     [TestMethod]
     public void OneIndexExample()
     {
         var a = new AnySequence("GATATATGCATATACTT");
         var b = new AnySequence("ATAT");
         var result = a.MotifLocations(b);
-        var expected = new long[] { 2, 4, 10};
+        var expected = new long[] { 2, 4, 10 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
     }
 }

@@ -1,4 +1,10 @@
-motif 
+# Glossary
+
+## Known
+motif - subsequence within a given sequence
+
+
+## Unknown for now
 motif finding algorithms
 promoter sequences 
 coregulated genes 

@@ -1,7 +1,6 @@
 ﻿using Bio.Sequence.Types;
-using DNAStore.Executors;
 
-namespace ConsoleRunner.Executors;
+namespace DNAStore.Executors;
 
 public class Hamming : BaseExecutor
 {

@@ -13,10 +13,20 @@ public class BasePairDictionary : IBasePairDictionary
 {
     public long Count { get; private set; }
 
+    // This is a very, very optimistic implementation. This only works for addonly. Worry about it if we get to an edit case
+    public char HighestFrequencyBasePair { get; private set; }
+    public long HighestFrequencyBasePairCount { get; private set; }
+
     //TODO: there might be some perf optimizations here because we've only have so many base pairs -- might be faster to not use the hashmap search
     public void Add(char c)
     {
         if (!_dictionary.TryAdd(c, 1)) _dictionary[c] += 1;
+
+        if (_dictionary[c] > HighestFrequencyBasePairCount)
+        {
+            HighestFrequencyBasePairCount = _dictionary[c];
+            HighestFrequencyBasePair = c;
+        }
 
         Count++;
     }
