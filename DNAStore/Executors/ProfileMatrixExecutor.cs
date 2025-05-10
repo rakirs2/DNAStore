@@ -1,6 +1,7 @@
 ﻿using Bio.Analysis.Types;
 using Bio.IO;
-using DNAStore.Executors;
+
+namespace DNAStore.Executors;
 
 public class ProfileMatrixExecutor : BaseExecutor
 {

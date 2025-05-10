@@ -1,7 +1,6 @@
 ﻿using Bio.IO;
-using DNAStore.Executors;
 
-namespace ConsoleRunner.Executors;
+namespace DNAStore.Executors;
 
 public class GCContent : BaseExecutor
 {

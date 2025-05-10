@@ -1,7 +1,6 @@
-﻿using ConsoleRunner.Executors;
-using DNAStore.Executors;
+﻿using DNAStore.Executors;
 
-namespace ConsoleRunner;
+namespace DNAStore;
 
 internal static class InputProcessor
 {
@@ -52,7 +51,7 @@ internal static class InputProcessor
                 output = new SequenceAnalysis();
                 break;
 
-                // TODO: clean up the exit pathway
+            // TODO: clean up the exit pathway
         }
 
         return output;

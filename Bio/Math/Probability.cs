@@ -17,7 +17,7 @@ public static class Probability
         var totalCombinations = 4 * nCr(total, 2);
         var dominant = 4 * nCr(k, 2) + 4 * k * m + 4 * k * n + 3 * nCr(m, 2) + 2 * m * n;
 
-        return (double) dominant / totalCombinations;
+        return (double)dominant / totalCombinations;
     }
 
     public static long nCr(uint n, uint r)
