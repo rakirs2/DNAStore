@@ -33,7 +33,7 @@ internal static class InputProcessor
             case "translateRNA":
                 output = new TranslateRNA();
                 break;
-            case "percentDominant":
+            case "PercentDominant":
                 output = new PercentDominant();
                 break;
             case "motifFinder":
