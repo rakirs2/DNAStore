@@ -1,6 +1,5 @@
 ﻿using Base.DataStructures;
 
-
 namespace BaseTests.DataStructures;
 
 [TestClass]
@@ -50,7 +49,6 @@ public class BasePairDictionaryTests
         Assert.AreEqual('d', basePairDictionary.HighestFrequencyBasePair);
         Assert.AreEqual(3, basePairDictionary.HighestFrequencyBasePairCount);
     }
-
 
     [TestMethod]
     public void OverrideOfToString()
