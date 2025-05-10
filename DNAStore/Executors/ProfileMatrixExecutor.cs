@@ -1,8 +1,9 @@
-﻿using Bio.IO;
+﻿using Bio.Analysis.Types;
+using Bio.IO;
 
 namespace DNAStore.Executors;
 
-public class GCContent : BaseExecutor
+public class ProfileMatrixExecutor : BaseExecutor
 {
     protected override void GetInputs()
     {
@@ -13,14 +14,15 @@ public class GCContent : BaseExecutor
 
     protected override void CalculateResult()
     {
-        largestGCContent = fastas?.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
+        matrix = new ProfileMatrix(fastas);
     }
 
     protected override void OutputResult()
     {
-        Console.WriteLine($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
+        Console.WriteLine(matrix.GetProfileSequence().RawSequence);
+        Console.WriteLine(matrix.FrequencyMatrix());
     }
 
-    private IList<Fasta>? fastas;
-    private Fasta? largestGCContent;
+    private IList<Fasta> fastas;
+    private ProfileMatrix matrix;
 }

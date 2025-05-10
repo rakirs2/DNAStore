@@ -1,7 +1,6 @@
 ﻿using System.Text;
-using DNAStore.Executors;
 
-namespace ConsoleRunner.Executors;
+namespace DNAStore.Executors;
 
 public class EasterEgg : BaseExecutor
 {
