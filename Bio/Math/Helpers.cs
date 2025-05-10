@@ -1,4 +1,6 @@
-﻿namespace Bio.Math;
+﻿using System.Numerics;
+
+namespace Bio.Math;
 
 /// <summary>
 /// Most of these sequence Analysis are some combination of dynamic programming and string searches
@@ -16,10 +18,11 @@ public static class Helpers
     /// Exactly one month after two rabbits mate, they produce one male and one female rabbit.
     /// Rabbits never die or stop reproducing.
     /// </summary>
-    public static long GenerationalGrowth(int numGenerations, int growthPerGeneration)
+    public static BigInteger GenerationalGrowth(int numGenerations, int growthPerGeneration, int monthsToDie = Int32.MaxValue)
     {
-        var totalNewRabbits = new long[numGenerations];
-        long mature = 0;
+        var totalNewRabbits = new BigInteger[numGenerations];
+        BigInteger mature = 0;
+        BigInteger dead = 0;
         totalNewRabbits[0] = 1;
         totalNewRabbits[1] = 0;
 
@@ -29,11 +32,23 @@ public static class Helpers
         for (var i = 2; i < numGenerations; i++)
         {
             mature += totalNewRabbits[i - 2];
+            
             totalNewRabbits[i] = mature * growthPerGeneration;
+            if (i >= monthsToDie)
+            {
+                // maybe off by 1
+                mature -= totalNewRabbits[i - monthsToDie];
+                dead += totalNewRabbits[i - monthsToDie];
+            }
         }
 
-        // 1, 1, 3, 3, 12
-        return totalNewRabbits.Sum();
+        BigInteger total = 0;
+        foreach (var baby in totalNewRabbits)
+        {
+            total += baby;
+        }
+
+        return total - dead;
     }
 
     public static bool DoublesEqualWithinRange(double a, double b, double epsilon = 0.001)
