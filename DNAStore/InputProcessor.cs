@@ -36,6 +36,9 @@ internal static class InputProcessor
             case "PercentDominant":
                 output = new PercentDominant();
                 break;
+            case "Permutations":
+                output = new Permutations();
+                break;
             case "motifFinder":
                 output = new MotifFinder();
                 break;
