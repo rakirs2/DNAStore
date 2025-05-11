@@ -39,4 +39,15 @@ public static class Probability
             return 1;
         return i * Factorial(i - 1);
     }
+
+    /// <summary>
+    /// Terrible perf doesn't handle duplicates as separate. But can work for now
+    /// </summary>
+    public static IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> list, int length) {
+        if (length == 1) return list.Select(t => new T[] { t });
+
+        return GetPermutations(list, length - 1)
+            .SelectMany(t => list.Where(e => !t.Contains(e)),
+                (t1, t2) => t1.Concat([t2]));
+    }
 }
