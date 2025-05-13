@@ -48,6 +48,9 @@ internal static class InputProcessor
             case "ProteinWeight":
                 output = new ProteinWeight();
                 break;
+            case "OverlapGraph":
+                output = new OverlapGraphExecutor();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;
