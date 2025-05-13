@@ -50,4 +50,17 @@ public static class Probability
             .SelectMany(t => list.Where(e => !t.Contains(e)),
                 (t1, t2) => t1.Concat([t2]));
     }
+
+    public static double ExpectedDominantOffspring(int AAAA, int AAAa, int AAaa, int AaAa, int Aaaa, int aaaa,
+        int children)
+    {
+        var total = 0.0;
+        total += AAAA * children;
+        total += AAAa * children;
+        total += AAaa * children;
+        total +=0.75 * AaAa * children;
+        total += 0.5 * Aaaa * children;
+        return total;
+    }
+    
 }
