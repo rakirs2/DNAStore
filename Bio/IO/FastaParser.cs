@@ -2,11 +2,11 @@
 
 public static class FastaParser
 {
-    public static IList<Fasta> Read(string filePath)
+    public static List<Fasta> Read(string filePath)
     {
         var name = "";
         var currentSequence = "";
-        IList<Fasta> output = [];
+        List<Fasta> output = [];
         // Not sure about best practice here -- but I think we can be relatively optimistic about the incoming format
         // Realistically, we do not want to deal with bad formatting 
         foreach (var line in File.ReadLines(filePath))

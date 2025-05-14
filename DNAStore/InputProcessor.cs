@@ -1,4 +1,5 @@
-﻿using DNAStore.Executors;
+﻿using Bio.Analysis.Types;
+using DNAStore.Executors;
 
 namespace DNAStore;
 
@@ -50,6 +51,9 @@ internal static class InputProcessor
                 break;
             case "OverlapGraph":
                 output = new OverlapGraphExecutor();
+                break;
+            case "LongestCommonSubsequence":
+                output = new LongestCommonSubsequenceExecutor();
                 break;
             case "why":
                 output = new EasterEgg();

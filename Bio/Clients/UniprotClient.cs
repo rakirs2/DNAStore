@@ -4,6 +4,7 @@ using Bio.IO;
 
 namespace Bio.Clients
 {
+    // Should be moved
     public class UniprotClient
     {
         private static readonly HttpClient client = new HttpClient();
