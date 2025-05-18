@@ -20,6 +20,6 @@ public class Permutations : BaseExecutor
         foreach (var row in values) Console.WriteLine(string.Join(" ", row));
     }
 
-    private IEnumerable<IEnumerable<int>> values;
+    private IEnumerable<IEnumerable<int>>? values;
     private int total;
 }

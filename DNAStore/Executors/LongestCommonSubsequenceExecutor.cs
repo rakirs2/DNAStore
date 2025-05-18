@@ -22,6 +22,6 @@ internal class LongestCommonSubsequenceExecutor : BaseExecutor
         Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest().RawSequence}");
     }
 
-    private List<Fasta> _fastas;
-    private LongestCommonSubsequence _result;
+    private List<Fasta>? _fastas;
+    private LongestCommonSubsequence? _result;
 }

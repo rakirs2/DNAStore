@@ -23,5 +23,5 @@ internal class OverlapGraphExecutor : BaseExecutor
     }
 
     private IList<Fasta>? _fastas;
-    private OverlapGraph _overlapGraph;
+    private OverlapGraph? _overlapGraph;
 }
