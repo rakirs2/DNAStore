@@ -9,7 +9,6 @@ public class ProteinMotifFinder : BaseExecutor
 {
     protected override void GetInputs()
     {
-
         // TODO: at some point get a better pattern
         sequencesToCompare = new List<AnySequence>();
         while (true)
@@ -23,25 +22,31 @@ public class ProteinMotifFinder : BaseExecutor
 
             // TODO: async all the way
             var seq = UniprotClient.GetAsync(input).Result;
+
+            inputNames.Add(input);
             sequencesToCompare.Add(new AnySequence(seq));
         }
     }
 
     protected override void CalculateResult()
     {
-        foreach (var seq in sequencesToCompare) output.Add(seq.MotifLocations(KnownMotifs.NGlycostatin));
+        foreach (var seq in sequencesToCompare)
+            output.Add(seq.MotifLocations(KnownMotifs.NGlycostatin));
     }
 
     protected override void OutputResult()
     {
         for (var i = 0; i < sequencesToCompare.Count; i++)
         {
-            Console.WriteLine($"{sequencesToCompare[i].Name}");
-            Console.WriteLine($"{string.Join(" ", output[i])}");
+            if (output[i].Length > 0)
+            {
+                Console.WriteLine($"{inputNames[i]}");
+                Console.WriteLine($"{string.Join(" ", output[i])}");
+            }
         }
     }
 
     private List<long[]> output = new();
     private List<AnySequence> sequencesToCompare = new();
-    private AnySequence? motif;
+    private List<string> inputNames = new();
 }
