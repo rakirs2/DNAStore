@@ -1,4 +1,6 @@
-﻿namespace Bio.IO;
+﻿using System.Text.RegularExpressions;
+
+namespace Bio.IO;
 
 public static class FastaParser
 {
@@ -34,5 +36,17 @@ public static class FastaParser
         if (name != "" || currentSequence != "") output.Add(new Fasta(name, currentSequence));
 
         return output;
+    }
+
+    /// <summary>
+    /// This is a helper method to simply deserialze input from where the Fasta file can't actually be read
+    /// Completely. For now, this assumes only 1 Fasta per request.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static Fasta DeserializeRawString(string input)
+    {
+        var listofStrings = Regex.Split(input, @"\r?\n");
+        return new Fasta(listofStrings[0].Substring(1), string.Concat(listofStrings[1..]));
     }
 }

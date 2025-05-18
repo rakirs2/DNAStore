@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bio.Analysis.Types
-{
-    public interface  IKmerCounter
-    {
-        string HighestFrequencyKmer { get; }
-        int KmerLength { get; }
+namespace Bio.Analysis.Interfaces;
 
-    }
+public interface IKmerCounter
+{
+    string HighestFrequencyKmer { get; }
+    int KmerLength { get; }
 }

@@ -33,6 +33,6 @@ public class HelpersTests
     [TestMethod]
     public void GenerationalGrowthTestSolutionWithDeathLarge()
     {
-        Assert.AreEqual( BigInteger.Parse("51561931155211866078"), Helpers.GenerationalGrowth(96, 1, 20));
+        Assert.AreEqual(BigInteger.Parse("51561931155211866078"), Helpers.GenerationalGrowth(96, 1, 20));
     }
 }

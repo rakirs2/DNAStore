@@ -7,16 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Bio.Math;
 
-namespace Bio.Sequence.Types.Tests
+namespace BioTests.Sequence.Types;
+
+[TestClass()]
+public class ProteinSequenceTests
 {
-    [TestClass()]
-    public class ProteinSequenceTests
+    [TestMethod()]
+    public void ProteinSequenceTest()
     {
-        [TestMethod()]
-        public void ProteinSequenceTest()
-        {
-            var protein = new ProteinSequence("SKADYEK");
-            Assert.IsTrue(Helpers.DoublesEqualWithinRange(821.392, protein.MolecularWeight));
-        }
+        var protein = new ProteinSequence("SKADYEK");
+        Assert.IsTrue(Helpers.DoublesEqualWithinRange(821.392, protein.MolecularWeight));
     }
 }

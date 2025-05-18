@@ -2,43 +2,38 @@
 using Bio.IO;
 using Bio.Sequence.Types;
 
-namespace Bio.Analysis.Types
+namespace Bio.Analysis.Types;
+
+public class LongestCommonSubsequence : ILongestCommonSubsequence
 {
-    public class LongestCommonSubsequence : ILongestCommonSubsequence
+    public LongestCommonSubsequence(List<Fasta> fastas)
     {
-        public LongestCommonSubsequence(List<Fasta> fastas)
+        var first = fastas[0];
+        for (var i = first.Length; i > 0; i--)
         {
-            var first = fastas[0];
-            for (long i = first.Length; i>0 ; i--)
+            if (_longest != null) break;
+            for (var start = 0; start < first.Length - i; start++)
             {
-                if (_longest != null)
-                {
-                    break;
-                }
-                for (int start = 0; start < first.Length - i; start++)
-                {
-                    var currentString = first.RawSequence.Substring(start, (int) i);
-                    var isValid = true;
-                    foreach (var fasta in fastas[1..])
+                var currentString = first.RawSequence.Substring(start, (int)i);
+                var isValid = true;
+                foreach (var fasta in fastas[1..])
+                    if (!fasta.RawSequence.Contains(currentString))
                     {
-                        if (!fasta.RawSequence.Contains(currentString))
-                        {
-                            isValid = false;
-                            break;
-                        }
+                        isValid = false;
+                        break;
                     }
-                    if(isValid)
-                        _longest = new AnySequence(currentString);
-                }
+
+                if (isValid)
+                    _longest = new AnySequence(currentString);
             }
-            // to generate each possible subsequence
         }
-
-        public AnySequence GetAnyLongest()
-        {
-            return _longest;
-        }
-
-        private readonly AnySequence _longest;
+        // to generate each possible subsequence
     }
+
+    public AnySequence GetAnyLongest()
+    {
+        return _longest;
+    }
+
+    private readonly AnySequence _longest;
 }

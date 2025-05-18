@@ -7,12 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Bio.IO;
 
-namespace Bio.Analysis.Interfaces
+namespace Bio.Analysis.Interfaces;
+
+internal interface IOverlapGraph
 {
-    internal interface IOverlapGraph
-    {
-        public int Number { get; }
-        public int MatchLength { get; }
-        public List<Tuple<Fasta, Fasta>> GetOverlaps();
-    }
+    public int Number { get; }
+    public int MatchLength { get; }
+    public List<Tuple<Fasta, Fasta>> GetOverlaps();
 }
