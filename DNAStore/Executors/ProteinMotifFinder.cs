@@ -14,7 +14,6 @@ public class ProteinMotifFinder : BaseExecutor
         sequencesToCompare = new List<AnySequence>();
         while (true)
         {
-
             Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
             // TODO, create a generic non try catch for this to prevent nulls/io errors
             var input = Console.ReadLine();
@@ -22,6 +21,7 @@ public class ProteinMotifFinder : BaseExecutor
             // TODO: I hate these-- get these as a rule
             if (input.Equals("complete", StringComparison.InvariantCultureIgnoreCase)) break;
 
+            // TODO: async all the way
             var seq = UniprotClient.GetAsync(input).Result;
             sequencesToCompare.Add(new AnySequence(seq));
         }

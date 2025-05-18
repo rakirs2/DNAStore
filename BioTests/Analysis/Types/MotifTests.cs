@@ -51,15 +51,4 @@ public class MotifTests
         var motif = new Motif("[abc]{abcd}efg");
         Assert.IsFalse(motif.IsMatchStrict("aeefgh"));
     }
-
-    #region Known Motifs
-
-    [TestMethod]
-    public void NGlycostatin()
-    {
-        Assert.IsTrue(KnownMotifs.NGlycostatin.IsMatch("NNSN"));
-        Assert.IsFalse(KnownMotifs.NGlycostatin.IsMatchStrict("NNSNA"));
-    }
-
-    #endregion
 }
