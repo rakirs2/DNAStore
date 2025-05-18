@@ -35,5 +35,5 @@ public abstract class BaseExecutor : IExecutor
         Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
     }
 
-    private Stopwatch _stopwatch;
+    private Stopwatch? _stopwatch;
 }

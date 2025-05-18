@@ -23,6 +23,6 @@ public class ProfileMatrixExecutor : BaseExecutor
         Console.WriteLine(matrix.FrequencyMatrix());
     }
 
-    private IList<Fasta> fastas;
-    private ProfileMatrix matrix;
+    private IList<Fasta>? fastas;
+    private ProfileMatrix? matrix;
 }

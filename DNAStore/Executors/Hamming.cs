@@ -22,7 +22,7 @@ public class Hamming : BaseExecutor
         Console.WriteLine($"The Hamming Distance between both sequences is: {result}");
     }
 
-    private AnySequence a;
-    private AnySequence b;
+    private AnySequence? a;
+    private AnySequence? b;
     private long result;
 }

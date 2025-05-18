@@ -1,5 +1,4 @@
 ﻿using Bio.Sequence.Types;
-using System.Linq;
 
 namespace BioTests.Sequence.Types;
 

@@ -1,11 +1,4 @@
-﻿using Bio.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DNAStore.Executors;
+﻿namespace DNAStore.Executors;
 
 public class Permutations : BaseExecutor
 {
@@ -27,6 +20,6 @@ public class Permutations : BaseExecutor
         foreach (var row in values) Console.WriteLine(string.Join(" ", row));
     }
 
-    private IEnumerable<IEnumerable<int>> values;
+    private IEnumerable<IEnumerable<int>>? values;
     private int total;
 }

@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bio.Sequence.Types;
+﻿using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 
@@ -23,7 +22,7 @@ public class MotifFinder : BaseExecutor
         Console.WriteLine($"The One Index Locations are: \n{string.Join(" ", result)}");
     }
 
-    private AnySequence a;
-    private AnySequence b;
-    private long[] result;
+    private AnySequence? a;
+    private AnySequence? b;
+    private long[]? result;
 }

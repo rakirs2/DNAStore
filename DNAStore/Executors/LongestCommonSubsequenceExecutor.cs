@@ -1,11 +1,5 @@
 ﻿using Bio.Analysis.Types;
 using Bio.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 
@@ -28,6 +22,6 @@ internal class LongestCommonSubsequenceExecutor : BaseExecutor
         Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest().RawSequence}");
     }
 
-    private List<Fasta> _fastas;
-    private LongestCommonSubsequence _result;
+    private List<Fasta>? _fastas;
+    private LongestCommonSubsequence? _result;
 }

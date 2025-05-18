@@ -20,6 +20,6 @@ public class TranslateRNA : BaseExecutor
         Console.WriteLine($"The translated protein between both sequences is:\n{_result}");
     }
 
-    private RNASequence _a;
-    private string _result;
+    private RNASequence? _a;
+    private string? _result;
 }
