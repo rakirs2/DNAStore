@@ -19,18 +19,11 @@ namespace Bio.Analysis.Types;
 /// </summary>
 public class Motif : IMotif
 {
-    public Motif(string name, string motif)
+    public Motif(string motif, int expectedLength = 0, string name = "")
     {
         Name = name;
         InputMotif = motif;
-        UnderlyingRegex = new Regex(MotifToRegexString(InputMotif));
-    }
-
-    public Motif(string name, string motif, int expectedLength)
-    {
-        Name = name;
-        InputMotif = motif;
-        UnderlyingRegex = new Regex(MotifToRegexString(InputMotif));
+        UnderlyingRegex = new Regex(MotifToRegexString(InputMotif), RegexOptions.Compiled);
         ExpectedLength = expectedLength;
     }
 

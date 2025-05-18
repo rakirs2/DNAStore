@@ -45,7 +45,7 @@ public class AnySequenceTests
     public void OneIndexSimpleTest()
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
-        var b = new Motif("Test", "GAG", 3);
+        var b = new Motif("GAG", 3);
         var result = a.MotifLocations(b);
         var expected = new long[] { 1 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
@@ -55,7 +55,7 @@ public class AnySequenceTests
     public void ZeroIndexSimpleTest()
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
-        var b = new Motif("Test", "GAG", 3);
+        var b = new Motif("GAG", 3);
         var result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
@@ -65,7 +65,7 @@ public class AnySequenceTests
     public void OneIndexExample()
     {
         var a = new AnySequence("GATATATGCATATACTT");
-        var b = new Motif("Test", "ATAT", 4);
+        var b = new Motif("ATAT", 4);
         var result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
