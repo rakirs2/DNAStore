@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Bio.IO;
 
 namespace Bio.Clients
 {
@@ -7,21 +8,14 @@ namespace Bio.Clients
     {
         private static readonly HttpClient client = new HttpClient();
 
-        public static async Task Main(string[] args)
-        {
-            // Example GET request
-            var getUrl = "https://rest.uniprot.org/uniprotkb/A2Z669.fasta";
-            var getResponse = await GetAsync<Post>(getUrl);
-            Console.WriteLine($"Title: {getResponse.Title}");
-
-        }
-
-        public static async Task<T> GetAsync<T>(string url)
+        public static async Task<Fasta> GetAsync(string url)
         {
             var response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(responseBody);
+            // ok, I should probably add a constructor here for one even if it's a pain.
+            // we're not given a Json back in the body -- just a raw FASTA.
+            return FastaParser.DeserializeRawString(responseBody);
         }
     }
 

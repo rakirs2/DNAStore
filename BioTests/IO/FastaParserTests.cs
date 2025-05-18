@@ -1,4 +1,5 @@
-﻿using Bio.IO;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Bio.IO;
 
 namespace BioTests.IO;
 
@@ -11,15 +12,18 @@ public class FastaParserTests
     private readonly string _name1 = "Rosalind_6404";
     private readonly string _name2 = "Rosalind_5959";
     private readonly string _name3 = "Rosalind_0808";
-
     private readonly string _expectedSequence1 =
         "CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCCTCCCACTAATAATTCTGAGG";
-
     private readonly string _expectedSequence2 =
         "CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCTATATCCATTTGTCAGCAGACACGC";
-
     private readonly string _expectedSequence3 =
         "CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT";
+    private readonly string _exampleMixedStringForParsing =
+        ">sp|A2Z669|CSPLT_ORYSI CASP-like protein 5A2 OS=Oryza sativa subsp. indica OX=39946 GN=OsI_33147 PE=3 SV=1\nMRASRPVVHPVEAPPPAALAVAAAAVAVEAGVGAGGGAAAHGGENAQPRGVRMKDPPGAP\nGTPGGLGLRLVQAFFAAAALAVMASTDDFPSVSAFCYLVAAAILQCLWSLSLAVVDIYAL\nLVKRSLRNPQAVCIFTIGDGITGTLTLGAACASAGITVLIGNDLNICANNHCASFETATA\nMAFISWFALAPSCVLNFWSMASR\n";
+    private readonly string _mixedStringName =
+        "sp|A2Z669|CSPLT_ORYSI CASP-like protein 5A2 OS=Oryza sativa subsp. indica OX=39946 GN=OsI_33147 PE=3 SV=1";
+    private readonly string _mixedStringSequence =
+        "MRASRPVVHPVEAPPPAALAVAAAAVAVEAGVGAGGGAAAHGGENAQPRGVRMKDPPGAPGTPGGLGLRLVQAFFAAAALAVMASTDDFPSVSAFCYLVAAAILQCLWSLSLAVVDIYALLVKRSLRNPQAVCIFTIGDGITGTLTLGAACASAGITVLIGNDLNICANNHCASFETATAMAFISWFALAPSCVLNFWSMASR";
 
     [TestMethod]
     public void ReadMultipleTest()
@@ -41,6 +45,14 @@ public class FastaParserTests
         };
 
         Verify(result, expected);
+    }
+
+    [TestMethod()]
+    public void DeserializeRawStringTest()
+    {
+        var result = FastaParser.DeserializeRawString(_exampleMixedStringForParsing);
+        var expectedFasta = new ExpectedFasta(_mixedStringName, _mixedStringSequence);
+        expectedFasta.Verify(result);
     }
 
     private class ExpectedFasta
