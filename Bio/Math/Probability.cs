@@ -61,6 +61,7 @@ public static class Probability
         total += AAaa * children;
         total += 0.75 * AaAa * children;
         total += 0.5 * Aaaa * children;
+        total += 0 * aaaa * children;
         return total;
     }
 }

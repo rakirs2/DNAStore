@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bio.IO;
+﻿using Bio.IO;
 
 namespace Clients;
 

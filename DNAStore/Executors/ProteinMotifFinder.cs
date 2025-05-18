@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Bio.IO;
-using Bio.Sequence.Types;
+﻿using Bio.Sequence.Types;
+
 using Clients;
 
 namespace DNAStore.Executors;
@@ -48,6 +44,6 @@ public class ProteinMotifFinder : BaseExecutor
     private List<Task> tasksToAwait = new();
     private List<long[]> output = new();
     private List<AnySequence> sequencesToCompare = new();
-    private AnySequence motif;
-    private long[] result;
+    private AnySequence? motif;
+    private long[]? result;
 }

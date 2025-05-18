@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bio.Math;
+﻿using Bio.Math;
 
 namespace BioTests.Math;
 

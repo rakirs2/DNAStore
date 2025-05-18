@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Bio.Sequence.Types;
+﻿using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 

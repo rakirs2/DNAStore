@@ -1,4 +1,5 @@
 ﻿using Base.DataStructures;
+
 using Bio.IO;
 using Bio.Sequence.Interfaces;
 
@@ -45,7 +46,7 @@ public class AnySequence : ISequence
     public AnySequence(string name, string rawSequence)
     {
         Name = name;
-        ConstructionLogic(RawSequence);
+        ConstructionLogic(rawSequence);
     }
 
     public AnySequence(Fasta fasta)
