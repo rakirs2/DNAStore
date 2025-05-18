@@ -1,4 +1,4 @@
-﻿using Bio.Sequence.Types;
+﻿using Bio.Analysis.Types;
 
 namespace Bio.Sequence.Interfaces;
 
@@ -22,5 +22,5 @@ public interface ISequence
     /// <summary>
     /// Returns all locations of a given motif 
     /// </summary>
-    long[] MotifLocations(AnySequence motif, bool isZeroIndex = false);
+    long[] MotifLocations(Motif motif, bool isZeroIndex = false);
 }

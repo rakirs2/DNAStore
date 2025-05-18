@@ -1,4 +1,5 @@
-﻿using Bio.Sequence.Types;
+﻿using Bio.Analysis.Types;
+using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 
@@ -9,7 +10,7 @@ public class MotifFinder : BaseExecutor
         Console.WriteLine("Please enter the first sequence");
         a = new AnySequence(Console.ReadLine());
         Console.WriteLine("Please enter the second sequence");
-        b = new AnySequence(Console.ReadLine());
+        b = new Motif(Console.ReadLine());
     }
 
     protected override void CalculateResult()
@@ -23,6 +24,6 @@ public class MotifFinder : BaseExecutor
     }
 
     private AnySequence? a;
-    private AnySequence? b;
+    private Motif? b;
     private long[]? result;
 }

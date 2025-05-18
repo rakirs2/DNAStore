@@ -1,5 +1,6 @@
 ﻿using Base.DataStructures;
 
+using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
 
@@ -23,14 +24,14 @@ public class AnySequence : ISequence
     /// <param name="motif"></param>
     /// <param name="isZeroIndex"></param>
     /// <returns></returns>
-    public long[] MotifLocations(AnySequence motif, bool isZeroIndex = false)
+    public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
     {
         var modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
-        for (var i = 0; i < Length - motif.Length; i++)
+        for (var i = 0; i < Length - motif.ExpectedLength; i++)
             // TODO: make everything an int?
             // TODO: do I need to make this a long implementation -- does that even help?
-            if (RawSequence.Substring(i, (int)motif.Length) == motif.RawSequence)
+            if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
                 output.Add(i + modifier);
 
         return output.ToArray();
