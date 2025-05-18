@@ -11,7 +11,6 @@ public class ProteinMotifFinder : BaseExecutor
         Console.WriteLine("Type the UniProt Protein for motif");
         // TODO: clean up, async all the way
         // TODO: clean up, this is ugly as crap
-        // TODO: Ugh threading
         motif = new AnySequence(UniprotClient.GetAsync(Console.ReadLine()).Result);
 
         var input = "";
@@ -41,9 +40,7 @@ public class ProteinMotifFinder : BaseExecutor
         }
     }
 
-    private List<Task> tasksToAwait = new();
     private List<long[]> output = new();
     private List<AnySequence> sequencesToCompare = new();
     private AnySequence? motif;
-    private long[]? result;
 }
