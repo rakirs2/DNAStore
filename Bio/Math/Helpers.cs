@@ -18,7 +18,8 @@ public static class Helpers
     /// Exactly one month after two rabbits mate, they produce one male and one female rabbit.
     /// Rabbits never die or stop reproducing.
     /// </summary>
-    public static BigInteger GenerationalGrowth(int numGenerations, int growthPerGeneration, int monthsToDie = Int32.MaxValue)
+    public static BigInteger GenerationalGrowth(int numGenerations, int growthPerGeneration,
+        int monthsToDie = int.MaxValue)
     {
         var totalNewRabbits = new BigInteger[numGenerations];
         BigInteger mature = 0;
@@ -32,7 +33,7 @@ public static class Helpers
         for (var i = 2; i < numGenerations; i++)
         {
             mature += totalNewRabbits[i - 2];
-            
+
             totalNewRabbits[i] = mature * growthPerGeneration;
             if (i >= monthsToDie)
             {
@@ -43,10 +44,7 @@ public static class Helpers
         }
 
         BigInteger total = 0;
-        foreach (var baby in totalNewRabbits)
-        {
-            total += baby;
-        }
+        foreach (var baby in totalNewRabbits) total += baby;
 
         return total - dead;
     }

@@ -5,7 +5,7 @@ public class CaseInsensitiveCharComparer : IEqualityComparer<char>
 {
     public bool Equals(char x, char y)
     {
-        return  char.ToUpperInvariant(x) == char.ToUpperInvariant(y);
+        return char.ToUpperInvariant(x) == char.ToUpperInvariant(y);
     }
 
     public int GetHashCode(char x)

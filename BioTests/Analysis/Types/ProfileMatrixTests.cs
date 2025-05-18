@@ -18,6 +18,6 @@ public class ProfileMatrixTests
         var result = new ProfileMatrix(FastaParser.Read(_filePath));
         Assert.AreEqual(7, result.QuantityAnalyzed);
         Assert.AreEqual(8, result.LengthOfSequences);
-        Assert.AreEqual(_expectedFrequencyMatrix,result.FrequencyMatrix() );
+        Assert.AreEqual(_expectedFrequencyMatrix, result.FrequencyMatrix());
     }
 }

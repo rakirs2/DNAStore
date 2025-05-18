@@ -7,19 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Bio.IO;
 
-namespace Bio.Analysis.Types.Tests
-{
-    [TestClass()]
-    public class LongestCommonSubsequenceTests
-    {
-        private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-            "../../../../BioTests/TestData/LongestSubsequence.fasta");
+namespace BioTests.Analysis.Types;
 
-        [TestMethod()]
-        public void LongestCommonSubsequenceTest()
-        {
-            var result = new LongestCommonSubsequence(FastaParser.Read(_filePath));
-            Assert.AreEqual("AC", result.GetAnyLongest().RawSequence);
-        }
+[TestClass()]
+public class LongestCommonSubsequenceTests
+{
+    private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
+        "../../../../BioTests/TestData/LongestSubsequence.fasta");
+
+    [TestMethod()]
+    public void LongestCommonSubsequenceTest()
+    {
+        var result = new LongestCommonSubsequence(FastaParser.Read(_filePath));
+        Assert.AreEqual("AC", result.GetAnyLongest().RawSequence);
     }
 }

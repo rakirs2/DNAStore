@@ -1,29 +1,68 @@
 ﻿using System.Text;
-using System.Text.Json;
 using Bio.IO;
 
-namespace Bio.Clients
+namespace Clients;
+
+public class UniprotClient
 {
-    public class UniprotClient
-    {
-        private static readonly HttpClient client = new HttpClient();
+    private static readonly HttpClient Client = new();
+    private static readonly string uniprotBaseUrl = "http://www.uniprot.org/uniprot/";
+    private static readonly string fastaending = ".fasta";
 
-        public static async Task<Fasta> GetAsync(string url)
+    /// <summary>
+    /// This maps directly to the http://www.uniprot.org/uniprot/uniprot_id.fasta endpoint
+    /// The user only needs to add the id
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    public static async Task<Fasta> GetAsync(string id)
+    {
+        if (id.Contains('_'))
         {
-            var response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync();
-            // ok, I should probably add a constructor here for one even if it's a pain.
-            // we're not given a Json back in the body -- just a raw FASTA.
-            return FastaParser.DeserializeRawString(responseBody);
+            var index = id.IndexOf('_');
+            id = id.Substring(0, index);
         }
+
+        var response = await Client.GetAsync(ConvertToUniProtFastaEndpoint(id));
+        response.EnsureSuccessStatusCode();
+        var responseBody = await response.Content.ReadAsStringAsync();
+        // ok, I should probably add a constructor here for one even if it's a pain.
+        // we're not given a Json back in the body -- just a raw FASTA.
+        return FastaParser.DeserializeRawString(responseBody);
     }
 
-    public class Post
+    /// <summary>
+    /// This maps directly to the http://www.uniprot.org/uniprot/uniprot_id.fasta endpoint
+    /// The user only needs to add the id
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
+    public static Fasta Get(string id)
     {
-        public int UserId { get; set; }
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Body { get; set; }
+        if (id.Contains('_'))
+        {
+            var index = id.IndexOf('_');
+            id = id.Substring(0, index);
+        }
+
+        var response = Client.GetAsync(ConvertToUniProtFastaEndpoint(id)).Result;
+        response.EnsureSuccessStatusCode();
+        var responseBody = response.Content.ReadAsStringAsync().Result;
+        // ok, I should probably add a constructor here for one even if it's a pain.
+        // we're not given a Json back in the body -- just a raw FASTA.
+        return FastaParser.DeserializeRawString(responseBody);
     }
+
+    private static string ConvertToUniProtFastaEndpoint(string id)
+    {
+        return string.Concat(new string[] { uniprotBaseUrl, id, fastaending });
+    }
+}
+
+public class Post
+{
+    public int UserId { get; set; }
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Body { get; set; }
 }

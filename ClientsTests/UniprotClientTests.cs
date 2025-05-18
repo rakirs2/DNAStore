@@ -1,23 +1,23 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bio.Clients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
+﻿using Clients;
 
-namespace Bio.Clients.Tests
+namespace ClientsTests;
+
+[TestClass]
+public class UniprotClientTests
 {
-    [TestClass]
-    public class UniprotClientTests
+    [TestMethod]
+    public void GetAsync()
     {
-        [TestMethod]
-        public void GetAsyncTest()
-        {
-            // TODO: need to learn this later, but this can't be ideal
-            var result = UniprotClient.GetAsync("http://www.uniprot.org/uniprot/B5ZC00.fasta");
-            Assert.IsNotNull(result.Result);
-        }
+        // TODO: need to learn this later, but this can't be ideal
+        var result = UniprotClient.GetAsync("B5ZC00");
+        Assert.IsNotNull(result.Result);
+    }
+
+    [TestMethod]
+    public void GetAsyncComplicatedId()
+    {
+        // TODO: need to learn this later, but this can't be ideal
+        var result = UniprotClient.GetAsync("P07204_TRBM_HUMAN");
+        Assert.IsNotNull(result.Result);
     }
 }

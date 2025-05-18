@@ -1,4 +1,5 @@
 ﻿using Base.DataStructures;
+using Bio.IO;
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
@@ -11,9 +12,16 @@ namespace Bio.Sequence.Types;
 /// </summary>
 public class AnySequence : ISequence
 {
-    public long Length { get; }
-    public string RawSequence { get; }
+    public long Length { get; set; }
+    public string RawSequence { get; set; }
+    public string? Name { get; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="motif"></param>
+    /// <param name="isZeroIndex"></param>
+    /// <returns></returns>
     public long[] MotifLocations(AnySequence motif, bool isZeroIndex = false)
     {
         var modifier = isZeroIndex ? 0 : 1;
@@ -27,21 +35,23 @@ public class AnySequence : ISequence
         return output.ToArray();
     }
 
+
+    // TODO: this should be cleaned up
     public AnySequence(string rawSequence)
     {
-        RawSequence = rawSequence;
+        ConstructionLogic(rawSequence);
+    }
 
-        foreach (var basePair in rawSequence)
-            // TODO: virtual member call in constructor is an issue? why?
-            // Ah it's a design flaw on my part -- what's a better way to do this
-            // abstract, 
+    public AnySequence(string name, string rawSequence)
+    {
+        Name = name;
+        ConstructionLogic(RawSequence);
+    }
 
-            if (IsValid(basePair))
-                Counts.Add(basePair);
-            else
-                throw new Exception();
-
-        Length = RawSequence.Length;
+    public AnySequence(Fasta fasta)
+    {
+        Name = fasta.Name;
+        ConstructionLogic(fasta.RawSequence);
     }
 
     public BasePairDictionary Counts = new();
@@ -74,5 +84,22 @@ public class AnySequence : ISequence
     protected virtual bool IsValid(char bp)
     {
         return true;
+    }
+
+    private void ConstructionLogic(string rawSequence)
+    {
+        RawSequence = rawSequence;
+
+        foreach (var basePair in rawSequence)
+            // TODO: virtual member call in constructor is an issue? why?
+            // Ah it's a design flaw on my part -- what's a better way to do this
+            // abstract, 
+
+            if (IsValid(basePair))
+                Counts.Add(basePair);
+            else
+                throw new Exception();
+
+        Length = RawSequence.Length;
     }
 }

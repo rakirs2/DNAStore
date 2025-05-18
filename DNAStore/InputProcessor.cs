@@ -55,6 +55,9 @@ internal static class InputProcessor
             case "LongestCommonSubsequence":
                 output = new LongestCommonSubsequenceExecutor();
                 break;
+            case "ProteinMotif":
+                output = new ProteinMotifFinder();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;

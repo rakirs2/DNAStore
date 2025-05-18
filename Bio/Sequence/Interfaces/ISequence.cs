@@ -15,6 +15,11 @@ public interface ISequence
     string RawSequence { get; }
 
     /// <summary>
+    /// The name of the sequence at construction
+    /// </summary>
+    string? Name { get; }
+
+    /// <summary>
     /// Returns all locations of a given motif 
     /// </summary>
     long[] MotifLocations(AnySequence motif, bool isZeroIndex = false);

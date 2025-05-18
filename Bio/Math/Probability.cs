@@ -16,10 +16,10 @@ public static class Probability
     public static double PercentDominant(uint k, uint m, uint n)
     {
         var total = k + m + n;
-        BigInteger totalCombinations = 4 * Combinations(total, 2);
+        var totalCombinations = 4 * Combinations(total, 2);
         var dominant = 4 * Combinations(k, 2) + 4 * k * m + 4 * k * n + 3 * Combinations(m, 2) + 2 * m * n;
 
-        return ((double)(int)dominant / (int)totalCombinations);
+        return (double)(int)dominant / (int)totalCombinations;
     }
 
     public static BigInteger Combinations(uint n, uint r)
@@ -43,7 +43,8 @@ public static class Probability
     /// <summary>
     /// Terrible perf doesn't handle duplicates as separate. But can work for now
     /// </summary>
-    public static IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> list, int length) {
+    public static IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> list, int length)
+    {
         if (length == 1) return list.Select(t => new T[] { t });
 
         return GetPermutations(list, length - 1)
@@ -58,9 +59,8 @@ public static class Probability
         total += AAAA * children;
         total += AAAa * children;
         total += AAaa * children;
-        total +=0.75 * AaAa * children;
+        total += 0.75 * AaAa * children;
         total += 0.5 * Aaaa * children;
         return total;
     }
-    
 }

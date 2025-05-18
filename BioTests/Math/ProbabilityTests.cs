@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Bio.Math;
-using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
 
 namespace BioTests.Math;
 
@@ -23,7 +22,7 @@ public class ProbabilityTests
     [TestMethod()]
     public void ExpectedDominantOffspringTest()
     {
-        var total = Probability.ExpectedDominantOffspring(1, 0, 0, 1,0,1,2);
+        var total = Probability.ExpectedDominantOffspring(1, 0, 0, 1, 0, 1, 2);
         Assert.AreEqual(3.5, total);
     }
 }
