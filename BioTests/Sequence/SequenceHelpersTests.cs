@@ -136,4 +136,37 @@ public class SequenceHelpersTests
         Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("AGG"));
         Assert.AreEqual("G", SequenceHelpers.RNAToProteinConverter("GGG"));
     }
+
+
+    [TestMethod]
+    public void NumberOfProteins()
+    {
+        Assert.AreEqual(3, SequenceHelpers.NumberOfPossibleProteins("Stop"));
+        Assert.AreEqual(1, SequenceHelpers.NumberOfPossibleProteins("W"));
+        Assert.AreEqual(1, SequenceHelpers.NumberOfPossibleProteins("M"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("F"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("Y"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("H"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("N"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("D"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("Q"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("K"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("E"));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("C"));
+        Assert.AreEqual(3, SequenceHelpers.NumberOfPossibleProteins("I"));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("V"));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("P"));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("T"));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("A"));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("G"));
+        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins("R"));
+        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins("S"));
+        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins("L"));
+    }
+
+    [TestMethod]
+    public void NumberOfProteinsTotal()
+    {
+        Assert.AreEqual(64, SequenceHelpers.ProteinCodesToRNA.Sum(kv => kv.Value.Count));
+    }
 }

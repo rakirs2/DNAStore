@@ -58,6 +58,11 @@ public class SequenceHelpers
         throw new InvalidDataException("Value does not exist");
     }
 
+    public static int NumberOfPossibleProteins(string protein)
+    {
+        return ProteinCodesToRNA[protein].Count;
+    }
+
     /*
         RNA/DNA
         A --> adenosine           M --> A C (amino)
@@ -86,9 +91,9 @@ public class SequenceHelpers
     // Note, U Can be shared. So we need to check, "contains U"
      */
     // TODO: PotentialBottleneck perf bottleneck.
-    private static readonly HashSet<char> DistinctRNAMarkers = new() { 'U' };
-    private static readonly HashSet<char> AllRNAMarkers = new() { 'U', 'A', 'C', 'G', 'N' };
-    private static readonly HashSet<char> AllDNAMarkers = new() { 'T', 'A', 'C', 'G', 'N' };
+    private static readonly HashSet<char> DistinctRNAMarkers = ['U'];
+    private static readonly HashSet<char> AllRNAMarkers = ['U', 'A', 'C', 'G', 'N'];
+    private static readonly HashSet<char> AllDNAMarkers = ['T', 'A', 'C', 'G', 'N'];
 
     private static readonly Dictionary<string, string> RNAToProteinCode = new()
     {
@@ -158,6 +163,31 @@ public class SequenceHelpers
         { "GGG", "G" }
     };
 
+    public static readonly Dictionary<string, List<string>> ProteinCodesToRNA = new()
+    {
+        {"W", ["UGG"] },
+        {"M", ["AUG"] },
+        {"F", ["UUU", "UUC"] },
+        {"Y", ["UAU", "UAC"] },
+        {"H", ["CAU", "CAC"] },
+        {"N", ["AAU", "AAC"] },
+        {"D", ["GAU", "GAC"] },
+        {"Q", ["CAA", "CAG"] },
+        {"K", ["AAA", "AAG"] },
+        {"E", ["GAA", "GAG"] },
+        {"C", ["UGU", "UGC"] },
+        {"I", ["AUU", "AUC", "AUA"] },
+        {"V", ["GUU", "GUC", "GUA", "GUG"] },
+        {"P", ["CCU", "CCC", "CCA", "CCG"] },
+        {"T", ["ACU", "ACC", "ACA", "ACG"] },
+        {"A", ["GCU", "GCC", "GCA", "GCG"] },
+        {"G", ["GGU", "GGC", "GGA", "GGG"] },
+        {"R", ["CGU", "CGC", "CGA", "AGA", "CGG", "AGG"] },
+        {"S", ["UCU", "UCC", "UCA", "UCG", "AGU", "AGC"] },
+        {"L", ["CUU", "CUC", "UUA", "CUA", "UUG", "CUG"] },
+        {"Stop", ["UAA", "UAG", "UGA"] }
+    };
+
     private static readonly HashSet<char>
-        DistinctProteinMarkers = new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
+        DistinctProteinMarkers = ['E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*'];
 }

@@ -17,4 +17,16 @@ public class ProteinSequence : AnySequence, IProtein
             return output;
         }
     }
+
+    public int NumberOfPossibleRNA(int modulo = (int)1e6)
+    {
+        int result = 1;
+        foreach (var protein in RawSequence)
+        {
+            result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
+        }
+        // finally, we need to account for the stop
+        result *= SequenceHelpers.NumberOfPossibleProteins("Stop");
+        return result % modulo;
+    }
 }

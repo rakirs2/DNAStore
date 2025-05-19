@@ -2,6 +2,7 @@
 
 namespace BioTests.Sequence.Types;
 
+
 [TestClass]
 public class RNASequenceTests
 {
