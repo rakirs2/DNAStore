@@ -57,6 +57,9 @@ internal static class InputProcessor
             case "ProteinMotif":
                 output = new ProteinMotifFinder();
                 break;
+            case "ProteinToNumRNA":
+                output = new ProteinTomRNACount();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;

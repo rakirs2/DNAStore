@@ -17,4 +17,9 @@ public class RNASequence : AnySequence, IRNA
     {
         return SequenceHelpers.ConvertStringToProtein(RawSequence);
     }
+
+    public int GetPotentialNumberOfDNAStrings(int mod)
+    {
+        throw new NotImplementedException();
+    }
 }
