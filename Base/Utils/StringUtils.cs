@@ -2,8 +2,11 @@
 public static class StringUtils
 {
     /// <summary>
-    /// Swaps the characters on the reference passed in
+    /// Swaps the characers of the passed in string
     /// </summary>
+    /// <returns>
+    /// a new string object with the indices swapped
+    /// </returns>
     /// <param name="input"></param>
     /// <param name="indexA"></param>
     /// <param name="indexB"></param>
@@ -11,7 +14,9 @@ public static class StringUtils
     {
         if (input == null || indexA > input.Length - 1 || indexB > input.Length - 1 || indexA < 0 || indexB < 0)
         {
-            throw new InvalidDataException("Something wrong wiht the inputs");
+            // TODO: I wonder why we don't have this in the base language
+            // TODO: make errors clearer
+            throw new InvalidDataException("Something wrong w the inputs");
         }
 
         // Swaps characters in a string.
