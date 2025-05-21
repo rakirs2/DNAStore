@@ -44,7 +44,7 @@ public class SequenceHelpers
         }
         else
         {
-            for (int i = 0; i < currentLength; i++)
+            for (var i = 0; i < currentLength; i++)
             {
                 GeneratePerms(currentLength - 1, ref inputString, ref arrayToAddTo);
                 if (currentLength % 2 == 0)
