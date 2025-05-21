@@ -2,6 +2,8 @@
 
 public interface IKmerCounter
 {
-    string HighestFrequencyKmer { get; }
+    HashSet<string> HighestFrequencyKmers { get; }
+
     int KmerLength { get; }
+
 }
