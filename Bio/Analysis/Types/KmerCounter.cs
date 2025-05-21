@@ -11,7 +11,7 @@ public class KmerCounter : IKmerCounter
     ///
     /// TODO: add a heap implementation which can return all of the Kmers and their frequencies
     /// </summary>
-    public string HighestFrequencyKmer { get; } = "";
+    public HashSet<string> HighestFrequencyKmers { get; } = new HashSet<string>();
 
     public int CurrentHighestFrequency { get; } = 0;
     public int KmerLength { get; }
@@ -20,7 +20,7 @@ public class KmerCounter : IKmerCounter
     {
         KmerLength = kmerLength;
         // ok, we need to populate the right values here
-        for (var i = 0; i < sequence.RawSequence.Length - 1; i++)
+        for (var i = 0; i < sequence.RawSequence.Length - KmerLength + 1; i++)
         {
             var currentWord = sequence.RawSequence.Substring(i, KmerLength);
             if (Counts.ContainsKey(sequence.RawSequence.Substring(i, KmerLength)))
@@ -29,7 +29,12 @@ public class KmerCounter : IKmerCounter
                 if (Counts[currentWord] > CurrentHighestFrequency)
                 {
                     CurrentHighestFrequency = Counts[currentWord];
-                    HighestFrequencyKmer = currentWord;
+                    HighestFrequencyKmers = new HashSet<string>() { currentWord };
+                }
+
+                if (Counts[currentWord] == CurrentHighestFrequency)
+                {
+                    HighestFrequencyKmers.Add(currentWord);
                 }
             }
             else
@@ -40,4 +45,9 @@ public class KmerCounter : IKmerCounter
     }
 
     private static readonly Dictionary<string, int> Counts = new();
+
+    public List<string> GetMostFrequent()
+    {
+        throw new NotImplementedException();
+    }
 }
