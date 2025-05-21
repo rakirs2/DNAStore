@@ -25,6 +25,55 @@ public class SequenceHelpers
         return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
     }
 
+
+    //public static List<string> PossibleKmersList(string kmers)
+    //{
+    // def generate(n):
+    //     if n == 1:
+    //         result.append(nums[:])
+    //     else:
+    //         for i in range(n):
+    //             generate(n - 1)
+    //             if n % 2 == 0:
+    //                 nums[i], nums[n - 1] = nums[n - 1], nums[i]
+    //             else:
+    //                 nums[0], nums[n - 1] = nums[n - 1], nums[0]
+
+    // result = []
+    // generate(len(nums))
+    // return result
+
+    //    var result = new List<string>();
+
+    //    return result;
+    //}
+
+    private static void GeneratePerms(int currentLength, ref string inputString, ref List<string> arrayToAddTo)
+    {
+        if (currentLength == 1)
+        {
+            arrayToAddTo.Add(inputString);
+        }
+        else
+        {
+            for (int i = 0; i < currentLength; i++)
+            {
+                GeneratePerms(currentLength - 1, ref inputString, ref arrayToAddTo);
+                if (currentLength % 2 == 0)
+                {
+
+                }
+            }
+
+            //for i in range(n):
+            //generate(n - 1)
+            //if n % 2 == 0:
+            //nums[i], nums[n - 1] = nums[n - 1], nums[i]
+            //else:
+            //nums[0], nums[n - 1] = nums[n - 1], nums[0]
+        }
+    }
+
     // Maybe this belongs on the codon class
     public static string ConvertStringToProtein(string input)
     {
