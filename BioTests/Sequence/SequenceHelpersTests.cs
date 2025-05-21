@@ -169,4 +169,10 @@ public class SequenceHelpersTests
     {
         Assert.AreEqual(64, SequenceHelpers.ProteinCodesToRNA.Sum(kv => kv.Value.Count));
     }
+
+    [TestMethod()]
+    public void PossibleKmersListTest()
+    {
+        var output = SequenceHelpers.AllPossibleKmersList("ACGT");
+    }
 }

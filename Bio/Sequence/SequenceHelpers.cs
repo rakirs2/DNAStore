@@ -1,5 +1,7 @@
 ﻿using System.Text;
 
+using Base.Utils;
+
 namespace Bio.Sequence;
 
 public class SequenceHelpers
@@ -23,6 +25,45 @@ public class SequenceHelpers
     public static bool IsValidDNA(char c)
     {
         return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
+    }
+
+
+    public static List<string> AllPossibleKmersList(string kmers)
+    {
+        var output = new List<string>();
+        // TODO: check the pass by ref here (shouldn't be needed);
+        GeneratePerms(kmers.Length, ref kmers, ref output);
+        return output;
+    }
+
+    private static void GeneratePerms(int currentLength, ref string inputString, ref List<string> arrayToAddTo)
+    {
+        if (currentLength == 1)
+        {
+            arrayToAddTo.Add(inputString);
+        }
+        else
+        {
+            for (var i = 0; i < currentLength; i++)
+            {
+                GeneratePerms(currentLength - 1, ref inputString, ref arrayToAddTo);
+                if (currentLength % 2 == 0)
+                {
+                    inputString = StringUtils.SwapIndex(inputString, currentLength - 1, i);
+                }
+                else
+                {
+                    inputString = StringUtils.SwapIndex(inputString, 0, currentLength - 1);
+                }
+            }
+
+            //for i in range(n):
+            //generate(n - 1)
+            //if n % 2 == 0:
+            //nums[i], nums[n - 1] = nums[n - 1], nums[i]
+            //else:
+            //nums[0], nums[n - 1] = nums[n - 1], nums[0]
+        }
     }
 
     // Maybe this belongs on the codon class
