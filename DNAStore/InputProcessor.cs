@@ -60,6 +60,9 @@ internal static class InputProcessor
             case "ProteinToNumRNA":
                 output = new ProteinTomRNACount();
                 break;
+            case "ClumpFinder":
+                output = new ClumpFinder();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;

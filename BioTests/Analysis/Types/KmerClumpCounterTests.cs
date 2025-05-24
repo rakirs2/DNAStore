@@ -17,12 +17,23 @@ public class KmerClumpCounterTests
     }
 
     [TestMethod()]
-    public void KmerClumpCounterValidKmers()
+    public void GenericCase()
     {
         var seq = new AnySequence(
             "CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC");
         var counter = new KmerClumpCounter(seq, 75, 5, 4);
         var expected = new HashSet<string> { "CGACA", "GAAGA", "AATGT" };
+        Assert.IsTrue(counter.ValidKmers.SetEquals(expected));
+    }
+
+    [TestMethod]
+    // From book test cases
+    public void OffBy1()
+    {
+        var seq = new AnySequence(
+            "ACGTACGT");
+        var counter = new KmerClumpCounter(seq, 5, 1, 2);
+        var expected = new HashSet<string> { "T", "C", "G", "A" };
         Assert.IsTrue(counter.ValidKmers.SetEquals(expected));
     }
 }

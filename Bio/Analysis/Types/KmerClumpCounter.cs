@@ -6,6 +6,7 @@ public class KmerClumpCounter : IKmerClumpCounter
 {
     // TODO: there's probably some work to generalize this later
     // TODO: Design phil -- do I really care if there's calculations going on construction?
+    // TODO: Get a separate calculate step for all of these data structures
     public KmerClumpCounter(AnySequence sequence, int scanLength, int kmerLength, int minCount)
     {
         Sequence = sequence;
@@ -13,7 +14,7 @@ public class KmerClumpCounter : IKmerClumpCounter
         KmerLength = kmerLength;
         MinCount = minCount;
         // Always assume that we are adding to a proper Dictionary
-        for (int i = 0; i < sequence.RawSequence.Length - kmerLength; i++)
+        for (int i = 0; i <= sequence.RawSequence.Length - KmerLength; i++)
         {
             while (_orderQueue.Count >= ScanLength)
             {
