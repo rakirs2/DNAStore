@@ -35,11 +35,15 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         for (int i = 0; i < RawSequence.Length; i++)
         {
             int j = 4;
-            while (i + j < RawSequence.Length && j < 12)
+            // TODO: verify these
+            while (i + j <= RawSequence.Length && j <= 12)
             {
                 var subStringDNA = new DNASequence(RawSequence.Substring(i, j));
                 var reverseComplement = subStringDNA.ToReverseComplement();
-
+                if (AreSequenceEqual(subStringDNA, reverseComplement))
+                {
+                    output.Add(new Tuple<int, int>(i + 1, j));
+                }
                 j++;
             }
         }
@@ -50,8 +54,4 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
-    public List<Tuple<int, int>> CalculateRestrictionSites()
-    {
-        throw new NotImplementedException();
-    }
 }
