@@ -1,13 +1,14 @@
 # Glossary
 
 ## Known
+
 motif - subsequence within a given sequence
 
-
 ## Unknown for now
+
 motif finding algorithms
-promoter sequences 
-coregulated genes 
+promoter sequences
+coregulated genes
 transcription
 translation
 Gene Expression

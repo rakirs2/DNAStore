@@ -7,7 +7,7 @@ public class GCContent : BaseExecutor
     protected override void GetInputs()
     {
         Console.WriteLine("Please input path to file");
-        var location = Console.ReadLine();
+        string? location = Console.ReadLine();
         if (location != null) fastas = FastaParser.Read(location);
     }
 

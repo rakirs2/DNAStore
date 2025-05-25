@@ -1,6 +1,7 @@
 ﻿using Bio.Analysis.Types;
 
 namespace BioTests.Analysis.Types;
+
 public class KnownMotifsTests
 {
     [TestMethod]

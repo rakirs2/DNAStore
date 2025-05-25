@@ -13,7 +13,7 @@ public class TranscibeDna : IExecutor
     private void GetInputs()
     {
         Console.WriteLine("Please input the DNA in question");
-        var inputString = Console.ReadLine();
+        string? inputString = Console.ReadLine();
         if (inputString != null) _dnaSequence = new DNASequence(inputString);
     }
 

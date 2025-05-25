@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Bio\Bio.csproj" />
-      <ProjectReference Include="..\Clients\Clients.csproj" />
+        <ProjectReference Include="..\Bio\Bio.csproj"/>
+        <ProjectReference Include="..\Clients\Clients.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -42,7 +42,7 @@ public class BasePairDictionary : IBasePairDictionary
         var outputString = "";
         // TODO: there's probably some JSONifier that does this in one line
         // TODO: there might be some value in forcing this to be alphabetical
-        foreach (var key in _dictionary.Keys) outputString += $"{key}: {_dictionary[key]};";
+        foreach (char key in _dictionary.Keys) outputString += $"{key}: {_dictionary[key]};";
 
         return outputString;
     }

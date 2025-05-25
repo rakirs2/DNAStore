@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace Bio.Analysis.Interfaces;
+
 internal interface IMotif
 {
     string Name { get; }

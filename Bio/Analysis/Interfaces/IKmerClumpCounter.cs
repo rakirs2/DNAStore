@@ -24,5 +24,6 @@ public interface IKmerClumpCounter
     /// The seqquence being analyzed
     /// </summary>
     AnySequence Sequence { get; }
+
     public HashSet<string> ValidKmers { get; }
 }

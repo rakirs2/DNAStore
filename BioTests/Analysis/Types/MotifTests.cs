@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-
 using Bio.Analysis.Types;
 
 namespace BioTests.Analysis.Types;

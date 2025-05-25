@@ -7,7 +7,7 @@ public class PercentDominant : BaseExecutor
     protected override void GetInputs()
     {
         Console.WriteLine("k");
-        var inputString = Console.ReadLine();
+        string? inputString = Console.ReadLine();
         k = uint.Parse(inputString);
         Console.WriteLine("m");
         inputString = Console.ReadLine();

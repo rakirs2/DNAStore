@@ -1,4 +1,5 @@
 ﻿namespace Base.Utils;
+
 public static class StringUtils
 {
     /// <summary>
@@ -13,11 +14,9 @@ public static class StringUtils
     public static string SwapIndex(string input, int indexA, int indexB)
     {
         if (input == null || indexA > input.Length - 1 || indexB > input.Length - 1 || indexA < 0 || indexB < 0)
-        {
             // TODO: I wonder why we don't have this in the base language
             // TODO: make errors clearer
             throw new InvalidDataException("Something wrong w the inputs");
-        }
 
         // Swaps characters in a string.
         char[] array = input.ToCharArray();

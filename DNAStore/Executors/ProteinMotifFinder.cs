@@ -1,6 +1,5 @@
 ﻿using Bio.Analysis.Types;
 using Bio.Sequence.Types;
-
 using Clients;
 
 namespace DNAStore.Executors;
@@ -15,7 +14,7 @@ public class ProteinMotifFinder : BaseExecutor
         {
             Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
             // TODO, create a generic non try catch for this to prevent nulls/io errors
-            var input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             // TODO: I hate these-- get these as a rule
             if (input.Equals("complete", StringComparison.InvariantCultureIgnoreCase)) break;
@@ -37,13 +36,11 @@ public class ProteinMotifFinder : BaseExecutor
     protected override void OutputResult()
     {
         for (var i = 0; i < sequencesToCompare.Count; i++)
-        {
             if (output[i].Length > 0)
             {
                 Console.WriteLine($"{inputNames[i]}");
                 Console.WriteLine($"{string.Join(" ", output[i])}");
             }
-        }
     }
 
     private List<long[]> output = new();

@@ -1,7 +1,5 @@
 ﻿using System.Text;
-
 using Base.DataStructures;
-
 using Bio.Analysis.Interfaces;
 using Bio.IO;
 using Bio.Sequence.Types;
@@ -46,9 +44,9 @@ public class ProfileMatrix : IProfileMatrix
     public string FrequencyMatrix()
     {
         var stringBuilder = new StringBuilder();
-        var characters = listOfChars.ToArray();
+        char[]? characters = listOfChars.ToArray();
         Array.Sort(characters);
-        foreach (var bp in characters)
+        foreach (char bp in characters)
         {
             stringBuilder.Append(bp + ":");
             for (var i = 0; i < LengthOfSequences; i++)

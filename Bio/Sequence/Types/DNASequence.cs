@@ -19,7 +19,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence)
     public DNASequence ToReverseComplement()
     {
         var dnaStrand = new StringBuilder();
-        for (var i = RawSequence.Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[RawSequence[i]]);
+        for (int i = RawSequence.Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[RawSequence[i]]);
 
         return new DNASequence(dnaStrand.ToString());
     }
