@@ -11,7 +11,7 @@ public static class FastaParser
         List<Fasta> output = [];
         // Not sure about best practice here -- but I think we can be relatively optimistic about the incoming format
         // Realistically, we do not want to deal with bad formatting 
-        foreach (string? line in File.ReadLines(filePath))
+        foreach (var line in File.ReadLines(filePath))
             if (line.StartsWith('>'))
             {
                 // Let's handle possible existing classes.

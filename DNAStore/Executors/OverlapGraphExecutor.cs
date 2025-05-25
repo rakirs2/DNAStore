@@ -8,7 +8,7 @@ internal class OverlapGraphExecutor : BaseExecutor
     protected override void GetInputs()
     {
         Console.WriteLine("Please input path to file");
-        string? location = Console.ReadLine();
+        var location = Console.ReadLine();
         if (location != null) _fastas = FastaParser.Read(location);
     }
 

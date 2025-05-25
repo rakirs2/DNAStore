@@ -19,11 +19,11 @@ public class KmerClumpCounter : IKmerClumpCounter
         {
             while (_orderQueue.Count >= ScanLength)
             {
-                string? temp = _orderQueue.Dequeue();
+                var temp = _orderQueue.Dequeue();
                 _slidingCounter[temp] -= 1;
             }
 
-            string? current = sequence.RawSequence.Substring(i, kmerLength);
+            var current = sequence.RawSequence.Substring(i, kmerLength);
             _orderQueue.Enqueue(current);
 
             _slidingCounter.TryAdd(current, 0);

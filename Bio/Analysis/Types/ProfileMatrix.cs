@@ -44,9 +44,9 @@ public class ProfileMatrix : IProfileMatrix
     public string FrequencyMatrix()
     {
         var stringBuilder = new StringBuilder();
-        char[]? characters = listOfChars.ToArray();
+        var characters = listOfChars.ToArray();
         Array.Sort(characters);
-        foreach (char bp in characters)
+        foreach (var bp in characters)
         {
             stringBuilder.Append(bp + ":");
             for (var i = 0; i < LengthOfSequences; i++)

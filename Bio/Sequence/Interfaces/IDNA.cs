@@ -1,4 +1,5 @@
 ﻿namespace Bio.Sequence.Interfaces;
+
 public interface IDNA
 {
     /// <summary>

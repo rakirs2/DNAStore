@@ -1,9 +1,9 @@
 ﻿using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
+
 internal class RestictionSites : BaseExecutor
 {
-
     protected override void GetInputs()
     {
         Console.WriteLine("Enter Sequence To be analyzed");
@@ -17,10 +17,7 @@ internal class RestictionSites : BaseExecutor
 
     protected override void OutputResult()
     {
-        foreach (var tuple in output)
-        {
-            Console.WriteLine($"{tuple.Item1} {tuple.Item2}");
-        }
+        foreach (var tuple in output) Console.WriteLine($"{tuple.Item1} {tuple.Item2}");
     }
 
     private DNASequence? sequence;
