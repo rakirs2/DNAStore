@@ -1,4 +1,4 @@
-﻿using Bio.Sequence.Types;
+﻿namespace Bio.Sequence.Types.Tests;
 
 namespace BioTests.Sequence.Types;
 
@@ -19,5 +19,12 @@ public class DNASequenceTests
         var sequence = new DNASequence("AAAACCCGGT");
         var complement = sequence.ToReverseComplement();
         Assert.AreEqual("ACCGGGTTTT", complement.RawSequence);
+    }
+
+    [TestMethod()]
+    public void RestrictionSitesTest()
+    {
+        var sequence = new DNASequence("AAAACCCGGT");
+        sequence.CalculateRestrictionSites();
     }
 }

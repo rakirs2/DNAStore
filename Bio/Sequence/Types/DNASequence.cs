@@ -1,8 +1,10 @@
 ﻿using System.Text;
 
+using Bio.Sequence.Interfaces;
+
 namespace Bio.Sequence.Types;
 
-public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence)
+public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), IDNA
 {
     // Should this be static, should this be a class conversion
     // For now, let's just let it be an explicit conversion, pay for the new class
@@ -24,7 +26,16 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence)
         return new DNASequence(dnaStrand.ToString());
     }
 
+    public List<Tuple<int, int>> RestrictionSites()
+    {
+        throw new NotImplementedException();
+    }
 
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
+
+    public List<Tuple<int, int>> CalculateRestrictionSites()
+    {
+        throw new NotImplementedException();
+    }
 }

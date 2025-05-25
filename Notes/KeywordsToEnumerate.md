@@ -2,15 +2,17 @@
 
 ## Known
 
-motif - subsequence within a given sequence
+Homodimer -- composed of two identical substructures
+Motif -- subsequence within a given sequence
+Transcription -- This is realistically a 1 semeseter Molgen class. But let's stick with DNA --> RNA
+Translation -- This is realistically a 1 semeseter Molgen class. But let's stick with RNA --> Protein
+Reverse Complement -- Classic DNA matching. ATCG --> CGAT. 
+
 
 ## Unknown for now
 
-motif finding algorithms
 promoter sequences
 coregulated genes
-transcription
-translation
 Gene Expression
 palindromic motifs
 spaced dyad (gapped) motifs
@@ -20,3 +22,5 @@ Prokaryote
 Eukaryote
 Word Based Algorithms
 Oligo Analysiss
+
+5' vs 3' ends
