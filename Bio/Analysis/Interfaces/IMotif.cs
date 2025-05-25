@@ -7,7 +7,7 @@ internal interface IMotif
     string Name { get; }
 
     /// <summary>
-    /// The original string added at contruction
+    /// The original string added at construction
     /// </summary>
     string InputMotif { get; }
 
@@ -17,7 +17,7 @@ internal interface IMotif
     int ExpectedLength { get; }
 
     /// <summary>
-    /// Mostly for debugging purposes. This is the actual regex operater that the input string gets converted to
+    /// Mostly for debugging purposes. This is the actual regex operator that the input string gets converted to
     /// </summary>
     Regex UnderlyingRegex { get; }
 
