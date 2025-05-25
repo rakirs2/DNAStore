@@ -19,7 +19,7 @@ internal class RestictionSites : BaseExecutor
     {
         foreach (var tuple in output)
         {
-            Console.WriteLine($"{tuple.Item1} {tuple.Item2.}");
+            Console.WriteLine($"{tuple.Item1} {tuple.Item2}");
         }
     }
 
