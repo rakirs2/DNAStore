@@ -2,6 +2,7 @@
 using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
+
 public class KmerClumpCounter : IKmerClumpCounter
 {
     // TODO: there's probably some work to generalize this later
@@ -14,24 +15,20 @@ public class KmerClumpCounter : IKmerClumpCounter
         KmerLength = kmerLength;
         MinCount = minCount;
         // Always assume that we are adding to a proper Dictionary
-        for (int i = 0; i <= sequence.RawSequence.Length - KmerLength; i++)
+        for (var i = 0; i <= sequence.RawSequence.Length - KmerLength; i++)
         {
             while (_orderQueue.Count >= ScanLength)
             {
-                var temp = _orderQueue.Dequeue();
+                string? temp = _orderQueue.Dequeue();
                 _slidingCounter[temp] -= 1;
             }
 
-            var current = sequence.RawSequence.Substring(i, kmerLength);
+            string? current = sequence.RawSequence.Substring(i, kmerLength);
             _orderQueue.Enqueue(current);
 
             _slidingCounter.TryAdd(current, 0);
             _slidingCounter[current] += 1;
-            if (_slidingCounter[current] >= MinCount)
-            {
-                ValidKmers.Add(current);
-            }
-
+            if (_slidingCounter[current] >= MinCount) ValidKmers.Add(current);
         }
     }
 
@@ -40,7 +37,7 @@ public class KmerClumpCounter : IKmerClumpCounter
     public AnySequence Sequence { get; }
     public int MinCount { get; }
 
-    public HashSet<string> ValidKmers { get; } = new HashSet<string>();
+    public HashSet<string> ValidKmers { get; } = new();
 
 
     private Dictionary<string, int> _slidingCounter = new();

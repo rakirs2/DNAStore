@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-
 using Bio.Analysis.Interfaces;
 
 namespace Bio.Analysis.Types;
@@ -50,21 +49,13 @@ public class Motif : IMotif
     private static string MotifToRegexString(string input)
     {
         var output = new StringBuilder();
-        foreach (var c in input)
-        {
+        foreach (char c in input)
             if (c == '{')
-            {
                 output.Append("[^");
-            }
             else if (c == '}')
-            {
                 output.Append("]");
-            }
             else
-            {
                 output.Append(c);
-            }
-        }
 
         return output.ToString();
     }

@@ -1,5 +1,4 @@
 ﻿using System.Text;
-
 using Base.Utils;
 
 namespace Bio.Sequence;
@@ -39,31 +38,22 @@ public class SequenceHelpers
     private static void GeneratePerms(int currentLength, ref string inputString, ref List<string> arrayToAddTo)
     {
         if (currentLength == 1)
-        {
             arrayToAddTo.Add(inputString);
-        }
         else
-        {
             for (var i = 0; i < currentLength; i++)
             {
                 GeneratePerms(currentLength - 1, ref inputString, ref arrayToAddTo);
                 if (currentLength % 2 == 0)
-                {
                     inputString = StringUtils.SwapIndex(inputString, currentLength - 1, i);
-                }
                 else
-                {
                     inputString = StringUtils.SwapIndex(inputString, 0, currentLength - 1);
-                }
             }
-
-            //for i in range(n):
-            //generate(n - 1)
-            //if n % 2 == 0:
-            //nums[i], nums[n - 1] = nums[n - 1], nums[i]
-            //else:
-            //nums[0], nums[n - 1] = nums[n - 1], nums[0]
-        }
+        //for i in range(n):
+        //generate(n - 1)
+        //if n % 2 == 0:
+        //nums[i], nums[n - 1] = nums[n - 1], nums[i]
+        //else:
+        //nums[0], nums[n - 1] = nums[n - 1], nums[0]
     }
 
     // Maybe this belongs on the codon class
@@ -76,7 +66,7 @@ public class SequenceHelpers
         var hitStop = false;
         while (i < input.Length && !hitStop)
         {
-            var temp = RNAToProteinConverter(input.Substring(i, 3));
+            string? temp = RNAToProteinConverter(input.Substring(i, 3));
             if (temp.Length == 1)
             {
                 convertedRNA.Append(temp);
@@ -93,7 +83,7 @@ public class SequenceHelpers
 
     public static string RNAToProteinConverter(string codon)
     {
-        if (RNAToProteinCode.TryGetValue(codon, out var value))
+        if (RNAToProteinCode.TryGetValue(codon, out string? value))
             return value;
 
         throw new InvalidDataException("Value does not exist");
@@ -206,27 +196,27 @@ public class SequenceHelpers
 
     public static readonly Dictionary<string, List<string>> ProteinCodesToRNA = new()
     {
-        {"W", ["UGG"] },
-        {"M", ["AUG"] },
-        {"F", ["UUU", "UUC"] },
-        {"Y", ["UAU", "UAC"] },
-        {"H", ["CAU", "CAC"] },
-        {"N", ["AAU", "AAC"] },
-        {"D", ["GAU", "GAC"] },
-        {"Q", ["CAA", "CAG"] },
-        {"K", ["AAA", "AAG"] },
-        {"E", ["GAA", "GAG"] },
-        {"C", ["UGU", "UGC"] },
-        {"I", ["AUU", "AUC", "AUA"] },
-        {"V", ["GUU", "GUC", "GUA", "GUG"] },
-        {"P", ["CCU", "CCC", "CCA", "CCG"] },
-        {"T", ["ACU", "ACC", "ACA", "ACG"] },
-        {"A", ["GCU", "GCC", "GCA", "GCG"] },
-        {"G", ["GGU", "GGC", "GGA", "GGG"] },
-        {"R", ["CGU", "CGC", "CGA", "AGA", "CGG", "AGG"] },
-        {"S", ["UCU", "UCC", "UCA", "UCG", "AGU", "AGC"] },
-        {"L", ["CUU", "CUC", "UUA", "CUA", "UUG", "CUG"] },
-        {"Stop", ["UAA", "UAG", "UGA"] }
+        { "W", ["UGG"] },
+        { "M", ["AUG"] },
+        { "F", ["UUU", "UUC"] },
+        { "Y", ["UAU", "UAC"] },
+        { "H", ["CAU", "CAC"] },
+        { "N", ["AAU", "AAC"] },
+        { "D", ["GAU", "GAC"] },
+        { "Q", ["CAA", "CAG"] },
+        { "K", ["AAA", "AAG"] },
+        { "E", ["GAA", "GAG"] },
+        { "C", ["UGU", "UGC"] },
+        { "I", ["AUU", "AUC", "AUA"] },
+        { "V", ["GUU", "GUC", "GUA", "GUG"] },
+        { "P", ["CCU", "CCC", "CCA", "CCG"] },
+        { "T", ["ACU", "ACC", "ACA", "ACG"] },
+        { "A", ["GCU", "GCC", "GCA", "GCG"] },
+        { "G", ["GGU", "GGC", "GGA", "GGG"] },
+        { "R", ["CGU", "CGC", "CGA", "AGA", "CGG", "AGG"] },
+        { "S", ["UCU", "UCC", "UCA", "UCG", "AGU", "AGC"] },
+        { "L", ["CUU", "CUC", "UUA", "CUA", "UUG", "CUG"] },
+        { "Stop", ["UAA", "UAG", "UGA"] }
     };
 
     private static readonly HashSet<char>

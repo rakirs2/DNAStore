@@ -8,7 +8,7 @@ internal class LongestCommonSubsequenceExecutor : BaseExecutor
     protected override void GetInputs()
     {
         Console.WriteLine("Please input path to file");
-        var location = Console.ReadLine();
+        string? location = Console.ReadLine();
         if (location != null) _fastas = FastaParser.Read(location);
     }
 

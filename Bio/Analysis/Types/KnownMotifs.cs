@@ -5,5 +5,5 @@
 /// </summary>
 public static class KnownMotifs
 {
-    public static Motif NGlycostatin => new("N{P}[ST]{P}", expectedLength: 4, name: "N-Glycosatin");
+    public static Motif NGlycostatin => new("N{P}[ST]{P}", 4, "N-Glycosatin");
 }

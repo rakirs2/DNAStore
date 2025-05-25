@@ -12,15 +12,15 @@ public class OverlapGraph : IOverlapGraph
 
         // can't match with itself
         for (var i = 0; i < Number - 1; i++)
-            for (var j = i + 1; j < Number; j++)
-            {
-                // there are two possible matches
-                if (fastas[i].RawSequence[..MatchLength].Equals(fastas[j].RawSequence[^MatchLength..]))
-                    _overlaps.Add(new Tuple<Fasta, Fasta>(fastas[j], fastas[i]));
+        for (int j = i + 1; j < Number; j++)
+        {
+            // there are two possible matches
+            if (fastas[i].RawSequence[..MatchLength].Equals(fastas[j].RawSequence[^MatchLength..]))
+                _overlaps.Add(new Tuple<Fasta, Fasta>(fastas[j], fastas[i]));
 
-                if (fastas[j].RawSequence[..MatchLength].Equals(fastas[i].RawSequence[^MatchLength..]))
-                    _overlaps.Add(new Tuple<Fasta, Fasta>(fastas[i], fastas[j]));
-            }
+            if (fastas[j].RawSequence[..MatchLength].Equals(fastas[i].RawSequence[^MatchLength..]))
+                _overlaps.Add(new Tuple<Fasta, Fasta>(fastas[i], fastas[j]));
+        }
     }
 
     public int Number { get; }

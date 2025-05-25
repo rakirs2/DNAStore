@@ -2,7 +2,7 @@
 
 namespace Bio.Sequence.Types;
 
-public class RNASequence : AnySequence, IRNA
+public class RNASequence : NucleotideSequence, IRNA
 {
     public RNASequence(string rawSequence) : base(rawSequence)
     {
