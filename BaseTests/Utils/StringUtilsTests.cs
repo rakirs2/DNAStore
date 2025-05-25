@@ -6,7 +6,7 @@ public class StringUtilsTests
     [TestMethod()]
     public void SwapIndexTest()
     {
-        string? output = StringUtils.SwapIndex("test", 0, 1);
+        var output = StringUtils.SwapIndex("test", 0, 1);
         Assert.IsTrue(output.Equals("etst"));
     }
 
@@ -14,20 +14,20 @@ public class StringUtilsTests
     [ExpectedException(typeof(InvalidDataException))]
     public void SwapIndexTestOutOfBoundsNegative()
     {
-        string? output = StringUtils.SwapIndex("test", -1, 1);
+        var output = StringUtils.SwapIndex("test", -1, 1);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(InvalidDataException))]
     public void SwapIndexTestOutOfBoundsGreaterThanLength()
     {
-        string? output = StringUtils.SwapIndex("test", 5, 1);
+        var output = StringUtils.SwapIndex("test", 5, 1);
     }
 
     [TestMethod()]
     [ExpectedException(typeof(InvalidDataException))]
     public void SwapIndexTestOutOfBoundsNullString()
     {
-        string? output = StringUtils.SwapIndex(null, 5, 1);
+        var output = StringUtils.SwapIndex(null, 5, 1);
     }
 }

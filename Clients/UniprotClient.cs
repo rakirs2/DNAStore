@@ -18,13 +18,13 @@ public class UniprotClient
     {
         if (id.Contains('_'))
         {
-            int index = id.IndexOf('_');
+            var index = id.IndexOf('_');
             id = id.Substring(0, index);
         }
 
         var response = await Client.GetAsync(ConvertToUniProtFastaEndpoint(id));
         response.EnsureSuccessStatusCode();
-        string? responseBody = await response.Content.ReadAsStringAsync();
+        var responseBody = await response.Content.ReadAsStringAsync();
         // ok, I should probably add a constructor here for one even if it's a pain.
         // we're not given a Json back in the body -- just a raw FASTA.
         return FastaParser.DeserializeRawString(responseBody);
@@ -40,13 +40,13 @@ public class UniprotClient
     {
         if (id.Contains('_'))
         {
-            int index = id.IndexOf('_');
+            var index = id.IndexOf('_');
             id = id.Substring(0, index);
         }
 
         var response = Client.GetAsync(ConvertToUniProtFastaEndpoint(id)).Result;
         response.EnsureSuccessStatusCode();
-        string? responseBody = response.Content.ReadAsStringAsync().Result;
+        var responseBody = response.Content.ReadAsStringAsync().Result;
         // ok, I should probably add a constructor here for one even if it's a pain.
         // we're not given a Json back in the body -- just a raw FASTA.
         return FastaParser.DeserializeRawString(responseBody);

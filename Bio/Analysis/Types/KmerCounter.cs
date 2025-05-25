@@ -22,7 +22,7 @@ public class KmerCounter : IKmerCounter
         // ok, we need to populate the right values here
         for (var i = 0; i < sequence.RawSequence.Length - KmerLength + 1; i++)
         {
-            string? currentWord = sequence.RawSequence.Substring(i, KmerLength);
+            var currentWord = sequence.RawSequence.Substring(i, KmerLength);
             if (Counts.ContainsKey(sequence.RawSequence.Substring(i, KmerLength)))
             {
                 Counts[currentWord] += 1;

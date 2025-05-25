@@ -7,7 +7,7 @@ public class Complement : BaseExecutor
     protected override void GetInputs()
     {
         Console.WriteLine("Please input the DNA in question");
-        string? inputString = Console.ReadLine();
+        var inputString = Console.ReadLine();
         if (inputString != null) _dnaSequence = new DNASequence(inputString);
     }
 

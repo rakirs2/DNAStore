@@ -1,6 +1,7 @@
 ﻿using Bio.Analysis.Types;
 using Bio.Sequence.Types;
 
+
 namespace BioTests.Sequence.Types;
 
 [TestClass]
@@ -20,7 +21,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("a");
         var b = new AnySequence("ab");
-        long result = AnySequence.HammingDistance(a, b);
+        var result = AnySequence.HammingDistance(a, b);
     }
 
     [TestMethod]
@@ -28,7 +29,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("ac");
         var b = new AnySequence("ab");
-        long result = AnySequence.HammingDistance(a, b);
+        var result = AnySequence.HammingDistance(a, b);
         Assert.AreEqual(1, result);
     }
 
@@ -37,7 +38,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
         var b = new AnySequence("CATCGTAATGACGGCCT");
-        long result = AnySequence.HammingDistance(a, b);
+        var result = AnySequence.HammingDistance(a, b);
         Assert.AreEqual(7, result);
     }
 
@@ -46,7 +47,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        long[] result = a.MotifLocations(b);
+        var result = a.MotifLocations(b);
         var expected = new long[] { 1 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
     }
@@ -56,7 +57,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        long[] result = a.MotifLocations(b, true);
+        var result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
     }
@@ -66,8 +67,32 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GATATATGCATATACTT");
         var b = new Motif("ATAT", 4);
-        long[] result = a.MotifLocations(b);
+        var result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+    }
+
+    [TestMethod()]
+    public void AreSequenceEqualTest()
+    {
+        var seq1 = new AnySequence("abcde");
+        var seq2 = new AnySequence("abcde");
+        Assert.IsTrue(AnySequence.AreSequenceEqual(seq1, seq2));
+    }
+
+    [TestMethod()]
+    public void AreSequenceEqualTestDifferentSequence()
+    {
+        var seq1 = new AnySequence("abcde");
+        var seq2 = new AnySequence("abcdf");
+        Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
+    }
+
+    [TestMethod()]
+    public void AreSequenceEqualTestDifferentLength()
+    {
+        var seq1 = new AnySequence("abcde");
+        var seq2 = new AnySequence("abcdeg");
+        Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
     }
 }

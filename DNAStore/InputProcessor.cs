@@ -66,6 +66,9 @@ internal static class InputProcessor
             case "GCSkew":
                 output = new MinSkewLocation();
                 break;
+            case "RestrictionSites":
+                output = new RestictionSites();
+                break;
             case "why":
                 output = new EasterEgg();
                 break;
@@ -74,7 +77,7 @@ internal static class InputProcessor
                 output = new SequenceAnalysis();
                 break;
 
-            // TODO: clean up the exit pathway
+                // TODO: clean up the exit pathway
         }
 
         return output;

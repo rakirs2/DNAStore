@@ -14,7 +14,7 @@ public class ProteinMotifFinder : BaseExecutor
         {
             Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
             // TODO, create a generic non try catch for this to prevent nulls/io errors
-            string? input = Console.ReadLine();
+            var input = Console.ReadLine();
 
             // TODO: I hate these-- get these as a rule
             if (input.Equals("complete", StringComparison.InvariantCultureIgnoreCase)) break;

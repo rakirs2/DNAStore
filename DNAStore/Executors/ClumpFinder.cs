@@ -2,9 +2,9 @@
 using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
+
 internal class ClumpFinder : BaseExecutor
 {
-
     protected override void GetInputs()
     {
         Console.WriteLine("Please enter the sequence");

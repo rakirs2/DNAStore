@@ -1,4 +1,5 @@
 ﻿using Base.DataStructures;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -25,7 +26,7 @@ public class AnySequence : ISequence
     /// <returns></returns>
     public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
     {
-        int modifier = isZeroIndex ? 0 : 1;
+        var modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
         for (var i = 0; i < Length - motif.ExpectedLength; i++)
             // TODO: make everything an int?
@@ -77,6 +78,12 @@ public class AnySequence : ISequence
         return result;
     }
 
+    // TODO: there still needs to be a determination made if this should or should not be case-sensitive
+    public static bool AreSequenceEqual(AnySequence a, AnySequence b)
+    {
+        return a.RawSequence.Equals(b.RawSequence);
+    }
+
     /// <summary>
     /// This is a pretty simple cleanup t
     /// </summary>
@@ -91,7 +98,7 @@ public class AnySequence : ISequence
     {
         RawSequence = rawSequence;
 
-        foreach (char basePair in rawSequence)
+        foreach (var basePair in rawSequence)
             // TODO: virtual member call in constructor is an issue? why?
             // Ah it's a design flaw on my part -- what's a better way to do this
             // abstract, 

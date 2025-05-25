@@ -19,7 +19,7 @@ public static class StringUtils
             throw new InvalidDataException("Something wrong w the inputs");
 
         // Swaps characters in a string.
-        char[] array = input.ToCharArray();
+        var array = input.ToCharArray();
         (array[indexA], array[indexB]) = (array[indexB], array[indexA]);
         return new string(array);
     }

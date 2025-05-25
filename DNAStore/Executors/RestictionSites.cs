@@ -1,8 +1,8 @@
-using Bio.Sequence.Types;
+﻿using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 
-public class MinSkewLocation : BaseExecutor
+internal class RestictionSites : BaseExecutor
 {
     protected override void GetInputs()
     {
@@ -12,14 +12,14 @@ public class MinSkewLocation : BaseExecutor
 
     protected override void CalculateResult()
     {
-        output = sequence.CalculateMinPrefixGCSkew();
+        output = sequence.RestrictionSites();
     }
 
     protected override void OutputResult()
     {
-        Console.WriteLine($"{string.Join(' ', output)}");
+        foreach (var tuple in output) Console.WriteLine($"{tuple.Item1} {tuple.Item2}");
     }
 
-    private NucleotideSequence? sequence;
-    private int[]? output;
+    private DNASequence? sequence;
+    private List<Tuple<int, int>>? output;
 }

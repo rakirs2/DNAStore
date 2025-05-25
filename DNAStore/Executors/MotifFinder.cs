@@ -10,13 +10,13 @@ public class MotifFinder : BaseExecutor
         Console.WriteLine("Please enter the first sequence");
         a = new AnySequence(Console.ReadLine());
         Console.WriteLine("Please enter the motif");
-        string? motifString = Console.ReadLine();
+        var motifString = Console.ReadLine();
         Console.WriteLine("Please enter the expected Length");
-        int expectedLength = int.Parse(Console.ReadLine());
+        var expectedLength = int.Parse(Console.ReadLine());
         b = new Motif(motifString, expectedLength);
 
         Console.WriteLine("Is Zero Index 'y'");
-        string? input = Console.ReadLine();
+        var input = Console.ReadLine();
         _isZeroIndex = input.Equals("y", StringComparison.OrdinalIgnoreCase);
     }
 
@@ -27,7 +27,7 @@ public class MotifFinder : BaseExecutor
 
     protected override void OutputResult()
     {
-        string? indexType = _isZeroIndex ? "Zero" : "One";
+        var indexType = _isZeroIndex ? "Zero" : "One";
         Console.WriteLine($"The {indexType}-Index Locations are: \n{string.Join(" ", result)}");
     }
 
