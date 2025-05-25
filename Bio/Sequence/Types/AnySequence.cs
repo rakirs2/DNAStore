@@ -1,4 +1,5 @@
 ﻿using Base.DataStructures;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -76,6 +77,9 @@ public class AnySequence : ISequence
 
         return result;
     }
+
+    // TODO: there still needs to be a determination made if this should or should not be case-sensitive
+    public static bool AreSequenceEqual(AnySequence a, AnySequence b) => a.RawSequence.Equals(b.RawSequence);
 
     /// <summary>
     /// This is a pretty simple cleanup t

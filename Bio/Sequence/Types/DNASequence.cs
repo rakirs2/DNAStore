@@ -28,7 +28,23 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     public List<Tuple<int, int>> RestrictionSites()
     {
-        throw new NotImplementedException();
+        // Simple, unoptimized algorithm, iterate through string
+        // if the reverse complement of the string 
+        // n^2 complexity. There might be some interesting palindromic logic but let's avoid that for now
+        var output = new List<Tuple<int, int>>();
+        for (int i = 0; i < RawSequence.Length; i++)
+        {
+            int j = 4;
+            while (i + j < RawSequence.Length && j < 12)
+            {
+                var subStringDNA = new DNASequence(RawSequence.Substring(i, j));
+                var reverseComplement = subStringDNA.ToReverseComplement();
+
+                j++;
+            }
+        }
+
+        return output;
     }
 
     private static readonly Dictionary<char, char> ComplementDict = new()

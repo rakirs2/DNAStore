@@ -1,6 +1,7 @@
 ﻿using Bio.Analysis.Types;
 using Bio.Sequence.Types;
 
+
 namespace BioTests.Sequence.Types;
 
 [TestClass]
@@ -69,5 +70,29 @@ public class AnySequenceTests
         long[] result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+    }
+
+    [TestMethod()]
+    public void AreSequenceEqualTest()
+    {
+        var seq1 = new AnySequence("abcde");
+        var seq2 = new AnySequence("abcde");
+        Assert.IsTrue(AnySequence.AreSequenceEqual(seq1, seq2));
+    }
+
+    [TestMethod()]
+    public void AreSequenceEqualTestDifferentSequence()
+    {
+        var seq1 = new AnySequence("abcde");
+        var seq2 = new AnySequence("abcdf");
+        Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
+    }
+
+    [TestMethod()]
+    public void AreSequenceEqualTestDifferentLength()
+    {
+        var seq1 = new AnySequence("abcde");
+        var seq2 = new AnySequence("abcdeg");
+        Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
     }
 }

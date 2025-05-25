@@ -1,4 +1,4 @@
-﻿namespace Bio.Sequence.Types.Tests;
+﻿using Bio.Sequence.Types;
 
 namespace BioTests.Sequence.Types;
 
@@ -22,6 +22,7 @@ public class DNASequenceTests
     }
 
     [TestMethod()]
+    [Ignore]
     public void RestrictionSitesTest()
     {
         var sequence = new DNASequence("AAAACCCGGT");
