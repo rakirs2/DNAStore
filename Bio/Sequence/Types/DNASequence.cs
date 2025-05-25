@@ -2,7 +2,7 @@
 
 namespace Bio.Sequence.Types;
 
-public class DNASequence(string rawSequence) : AnySequence(rawSequence)
+public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence)
 {
     // Should this be static, should this be a class conversion
     // For now, let's just let it be an explicit conversion, pay for the new class
