@@ -6,9 +6,6 @@ namespace BioTests.Analysis.Types;
 [TestClass]
 public class KmerCounterTests
 {
-    // TODO: what does eee get counted 2 or 3x -- > is there a DNA related
-    // example here?
-
     [TestMethod]
     public void KmerCounterTest()
     {
