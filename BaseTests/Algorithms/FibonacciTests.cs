@@ -18,7 +18,7 @@ public class FibonacciTests
     }
 
     [TestMethod]
-    public void GetNthBase()
+    public void GetNthKnown()
     {
         Assert.AreEqual(8, Fibonacci.GetNth(6));
     }
