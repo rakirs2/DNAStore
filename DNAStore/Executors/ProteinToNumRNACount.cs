@@ -3,7 +3,7 @@ using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 
-public class ProteinTomRNACount : BaseExecutor
+public class ProteinToNumRNACount : BaseExecutor
 {
     protected override void GetInputs()
     {

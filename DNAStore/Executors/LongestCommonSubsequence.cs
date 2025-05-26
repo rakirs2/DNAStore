@@ -3,7 +3,7 @@ using Bio.IO;
 
 namespace DNAStore.Executors;
 
-internal class LongestCommonSubsequenceExecutor : BaseExecutor
+internal class LongestCommonSubsequence : BaseExecutor
 {
     protected override void GetInputs()
     {
@@ -14,7 +14,7 @@ internal class LongestCommonSubsequenceExecutor : BaseExecutor
 
     protected override void CalculateResult()
     {
-        _result = new LongestCommonSubsequence(_fastas);
+        _result = new Bio.Analysis.Types.LongestCommonSubsequence(_fastas);
     }
 
     protected override void OutputResult()
@@ -23,5 +23,5 @@ internal class LongestCommonSubsequenceExecutor : BaseExecutor
     }
 
     private List<Fasta>? _fastas;
-    private LongestCommonSubsequence? _result;
+    private Bio.Analysis.Types.LongestCommonSubsequence? _result;
 }
