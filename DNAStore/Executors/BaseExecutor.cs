@@ -2,9 +2,9 @@
 
 namespace DNAStore.Executors;
 
-public abstract class BaseExecutor : IExecutor
+internal abstract class BaseExecutor : IExecutor
 {
-    public static IExecutor GetExecutorFromString(string input)
+    internal static IExecutor GetExecutorFromString(string input)
     {
         switch (input)
         {

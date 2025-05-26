@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class GCContent : BaseExecutor
+internal class GCContent : BaseExecutor
 {
     protected override void GetInputs()
     {

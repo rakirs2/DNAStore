@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class ProteinWeight : BaseExecutor
+internal class ProteinWeight : BaseExecutor
 {
     protected override void GetInputs()
     {

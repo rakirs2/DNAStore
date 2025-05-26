@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class TranscibeDna : IExecutor
+internal class TranscibeDna : IExecutor
 {
     public void Run()
     {

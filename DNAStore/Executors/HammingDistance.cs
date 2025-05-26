@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class HammingDistance : BaseExecutor
+internal class HammingDistance : BaseExecutor
 {
     protected override void GetInputs()
     {

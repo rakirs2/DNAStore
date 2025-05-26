@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class SequenceAnalysis : BaseExecutor
+internal class SequenceAnalysis : BaseExecutor
 {
     protected override void GetInputs()
     {

@@ -1,6 +1,6 @@
 ﻿namespace DNAStore.Executors;
 
-public class Permutations : BaseExecutor
+internal class Permutations : BaseExecutor
 {
     protected override void GetInputs()
     {

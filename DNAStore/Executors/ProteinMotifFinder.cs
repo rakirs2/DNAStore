@@ -1,10 +1,11 @@
 ﻿using Bio.Analysis.Types;
 using Bio.Sequence.Types;
+
 using Clients;
 
 namespace DNAStore.Executors;
 
-public class ProteinMotifFinder : BaseExecutor
+internal class ProteinMotifFinder : BaseExecutor
 {
     protected override void GetInputs()
     {

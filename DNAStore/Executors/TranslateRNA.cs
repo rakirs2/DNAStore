@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class TranslateRNA : BaseExecutor
+internal class TranslateRNA : BaseExecutor
 {
     protected override void GetInputs()
     {

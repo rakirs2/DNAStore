@@ -1,5 +1,4 @@
-﻿using Bio.Analysis.Types;
-using Bio.IO;
+﻿using Bio.IO;
 
 namespace DNAStore.Executors;
 
