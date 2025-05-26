@@ -1,4 +1,5 @@
 ﻿namespace Bio.Analysis.Interfaces;
+
 public interface IHammingMatch : IMatch
 {
     /// <summary>

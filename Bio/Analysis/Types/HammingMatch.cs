@@ -2,6 +2,7 @@
 using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
+
 public class HammingMatch : IHammingMatch
 {
     public HammingMatch(string matchString, int tolerance = 0)

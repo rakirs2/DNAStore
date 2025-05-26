@@ -2,6 +2,7 @@
 using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
+
 public class SequenceMatchLocations : ISequenceMatchLocator
 {
     public SequenceMatchLocations(AnySequence sequence, IMatch matchLogic)
@@ -16,15 +17,10 @@ public class SequenceMatchLocations : ISequenceMatchLocator
     public List<int> GetLocations()
     {
         var output = new List<int>();
-        for (int i = 0; i < _sequence.RawSequence.Length - _matchLogic.ExpectedLength; i++)
-        {
+        for (var i = 0; i < _sequence.RawSequence.Length - _matchLogic.ExpectedLength; i++)
             if (_matchLogic.IsMatchStrict(_sequence.RawSequence.Substring(i, _matchLogic.ExpectedLength)))
-            {
                 output.Add(i);
-            }
-        }
 
         return output;
     }
-
 }

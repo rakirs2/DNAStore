@@ -1,5 +1,4 @@
 ﻿using Base.DataStructures;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;

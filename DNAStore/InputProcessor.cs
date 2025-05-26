@@ -20,7 +20,10 @@ internal class InputProcessor
         void Run();
     }
 
-    public static IExecutor GetExecutor(string request) => BaseExecutor.GetExecutorFromString(request);
+    public static IExecutor GetExecutor(string request)
+    {
+        return BaseExecutor.GetExecutorFromString(request);
+    }
 
     private abstract class BaseExecutor : IExecutor
     {
@@ -48,9 +51,10 @@ internal class InputProcessor
                 "RestrictionSites" => new RestrictionSites(),
                 "HammingSequenceMatch" => new HammingSequenceMatch(),
                 "why" => new EasterEgg(),
-                _ => new SequenceAnalysis(),// probably safe to do it this way
+                _ => new SequenceAnalysis() // probably safe to do it this way
             };
         }
+
         public void Run()
         {
             GetInputs();
@@ -118,6 +122,7 @@ internal class InputProcessor
         private List<int>? output;
         private SequenceMatchLocations? _matcher;
     }
+
     private class SequenceAnalysis : BaseExecutor
     {
         protected override void GetInputs()
@@ -243,6 +248,7 @@ internal class InputProcessor
         private IList<Fasta>? fastas;
         private Fasta? largestGCContent;
     }
+
     private class HammingDistance : BaseExecutor
     {
         protected override void GetInputs()
@@ -291,6 +297,7 @@ internal class InputProcessor
         private List<Fasta>? _fastas;
         private Bio.Analysis.Types.LongestCommonSubsequence? _result;
     }
+
     private class MinGCSkewLocation : BaseExecutor
     {
         protected override void GetInputs()
@@ -364,7 +371,8 @@ internal class InputProcessor
 
         protected override void OutputResult()
         {
-            foreach (var tuple in _overlapGraph.GetOverlaps()) Console.WriteLine(tuple.Item1.Name + " " + tuple.Item2.Name);
+            foreach (var tuple in _overlapGraph.GetOverlaps())
+                Console.WriteLine(tuple.Item1.Name + " " + tuple.Item2.Name);
         }
 
         private IList<Fasta>? _fastas;
@@ -414,7 +422,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            values = Bio.Math.Probability.GetPermutations(Enumerable.Range(1, total), total);
+            values = Probability.GetPermutations(Enumerable.Range(1, total), total);
         }
 
         protected override void OutputResult()
