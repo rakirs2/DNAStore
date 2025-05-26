@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Text;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
-
 using Clients;
 
 namespace DNAStore;
@@ -372,10 +370,7 @@ internal class InputProcessor
 
         protected override void OutputResult()
         {
-            foreach (var possibleValue in result)
-            {
-                Console.WriteLine(possibleValue);
-            }
+            foreach (var possibleValue in result) Console.WriteLine(possibleValue);
         }
 
         private List<string>? result;

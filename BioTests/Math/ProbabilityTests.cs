@@ -50,6 +50,8 @@ public class ProbabilityTests
     public void GenerateAllKmersTest_Length2()
     {
         var output = Probability.GenerateAllKmers("acgt", 2);
-        Assert.IsTrue(output.SequenceEqual(["aa", "ac", "ag", "at", "ca", "cc", "cg", "ct", "ga", "gc", "gg", "gt", "ta", "tc", "tg", "tt"]));
+        Assert.IsTrue(output.SequenceEqual([
+            "aa", "ac", "ag", "at", "ca", "cc", "cg", "ct", "ga", "gc", "gg", "gt", "ta", "tc", "tg", "tt"
+        ]));
     }
 }

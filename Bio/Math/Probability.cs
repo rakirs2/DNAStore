@@ -55,25 +55,25 @@ public static class Probability
 
     /*
      *nucleotides = ['A', 'T', 'C', 'G']
-       
+
        def generate_all_sequences(n):
-       
+
            if n < 1:
                return []
-       
+
            if n == 1:
                return nucleotides
-       
+
            sub_sequences = generate_all_sequences(n - 1)
-           
+
            sequences = []
-       
+
            for sequence in sub_sequences:
-       
+
                for nucleotide in nucleotides:
-       
+
                         sequences.append(nucleotide + sequence)
-           
+
            return sequences
      */
 
@@ -84,19 +84,13 @@ public static class Probability
 
     private static List<string>? KmersDriver(List<string> currentOutput, int currentLength, string kmers)
     {
-        if (currentLength < 1)
-        {
-            return null;
-        }
+        if (currentLength < 1) return null;
 
         if (currentLength == 1)
         {
             var initial = new List<string>() { };
             // initialize
-            foreach (var character in kmers)
-            {
-                initial.Add(character.ToString());
-            }
+            foreach (var character in kmers) initial.Add(character.ToString());
 
             return initial;
         }
@@ -106,12 +100,9 @@ public static class Probability
 
         var newOutput = new List<string>();
         foreach (var bp in kmers)
-        {
             foreach (var currentSequence in output)
-            {
                 newOutput.Add(bp + currentSequence);
-            }
-        }
+
         return newOutput;
     }
 
