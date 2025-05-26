@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-
 using Bio.Analysis.Interfaces;
 
 namespace Bio.Analysis.Types;

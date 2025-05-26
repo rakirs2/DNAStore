@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Text;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
-
 using Clients;
 
 namespace DNAStore;
@@ -50,6 +48,7 @@ internal class InputProcessor
                 "MinGCSkewLocation" => new MinGCSkewLocation(),
                 "RestrictionSites" => new RestrictionSites(),
                 "HammingSequenceMatch" => new HammingSequenceMatch(),
+                "GenerateLexicographicKmers" => new GenerateLexicographicKmers(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -354,6 +353,30 @@ internal class InputProcessor
         private long[]? result;
     }
 
+    private class GenerateLexicographicKmers : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the first sequence");
+            possibleValues = Console.ReadLine();
+            Console.WriteLine("Please enter the size k");
+            k = int.Parse(Console.ReadLine());
+        }
+
+        protected override void CalculateResult()
+        {
+            result = Probability.GenerateAllKmers(possibleValues, k);
+        }
+
+        protected override void OutputResult()
+        {
+            foreach (var possibleValue in result) Console.WriteLine(possibleValue);
+        }
+
+        private List<string>? result;
+        private string? possibleValues;
+        private int k;
+    }
 
     private class OverlapGraphExecutor : BaseExecutor
     {
