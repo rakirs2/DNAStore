@@ -1,5 +1,4 @@
 ﻿using Base.DataStructures;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -73,6 +72,18 @@ public class AnySequence : ISequence
         var result = 0;
         for (var i = 0; i < a.Length; i++)
             if (a.RawSequence[i] != b.RawSequence[i])
+                result++;
+
+        return result;
+    }
+
+    public static int HammingDistance(string a, string b)
+    {
+        if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
+
+        var result = 0;
+        for (var i = 0; i < a.Length; i++)
+            if (a[i] != b[i])
                 result++;
 
         return result;
