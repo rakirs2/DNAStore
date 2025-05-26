@@ -2,9 +2,9 @@
 using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
-public class MatchLocations : IMatchSuperStructure
+public class SequenceMatchLocations : ISequenceMatchLocator
 {
-    public MatchLocations(AnySequence sequence, IMatch matchLogic)
+    public SequenceMatchLocations(AnySequence sequence, IMatch matchLogic)
     {
         _sequence = sequence;
         _matchLogic = matchLogic;

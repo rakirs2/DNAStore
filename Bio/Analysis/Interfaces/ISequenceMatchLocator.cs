@@ -1,5 +1,5 @@
 ﻿namespace Bio.Analysis.Interfaces;
-public interface IMatchSuperStructure
+public interface ISequenceMatchLocator
 {
     /// <summary>
     /// Returns the match locations of the given object
