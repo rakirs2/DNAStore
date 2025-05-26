@@ -3,7 +3,7 @@ using Bio.IO;
 
 namespace DNAStore.Executors;
 
-public class ProfileMatrixExecutor : BaseExecutor
+internal class ProfileMatrixExecutor : BaseExecutor
 {
     protected override void GetInputs()
     {

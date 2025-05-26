@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class EasterEgg : BaseExecutor
+internal class EasterEgg : BaseExecutor
 {
     /// <summary>
     /// TODO: for a different day, let's make a new executor here to get rid of these ugly overrides

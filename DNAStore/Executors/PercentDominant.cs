@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class PercentDominant : BaseExecutor
+internal class PercentDominant : BaseExecutor
 {
     protected override void GetInputs()
     {

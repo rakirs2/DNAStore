@@ -3,7 +3,7 @@ using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 
-public class MotifFinder : BaseExecutor
+internal class MotifFinder : BaseExecutor
 {
     protected override void GetInputs()
     {

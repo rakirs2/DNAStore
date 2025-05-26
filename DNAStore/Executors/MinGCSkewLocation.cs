@@ -2,7 +2,7 @@ using Bio.Sequence.Types;
 
 namespace DNAStore.Executors;
 
-public class MinSkewLocation : BaseExecutor
+internal class MinGCSkewLocation : BaseExecutor
 {
     protected override void GetInputs()
     {

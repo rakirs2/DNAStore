@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class Hamming : BaseExecutor
+internal class HammingDistance : BaseExecutor
 {
     protected override void GetInputs()
     {
@@ -19,7 +19,7 @@ public class Hamming : BaseExecutor
 
     protected override void OutputResult()
     {
-        Console.WriteLine($"The Hamming Distance between both sequences is: {result}");
+        Console.WriteLine($"The HammingDistance Distance between both sequences is: {result}");
     }
 
     private AnySequence? a;
