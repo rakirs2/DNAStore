@@ -2,12 +2,12 @@
 
 namespace Bio.Analysis.Interfaces;
 
-internal interface IMotif
+internal interface IMotif : IMatch
 {
     string Name { get; }
 
     /// <summary>
-    /// The original string added at contruction
+    /// The original string added at construction
     /// </summary>
     string InputMotif { get; }
 
@@ -17,21 +17,7 @@ internal interface IMotif
     int ExpectedLength { get; }
 
     /// <summary>
-    /// Mostly for debugging purposes. This is the actual regex operater that the input string gets converted to
+    /// Mostly for debugging purposes. This is the actual regex operator that the input string gets converted to
     /// </summary>
     Regex UnderlyingRegex { get; }
-
-    /// <summary>
-    /// Returns if the string matches the underlying motif
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    public bool IsMatch(string input);
-
-    /// <summary>
-    /// Returns if the string matches the underlying motif and the expected Length
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    public bool IsMatchStrict(string input);
 }

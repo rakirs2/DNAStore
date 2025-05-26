@@ -1,8 +1,11 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+
 using Bio.Analysis.Interfaces;
 
 namespace Bio.Analysis.Types;
+
+// TODO: this needs some refactoring
 
 /// <summary>
 /// Motifs are usually written as something like:

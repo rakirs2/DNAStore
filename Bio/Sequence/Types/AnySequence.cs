@@ -78,6 +78,18 @@ public class AnySequence : ISequence
         return result;
     }
 
+    public static int HammingDistance(string a, string b)
+    {
+        if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
+
+        var result = 0;
+        for (var i = 0; i < a.Length; i++)
+            if (a[i] != b[i])
+                result++;
+
+        return result;
+    }
+
     // TODO: there still needs to be a determination made if this should or should not be case-sensitive
     public static bool AreSequenceEqual(AnySequence a, AnySequence b)
     {
