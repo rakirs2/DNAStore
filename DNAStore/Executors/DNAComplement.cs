@@ -2,7 +2,7 @@
 
 namespace DNAStore.Executors;
 
-public class Complement : BaseExecutor
+public class DNAComplement : BaseExecutor
 {
     protected override void GetInputs()
     {
