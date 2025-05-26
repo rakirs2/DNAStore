@@ -3,10 +3,10 @@ using Bio.Sequence.Types;
 
 namespace BioTests.Analysis.Types;
 
-[TestClass()]
+[TestClass]
 public class SequenceMatchLocationsTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void MatchLocationsTest()
     {
         var seq = new AnySequence(
@@ -17,7 +17,7 @@ public class SequenceMatchLocationsTests
         Assert.IsTrue(output.SequenceEqual(new List<int> { 0 }));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void HammingMatch()
     {
         var seq = new AnySequence(

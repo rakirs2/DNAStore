@@ -26,51 +26,30 @@ internal class InputProcessor
     {
         public static IExecutor GetExecutorFromString(string input)
         {
-            switch (input)
+            return input switch
             {
-                case "SequenceAnalysis":
-                    return new SequenceAnalysis();
-                case "DNAToRNA":
-                    return new TranscibeDna();
-                case "DNAComplement":
-                    return new DNAComplement();
-                case "GCContent":
-                    return new GCContent();
-                case "HammingDistance":
-                    return new HammingDistance();
-                case "TranslateRNA":
-                    return new TranslateRNA();
-                case "PercentDominant":
-                    return new PercentDominant();
-                case "Permutations":
-                    return new Permutations();
-                case "MotifFinder":
-                    return new MotifFinder();
-                case "ProfileMatrix":
-                    return new ProfileMatrixExecutor();
-                case "ProteinWeight":
-                    return new ProteinWeight();
-                case "OverlapGraph":
-                    return new OverlapGraphExecutor();
-                case "LongestCommonSubsequence":
-                    return new LongestCommonSubsequence();
-                case "ProteinMotif":
-                    return new ProteinMotifFinder();
-                case "ProteinToNumRNA":
-                    return new ProteinToNumRNACount();
-                case "ClumpFinder":
-                    return new ClumpFinder();
-                case "MinGCSkewLocation":
-                    return new MinGCSkewLocation();
-                case "RestrictionSites":
-                    return new RestictionSites();
-                case "why":
-                    return new EasterEgg();
-                default:
-                    // probably safe to do it this way
-                    return new SequenceAnalysis();
-            }
-
+                "SequenceAnalysis" => new SequenceAnalysis(),
+                "DNAToRNA" => new TranscribeDna(),
+                "DNAComplement" => new DNAComplement(),
+                "GCContent" => new GCContent(),
+                "HammingDistance" => new HammingDistance(),
+                "TranslateRNA" => new TranslateRNA(),
+                "PercentDominant" => new PercentDominant(),
+                "Permutations" => new Permutations(),
+                "MotifFinder" => new MotifFinder(),
+                "ProfileMatrix" => new ProfileMatrixExecutor(),
+                "ProteinWeight" => new ProteinWeight(),
+                "OverlapGraph" => new OverlapGraphExecutor(),
+                "LongestCommonSubsequence" => new LongestCommonSubsequence(),
+                "ProteinMotif" => new ProteinMotifFinder(),
+                "ProteinToNumRNA" => new ProteinToNumRNACount(),
+                "ClumpFinder" => new ClumpFinder(),
+                "MinGCSkewLocation" => new MinGCSkewLocation(),
+                "RestrictionSites" => new RestrictionSites(),
+                "HammingSequenceMatch" => new HammingSequenceMatch(),
+                "why" => new EasterEgg(),
+                _ => new SequenceAnalysis(),// probably safe to do it this way
+            };
         }
         public void Run()
         {
@@ -106,6 +85,39 @@ internal class InputProcessor
         private Stopwatch? _stopwatch;
     }
 
+
+    private class HammingSequenceMatch : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the match sequence");
+            var inputString = Console.ReadLine();
+
+            Console.WriteLine("Please enter the tolerance");
+
+            var tolerance = int.Parse(Console.ReadLine());
+            var matchLogic = new HammingMatch(inputString, tolerance);
+
+            Console.WriteLine("Please enter the sequence to be analyzed");
+            var sequence = new AnySequence(Console.ReadLine());
+
+            _matcher = new SequenceMatchLocations(sequence, matchLogic);
+        }
+
+        protected override void CalculateResult()
+        {
+            output = _matcher.GetLocations();
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{string.Join(' ', output)}");
+        }
+
+
+        private List<int>? output;
+        private SequenceMatchLocations? _matcher;
+    }
     private class SequenceAnalysis : BaseExecutor
     {
         protected override void GetInputs()
@@ -531,7 +543,7 @@ internal class InputProcessor
     }
 
 
-    private class RestictionSites : BaseExecutor
+    private class RestrictionSites : BaseExecutor
     {
         protected override void GetInputs()
         {
@@ -554,7 +566,7 @@ internal class InputProcessor
     }
 
 
-    private class TranscibeDna : IExecutor
+    private class TranscribeDna : IExecutor
     {
         public void Run()
         {
