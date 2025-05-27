@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Text;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
+
 using Clients;
 
 namespace DNAStore;
@@ -49,6 +51,7 @@ internal class InputProcessor
                 "RestrictionSites" => new RestrictionSites(),
                 "HammingSequenceMatch" => new HammingSequenceMatch(),
                 "GenerateLexicographicKmers" => new GenerateLexicographicKmers(),
+                "HammingFuzzyMatch" => new HammingFuzzyMatch(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -122,6 +125,39 @@ internal class InputProcessor
         private SequenceMatchLocations? _matcher;
     }
 
+    private class HammingFuzzyMatch : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the match sequence, usually ACGT");
+            _input = Console.ReadLine();
+
+            Console.WriteLine("Please enter the length of the Kmer");
+            var kmerLength = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please enter the tolerance");
+            var tolerance = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please enter the sequence to be analyzed");
+            var sequence = new AnySequence(Console.ReadLine());
+
+            _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
+        }
+
+        protected override void CalculateResult()
+        {
+            output = _matcher.GetKmers(_input);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{string.Join(' ', output)}");
+        }
+
+        private string? _input;
+        private HashSet<string>? output;
+        private MismatchKmerCounter? _matcher;
+    }
     private class SequenceAnalysis : BaseExecutor
     {
         protected override void GetInputs()

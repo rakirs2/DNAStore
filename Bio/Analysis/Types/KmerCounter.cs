@@ -42,9 +42,4 @@ public class KmerCounter : IKmerCounter
     }
 
     private static readonly Dictionary<string, int> Counts = new();
-
-    public List<string> GetMostFrequent()
-    {
-        throw new NotImplementedException();
-    }
 }
