@@ -19,7 +19,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
 
     private AnySequence _sequence;
 
-    public List<string> GetKmers(string matchString)
+    public HashSet<string> GetKmers(string matchString)
     {
         var listPossible = Probability.GenerateAllKmers(matchString, KmerLength);
         foreach (var kmer in listPossible)
@@ -28,7 +28,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
         }
 
         var currentHighest = 0;
-        for (int i = 0; i < _sequence.RawSequence.Length - KmerLength; i++)
+        for (int i = 0; i <= _sequence.RawSequence.Length - KmerLength; i++)
         {
             foreach (var key in MismatchDictionaryTracker.Keys)
             {
@@ -38,6 +38,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
                     if (MismatchDictionaryTracker[key] > currentHighest)
                     {
                         HighestFrequencyKmers = new HashSet<string>() { key };
+                        currentHighest = MismatchDictionaryTracker[key];
                     }
                     else if (MismatchDictionaryTracker[key] == currentHighest)
                     {
@@ -47,8 +48,8 @@ public class MismatchKmerCounter : IMismatchKmerCounter
             }
         }
 
-        return new List<string>(HighestFrequencyKmers);
+        return HighestFrequencyKmers;
     }
 
-    private Dictionary<string, int> MismatchDictionaryTracker;
+    private Dictionary<string, int> MismatchDictionaryTracker = new();
 }
