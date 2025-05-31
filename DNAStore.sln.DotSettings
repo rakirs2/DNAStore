@@ -2,3 +2,15 @@
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=fastas/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Kmer/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=kmers/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b6a35034_002D5967_002D416d_002Dabc4_002Ddf759cf49e40/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="PercentDominantTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242::net9.0::BioTests.Math.ProbabilityTests.PercentDominantTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242::net9.0::BioTests.Analysis.Types.ProfileMatrixTests.ProfileMatrixTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242::net9.0::BioTests.Analysis.Types.ProfileMatrixTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242::net9.0::Bio.Analysis.Types.Tests.LongestCommonSubsequenceTests.LongestCommonSubsequenceTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242::net9.0::BioTests.IO.FastaParserTests.DeserializeRawStringTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242::net9.0::BioTests.Math.ProbabilityTests.GenerateAllKmersTest_Length2&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:Boolean x:Key="/Default/GrammarAndSpelling/GrammarChecking/Exceptions/=it_0020It_0027s/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=fasta/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
