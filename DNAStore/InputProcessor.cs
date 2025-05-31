@@ -52,6 +52,7 @@ internal class InputProcessor
                 "HammingSequenceMatch" => new HammingSequenceMatch(),
                 "GenerateLexicographicKmers" => new GenerateLexicographicKmers(),
                 "HammingFuzzyMatch" => new HammingFuzzyMatch(),
+                "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -414,6 +415,32 @@ internal class InputProcessor
         private int k;
     }
 
+    private class GenerateLexicographicKmersAndSubKmers : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the first sequence");
+            possibleValues = Console.ReadLine();
+            Console.WriteLine("Please enter the size k");
+            k = int.Parse(Console.ReadLine());
+        }
+
+        protected override void CalculateResult()
+        {
+            result = Probability.GenerateAllKmersAndSubKmers(possibleValues, k);
+        }
+
+        protected override void OutputResult()
+        {
+            foreach (var possibleValue in result) Console.WriteLine(possibleValue);
+
+            File.WriteAllText("./output.txt", string.Join('\n', result));
+        }
+
+        private List<string>? result;
+        private string? possibleValues;
+        private int k;
+    }
     private class OverlapGraphExecutor : BaseExecutor
     {
         protected override void GetInputs()

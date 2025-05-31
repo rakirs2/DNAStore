@@ -106,6 +106,30 @@ public static class Probability
         return newOutput;
     }
 
+    public static List<string> GenerateAllKmersAndSubKmers(string inputString, int maxKmerLength)
+    {
+        var output = new List<string>();
+
+        GenerateAllkmersAndSubKmers(inputString, "", maxKmerLength, ref output);
+
+        return output;
+    }
+
+    private static void GenerateAllkmersAndSubKmers(string inputString, string current, int kmerLength, ref List<string> output)
+    {
+        if (kmerLength == 0)
+        {
+            return;
+        }
+
+        foreach (var character in inputString)
+        {
+            var newCurrent = current + character;
+            output.Add(newCurrent);
+            GenerateAllkmersAndSubKmers(inputString, newCurrent, kmerLength - 1, ref output);
+        }
+    }
+
     public static double ExpectedDominantOffspring(int AAAA, int AAAa, int AAaa, int AaAa, int Aaaa, int aaaa,
         int children)
     {
