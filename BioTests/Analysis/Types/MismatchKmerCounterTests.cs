@@ -1,6 +1,4 @@
-﻿
-
-using Bio.Analysis.Types;
+﻿using Bio.Analysis.Types;
 using Bio.Sequence.Types;
 
 namespace BioTests.Analysis.Types;
@@ -31,7 +29,7 @@ public class MismatchKmerCounterTests
     {
         var sequence = new AnySequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
         var counter = new MismatchKmerCounter(4, sequence, 1);
-        var output = counter.GetKmers("ACGT", checkComplement: true);
+        var output = counter.GetKmers("ACGT", true);
         Assert.IsTrue(counter.HighestFrequencyKmers.SetEquals(new HashSet<string>() { "ATGT", "ACAT" }));
     }
 }

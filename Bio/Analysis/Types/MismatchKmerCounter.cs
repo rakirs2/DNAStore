@@ -3,6 +3,7 @@ using Bio.Math;
 using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
+
 public class MismatchKmerCounter : IMismatchKmerCounter
 {
     public MismatchKmerCounter(int kmerLength, AnySequence sequence, int tolerance)
@@ -21,22 +22,17 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     public HashSet<string> GetKmers(string matchString, bool checkComplement = false)
     {
         var listPossible = Probability.GenerateAllKmers(matchString, KmerLength);
-        foreach (var kmer in listPossible)
-        {
-            MismatchDictionaryTracker[kmer] = 0;
-        }
+        foreach (var kmer in listPossible) MismatchDictionaryTracker[kmer] = 0;
 
         var currentHighest = 0;
-        for (int i = 0; i <= _sequence.RawSequence.Length - KmerLength; i++)
-        {
+        for (var i = 0; i <= _sequence.RawSequence.Length - KmerLength; i++)
             foreach (var key in MismatchDictionaryTracker.Keys)
             {
-                currentHighest = AnalyzeKmer(i, key, currentHighest, checkComplement: false);
+                currentHighest = AnalyzeKmer(i, key, currentHighest, false);
                 // TODO: maybe a bad pattern, can be iterated
                 if (checkComplement)
-                    currentHighest = AnalyzeKmer(i, key, currentHighest, checkComplement: true);
+                    currentHighest = AnalyzeKmer(i, key, currentHighest, true);
             }
-        }
 
         return HighestFrequencyKmers;
     }
@@ -44,10 +40,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     private int AnalyzeKmer(int i, string key, int currentHighest, bool checkComplement)
     {
         var stringToCheck = key;
-        if (checkComplement)
-        {
-            stringToCheck = new DNASequence(key).ToReverseComplement().RawSequence;
-        }
+        if (checkComplement) stringToCheck = new DNASequence(key).ToReverseComplement().RawSequence;
 
         if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
         {

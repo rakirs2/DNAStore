@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Text;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
-
 using Clients;
 
 namespace DNAStore;
@@ -193,6 +191,7 @@ internal class InputProcessor
         private string? _input;
         private MismatchKmerCounter? _matcher;
     }
+
     private class SequenceAnalysis : BaseExecutor
     {
         protected override void GetInputs()
@@ -475,6 +474,7 @@ internal class InputProcessor
         private string? possibleValues;
         private int k;
     }
+
     private class OverlapGraphExecutor : BaseExecutor
     {
         protected override void GetInputs()

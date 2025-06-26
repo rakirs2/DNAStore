@@ -1,5 +1,4 @@
-﻿
-using Bio.Math;
+﻿using Bio.Math;
 
 namespace BioTests.Math;
 
@@ -70,7 +69,8 @@ public class ProbabilityTests
     {
         var output = Probability.GenerateAllKmersAndSubKmers("acgt", 2);
         Assert.IsTrue(output.SequenceEqual([
-            "a", "aa", "ac", "ag", "at", "c", "ca", "cc", "cg", "ct", "g", "ga", "gc", "gg", "gt", "t", "ta", "tc", "tg", "tt"
+            "a", "aa", "ac", "ag", "at", "c", "ca", "cc", "cg", "ct", "g", "ga", "gc", "gg", "gt", "t", "ta", "tc",
+            "tg", "tt"
         ]));
     }
 }

@@ -1,4 +1,5 @@
 ﻿namespace Bio.Analysis.Interfaces;
+
 internal interface IMismatchKmerCounter : IKmerCounter
 {
     int Tolerance { get; }
