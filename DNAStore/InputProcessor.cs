@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Text;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
-
 using Clients;
 
 namespace DNAStore;
@@ -54,6 +52,7 @@ internal class InputProcessor
                 "HammingFuzzyMatch" => new HammingFuzzyMatch(),
                 "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
                 "GenerateFrequencyArray" => new GenerateFrequencyArray(),
+                "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -160,6 +159,40 @@ internal class InputProcessor
         private HashSet<string>? output;
         private MismatchKmerCounter? _matcher;
     }
+
+    private class HammingFuzzyMatchWithComplement : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the match sequence, usually ACGT");
+            _input = Console.ReadLine();
+
+            Console.WriteLine("Please enter the length of the Kmer");
+            var kmerLength = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please enter the tolerance");
+            var tolerance = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please enter the sequence to be analyzed");
+            var sequence = new AnySequence(Console.ReadLine());
+
+            _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
+        }
+
+        protected override void CalculateResult()
+        {
+            _matcher.GetKmers(_input);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{string.Join(' ', _matcher.HighestFrequencyKmers)}");
+        }
+
+        private string? _input;
+        private MismatchKmerCounter? _matcher;
+    }
+
     private class SequenceAnalysis : BaseExecutor
     {
         protected override void GetInputs()
@@ -472,6 +505,7 @@ internal class InputProcessor
         private AnySequence? a;
         private List<int>? result;
     }
+  
     private class OverlapGraphExecutor : BaseExecutor
     {
         protected override void GetInputs()
