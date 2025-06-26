@@ -51,6 +51,7 @@ internal class InputProcessor
                 "GenerateLexicographicKmers" => new GenerateLexicographicKmers(),
                 "HammingFuzzyMatch" => new HammingFuzzyMatch(),
                 "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
+                "GenerateFrequencyArray" => new GenerateFrequencyArray(),
                 "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
@@ -475,6 +476,36 @@ internal class InputProcessor
         private int k;
     }
 
+    private class GenerateFrequencyArray : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the first sequence");
+            a = new AnySequence(Console.ReadLine());
+            Console.WriteLine("Please enter the valid values");
+            _values = Console.ReadLine();
+            Console.WriteLine("Please enter the expected Length");
+            _length = int.Parse(Console.ReadLine());
+            _frequencyArray = new FrequencyArray(a);
+        }
+
+        protected override void CalculateResult()
+        {
+            result = _frequencyArray.GetFrequencyArrayInLexicographicOrder(_values, _length);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{string.Join(" ", result)}");
+        }
+
+        private FrequencyArray? _frequencyArray;
+        private string? _values;
+        private int _length;
+        private AnySequence? a;
+        private List<int>? result;
+    }
+  
     private class OverlapGraphExecutor : BaseExecutor
     {
         protected override void GetInputs()
