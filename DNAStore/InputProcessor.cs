@@ -177,7 +177,7 @@ internal class InputProcessor
             Console.WriteLine("Please enter the sequence to be analyzed");
             var sequence = new AnySequence(Console.ReadLine());
 
-            _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance, true);
+            _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
         }
 
         protected override void CalculateResult()

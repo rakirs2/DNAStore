@@ -3,5 +3,5 @@ internal interface IMismatchKmerCounter : IKmerCounter
 {
     int Tolerance { get; }
 
-    HashSet<string> GetKmers(string matchString);
+    HashSet<string> GetKmers(string matchString, bool checkComplement);
 }

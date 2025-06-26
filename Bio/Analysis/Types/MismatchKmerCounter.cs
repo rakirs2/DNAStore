@@ -5,12 +5,11 @@ using Bio.Sequence.Types;
 namespace Bio.Analysis.Types;
 public class MismatchKmerCounter : IMismatchKmerCounter
 {
-    public MismatchKmerCounter(int kmerLength, AnySequence sequence, int tolerance, bool checkComplement = false)
+    public MismatchKmerCounter(int kmerLength, AnySequence sequence, int tolerance)
     {
         KmerLength = kmerLength;
         Tolerance = tolerance;
         _sequence = sequence;
-        _checkComplement = checkComplement;
     }
 
     public HashSet<string> HighestFrequencyKmers { get; private set; }
@@ -19,7 +18,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
 
     private AnySequence _sequence;
 
-    public HashSet<string> GetKmers(string matchString)
+    public HashSet<string> GetKmers(string matchString, bool checkComplement = false)
     {
         var listPossible = Probability.GenerateAllKmers(matchString, KmerLength);
         foreach (var kmer in listPossible)
@@ -47,7 +46,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
                     }
                 }
 
-                if (_checkComplement)
+                if (checkComplement)
                 {
                     var dnaSequence = new DNASequence(key);
                     var complement = dnaSequence.ToReverseComplement();
@@ -74,5 +73,4 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     }
 
     private Dictionary<string, int> MismatchDictionaryTracker = new();
-    private bool _checkComplement;
 }
