@@ -5,13 +5,13 @@ using Bio.Sequence.Types;
 namespace Bio.Analysis.Types;
 public class MismatchKmerCounter : IMismatchKmerCounter
 {
-    public MismatchKmerCounter(int kmerLength, AnySequence sequence, int tolerance)
+    public MismatchKmerCounter(int kmerLength, AnySequence sequence, int tolerance, bool checkComplement = false)
     {
         KmerLength = kmerLength;
         Tolerance = tolerance;
         _sequence = sequence;
+        _checkComplement = checkComplement;
     }
-
 
     public HashSet<string> HighestFrequencyKmers { get; private set; }
     public int KmerLength { get; }
@@ -34,6 +34,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
             {
                 if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), key) <= Tolerance)
                 {
+                    // TODO: this really can get refactored
                     MismatchDictionaryTracker[key] += 1;
                     if (MismatchDictionaryTracker[key] > currentHighest)
                     {
@@ -45,6 +46,27 @@ public class MismatchKmerCounter : IMismatchKmerCounter
                         HighestFrequencyKmers.Add(key);
                     }
                 }
+
+                if (_checkComplement)
+                {
+                    var dnaSequence = new DNASequence(key);
+                    var complement = dnaSequence.ToReverseComplement();
+
+                    if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), complement.RawSequence) <= Tolerance)
+                    {
+                        MismatchDictionaryTracker[key] += 1;
+                        if (MismatchDictionaryTracker[key] > currentHighest)
+                        {
+                            HighestFrequencyKmers = new HashSet<string>() { key };
+                            currentHighest = MismatchDictionaryTracker[key];
+                        }
+                        else if (MismatchDictionaryTracker[key] == currentHighest)
+                        {
+                            HighestFrequencyKmers.Add(key);
+                        }
+                    }
+
+                }
             }
         }
 
@@ -52,4 +74,5 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     }
 
     private Dictionary<string, int> MismatchDictionaryTracker = new();
+    private bool _checkComplement;
 }

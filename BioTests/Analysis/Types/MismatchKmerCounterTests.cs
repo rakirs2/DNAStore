@@ -25,4 +25,13 @@ public class MismatchKmerCounterTests
         var output = counter.GetKmers("ACGT");
         Assert.IsTrue(output.SetEquals(new HashSet<string>() { "GG" }));
     }
+
+    [TestMethod()]
+    public void MismatchKmerCounterComplement()
+    {
+        var sequence = new AnySequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
+        var counter = new MismatchKmerCounter(4, sequence, 1, checkComplement: true);
+        var output = counter.GetKmers("ACGT");
+        Assert.IsTrue(counter.HighestFrequencyKmers.SetEquals(new HashSet<string>() { "ATGT", "ACAT" }));
+    }
 }
