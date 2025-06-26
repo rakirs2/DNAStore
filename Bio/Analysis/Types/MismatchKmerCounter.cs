@@ -31,45 +31,40 @@ public class MismatchKmerCounter : IMismatchKmerCounter
         {
             foreach (var key in MismatchDictionaryTracker.Keys)
             {
-                if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), key) <= Tolerance)
-                {
-                    // TODO: this really can get refactored
-                    MismatchDictionaryTracker[key] += 1;
-                    if (MismatchDictionaryTracker[key] > currentHighest)
-                    {
-                        HighestFrequencyKmers = new HashSet<string>() { key };
-                        currentHighest = MismatchDictionaryTracker[key];
-                    }
-                    else if (MismatchDictionaryTracker[key] == currentHighest)
-                    {
-                        HighestFrequencyKmers.Add(key);
-                    }
-                }
-
+                currentHighest = AnalyzeKmer(i, key, currentHighest, checkComplement: false);
+                // TODO: maybe a bad pattern, can be iterated
                 if (checkComplement)
-                {
-                    var dnaSequence = new DNASequence(key);
-                    var complement = dnaSequence.ToReverseComplement();
-
-                    if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), complement.RawSequence) <= Tolerance)
-                    {
-                        MismatchDictionaryTracker[key] += 1;
-                        if (MismatchDictionaryTracker[key] > currentHighest)
-                        {
-                            HighestFrequencyKmers = new HashSet<string>() { key };
-                            currentHighest = MismatchDictionaryTracker[key];
-                        }
-                        else if (MismatchDictionaryTracker[key] == currentHighest)
-                        {
-                            HighestFrequencyKmers.Add(key);
-                        }
-                    }
-
-                }
+                    currentHighest = AnalyzeKmer(i, key, currentHighest, checkComplement: true);
             }
         }
 
         return HighestFrequencyKmers;
+    }
+
+    private int AnalyzeKmer(int i, string key, int currentHighest, bool checkComplement)
+    {
+        var stringToCheck = key;
+        if (checkComplement)
+        {
+            stringToCheck = new DNASequence(key).ToReverseComplement().RawSequence;
+        }
+
+        if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
+        {
+            // TODO: this really can get refactored
+            MismatchDictionaryTracker[key] += 1;
+            if (MismatchDictionaryTracker[key] > currentHighest)
+            {
+                HighestFrequencyKmers = new HashSet<string>() { key };
+                currentHighest = MismatchDictionaryTracker[key];
+            }
+            else if (MismatchDictionaryTracker[key] == currentHighest)
+            {
+                HighestFrequencyKmers.Add(key);
+            }
+        }
+
+        return currentHighest;
     }
 
     private Dictionary<string, int> MismatchDictionaryTracker = new();
