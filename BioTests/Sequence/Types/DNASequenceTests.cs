@@ -44,11 +44,27 @@ public class DNASequenceTests
     [TestMethod()]
     public void GetCandidateProteinSequencesTest()
     {
-        var testDNASequence = new DNASequence("AGCCATG");
+        var testDNASequence = new DNASequence("ATGTAG");
         var result = testDNASequence.GetCandidateProteinSequences();
         var expected = new List<ProteinSequence>()
         {
             new("M")
+        };
+
+        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+    }
+
+    [TestMethod()]
+    public void GetCandidateProteinSequencesWithReverseComplementTest()
+    {
+        var testDNASequence = new DNASequence("AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG");
+        var result = testDNASequence.GetCandidateProteinSequences();
+        var expected = new List<ProteinSequence>()
+        {
+            new("M"),
+            new("MLLGSFRLIPKETLIQVAGSSPCNLS"),
+            new("MGMTPRLGLESLLE"),
+            new("MTPRLGLESLLE")
         };
 
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));

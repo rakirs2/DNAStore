@@ -48,6 +48,11 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output;
     }
 
+    /// <summary>
+    /// Simple algorithm using Open Reading frames. We go through each possible starting location.
+    /// An Open Reading Frame, by definition, must contain a start or Methionine and a stop codon.
+    /// </summary>
+    /// <returns></returns>
     public List<ProteinSequence> GetCandidateProteinSequences()
     {
         // TODO: should implement a 3 letter ORF class
@@ -56,23 +61,33 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         var output = new List<ProteinSequence>();
         // var complement = ToReverseComplement();
 
-        for (int i = 0; i <= RawSequence.Length - 3; i++)
-        {
-            if (SequenceHelpers.DNAToProteinCode[RawSequence.Substring(i, 3)].Equals("M"))
-            {
-                var k = i + 3;
-                var current = "M";
-                while (current != "Stop" && k < RawSequence.Length)
-                {
-                    current += SequenceHelpers.DNAToProteinCode[RawSequence.Substring(k, 3)];
-                    k += 3;
-                }
-
-                output.Add(new ProteinSequence(current));
-            }
-        }
+        SingleReadToProteinSequences(this, ref output);
+        SingleReadToProteinSequences(ToReverseComplement(), ref output);
 
         return output;
+    }
+
+    public static void SingleReadToProteinSequences(DNASequence dnaSequence, ref List<ProteinSequence> output)
+    {
+        for (int i = 0; i <= dnaSequence.RawSequence.Length - 3; i++)
+        {
+            if (SequenceHelpers.DNAToProteinCode[dnaSequence.RawSequence.Substring(i, 3)].Equals("M"))
+            {
+                var k = i + 3;
+                var seqToAdd = "M";
+                while (k <= dnaSequence.RawSequence.Length - 3)
+                {
+                    var current = SequenceHelpers.DNAToProteinCode[dnaSequence.RawSequence.Substring(k, 3)];
+                    if (current.Equals("Stop"))
+                    {
+                        output.Add(new ProteinSequence(seqToAdd));
+                    }
+
+                    seqToAdd += current;
+                    k += 3;
+                }
+            }
+        }
     }
 
     private static readonly Dictionary<char, char> ComplementDict = new()
