@@ -2,7 +2,7 @@
 
 namespace Bio.Analysis.Interfaces;
 
-internal interface IMotif : IMatch
+public interface IMotif : IMatch
 {
     string Name { get; }
 
@@ -10,11 +10,6 @@ internal interface IMotif : IMatch
     /// The original string added at construction
     /// </summary>
     string InputMotif { get; }
-
-    /// <summary>
-    /// Used for a strict motif match.
-    /// </summary>
-    int ExpectedLength { get; }
 
     /// <summary>
     /// Mostly for debugging purposes. This is the actual regex operator that the input string gets converted to
