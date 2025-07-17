@@ -56,15 +56,29 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     public List<ProteinSequence> GetCandidateProteinSequences()
     {
         // TODO: should implement a 3 letter ORF class
-        // TODO: this should be using the build in iterator
+        // TODO: this should be using the built in iterator
         // TODO: reverse as well
-        var output = new List<ProteinSequence>();
+        var values = new List<ProteinSequence>();
         // var complement = ToReverseComplement();
 
-        SingleReadToProteinSequences(this, ref output);
-        SingleReadToProteinSequences(ToReverseComplement(), ref output);
+        SingleReadToProteinSequences(this, ref values);
+        SingleReadToProteinSequences(ToReverseComplement(), ref values);
+        // TODO: This is terrible, terrible perf wise and bad form.
+        // But, it might be the right answer for now
 
-        return output;
+        HashSet<string> filter = new();
+        List<ProteinSequence> output = new();
+        foreach (var sequence in values)
+        {
+            if (!filter.Contains(sequence.RawSequence))
+            {
+                output.Add(sequence);
+                filter.Add(sequence.RawSequence);
+            }
+        }
+
+
+        return output.ToList();
     }
 
     public static void SingleReadToProteinSequences(DNASequence dnaSequence, ref List<ProteinSequence> output)
@@ -81,6 +95,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
                     if (current.Equals("Stop"))
                     {
                         output.Add(new ProteinSequence(seqToAdd));
+                        break;
                     }
 
                     seqToAdd += current;

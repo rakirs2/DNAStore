@@ -62,11 +62,12 @@ public class DNASequenceTests
         var expected = new List<ProteinSequence>()
         {
             new("M"),
-            new("MLLGSFRLIPKETLIQVAGSSPCNLS"),
             new("MGMTPRLGLESLLE"),
-            new("MTPRLGLESLLE")
+            new("MTPRLGLESLLE"),
+            new("MLLGSFRLIPKETLIQVAGSSPCNLS")
         };
 
+        // TODO: this is not the right way to test this
         Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
     }
 }
