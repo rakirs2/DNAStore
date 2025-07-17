@@ -1,4 +1,5 @@
 ﻿using Base.DataStructures;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -16,6 +17,21 @@ public class AnySequence : ISequence
     public long Length { get; set; }
     public string RawSequence { get; set; }
     public string? Name { get; }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is AnySequence other)
+        {
+            return RawSequence == other.RawSequence;
+        }
+
+        return false;
+    }
+
+    public override string ToString()
+    {
+        return RawSequence;
+    }
 
     /// <summary>
     /// 
@@ -120,5 +136,10 @@ public class AnySequence : ISequence
                 throw new Exception();
 
         Length = RawSequence.Length;
+    }
+
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException();
     }
 }

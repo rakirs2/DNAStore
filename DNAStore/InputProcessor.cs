@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Text;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
+
 using Clients;
 
 namespace DNAStore;
@@ -53,6 +55,7 @@ internal class InputProcessor
                 "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
                 "GenerateFrequencyArray" => new GenerateFrequencyArray(),
                 "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
+                "CandidateProteinsFromDNA" => new CandidateProteinsFromDNA(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -160,6 +163,30 @@ internal class InputProcessor
         private MismatchKmerCounter? _matcher;
     }
 
+    private class CandidateProteinsFromDNA : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the DNAstring");
+            _sequence = new DNASequence(Console.ReadLine());
+        }
+
+        protected override void CalculateResult()
+        {
+            _proteins = _sequence.GetCandidateProteinSequences();
+        }
+
+        protected override void OutputResult()
+        {
+            foreach (var protein in _proteins)
+            {
+                Console.WriteLine(protein.RawSequence);
+            }
+        }
+
+        private DNASequence? _sequence;
+        private List<ProteinSequence>? _proteins;
+    }
     private class HammingFuzzyMatchWithComplement : BaseExecutor
     {
         protected override void GetInputs()
@@ -505,7 +532,7 @@ internal class InputProcessor
         private AnySequence? a;
         private List<int>? result;
     }
-  
+
     private class OverlapGraphExecutor : BaseExecutor
     {
         protected override void GetInputs()
