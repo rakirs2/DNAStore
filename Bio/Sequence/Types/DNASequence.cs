@@ -1,4 +1,5 @@
 ﻿using System.Text;
+
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
@@ -41,6 +42,33 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
                 var reverseComplement = subStringDNA.ToReverseComplement();
                 if (AreSequenceEqual(subStringDNA, reverseComplement)) output.Add(new Tuple<int, int>(i + 1, j));
                 j++;
+            }
+        }
+
+        return output;
+    }
+
+    public List<ProteinSequence> GetCandidateProteinSequences()
+    {
+        // TODO: should implement a 3 letter ORF class
+        // TODO: this should be using the build in iterator
+        // TODO: reverse as well
+        var output = new List<ProteinSequence>();
+        // var complement = ToReverseComplement();
+
+        for (int i = 0; i <= RawSequence.Length - 3; i++)
+        {
+            if (SequenceHelpers.DNAToProteinCode[RawSequence.Substring(i, 3)].Equals("M"))
+            {
+                var k = i + 3;
+                var current = "M";
+                while (current != "Stop" && k < RawSequence.Length)
+                {
+                    current += SequenceHelpers.DNAToProteinCode[RawSequence.Substring(k, 3)];
+                    k += 3;
+                }
+
+                output.Add(new ProteinSequence(current));
             }
         }
 

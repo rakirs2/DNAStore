@@ -40,4 +40,17 @@ public class DNASequenceTests
 
         Assert.IsTrue(actual.SequenceEqual(expected));
     }
+
+    [TestMethod()]
+    public void GetCandidateProteinSequencesTest()
+    {
+        var testDNASequence = new DNASequence("AGCCATG");
+        var result = testDNASequence.GetCandidateProteinSequences();
+        var expected = new List<ProteinSequence>()
+        {
+            new("M")
+        };
+
+        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+    }
 }
