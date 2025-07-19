@@ -23,4 +23,11 @@ public interface ISequence
     /// Returns all locations of a given motif 
     /// </summary>
     long[] MotifLocations(Motif motif, bool isZeroIndex = false);
+
+    /// <summary>
+    /// Returns a new object with the introns of a given type removed
+    /// </summary>
+    /// <param name="introns"></param>
+    /// <returns></returns>
+    ISequence RemoveIntrons(List<ISequence> introns);
 }

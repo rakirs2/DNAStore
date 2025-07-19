@@ -1,4 +1,5 @@
 ﻿using Base.DataStructures;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -35,7 +36,6 @@ public class AnySequence : ISequence
 
         return output.ToArray();
     }
-
 
     // TODO: this should be cleaned up
     public AnySequence(string rawSequence)
@@ -120,5 +120,16 @@ public class AnySequence : ISequence
                 throw new Exception();
 
         Length = RawSequence.Length;
+    }
+
+    public ISequence RemoveIntrons(List<ISequence> introns)
+    {
+        // Construct the Trie
+        foreach (var intron in introns)
+        {
+            
+        }
+
+        return null;
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Text;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
+
 using Clients;
 
 namespace DNAStore;
@@ -53,6 +55,7 @@ internal class InputProcessor
                 "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
                 "GenerateFrequencyArray" => new GenerateFrequencyArray(),
                 "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
+                "SplicedDNAToProtein" => new HammingFuzzyMatchWithComplement(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -505,7 +508,7 @@ internal class InputProcessor
         private AnySequence? a;
         private List<int>? result;
     }
-  
+
     private class OverlapGraphExecutor : BaseExecutor
     {
         protected override void GetInputs()
