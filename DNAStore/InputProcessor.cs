@@ -55,7 +55,7 @@ internal class InputProcessor
                 "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
                 "GenerateFrequencyArray" => new GenerateFrequencyArray(),
                 "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
-                "SplicedDNAToProtein" => new HammingFuzzyMatchWithComplement(),
+                "SplicedDNAToProtein" => new SplicedDNAToProtein(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -161,6 +161,46 @@ internal class InputProcessor
         private string? _input;
         private HashSet<string>? output;
         private MismatchKmerCounter? _matcher;
+    }
+
+    // TODO: this should be a single fasta read
+    private class SplicedDNAToProtein : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the full sequence");
+            _input = new DNASequence(Console.ReadLine());
+
+            var input = "z";
+
+            while (true)
+            {
+                input = Console.ReadLine();
+                if (input.Equals("done"))
+                {
+                    break;
+                }
+                _introns.Add(new DNASequence(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            // TODO: this is terrible, figure out how I want this later
+            var splicedSequence = _input.RemoveIntrons(_introns);
+            var dnaSequence = new DNASequence(splicedSequence.ToString());
+            var rnaSequence = dnaSequence.TranscribeToRNA();
+            _output = rnaSequence.GetExpectedProteinString();
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{_output}");
+        }
+
+        private DNASequence? _input;
+        private string? _output;
+        private List<AnySequence>? _introns = new();
     }
 
     private class HammingFuzzyMatchWithComplement : BaseExecutor

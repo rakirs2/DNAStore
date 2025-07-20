@@ -1,4 +1,6 @@
-﻿using Base.DataStructures;
+﻿using System.Text;
+
+using Base.DataStructures;
 
 using Bio.Analysis.Types;
 using Bio.IO;
@@ -35,6 +37,11 @@ public class AnySequence : ISequence
                 output.Add(i + modifier);
 
         return output.ToArray();
+    }
+
+    public string ToString()
+    {
+        return RawSequence;
     }
 
     // TODO: this should be cleaned up
@@ -122,14 +129,45 @@ public class AnySequence : ISequence
         Length = RawSequence.Length;
     }
 
-    public ISequence RemoveIntrons(List<ISequence> introns)
+    // TODO: interface this
+    public AnySequence RemoveIntrons(List<AnySequence> introns)
     {
+        if (introns == null)
+        {
+            throw new ArgumentNullException();
+        }
         // Construct the Trie
+        var trie = new Trie();
         foreach (var intron in introns)
         {
-            
+            trie.AddWord(intron.RawSequence);
         }
 
-        return null;
+        var outputString = new StringBuilder();
+
+        for (int i = 0; i < RawSequence.Length; i++)
+        {
+            bool isValid = true;
+            for (int j = 0; j < trie.MaxStringLength; j++)
+            {
+                if (i + j > RawSequence.Length - 1)
+                {
+                    break;
+                }
+
+                if (trie.Search(RawSequence.Substring(i, j + 1)))
+                {
+                    i += j;
+                    isValid = false;
+                }
+            }
+
+            if (isValid)
+            {
+                outputString.Append(RawSequence[i]);
+            }
+        }
+
+        return new AnySequence(outputString.ToString());
     }
 }

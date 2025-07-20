@@ -1,4 +1,5 @@
 ﻿using Bio.Analysis.Types;
+using Bio.Sequence.Interfaces;
 using Bio.Sequence.Types;
 
 
@@ -94,5 +95,30 @@ public class AnySequenceTests
         var seq1 = new AnySequence("abcde");
         var seq2 = new AnySequence("abcdeg");
         Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
+    }
+
+    [TestMethod()]
+    public void RemoveIntronsTestBeginning()
+    {
+        var seq1 = new AnySequence("abcde");
+        var output = seq1.RemoveIntrons(new List<AnySequence>() { new AnySequence("a") });
+        Assert.AreEqual("bcde", output.RawSequence);
+    }
+
+    [TestMethod()]
+    public void RemoveIntronsTestEnd()
+    {
+        var seq1 = new AnySequence("abcde");
+        var output = seq1.RemoveIntrons(new List<AnySequence>() { new AnySequence("e") });
+        Assert.AreEqual("abcd", output.RawSequence);
+    }
+
+    [TestMethod()]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void RemoveIntronsTestNull()
+    {
+        var seq1 = new AnySequence("abcde");
+        var output = seq1.RemoveIntrons(null);
+        Assert.AreEqual("abcde", output.RawSequence);
     }
 }
