@@ -2,19 +2,19 @@
 
 namespace BaseTests.Utils;
 
-[TestClass()]
+[TestClass]
 public class CaseInsensitiveCharComparerTests
 {
     private readonly CaseInsensitiveCharComparer _comparer = new();
 
-    [TestMethod()]
+    [TestMethod]
     public void BaseEqualityTests()
     {
         Assert.IsTrue(_comparer.Equals('a', 'A'), "Cases should be equivalent");
         Assert.IsTrue(_comparer.Equals('a', 'a'), "Cases should be equivalent");
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void HashCode()
     {
         var lowerCase = 'a';

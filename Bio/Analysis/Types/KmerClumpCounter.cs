@@ -5,6 +5,11 @@ namespace Bio.Analysis.Types;
 
 public class KmerClumpCounter : IKmerClumpCounter
 {
+    private readonly Queue<string> _orderQueue = new();
+
+
+    private readonly Dictionary<string, int> _slidingCounter = new();
+
     // TODO: there's probably some work to generalize this later
     // TODO: Design phil -- do I really care if there's calculations going on construction?
     // TODO: Get a separate calculate step for all of these data structures
@@ -38,9 +43,4 @@ public class KmerClumpCounter : IKmerClumpCounter
     public int MinCount { get; }
 
     public HashSet<string> ValidKmers { get; } = new();
-
-
-    private Dictionary<string, int> _slidingCounter = new();
-
-    private Queue<string> _orderQueue = new();
 }

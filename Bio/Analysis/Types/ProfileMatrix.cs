@@ -9,6 +9,9 @@ namespace Bio.Analysis.Types;
 // For now, it's fine if it's accessible, but if the only use case is for a fasta read, it should probably be subclassed and interfaced
 public class ProfileMatrix : IProfileMatrix
 {
+    private readonly HashSet<char> listOfChars = new();
+    private readonly List<BasePairDictionary> listOfFrequencies;
+
     public ProfileMatrix(IList<Fasta> inputs)
     {
         // TODO null, 0 length
@@ -41,6 +44,16 @@ public class ProfileMatrix : IProfileMatrix
         return new AnySequence(stringBuilder.ToString());
     }
 
+    public string GetCleanOutput()
+    {
+        var sequence = GetProfileSequence();
+        var stringBuilder = new StringBuilder();
+        stringBuilder.Append(sequence.RawSequence);
+        stringBuilder.Append("\n");
+
+        return stringBuilder.ToString();
+    }
+
     public string FrequencyMatrix()
     {
         var stringBuilder = new StringBuilder();
@@ -56,17 +69,4 @@ public class ProfileMatrix : IProfileMatrix
 
         return stringBuilder.ToString();
     }
-
-    public string GetCleanOutput()
-    {
-        var sequence = GetProfileSequence();
-        var stringBuilder = new StringBuilder();
-        stringBuilder.Append(sequence.RawSequence);
-        stringBuilder.Append("\n");
-
-        return stringBuilder.ToString();
-    }
-
-    private readonly HashSet<char> listOfChars = new();
-    private readonly List<BasePairDictionary> listOfFrequencies;
 }

@@ -3,7 +3,7 @@
 public interface ISequenceMatchLocator
 {
     /// <summary>
-    /// Returns the match locations of the given object
+    ///     Returns the match locations of the given object
     /// </summary>
     /// <returns></returns>
     List<int> GetLocations();

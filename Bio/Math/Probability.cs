@@ -7,11 +7,12 @@ namespace Bio.Math;
 public static class Probability
 {
     /// <summary>
-    /// Given a population of x dominant, y heterozygous and z recessive individuals,
-    /// What is the percentage an offspring will have the dominant phenotype?
+    ///     Given a population of x dominant, y heterozygous and z recessive individuals,
+    ///     What is the percentage an offspring will have the dominant phenotype?
     /// </summary>
     /// <remarks>
-    /// This is a raw Mendelian Genetics calculator</remarks>
+    ///     This is a raw Mendelian Genetics calculator
+    /// </remarks>
     /// <returns></returns>
     public static double PercentDominant(uint k, uint m, uint n)
     {
@@ -42,11 +43,11 @@ public static class Probability
     }
 
     /// <summary>
-    /// Terrible perf doesn't handle duplicates as separate. But can work for now
+    ///     Terrible perf doesn't handle duplicates as separate. But can work for now
     /// </summary>
     public static IEnumerable<IEnumerable<T>> GetPermutations<T>(IEnumerable<T> list, int length)
     {
-        if (length == 1) return list.Select(t => new T[] { t });
+        if (length == 1) return list.Select(t => new[] { t });
 
         return GetPermutations(list, length - 1)
             .SelectMany(t => list.Where(e => !t.Contains(e)),
@@ -79,7 +80,7 @@ public static class Probability
 
     public static List<string> GenerateAllKmers(string inputString, int kmerLength)
     {
-        return KmersDriver(new List<string>() { }, kmerLength, inputString);
+        return KmersDriver(new List<string>(), kmerLength, inputString);
     }
 
     private static List<string>? KmersDriver(List<string> currentOutput, int currentLength, string kmers)
@@ -88,7 +89,7 @@ public static class Probability
 
         if (currentLength == 1)
         {
-            var initial = new List<string>() { };
+            var initial = new List<string>();
             // initialize
             foreach (var character in kmers) initial.Add(character.ToString());
 

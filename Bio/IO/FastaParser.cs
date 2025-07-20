@@ -39,8 +39,8 @@ public static class FastaParser
     }
 
     /// <summary>
-    /// This is a helper method to simply deserialze input from where the Fasta file can't actually be read
-    /// Completely. For now, this assumes only 1 Fasta per request.
+    ///     This is a helper method to simply deserialze input from where the Fasta file can't actually be read
+    ///     Completely. For now, this assumes only 1 Fasta per request.
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>

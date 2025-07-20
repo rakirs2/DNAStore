@@ -5,6 +5,8 @@ namespace Bio.Analysis.Types;
 
 public class OverlapGraph : IOverlapGraph
 {
+    private readonly List<Tuple<Fasta, Fasta>> _overlaps = new();
+
     public OverlapGraph(IList<Fasta> fastas, int matchLength)
     {
         Number = fastas.Count;
@@ -30,6 +32,4 @@ public class OverlapGraph : IOverlapGraph
     {
         return _overlaps;
     }
-
-    private readonly List<Tuple<Fasta, Fasta>> _overlaps = new();
 }

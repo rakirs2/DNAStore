@@ -10,6 +10,10 @@ public class Codon : ICodon
         RawRna = seq.ToUpper();
     }
 
+    public string RawRna { get; }
+
+    public string ExpectedProtein => SequenceHelpers.RNAToProteinConverter(RawRna);
+
     private void VerifyContent(string seq)
     {
         if (seq.Length != 3) throw new InvalidDataException("Codons can only have 3 characters");
@@ -19,8 +23,4 @@ public class Codon : ICodon
     {
         return input.ToUpper();
     }
-
-    public string RawRna { get; }
-
-    public string ExpectedProtein => SequenceHelpers.RNAToProteinConverter(RawRna);
 }

@@ -6,6 +6,8 @@ namespace Bio.Analysis.Types;
 
 public class LongestCommonSubsequence : ILongestCommonSubsequence
 {
+    private readonly AnySequence _longest;
+
     public LongestCommonSubsequence(List<Fasta> fastas)
     {
         var first = fastas[0];
@@ -34,6 +36,4 @@ public class LongestCommonSubsequence : ILongestCommonSubsequence
     {
         return _longest;
     }
-
-    private readonly AnySequence _longest;
 }

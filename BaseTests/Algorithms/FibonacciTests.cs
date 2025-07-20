@@ -1,16 +1,16 @@
 ﻿namespace Base.Algorithms.Tests;
 
-[TestClass()]
+[TestClass]
 public class FibonacciTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void GetNthBaseCases()
     {
         Assert.AreEqual(1, Fibonacci.GetNth(1));
         Assert.AreEqual(1, Fibonacci.GetNth(2));
     }
 
-    [TestMethod()]
+    [TestMethod]
     [ExpectedException(typeof(InvalidDataException))]
     public void GetNthTestOutOfRange()
     {

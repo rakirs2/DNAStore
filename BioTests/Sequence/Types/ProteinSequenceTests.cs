@@ -3,17 +3,17 @@ using Bio.Sequence.Types;
 
 namespace BioTests.Sequence.Types;
 
-[TestClass()]
+[TestClass]
 public class ProteinSequenceTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void ProteinSequenceTest()
     {
         var protein = new ProteinSequence("SKADYEK");
         Assert.IsTrue(Helpers.DoublesEqualWithinRange(821.392, protein.MolecularWeight));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void NumberOfPossibleRNATest()
     {
         var protein = new ProteinSequence("MA");

@@ -32,19 +32,6 @@ public class Fasta : IFasta
         ContentType = isPossibleRNA ? ContentType.RNA : ContentType.DNA;
     }
 
-    public override string ToString()
-    {
-        return Name;
-    }
-
-    // TODO: override Hashcode and equals
-    public string Name { get; }
-
-    public string RawSequence { get; }
-    public BasePairDictionary BasePairDictionary { get; }
-
-    public long Length => RawSequence.Length;
-
     // TODO: consider moving this to a nucleotide class. Or maybe a generic 
     public double GCContent
     {
@@ -60,6 +47,14 @@ public class Fasta : IFasta
 
     public ContentType ContentType { get; }
 
+    // TODO: override Hashcode and equals
+    public string Name { get; }
+
+    public string RawSequence { get; }
+    public BasePairDictionary BasePairDictionary { get; }
+
+    public long Length => RawSequence.Length;
+
     public string ToJson()
     {
         return JsonSerializer.Serialize(this);
@@ -70,6 +65,11 @@ public class Fasta : IFasta
         throw new NotImplementedException();
     }
 
+    public override string ToString()
+    {
+        return Name;
+    }
+
 
     public void Save(string filePath)
     {
@@ -77,7 +77,7 @@ public class Fasta : IFasta
     }
 
     /// <summary>
-    /// Potentially dubious method. Let's see wheere it goes.
+    ///     Potentially dubious method. Let's see wheere it goes.
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
