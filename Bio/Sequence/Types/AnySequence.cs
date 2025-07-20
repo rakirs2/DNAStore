@@ -55,11 +55,6 @@ public class AnySequence : ISequence
         return output.ToArray();
     }
 
-    public string ToString()
-    {
-        return RawSequence;
-    }
-
     // TODO: this should be cleaned up
     public AnySequence(string rawSequence)
     {
