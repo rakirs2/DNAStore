@@ -56,6 +56,7 @@ internal class InputProcessor
                 "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
                 "GenerateFrequencyArray" => new GenerateFrequencyArray(),
                 "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
+                "CandidateProteinsFromDNA" => new CandidateProteinsFromDNA(),
                 "SplicedDNAToProtein" => new SplicedDNAToProtein(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
@@ -162,6 +163,30 @@ internal class InputProcessor
         private string? _input;
         private HashSet<string>? output;
         private MismatchKmerCounter? _matcher;
+    }
+    private class CandidateProteinsFromDNA : BaseExecutor
+    {
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the DNAstring");
+            _sequence = new DNASequence(Console.ReadLine());
+        }
+
+        protected override void CalculateResult()
+        {
+            _proteins = _sequence.GetCandidateProteinSequences();
+        }
+
+        protected override void OutputResult()
+        {
+            foreach (var protein in _proteins)
+            {
+                Console.WriteLine(protein.RawSequence);
+            }
+        }
+
+        private DNASequence? _sequence;
+        private List<ProteinSequence>? _proteins;
     }
 
     // TODO: this should be a single fasta read
