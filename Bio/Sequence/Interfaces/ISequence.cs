@@ -1,4 +1,5 @@
 ﻿using Bio.Analysis.Types;
+using Bio.Sequence.Types;
 
 namespace Bio.Sequence.Interfaces;
 
@@ -23,4 +24,11 @@ public interface ISequence
     ///     Returns all locations of a given motif
     /// </summary>
     long[] MotifLocations(Motif motif, bool isZeroIndex = false);
+
+    /// <summary>
+    /// Assumes that the instance is the main sequence, removes all possible introns within the sequence
+    /// </summary>
+    /// <param name="introns"></param>
+    /// <returns></returns>
+    public AnySequence RemoveIntrons(List<AnySequence> introns);
 }
