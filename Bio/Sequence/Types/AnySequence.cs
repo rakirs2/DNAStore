@@ -27,8 +27,8 @@ public class AnySequence : ISequence
         Name = fasta.Name;
         ConstructionLogic(fasta.RawSequence);
     }
+    public long Length => RawSequence.Length;
 
-    public long Length { get; set; }
     public string RawSequence { get; set; }
     public string? Name { get; }
 
@@ -50,7 +50,7 @@ public class AnySequence : ISequence
 
     public override bool Equals(object obj)
     {
-        if (obj is AnySequence other) return RawSequence == other.RawSequence;
+        if (obj is AnySequence other) return RawSequence.Equals(other.RawSequence);
 
         return false;
     }
@@ -59,6 +59,10 @@ public class AnySequence : ISequence
     {
         return RawSequence;
     }
+
+    #region String Manipulators
+
+    #endregion
 
     /// <summary>
     ///     Returns the hamming distance, the difference between any string at any given point.
@@ -99,8 +103,12 @@ public class AnySequence : ISequence
     }
 
     /// <summary>
-    ///     This is a pretty simple cleanup t
+    ///     This is a pretty simple cleanup method that is implemented in each child class.
     /// </summary>
+    /// <remarks>
+    /// We know that some classes have slight differences. We want to be as strict as possible when
+    /// creating classes because biology data is inherently a mess. 
+    /// </remarks>
     /// <param name="bp"></param>
     /// <returns></returns>
     protected virtual bool IsValid(char bp)
@@ -121,14 +129,11 @@ public class AnySequence : ISequence
                 Counts.Add(basePair);
             else
                 throw new Exception();
-
-        Length = RawSequence.Length;
     }
 
     public AnySequence RemoveIntrons(List<AnySequence> introns)
     {
         if (introns == null) throw new ArgumentNullException();
-        // Construct the Trie
         var trie = new Trie();
         foreach (var intron in introns) trie.AddWord(intron.RawSequence);
 
