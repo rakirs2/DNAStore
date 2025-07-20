@@ -42,8 +42,6 @@ public class AnySequence : ISequence
         var modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
         for (var i = 0; i < Length - motif.ExpectedLength; i++)
-            // TODO: make everything an int?
-            // TODO: do I need to make this a long implementation -- does that even help?
             if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
                 output.Add(i + modifier);
 
@@ -127,7 +125,6 @@ public class AnySequence : ISequence
         Length = RawSequence.Length;
     }
 
-    // TODO: interface this
     public AnySequence RemoveIntrons(List<AnySequence> introns)
     {
         if (introns == null) throw new ArgumentNullException();
