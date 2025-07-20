@@ -1,5 +1,7 @@
 ﻿using System.Text;
+
 using Base.DataStructures;
+
 using Bio.Analysis.Interfaces;
 using Bio.IO;
 using Bio.Sequence.Types;
@@ -48,7 +50,7 @@ public class ProfileMatrix : IProfileMatrix
     {
         var sequence = GetProfileSequence();
         var stringBuilder = new StringBuilder();
-        stringBuilder.Append(sequence.RawSequence);
+        stringBuilder.Append(sequence);
         stringBuilder.Append("\n");
 
         return stringBuilder.ToString();

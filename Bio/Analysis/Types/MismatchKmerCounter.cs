@@ -27,7 +27,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
         foreach (var kmer in listPossible) MismatchDictionaryTracker[kmer] = 0;
 
         var currentHighest = 0;
-        for (var i = 0; i <= _sequence.RawSequence.Length - KmerLength; i++)
+        for (var i = 0; i <= _sequence.Length - KmerLength; i++)
             foreach (var key in MismatchDictionaryTracker.Keys)
             {
                 currentHighest = AnalyzeKmer(i, key, currentHighest, false);
@@ -42,9 +42,9 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     private int AnalyzeKmer(int i, string key, int currentHighest, bool checkComplement)
     {
         var stringToCheck = key;
-        if (checkComplement) stringToCheck = new DNASequence(key).ToReverseComplement().RawSequence;
+        if (checkComplement) stringToCheck = new DNASequence(key).ToReverseComplement().ToString();
 
-        if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
+        if (AnySequence.HammingDistance(_sequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
         {
             // TODO: this really can get refactored
             MismatchDictionaryTracker[key] += 1;

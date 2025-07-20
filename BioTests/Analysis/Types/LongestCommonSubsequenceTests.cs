@@ -13,6 +13,6 @@ public class LongestCommonSubsequenceTests
     public void LongestCommonSubsequenceTest()
     {
         var result = new LongestCommonSubsequence(FastaParser.Read(_filePath));
-        Assert.AreEqual("AC", result.GetAnyLongest().RawSequence);
+        Assert.AreEqual("AC", result.GetAnyLongest().ToString());
     }
 }
