@@ -1,16 +1,16 @@
 ﻿namespace Base.DataStructures.Tests;
 
-[TestClass()]
+[TestClass]
 public class TrieTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void TrieConstructionTest()
     {
         var simpleTrie = new Trie();
         Assert.AreEqual(0, simpleTrie.MaxStringLength);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void AddWordTest()
     {
         var simpleTrie = new Trie();
@@ -19,7 +19,7 @@ public class TrieTests
         Assert.IsTrue(simpleTrie.Search("ab"));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void SearchTest()
     {
         var simpleTrie = new Trie();

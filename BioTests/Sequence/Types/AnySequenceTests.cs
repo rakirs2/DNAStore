@@ -1,7 +1,5 @@
 ﻿using Bio.Analysis.Types;
-using Bio.Sequence.Interfaces;
 using Bio.Sequence.Types;
-
 
 namespace BioTests.Sequence.Types;
 
@@ -50,7 +48,7 @@ public class AnySequenceTests
         var b = new Motif("GAG", 3);
         var result = a.MotifLocations(b);
         var expected = new long[] { 1 };
-        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+        Assert.IsTrue(expected.SequenceEqual(result));
     }
 
     [TestMethod]
@@ -60,7 +58,7 @@ public class AnySequenceTests
         var b = new Motif("GAG", 3);
         var result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
-        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+        Assert.IsTrue(expected.SequenceEqual(result));
     }
 
     [TestMethod]
@@ -70,10 +68,10 @@ public class AnySequenceTests
         var b = new Motif("ATAT", 4);
         var result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
-        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+        Assert.IsTrue(expected.SequenceEqual(result));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void AreSequenceEqualTest()
     {
         var seq1 = new AnySequence("abcde");
@@ -81,7 +79,7 @@ public class AnySequenceTests
         Assert.IsTrue(AnySequence.AreSequenceEqual(seq1, seq2));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void AreSequenceEqualTestDifferentSequence()
     {
         var seq1 = new AnySequence("abcde");
@@ -89,7 +87,7 @@ public class AnySequenceTests
         Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void AreSequenceEqualTestDifferentLength()
     {
         var seq1 = new AnySequence("abcde");
@@ -97,23 +95,23 @@ public class AnySequenceTests
         Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void RemoveIntronsTestBeginning()
     {
         var seq1 = new AnySequence("abcde");
-        var output = seq1.RemoveIntrons(new List<AnySequence>() { new AnySequence("a") });
+        var output = seq1.RemoveIntrons(new List<AnySequence> { new("a") });
         Assert.AreEqual("bcde", output.RawSequence);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void RemoveIntronsTestEnd()
     {
         var seq1 = new AnySequence("abcde");
-        var output = seq1.RemoveIntrons(new List<AnySequence>() { new AnySequence("e") });
+        var output = seq1.RemoveIntrons(new List<AnySequence> { new("e") });
         Assert.AreEqual("abcd", output.RawSequence);
     }
 
-    [TestMethod()]
+    [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveIntronsTestNull()
     {

@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
@@ -8,16 +7,6 @@ public class ProteinSequence : AnySequence, IProtein
 {
     public ProteinSequence(string rawSequence) : base(rawSequence)
     {
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (obj is ProteinSequence other)
-        {
-            return RawSequence == other.RawSequence;
-        }
-
-        return false;
     }
 
     public double MolecularWeight
@@ -40,6 +29,13 @@ public class ProteinSequence : AnySequence, IProtein
         var modulo2 = new BigInteger(modulo);
         var output = result % modulo2;
         return (int)output;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is ProteinSequence other) return RawSequence == other.RawSequence;
+
+        return false;
     }
 
     // TODO: implement this. There are a couple of known hashes.

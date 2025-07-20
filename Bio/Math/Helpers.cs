@@ -3,20 +3,19 @@
 namespace Bio.Math;
 
 /// <summary>
-/// Most of these sequence Analysis are some combination of dynamic programming and string searches
-/// The dynamic programming things can just be stored here.
+///     Most of these sequence Analysis are some combination of dynamic programming and string searches
+///     The dynamic programming things can just be stored here.
 /// </summary>
 public static class Helpers
 {
     /// <summary>
-    /// Probably bruteforceable but there are other problems later on with generation death and decay
-    /// that will need memory.
-    ///
-    /// The population begins in the first month with a pair of newborn rabbits.
-    /// Rabbits reach reproductive age after one month.
-    /// In any given month, every rabbit of reproductive age mates with another rabbit of reproductive age.
-    /// Exactly one month after two rabbits mate, they produce one male and one female rabbit.
-    /// Rabbits never die or stop reproducing.
+    ///     Probably bruteforceable but there are other problems later on with generation death and decay
+    ///     that will need memory.
+    ///     The population begins in the first month with a pair of newborn rabbits.
+    ///     Rabbits reach reproductive age after one month.
+    ///     In any given month, every rabbit of reproductive age mates with another rabbit of reproductive age.
+    ///     Exactly one month after two rabbits mate, they produce one male and one female rabbit.
+    ///     Rabbits never die or stop reproducing.
     /// </summary>
     public static BigInteger GenerationalGrowth(int numGenerations, int growthPerGeneration,
         int monthsToDie = int.MaxValue)

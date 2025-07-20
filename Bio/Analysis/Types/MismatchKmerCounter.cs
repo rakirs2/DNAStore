@@ -6,6 +6,10 @@ namespace Bio.Analysis.Types;
 
 public class MismatchKmerCounter : IMismatchKmerCounter
 {
+    private readonly AnySequence _sequence;
+
+    private readonly Dictionary<string, int> MismatchDictionaryTracker = new();
+
     public MismatchKmerCounter(int kmerLength, AnySequence sequence, int tolerance)
     {
         KmerLength = kmerLength;
@@ -16,8 +20,6 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     public HashSet<string> HighestFrequencyKmers { get; private set; }
     public int KmerLength { get; }
     public int Tolerance { get; }
-
-    private AnySequence _sequence;
 
     public HashSet<string> GetKmers(string matchString, bool checkComplement = false)
     {
@@ -48,7 +50,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
             MismatchDictionaryTracker[key] += 1;
             if (MismatchDictionaryTracker[key] > currentHighest)
             {
-                HighestFrequencyKmers = new HashSet<string>() { key };
+                HighestFrequencyKmers = new HashSet<string> { key };
                 currentHighest = MismatchDictionaryTracker[key];
             }
             else if (MismatchDictionaryTracker[key] == currentHighest)
@@ -59,6 +61,4 @@ public class MismatchKmerCounter : IMismatchKmerCounter
 
         return currentHighest;
     }
-
-    private Dictionary<string, int> MismatchDictionaryTracker = new();
 }

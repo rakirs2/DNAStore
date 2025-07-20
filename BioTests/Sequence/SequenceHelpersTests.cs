@@ -6,7 +6,7 @@ namespace BioTests.Sequence;
 public class SequenceHelpersTests
 {
     // TODO: there might be a corruptoin angle with all of these as well. For now, focus just on making sure these methods work
-    private static HashSet<char> KnownProteinSequenceDifferentiators =
+    private static readonly HashSet<char> KnownProteinSequenceDifferentiators =
         new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 
     [TestMethod]
@@ -170,7 +170,7 @@ public class SequenceHelpersTests
         Assert.AreEqual(64, SequenceHelpers.ProteinCodesToRNA.Sum(kv => kv.Value.Count));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void PossibleKmersListTest()
     {
         var output = SequenceHelpers.AllPossibleKmersList("ACGT");

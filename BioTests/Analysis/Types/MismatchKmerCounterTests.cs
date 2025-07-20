@@ -3,33 +3,33 @@ using Bio.Sequence.Types;
 
 namespace BioTests.Analysis.Types;
 
-[TestClass()]
+[TestClass]
 public class MismatchKmerCounterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void MismatchKmerCounterSimple()
     {
         var sequence = new AnySequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
         var counter = new MismatchKmerCounter(4, sequence, 1);
         var output = counter.GetKmers("ACGT");
-        Assert.IsTrue(output.SetEquals(new HashSet<string>() { "GATG", "ATGC", "ATGT" }));
+        Assert.IsTrue(output.SetEquals(new HashSet<string> { "GATG", "ATGC", "ATGT" }));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void MismatchKmerCounterShort()
     {
         var sequence = new AnySequence("AGGT");
         var counter = new MismatchKmerCounter(2, sequence, 1);
         var output = counter.GetKmers("ACGT");
-        Assert.IsTrue(output.SetEquals(new HashSet<string>() { "GG" }));
+        Assert.IsTrue(output.SetEquals(new HashSet<string> { "GG" }));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void MismatchKmerCounterComplement()
     {
         var sequence = new AnySequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
         var counter = new MismatchKmerCounter(4, sequence, 1);
         var output = counter.GetKmers("ACGT", true);
-        Assert.IsTrue(counter.HighestFrequencyKmers.SetEquals(new HashSet<string>() { "ATGT", "ACAT" }));
+        Assert.IsTrue(counter.HighestFrequencyKmers.SetEquals(new HashSet<string> { "ATGT", "ACAT" }));
     }
 }

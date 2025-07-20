@@ -1,8 +1,11 @@
 ﻿using Base.Interfaces;
 
 namespace Base.DataStructures;
+
 public class Trie : ITrie
 {
+    private readonly TrieNode root;
+
     public Trie()
     {
         root = new TrieNode();
@@ -14,7 +17,7 @@ public class Trie : ITrie
         MaxStringLength = Math.Max(word.Length, MaxStringLength);
 
         var node = root;
-        foreach (char c in word)
+        foreach (var c in word)
         {
             if (!node.Children.ContainsKey(c))
                 node.Children.Add(c, new TrieNode());
@@ -27,18 +30,12 @@ public class Trie : ITrie
     public bool Search(string wordToCheck)
     {
         // Go ahead and quick fail for this scenario
-        if (wordToCheck.Length > MaxStringLength)
-        {
-            return false;
-        }
+        if (wordToCheck.Length > MaxStringLength) return false;
 
         var temp = root;
         foreach (var character in wordToCheck)
         {
-            if (!temp.Children.ContainsKey(character))
-            {
-                return false;
-            }
+            if (!temp.Children.ContainsKey(character)) return false;
 
             temp = temp.Children[character];
         }
@@ -48,23 +45,15 @@ public class Trie : ITrie
 
     public int MaxStringLength { get; private set; }
 
-    private TrieNode root;
-
     private class TrieNode
     {
+        public readonly Dictionary<char, TrieNode> Children;
+
         public TrieNode()
         {
             Children = new Dictionary<char, TrieNode>();
         }
 
-        public bool IsTerminus
-        {
-            get => _isTerminus;
-            set => _isTerminus = value;
-        }
-
-        public Dictionary<char, TrieNode> Children;
-
-        private bool _isTerminus = false;
+        public bool IsTerminus { get; set; }
     }
 }

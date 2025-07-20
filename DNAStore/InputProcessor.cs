@@ -1,33 +1,43 @@
 ﻿using System.Diagnostics;
 using System.Text;
-
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
-
 using Clients;
 
 namespace DNAStore;
 
 internal class InputProcessor
 {
-    public interface IExecutor
-    {
-        /// <summary>
-        /// Executes the request.
-        /// </summary>
-        void Run();
-    }
-
     public static IExecutor GetExecutor(string request)
     {
         return BaseExecutor.GetExecutorFromString(request);
     }
 
+    public interface IExecutor
+    {
+        /// <summary>
+        ///     Executes the request.
+        /// </summary>
+        void Run();
+    }
+
     private abstract class BaseExecutor : IExecutor
     {
+        private Stopwatch? _stopwatch;
+
+        public void Run()
+        {
+            GetInputs();
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
+            CalculateResult();
+            _stopwatch.Stop();
+            OutputResult();
+            ReportMetrics();
+        }
+
         public static IExecutor GetExecutorFromString(string input)
         {
             return input switch
@@ -63,29 +73,17 @@ internal class InputProcessor
             };
         }
 
-        public void Run()
-        {
-            GetInputs();
-            _stopwatch = new Stopwatch();
-            _stopwatch.Start();
-            CalculateResult();
-            _stopwatch.Stop();
-            OutputResult();
-            ReportMetrics();
-        }
-
         /// <summary>
-        /// Should solely be user facing
+        ///     Should solely be user facing
         /// </summary>
         protected abstract void GetInputs();
 
         /// <summary>
-        /// Ideally this is one function. However, that isn't always possible
+        ///     Ideally this is one function. However, that isn't always possible
         /// </summary>
         protected abstract void CalculateResult();
 
         /// <summary>
-        ///
         /// </summary>
         protected abstract void OutputResult();
 
@@ -93,13 +91,16 @@ internal class InputProcessor
         {
             Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
         }
-
-        private Stopwatch? _stopwatch;
     }
 
 
     private class HammingSequenceMatch : BaseExecutor
     {
+        private SequenceMatchLocations? _matcher;
+
+
+        private List<int>? output;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the match sequence");
@@ -125,14 +126,14 @@ internal class InputProcessor
         {
             Console.WriteLine($"{string.Join(' ', output)}");
         }
-
-
-        private List<int>? output;
-        private SequenceMatchLocations? _matcher;
     }
 
     private class HammingFuzzyMatch : BaseExecutor
     {
+        private string? _input;
+        private MismatchKmerCounter? _matcher;
+        private HashSet<string>? output;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the match sequence, usually ACGT");
@@ -159,13 +160,14 @@ internal class InputProcessor
         {
             Console.WriteLine($"{string.Join(' ', output)}");
         }
-
-        private string? _input;
-        private HashSet<string>? output;
-        private MismatchKmerCounter? _matcher;
     }
+
     private class CandidateProteinsFromDNA : BaseExecutor
     {
+        private List<ProteinSequence>? _proteins;
+
+        private DNASequence? _sequence;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the DNAstring");
@@ -179,19 +181,18 @@ internal class InputProcessor
 
         protected override void OutputResult()
         {
-            foreach (var protein in _proteins)
-            {
-                Console.WriteLine(protein.RawSequence);
-            }
+            foreach (var protein in _proteins) Console.WriteLine(protein.RawSequence);
         }
-
-        private DNASequence? _sequence;
-        private List<ProteinSequence>? _proteins;
     }
 
     // TODO: this should be a single fasta read
     private class SplicedDNAToProtein : BaseExecutor
     {
+        private readonly List<AnySequence>? _introns = new();
+
+        private DNASequence? _input;
+        private string? _output;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the full sequence");
@@ -202,10 +203,7 @@ internal class InputProcessor
             while (true)
             {
                 input = Console.ReadLine();
-                if (input.Equals("done"))
-                {
-                    break;
-                }
+                if (input.Equals("done")) break;
                 _introns.Add(new DNASequence(input));
             }
         }
@@ -223,14 +221,13 @@ internal class InputProcessor
         {
             Console.WriteLine($"{_output}");
         }
-
-        private DNASequence? _input;
-        private string? _output;
-        private List<AnySequence>? _introns = new();
     }
 
     private class HammingFuzzyMatchWithComplement : BaseExecutor
     {
+        private string? _input;
+        private MismatchKmerCounter? _matcher;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the match sequence, usually ACGT");
@@ -257,13 +254,14 @@ internal class InputProcessor
         {
             Console.WriteLine($"{string.Join(' ', _matcher.HighestFrequencyKmers)}");
         }
-
-        private string? _input;
-        private MismatchKmerCounter? _matcher;
     }
 
     private class SequenceAnalysis : BaseExecutor
     {
+        private AnySequence? _anySequence;
+
+        private string? _inputString;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please Input the string in question");
@@ -279,13 +277,17 @@ internal class InputProcessor
         {
             Console.WriteLine(_anySequence?.Counts);
         }
-
-        private string? _inputString;
-        private AnySequence? _anySequence;
     }
 
     private class ClumpFinder : BaseExecutor
     {
+        private AnySequence? _a;
+        private KmerClumpCounter? _clumpCounter;
+
+        private int _kmerLength;
+        private int _minCount;
+        private int _windowSize;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the sequence");
@@ -309,16 +311,13 @@ internal class InputProcessor
         {
             Console.WriteLine($"{string.Join(' ', _clumpCounter.ValidKmers)}");
         }
-
-        private int _kmerLength;
-        private int _windowSize;
-        private int _minCount;
-        private AnySequence? _a;
-        private KmerClumpCounter? _clumpCounter;
     }
 
     private class DNAComplement : BaseExecutor
     {
+        private DNASequence? _dnaSequence;
+        private string? output;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the DNA in question");
@@ -335,15 +334,12 @@ internal class InputProcessor
         {
             Console.WriteLine($"The complement is {output}");
         }
-
-        private DNASequence? _dnaSequence;
-        private string? output;
     }
 
     private class EasterEgg : BaseExecutor
     {
         /// <summary>
-        /// TODO: for a different day, let's make a new executor here to get rid of these ugly overrides
+        ///     TODO: for a different day, let's make a new executor here to get rid of these ugly overrides
         /// </summary>
         protected override void CalculateResult()
         {
@@ -367,6 +363,9 @@ internal class InputProcessor
 
     private class GCContent : BaseExecutor
     {
+        private IList<Fasta>? fastas;
+        private Fasta? largestGCContent;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
@@ -383,13 +382,14 @@ internal class InputProcessor
         {
             Console.WriteLine($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
         }
-
-        private IList<Fasta>? fastas;
-        private Fasta? largestGCContent;
     }
 
     private class HammingDistance : BaseExecutor
     {
+        private AnySequence? a;
+        private AnySequence? b;
+        private long result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
@@ -407,15 +407,14 @@ internal class InputProcessor
         {
             Console.WriteLine($"The HammingDistance Distance between both sequences is: {result}");
         }
-
-        private AnySequence? a;
-        private AnySequence? b;
-        private long result;
     }
 
 
     private class LongestCommonSubsequence : BaseExecutor
     {
+        private List<Fasta>? _fastas;
+        private Bio.Analysis.Types.LongestCommonSubsequence? _result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
@@ -432,13 +431,14 @@ internal class InputProcessor
         {
             Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest().RawSequence}");
         }
-
-        private List<Fasta>? _fastas;
-        private Bio.Analysis.Types.LongestCommonSubsequence? _result;
     }
 
     private class MinGCSkewLocation : BaseExecutor
     {
+        private int[]? output;
+
+        private NucleotideSequence? sequence;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Enter Sequence To be analyzed");
@@ -454,13 +454,15 @@ internal class InputProcessor
         {
             Console.WriteLine($"{string.Join(' ', output)}");
         }
-
-        private NucleotideSequence? sequence;
-        private int[]? output;
     }
 
     private class MotifFinder : BaseExecutor
     {
+        private bool _isZeroIndex;
+        private AnySequence? a;
+        private Motif? b;
+        private long[]? result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
@@ -486,15 +488,15 @@ internal class InputProcessor
             var indexType = _isZeroIndex ? "Zero" : "One";
             Console.WriteLine($"The {indexType}-Index Locations are: \n{string.Join(" ", result)}");
         }
-
-        private bool _isZeroIndex;
-        private AnySequence? a;
-        private Motif? b;
-        private long[]? result;
     }
 
     private class GenerateLexicographicKmers : BaseExecutor
     {
+        private int k;
+        private string? possibleValues;
+
+        private List<string>? result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
@@ -512,14 +514,15 @@ internal class InputProcessor
         {
             foreach (var possibleValue in result) Console.WriteLine(possibleValue);
         }
-
-        private List<string>? result;
-        private string? possibleValues;
-        private int k;
     }
 
     private class GenerateLexicographicKmersAndSubKmers : BaseExecutor
     {
+        private int k;
+        private string? possibleValues;
+
+        private List<string>? result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
@@ -539,14 +542,16 @@ internal class InputProcessor
 
             File.WriteAllText("./output.txt", string.Join('\n', result));
         }
-
-        private List<string>? result;
-        private string? possibleValues;
-        private int k;
     }
 
     private class GenerateFrequencyArray : BaseExecutor
     {
+        private FrequencyArray? _frequencyArray;
+        private int _length;
+        private string? _values;
+        private AnySequence? a;
+        private List<int>? result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
@@ -567,16 +572,13 @@ internal class InputProcessor
         {
             Console.WriteLine($"{string.Join(" ", result)}");
         }
-
-        private FrequencyArray? _frequencyArray;
-        private string? _values;
-        private int _length;
-        private AnySequence? a;
-        private List<int>? result;
     }
 
     private class OverlapGraphExecutor : BaseExecutor
     {
+        private IList<Fasta>? _fastas;
+        private OverlapGraph? _overlapGraph;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
@@ -594,14 +596,16 @@ internal class InputProcessor
             foreach (var tuple in _overlapGraph.GetOverlaps())
                 Console.WriteLine(tuple.Item1.Name + " " + tuple.Item2.Name);
         }
-
-        private IList<Fasta>? _fastas;
-        private OverlapGraph? _overlapGraph;
     }
 
 
     private class PercentDominant : BaseExecutor
     {
+        private uint k;
+        private uint m;
+        private uint n;
+        private double output;
+
         protected override void GetInputs()
         {
             Console.WriteLine("k");
@@ -624,16 +628,15 @@ internal class InputProcessor
         {
             Console.WriteLine($"The percent Dominant is {output}");
         }
-
-        private uint k;
-        private uint m;
-        private uint n;
-        private double output;
     }
 
 
     private class Permutations : BaseExecutor
     {
+        private int total;
+
+        private IEnumerable<IEnumerable<int>>? values;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Input Number");
@@ -651,13 +654,13 @@ internal class InputProcessor
             Console.WriteLine(values.Count());
             foreach (var row in values) Console.WriteLine(string.Join(" ", row));
         }
-
-        private IEnumerable<IEnumerable<int>>? values;
-        private int total;
     }
 
     private class ProfileMatrixExecutor : BaseExecutor
     {
+        private IList<Fasta>? fastas;
+        private ProfileMatrix? matrix;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
@@ -675,13 +678,15 @@ internal class InputProcessor
             Console.WriteLine(matrix.GetProfileSequence().RawSequence);
             Console.WriteLine(matrix.FrequencyMatrix());
         }
-
-        private IList<Fasta>? fastas;
-        private ProfileMatrix? matrix;
     }
 
     private class ProteinMotifFinder : BaseExecutor
     {
+        private readonly List<string> inputNames = new();
+
+        private readonly List<long[]> output = new();
+        private List<AnySequence> sequencesToCompare = new();
+
         protected override void GetInputs()
         {
             // TODO: at some point get a better pattern
@@ -718,15 +723,16 @@ internal class InputProcessor
                     Console.WriteLine($"{string.Join(" ", output[i])}");
                 }
         }
-
-        private List<long[]> output = new();
-        private List<AnySequence> sequencesToCompare = new();
-        private List<string> inputNames = new();
     }
 
 
     private class ProteinToNumRNACount : BaseExecutor
     {
+        private Motif? b;
+
+        private ProteinSequence? protein;
+        private long result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
@@ -742,14 +748,14 @@ internal class InputProcessor
         {
             Console.WriteLine($"{result}");
         }
-
-        private ProteinSequence? protein;
-        private Motif? b;
-        private long result;
     }
 
     private class ProteinWeight : BaseExecutor
     {
+        private ProteinSequence? _protein;
+
+        private double _result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the protein string");
@@ -765,14 +771,15 @@ internal class InputProcessor
         {
             Console.WriteLine(_result);
         }
-
-        private double _result;
-        private ProteinSequence? _protein;
     }
 
 
     private class RestrictionSites : BaseExecutor
     {
+        private List<Tuple<int, int>>? output;
+
+        private DNASequence? sequence;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Enter Sequence To be analyzed");
@@ -788,14 +795,13 @@ internal class InputProcessor
         {
             foreach (var tuple in output) Console.WriteLine($"{tuple.Item1} {tuple.Item2}");
         }
-
-        private DNASequence? sequence;
-        private List<Tuple<int, int>>? output;
     }
 
 
     private class TranscribeDna : IExecutor
     {
+        private DNASequence? _dnaSequence;
+
         public void Run()
         {
             GetInputs();
@@ -813,13 +819,14 @@ internal class InputProcessor
         {
             Console.WriteLine(_dnaSequence?.TranscribeToRNA().RawSequence);
         }
-
-        private DNASequence? _dnaSequence;
     }
 
 
     private class TranslateRNA : BaseExecutor
     {
+        private RNASequence? _a;
+        private string? _result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
@@ -835,8 +842,5 @@ internal class InputProcessor
         {
             Console.WriteLine($"The translated protein between both sequences is:\n{_result}");
         }
-
-        private RNASequence? _a;
-        private string? _result;
     }
 }

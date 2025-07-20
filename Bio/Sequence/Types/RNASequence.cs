@@ -8,11 +8,6 @@ public class RNASequence : NucleotideSequence, IRNA
     {
     }
 
-    protected override bool IsValid(char c)
-    {
-        return SequenceHelpers.IsValidRNA(c);
-    }
-
     public string GetExpectedProteinString()
     {
         return SequenceHelpers.ConvertStringToProtein(RawSequence);
@@ -21,5 +16,10 @@ public class RNASequence : NucleotideSequence, IRNA
     public int GetPotentialNumberOfDNAStrings(int mod)
     {
         throw new NotImplementedException();
+    }
+
+    protected override bool IsValid(char c)
+    {
+        return SequenceHelpers.IsValidRNA(c);
     }
 }
