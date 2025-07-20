@@ -19,7 +19,7 @@ public interface IProfileMatrix
     ///     Ties are broken with the last highest number
     /// </summary>
     /// <returns></returns>
-    AnySequence GetProfileSequence();
+    Sequence.Types.Sequence GetProfileSequence();
 
 
     /// <summary>

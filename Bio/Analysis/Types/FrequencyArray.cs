@@ -6,9 +6,9 @@ namespace Bio.Analysis.Types;
 
 public class FrequencyArray : IFrequencyArray
 {
-    private readonly AnySequence _sequence;
+    private readonly Sequence.Types.Sequence _sequence;
 
-    public FrequencyArray(AnySequence sequence)
+    public FrequencyArray(Sequence.Types.Sequence sequence)
     {
         _sequence = sequence;
     }

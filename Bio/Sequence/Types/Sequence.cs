@@ -1,5 +1,7 @@
 using System.Text;
+
 using Base.DataStructures;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -11,23 +13,23 @@ namespace Bio.Sequence.Types;
 ///     know what type of string we are analyzing.
 ///     TODO: this should eventually have 1 static creator which can take in a string and returns the implied typing
 /// </summary>
-public class AnySequence : ISequence
+public class Sequence : ISequence
 {
     public BasePairDictionary Counts = new();
 
     // TODO: this should be cleaned up
-    public AnySequence(string rawSequence)
+    public Sequence(string rawSequence)
     {
         ConstructionLogic(rawSequence);
     }
 
-    public AnySequence(string name, string rawSequence)
+    public Sequence(string name, string rawSequence)
     {
         Name = name;
         ConstructionLogic(rawSequence);
     }
 
-    public AnySequence(Fasta fasta)
+    public Sequence(Fasta fasta)
     {
         Name = fasta.Name;
         ConstructionLogic(fasta.RawSequence);
@@ -57,7 +59,7 @@ public class AnySequence : ISequence
 
     public override bool Equals(object obj)
     {
-        if (obj is AnySequence other) return RawSequence == other.RawSequence;
+        if (obj is Sequence other) return RawSequence == other.RawSequence;
 
         return false;
     }
@@ -75,7 +77,7 @@ public class AnySequence : ISequence
     ///     This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
     ///     Also, hamming distance to hash difference seems intriguing if nothing else
     /// </remarks>
-    public static long HammingDistance(AnySequence a, AnySequence b)
+    public static long HammingDistance(Sequence a, Sequence b)
     {
         if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
 
@@ -100,7 +102,7 @@ public class AnySequence : ISequence
     }
 
     // TODO: there still needs to be a determination made if this should or should not be case-sensitive
-    public static bool AreSequenceEqual(AnySequence a, AnySequence b)
+    public static bool AreSequenceEqual(Sequence a, Sequence b)
     {
         return a.RawSequence.Equals(b.RawSequence);
     }
@@ -133,7 +135,7 @@ public class AnySequence : ISequence
     }
 
     // TODO: interface this
-    public AnySequence RemoveIntrons(List<AnySequence> introns)
+    public Sequence RemoveIntrons(List<Sequence> introns)
     {
         if (introns == null) throw new ArgumentNullException();
         // Construct the Trie
@@ -159,7 +161,7 @@ public class AnySequence : ISequence
             if (isValid) outputString.Append(RawSequence[i]);
         }
 
-        return new AnySequence(outputString.ToString());
+        return new Sequence(outputString.ToString());
     }
 
     public override int GetHashCode()
