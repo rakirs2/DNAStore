@@ -1,5 +1,7 @@
 using System.Text;
+
 using Base.DataStructures;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -9,19 +11,12 @@ namespace Bio.Sequence.Types;
 /// <summary>
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
 ///     know what type of string we are analyzing.
-///     TODO: this should eventually have 1 static creator which can take in a string and returns the implied typing
 /// </summary>
 public class AnySequence : ISequence
 {
     public BasePairDictionary Counts = new();
 
-    // TODO: this should be cleaned up
-    public AnySequence(string rawSequence)
-    {
-        ConstructionLogic(rawSequence);
-    }
-
-    public AnySequence(string name, string rawSequence)
+    public AnySequence(string rawSequence, string? name = null)
     {
         Name = name;
         ConstructionLogic(rawSequence);

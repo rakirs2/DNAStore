@@ -9,7 +9,7 @@ public abstract class NucleotideSequence : AnySequence, INucleotideSequence
     {
     }
 
-    protected NucleotideSequence(string name, string rawSequence) : base(name, rawSequence)
+    protected NucleotideSequence(string name, string rawSequence) : base(rawSequence, name)
     {
     }
 
