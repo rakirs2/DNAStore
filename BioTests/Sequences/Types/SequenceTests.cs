@@ -1,5 +1,4 @@
 ﻿using Bio.Analysis.Types;
-using Bio.Sequence.Types;
 
 namespace BioTests.Sequence.Types;
 

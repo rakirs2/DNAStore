@@ -1,6 +1,4 @@
-﻿using Bio.Sequence.Types;
-
-namespace Bio.Analysis.Types.Tests;
+﻿namespace Bio.Analysis.Types.Tests;
 
 [TestClass]
 public class FrequencyArrayTests

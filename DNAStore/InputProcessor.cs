@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Text;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
 using Bio.Sequence.Types;
+
 using Clients;
 
 namespace DNAStore;
@@ -112,7 +114,7 @@ internal class InputProcessor
             var matchLogic = new HammingMatch(inputString, tolerance);
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new SequenceMatchLocations(sequence, matchLogic);
         }
@@ -146,7 +148,7 @@ internal class InputProcessor
             var tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
         }
@@ -188,7 +190,7 @@ internal class InputProcessor
     // TODO: this should be a single fasta read
     private class SplicedDNAToProtein : BaseExecutor
     {
-        private readonly List<AnySequence>? _introns = new();
+        private readonly List<Sequence>? _introns = new();
 
         private DNASequence? _input;
         private string? _output;
@@ -240,7 +242,7 @@ internal class InputProcessor
             var tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
         }
@@ -258,7 +260,7 @@ internal class InputProcessor
 
     private class SequenceAnalysis : BaseExecutor
     {
-        private AnySequence? _anySequence;
+        private Sequence? _anySequence;
 
         private string? _inputString;
 
@@ -270,7 +272,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _anySequence = new AnySequence(_inputString ?? string.Empty);
+            _anySequence = new Sequence(_inputString ?? string.Empty);
         }
 
         protected override void OutputResult()
@@ -281,7 +283,7 @@ internal class InputProcessor
 
     private class ClumpFinder : BaseExecutor
     {
-        private AnySequence? _a;
+        private Sequence? _a;
         private KmerClumpCounter? _clumpCounter;
 
         private int _kmerLength;
@@ -291,7 +293,7 @@ internal class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the sequence");
-            _a = new AnySequence(Console.ReadLine());
+            _a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the expected Length");
             _kmerLength = int.Parse(Console.ReadLine());
 
@@ -386,21 +388,21 @@ internal class InputProcessor
 
     private class HammingDistance : BaseExecutor
     {
-        private AnySequence? a;
-        private AnySequence? b;
+        private Sequence? a;
+        private Sequence? b;
         private long result;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the second sequence");
-            b = new AnySequence(Console.ReadLine());
+            b = new Sequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
         {
-            result = AnySequence.HammingDistance(a, b);
+            result = Sequence.HammingDistance(a, b);
         }
 
         protected override void OutputResult()
@@ -459,14 +461,14 @@ internal class InputProcessor
     private class MotifFinder : BaseExecutor
     {
         private bool _isZeroIndex;
-        private AnySequence? a;
+        private Sequence? a;
         private Motif? b;
         private long[]? result;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the motif");
             var motifString = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
@@ -549,13 +551,13 @@ internal class InputProcessor
         private FrequencyArray? _frequencyArray;
         private int _length;
         private string? _values;
-        private AnySequence? a;
+        private Sequence? a;
         private List<int>? result;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the valid values");
             _values = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
@@ -685,12 +687,12 @@ internal class InputProcessor
         private readonly List<string> inputNames = new();
 
         private readonly List<long[]> output = new();
-        private List<AnySequence> sequencesToCompare = new();
+        private List<Sequence> sequencesToCompare = new();
 
         protected override void GetInputs()
         {
             // TODO: at some point get a better pattern
-            sequencesToCompare = new List<AnySequence>();
+            sequencesToCompare = new List<Sequence>();
             while (true)
             {
                 Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
@@ -704,7 +706,7 @@ internal class InputProcessor
                 var seq = UniprotClient.GetAsync(input).Result;
 
                 inputNames.Add(input);
-                sequencesToCompare.Add(new AnySequence(seq));
+                sequencesToCompare.Add(new Sequence(seq));
             }
         }
 
