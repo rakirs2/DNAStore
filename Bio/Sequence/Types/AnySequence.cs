@@ -139,12 +139,12 @@ public class AnySequence : ISequence
 
         var outputString = new StringBuilder();
 
-        for (var i = 0; i < RawSequence.Length; i++)
+        for (var i = 0; i < Length; i++)
         {
             var isValid = true;
             for (var j = 0; j < trie.MaxStringLength; j++)
             {
-                if (i + j > RawSequence.Length - 1) break;
+                if (i + j > Length - 1) break;
 
                 if (trie.Search(RawSequence.Substring(i, j + 1)))
                 {
