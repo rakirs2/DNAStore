@@ -1,4 +1,5 @@
 ﻿using System.Text;
+
 using Base.Utils;
 
 namespace Bio.Sequence;
@@ -183,19 +184,18 @@ public class SequenceHelpers
     public static List<string> AllPossibleKmersList(string kmers)
     {
         var output = new List<string>();
-        // TODO: check the pass by ref here (shouldn't be needed);
-        GeneratePerms(kmers.Length, ref kmers, ref output);
+        GeneratePerms(kmers.Length, kmers, ref output);
         return output;
     }
 
-    private static void GeneratePerms(int currentLength, ref string inputString, ref List<string> arrayToAddTo)
+    private static void GeneratePerms(int currentLength, string inputString, ref List<string> arrayToAddTo)
     {
         if (currentLength == 1)
             arrayToAddTo.Add(inputString);
         else
             for (var i = 0; i < currentLength; i++)
             {
-                GeneratePerms(currentLength - 1, ref inputString, ref arrayToAddTo);
+                GeneratePerms(currentLength - 1, inputString, ref arrayToAddTo);
                 if (currentLength % 2 == 0)
                     inputString = StringUtils.SwapIndex(inputString, currentLength - 1, i);
                 else
