@@ -109,7 +109,7 @@ internal class InputProcessor
             var matchLogic = new HammingMatch(inputString, tolerance);
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new SequenceMatchLocations(sequence, matchLogic);
         }
@@ -143,7 +143,7 @@ internal class InputProcessor
             var tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
         }
@@ -201,7 +201,7 @@ internal class InputProcessor
             var tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
         }
@@ -230,7 +230,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _anySequence = new AnySequence(_inputString ?? string.Empty);
+            _anySequence = new Sequence(_inputString ?? string.Empty);
         }
 
         protected override void OutputResult()
@@ -239,7 +239,7 @@ internal class InputProcessor
         }
 
         private string? _inputString;
-        private AnySequence? _anySequence;
+        private Sequence? _anySequence;
     }
 
     private class ClumpFinder : BaseExecutor
@@ -247,7 +247,7 @@ internal class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the sequence");
-            _a = new AnySequence(Console.ReadLine());
+            _a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the expected Length");
             _kmerLength = int.Parse(Console.ReadLine());
 
@@ -271,7 +271,7 @@ internal class InputProcessor
         private int _kmerLength;
         private int _windowSize;
         private int _minCount;
-        private AnySequence? _a;
+        private Sequence? _a;
         private KmerClumpCounter? _clumpCounter;
     }
 
@@ -351,14 +351,14 @@ internal class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the second sequence");
-            b = new AnySequence(Console.ReadLine());
+            b = new Sequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
         {
-            result = AnySequence.HammingDistance(a, b);
+            result = Sequence.HammingDistance(a, b);
         }
 
         protected override void OutputResult()
@@ -366,8 +366,8 @@ internal class InputProcessor
             Console.WriteLine($"The HammingDistance Distance between both sequences is: {result}");
         }
 
-        private AnySequence? a;
-        private AnySequence? b;
+        private Sequence? a;
+        private Sequence? b;
         private long result;
     }
 
@@ -422,7 +422,7 @@ internal class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the motif");
             var motifString = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
@@ -446,7 +446,7 @@ internal class InputProcessor
         }
 
         private bool _isZeroIndex;
-        private AnySequence? a;
+        private Sequence? a;
         private Motif? b;
         private long[]? result;
     }
@@ -508,7 +508,7 @@ internal class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the valid values");
             _values = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
@@ -529,7 +529,7 @@ internal class InputProcessor
         private FrequencyArray? _frequencyArray;
         private string? _values;
         private int _length;
-        private AnySequence? a;
+        private Sequence? a;
         private List<int>? result;
     }
 
@@ -643,7 +643,7 @@ internal class InputProcessor
         protected override void GetInputs()
         {
             // TODO: at some point get a better pattern
-            sequencesToCompare = new List<AnySequence>();
+            sequencesToCompare = new List<Sequence>();
             while (true)
             {
                 Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
@@ -657,7 +657,7 @@ internal class InputProcessor
                 var seq = UniprotClient.GetAsync(input).Result;
 
                 inputNames.Add(input);
-                sequencesToCompare.Add(new AnySequence(seq));
+                sequencesToCompare.Add(new Sequence(seq));
             }
         }
 
@@ -678,7 +678,7 @@ internal class InputProcessor
         }
 
         private List<long[]> output = new();
-        private List<AnySequence> sequencesToCompare = new();
+        private List<Sequence> sequencesToCompare = new();
         private List<string> inputNames = new();
     }
 

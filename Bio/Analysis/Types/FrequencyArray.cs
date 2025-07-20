@@ -6,7 +6,7 @@ using Bio.Sequence.Types;
 namespace Bio.Analysis.Types;
 public class FrequencyArray : IFrequencyArray
 {
-    public FrequencyArray(AnySequence sequence)
+    public FrequencyArray(Sequence.Types.Sequence sequence)
     {
         _sequence = sequence;
     }
@@ -33,6 +33,6 @@ public class FrequencyArray : IFrequencyArray
         return output;
     }
 
-    private AnySequence _sequence;
+    private Sequence.Types.Sequence _sequence;
 
 }

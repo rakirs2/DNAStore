@@ -4,7 +4,7 @@ using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 
-public class ProteinSequence : AnySequence, IProtein
+public class ProteinSequence : Sequence, IProtein
 {
     public ProteinSequence(string rawSequence) : base(rawSequence)
     {

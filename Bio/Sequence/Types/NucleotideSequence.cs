@@ -4,7 +4,7 @@ using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 
-public abstract class NucleotideSequence : AnySequence, INucleotideSequence
+public abstract class NucleotideSequence : Sequence, INucleotideSequence
 {
     protected NucleotideSequence(string rawSequence) : base(rawSequence)
     {

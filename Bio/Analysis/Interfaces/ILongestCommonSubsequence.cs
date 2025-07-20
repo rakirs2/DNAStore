@@ -9,5 +9,5 @@ public interface ILongestCommonSubsequence
     /// Returns any longest subsequence in the List
     /// </summary>
     /// <returns></returns>
-    AnySequence GetAnyLongest();
+    Sequence.Types.Sequence GetAnyLongest();
 }

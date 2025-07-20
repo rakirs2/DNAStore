@@ -8,7 +8,7 @@ public class KmerClumpCounter : IKmerClumpCounter
     // TODO: there's probably some work to generalize this later
     // TODO: Design phil -- do I really care if there's calculations going on construction?
     // TODO: Get a separate calculate step for all of these data structures
-    public KmerClumpCounter(AnySequence sequence, int scanLength, int kmerLength, int minCount)
+    public KmerClumpCounter(Sequence.Types.Sequence sequence, int scanLength, int kmerLength, int minCount)
     {
         Sequence = sequence;
         ScanLength = scanLength;
@@ -34,7 +34,7 @@ public class KmerClumpCounter : IKmerClumpCounter
 
     public int ScanLength { get; }
     public int KmerLength { get; }
-    public AnySequence Sequence { get; }
+    public Sequence.Types.Sequence Sequence { get; }
     public int MinCount { get; }
 
     public HashSet<string> ValidKmers { get; } = new();

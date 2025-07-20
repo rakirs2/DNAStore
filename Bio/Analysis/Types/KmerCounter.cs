@@ -16,7 +16,7 @@ public class KmerCounter : IKmerCounter
     public int CurrentHighestFrequency { get; } = 0;
     public int KmerLength { get; }
 
-    public KmerCounter(AnySequence sequence, int kmerLength)
+    public KmerCounter(Sequence.Types.Sequence sequence, int kmerLength)
     {
         KmerLength = kmerLength;
         // ok, we need to populate the right values here

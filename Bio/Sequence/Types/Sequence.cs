@@ -12,7 +12,7 @@ namespace Bio.Sequence.Types;
 ///
 /// TODO: this should eventually have 1 static creator which can take in a string and returns the implied typing
 /// </summary>
-public class AnySequence : ISequence
+public class Sequence : ISequence
 {
     public long Length { get; set; }
     public string RawSequence { get; set; }
@@ -20,7 +20,7 @@ public class AnySequence : ISequence
 
     public override bool Equals(object obj)
     {
-        if (obj is AnySequence other)
+        if (obj is Sequence other)
         {
             return RawSequence == other.RawSequence;
         }
@@ -54,18 +54,18 @@ public class AnySequence : ISequence
 
 
     // TODO: this should be cleaned up
-    public AnySequence(string rawSequence)
+    public Sequence(string rawSequence)
     {
         ConstructionLogic(rawSequence);
     }
 
-    public AnySequence(string name, string rawSequence)
+    public Sequence(string name, string rawSequence)
     {
         Name = name;
         ConstructionLogic(rawSequence);
     }
 
-    public AnySequence(Fasta fasta)
+    public Sequence(Fasta fasta)
     {
         Name = fasta.Name;
         ConstructionLogic(fasta.RawSequence);
@@ -81,7 +81,7 @@ public class AnySequence : ISequence
     /// This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
     /// Also, hamming distance to hash difference seems intriguing if nothing else
     /// </remarks>
-    public static long HammingDistance(AnySequence a, AnySequence b)
+    public static long HammingDistance(Sequence a, Sequence b)
     {
         if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
 
@@ -106,7 +106,7 @@ public class AnySequence : ISequence
     }
 
     // TODO: there still needs to be a determination made if this should or should not be case-sensitive
-    public static bool AreSequenceEqual(AnySequence a, AnySequence b)
+    public static bool AreSequenceEqual(Sequence a, Sequence b)
     {
         return a.RawSequence.Equals(b.RawSequence);
     }

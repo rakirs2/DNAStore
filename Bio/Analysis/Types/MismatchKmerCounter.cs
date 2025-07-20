@@ -6,7 +6,7 @@ namespace Bio.Analysis.Types;
 
 public class MismatchKmerCounter : IMismatchKmerCounter
 {
-    public MismatchKmerCounter(int kmerLength, AnySequence sequence, int tolerance)
+    public MismatchKmerCounter(int kmerLength, Sequence.Types.Sequence sequence, int tolerance)
     {
         KmerLength = kmerLength;
         Tolerance = tolerance;
@@ -17,7 +17,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     public int KmerLength { get; }
     public int Tolerance { get; }
 
-    private AnySequence _sequence;
+    private Sequence.Types.Sequence _sequence;
 
     public HashSet<string> GetKmers(string matchString, bool checkComplement = false)
     {
@@ -42,7 +42,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
         var stringToCheck = key;
         if (checkComplement) stringToCheck = new DNASequence(key).ToReverseComplement().RawSequence;
 
-        if (AnySequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
+        if (Sequence.Types.Sequence.HammingDistance(_sequence.RawSequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
         {
             // TODO: this really can get refactored
             MismatchDictionaryTracker[key] += 1;

@@ -1,5 +1,4 @@
 ﻿using Bio.Analysis.Interfaces;
-using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
 
@@ -20,7 +19,7 @@ public class HammingMatch : IHammingMatch
 
     public bool IsMatchStrict(string input)
     {
-        return AnySequence.HammingDistance(input, MatchString) <= Tolerance;
+        return Sequence.Types.Sequence.HammingDistance(input, MatchString) <= Tolerance;
     }
 
     public int ExpectedLength { get; }

@@ -5,13 +5,13 @@ namespace Bio.Analysis.Types;
 
 public class SequenceMatchLocations : ISequenceMatchLocator
 {
-    public SequenceMatchLocations(AnySequence sequence, IMatch matchLogic)
+    public SequenceMatchLocations(Sequence.Types.Sequence sequence, IMatch matchLogic)
     {
         _sequence = sequence;
         _matchLogic = matchLogic;
     }
 
-    private readonly AnySequence _sequence;
+    private readonly Sequence.Types.Sequence _sequence;
     private readonly IMatch _matchLogic;
 
     public List<int> GetLocations()
