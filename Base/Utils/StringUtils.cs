@@ -3,10 +3,10 @@
 public static class StringUtils
 {
     /// <summary>
-    /// Swaps the characers of the passed in string
+    ///     Swaps the characers of the passed in string
     /// </summary>
     /// <returns>
-    /// a new string object with the indices swapped
+    ///     a new string object with the indices swapped
     /// </returns>
     /// <param name="input"></param>
     /// <param name="indexA"></param>

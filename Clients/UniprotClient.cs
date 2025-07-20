@@ -9,8 +9,8 @@ public class UniprotClient
     private static readonly string fastaending = ".fasta";
 
     /// <summary>
-    /// This maps directly to the http://www.uniprot.org/uniprot/uniprot_id.fasta endpoint
-    /// The user only needs to add the id
+    ///     This maps directly to the http://www.uniprot.org/uniprot/uniprot_id.fasta endpoint
+    ///     The user only needs to add the id
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
@@ -31,8 +31,8 @@ public class UniprotClient
     }
 
     /// <summary>
-    /// This maps directly to the http://www.uniprot.org/uniprot/uniprot_id.fasta endpoint
-    /// The user only needs to add the id
+    ///     This maps directly to the http://www.uniprot.org/uniprot/uniprot_id.fasta endpoint
+    ///     The user only needs to add the id
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
@@ -54,7 +54,7 @@ public class UniprotClient
 
     private static string ConvertToUniProtFastaEndpoint(string id)
     {
-        return string.Concat(new string[] { uniprotBaseUrl, id, fastaending });
+        return string.Concat(new[] { uniprotBaseUrl, id, fastaending });
     }
 }
 

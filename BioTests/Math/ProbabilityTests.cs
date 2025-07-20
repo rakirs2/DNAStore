@@ -32,21 +32,21 @@ public class ProbabilityTests
         Assert.AreEqual(24, allPerms.Count());
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void ExpectedDominantOffspringTest()
     {
         var total = Probability.ExpectedDominantOffspring(1, 0, 0, 1, 0, 1, 2);
         Assert.AreEqual(3.5, total);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GenerateAllKmersTest()
     {
         var output = Probability.GenerateAllKmers("acgt", 1);
         Assert.IsTrue(output.SequenceEqual(["a", "c", "g", "t"]));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GenerateAllKmersTest_Length2()
     {
         var output = Probability.GenerateAllKmers("acgt", 2);
@@ -55,7 +55,7 @@ public class ProbabilityTests
         ]));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GenerateAllKmersAndSubKmersTest()
     {
         var output = Probability.GenerateAllKmers("acgt", 1);
@@ -64,7 +64,7 @@ public class ProbabilityTests
         ]));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GenerateAllKmersAndSubKmersTwoTest()
     {
         var output = Probability.GenerateAllKmersAndSubKmers("acgt", 2);

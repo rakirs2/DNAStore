@@ -3,7 +3,7 @@
 public interface IGenerator
 {
     /// <summary>
-    /// Create a sequence of a given type
+    ///     Create a sequence of a given type
     /// </summary>
     /// <param name="length"></param>
     /// <returns></returns>

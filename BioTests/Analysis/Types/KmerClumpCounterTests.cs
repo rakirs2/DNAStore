@@ -2,10 +2,10 @@
 
 namespace Bio.Analysis.Types.Tests;
 
-[TestClass()]
+[TestClass]
 public class KmerClumpCounterTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void KmerClumpCounterTest()
     {
         var seq = new AnySequence(
@@ -16,7 +16,7 @@ public class KmerClumpCounterTests
         Assert.AreEqual(3, counter.MinCount);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GenericCase()
     {
         var seq = new AnySequence(

@@ -2,14 +2,15 @@
 
 namespace Bio.Analysis.Types.Tests;
 
-[TestClass()]
+[TestClass]
 public class FrequencyArrayTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void GetFrequencyArrayInLexicographicOrderTest()
     {
         var sequence = new AnySequence("ACGCGGCTCTGAAA");
         var frequencyArray = new FrequencyArray(sequence);
-        Assert.IsTrue(frequencyArray.GetFrequencyArrayInLexicographicOrder("ACGT", 2).SequenceEqual(new int[] { 2, 1, 0, 0, 0, 0, 2, 2, 1, 2, 1, 0, 0, 1, 1, 0 }));
+        Assert.IsTrue(frequencyArray.GetFrequencyArrayInLexicographicOrder("ACGT", 2)
+            .SequenceEqual(new[] { 2, 1, 0, 0, 0, 0, 2, 2, 1, 2, 1, 0, 0, 1, 1, 0 }));
     }
 }

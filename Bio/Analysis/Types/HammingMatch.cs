@@ -26,5 +26,5 @@ public class HammingMatch : IHammingMatch
     public int ExpectedLength { get; }
     public int Tolerance { get; }
 
-    public string MatchString { get; private set; }
+    public string MatchString { get; }
 }

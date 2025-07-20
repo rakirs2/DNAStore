@@ -1,4 +1,3 @@
-using Base.Utils;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
 

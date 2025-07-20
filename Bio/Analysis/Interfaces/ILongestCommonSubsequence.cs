@@ -6,7 +6,7 @@ namespace Bio.Analysis.Interfaces;
 public interface ILongestCommonSubsequence
 {
     /// <summary>
-    /// Returns any longest subsequence in the List
+    ///     Returns any longest subsequence in the List
     /// </summary>
     /// <returns></returns>
     AnySequence GetAnyLongest();

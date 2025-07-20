@@ -5,16 +5,7 @@ namespace Bio.Analysis.Types;
 
 public class KmerCounter : IKmerCounter
 {
-    /// <summary>
-    /// This only gets the highest value. This is the bareminimum lightweight implementation
-    /// as sequences can theoretically be infinitely large.
-    ///
-    /// TODO: add a heap implementation which can return all of the Kmers and their frequencies
-    /// </summary>
-    public HashSet<string> HighestFrequencyKmers { get; } = new();
-
-    public int CurrentHighestFrequency { get; } = 0;
-    public int KmerLength { get; }
+    private static readonly Dictionary<string, int> Counts = new();
 
     public KmerCounter(AnySequence sequence, int kmerLength)
     {
@@ -29,7 +20,7 @@ public class KmerCounter : IKmerCounter
                 if (Counts[currentWord] > CurrentHighestFrequency)
                 {
                     CurrentHighestFrequency = Counts[currentWord];
-                    HighestFrequencyKmers = new HashSet<string>() { currentWord };
+                    HighestFrequencyKmers = new HashSet<string> { currentWord };
                 }
 
                 if (Counts[currentWord] == CurrentHighestFrequency) HighestFrequencyKmers.Add(currentWord);
@@ -41,5 +32,14 @@ public class KmerCounter : IKmerCounter
         }
     }
 
-    private static readonly Dictionary<string, int> Counts = new();
+    public int CurrentHighestFrequency { get; }
+
+    /// <summary>
+    ///     This only gets the highest value. This is the bareminimum lightweight implementation
+    ///     as sequences can theoretically be infinitely large.
+    ///     TODO: add a heap implementation which can return all of the Kmers and their frequencies
+    /// </summary>
+    public HashSet<string> HighestFrequencyKmers { get; } = new();
+
+    public int KmerLength { get; }
 }

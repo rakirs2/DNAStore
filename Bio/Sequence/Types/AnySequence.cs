@@ -1,5 +1,5 @@
-﻿using Base.DataStructures;
-
+using System.Text;
+using Base.DataStructures;
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -7,51 +7,13 @@ using Bio.Sequence.Interfaces;
 namespace Bio.Sequence.Types;
 
 /// <summary>
-/// Base class for any sequence. This is the main driver for all types of analysis where the program does not
-/// know what type of string we are analyzing.
-///
-/// TODO: this should eventually have 1 static creator which can take in a string and returns the implied typing
+///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
+///     know what type of string we are analyzing.
+///     TODO: this should eventually have 1 static creator which can take in a string and returns the implied typing
 /// </summary>
 public class AnySequence : ISequence
 {
-    public long Length { get; set; }
-    public string RawSequence { get; set; }
-    public string? Name { get; }
-
-    public override bool Equals(object obj)
-    {
-        if (obj is AnySequence other)
-        {
-            return RawSequence == other.RawSequence;
-        }
-
-        return false;
-    }
-
-    public override string ToString()
-    {
-        return RawSequence;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="motif"></param>
-    /// <param name="isZeroIndex"></param>
-    /// <returns></returns>
-    public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
-    {
-        var modifier = isZeroIndex ? 0 : 1;
-        var output = new List<long>();
-        for (var i = 0; i < Length - motif.ExpectedLength; i++)
-            // TODO: make everything an int?
-            // TODO: do I need to make this a long implementation -- does that even help?
-            if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
-                output.Add(i + modifier);
-
-        return output.ToArray();
-    }
-
+    public BasePairDictionary Counts = new();
 
     // TODO: this should be cleaned up
     public AnySequence(string rawSequence)
@@ -71,15 +33,47 @@ public class AnySequence : ISequence
         ConstructionLogic(fasta.RawSequence);
     }
 
-    public BasePairDictionary Counts = new();
+    public long Length { get; set; }
+    public string RawSequence { get; set; }
+    public string? Name { get; }
 
     /// <summary>
-    /// Returns the hamming distance, the difference between any string at any given point.
-    /// Hamming distance requires both sequences to be the same length.
+    /// </summary>
+    /// <param name="motif"></param>
+    /// <param name="isZeroIndex"></param>
+    /// <returns></returns>
+    public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
+    {
+        var modifier = isZeroIndex ? 0 : 1;
+        var output = new List<long>();
+        for (var i = 0; i < Length - motif.ExpectedLength; i++)
+            // TODO: make everything an int?
+            // TODO: do I need to make this a long implementation -- does that even help?
+            if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
+                output.Add(i + modifier);
+
+        return output.ToArray();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is AnySequence other) return RawSequence == other.RawSequence;
+
+        return false;
+    }
+
+    public override string ToString()
+    {
+        return RawSequence;
+    }
+
+    /// <summary>
+    ///     Returns the hamming distance, the difference between any string at any given point.
+    ///     Hamming distance requires both sequences to be the same length.
     /// </summary>
     /// <remarks>
-    /// This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
-    /// Also, hamming distance to hash difference seems intriguing if nothing else
+    ///     This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
+    ///     Also, hamming distance to hash difference seems intriguing if nothing else
     /// </remarks>
     public static long HammingDistance(AnySequence a, AnySequence b)
     {
@@ -112,7 +106,7 @@ public class AnySequence : ISequence
     }
 
     /// <summary>
-    /// This is a pretty simple cleanup t
+    ///     This is a pretty simple cleanup t
     /// </summary>
     /// <param name="bp"></param>
     /// <returns></returns>
@@ -128,7 +122,7 @@ public class AnySequence : ISequence
         foreach (var basePair in rawSequence)
             // TODO: virtual member call in constructor is an issue? why?
             // Ah it's a design flaw on my part -- what's a better way to do this
-            // abstract, 
+            // abstract,
 
             if (IsValid(basePair))
                 Counts.Add(basePair);
@@ -136,6 +130,36 @@ public class AnySequence : ISequence
                 throw new Exception();
 
         Length = RawSequence.Length;
+    }
+
+    // TODO: interface this
+    public AnySequence RemoveIntrons(List<AnySequence> introns)
+    {
+        if (introns == null) throw new ArgumentNullException();
+        // Construct the Trie
+        var trie = new Trie();
+        foreach (var intron in introns) trie.AddWord(intron.RawSequence);
+
+        var outputString = new StringBuilder();
+
+        for (var i = 0; i < RawSequence.Length; i++)
+        {
+            var isValid = true;
+            for (var j = 0; j < trie.MaxStringLength; j++)
+            {
+                if (i + j > RawSequence.Length - 1) break;
+
+                if (trie.Search(RawSequence.Substring(i, j + 1)))
+                {
+                    i += j;
+                    isValid = false;
+                }
+            }
+
+            if (isValid) outputString.Append(RawSequence[i]);
+        }
+
+        return new AnySequence(outputString.ToString());
     }
 
     public override int GetHashCode()

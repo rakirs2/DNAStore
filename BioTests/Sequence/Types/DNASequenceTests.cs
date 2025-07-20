@@ -21,12 +21,12 @@ public class DNASequenceTests
         Assert.AreEqual("ACCGGGTTTT", complement.RawSequence);
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void RestrictionSitesTest()
     {
         var sequence = new DNASequence("TCAATGCATGCGGGTCTATATGCAT");
         var actual = sequence.RestrictionSites();
-        var expected = new List<Tuple<int, int>>()
+        var expected = new List<Tuple<int, int>>
         {
             new(4, 6),
             new(5, 4),
@@ -41,25 +41,27 @@ public class DNASequenceTests
         Assert.IsTrue(actual.SequenceEqual(expected));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GetCandidateProteinSequencesTest()
     {
         var testDNASequence = new DNASequence("ATGTAG");
         var result = testDNASequence.GetCandidateProteinSequences();
-        var expected = new List<ProteinSequence>()
+        var expected = new List<ProteinSequence>
         {
             new("M")
         };
 
-        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+        Assert.IsTrue(expected.SequenceEqual(result));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GetCandidateProteinSequencesWithReverseComplementTest()
     {
-        var testDNASequence = new DNASequence("AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG");
+        var testDNASequence =
+            new DNASequence(
+                "AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG");
         var result = testDNASequence.GetCandidateProteinSequences();
-        var expected = new List<ProteinSequence>()
+        var expected = new List<ProteinSequence>
         {
             new("M"),
             new("MGMTPRLGLESLLE"),
@@ -68,6 +70,6 @@ public class DNASequenceTests
         };
 
         // TODO: this is not the right way to test this
-        Assert.IsTrue(Enumerable.SequenceEqual(expected, result));
+        Assert.IsTrue(expected.SequenceEqual(result));
     }
 }

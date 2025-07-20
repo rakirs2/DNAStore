@@ -3,13 +3,13 @@ using Bio.IO;
 
 namespace BioTests.Analysis.Types;
 
-[TestClass()]
+[TestClass]
 public class LongestCommonSubsequenceTests
 {
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
         "../../../../BioTests/TestData/LongestSubsequence.fasta");
 
-    [TestMethod()]
+    [TestMethod]
     public void LongestCommonSubsequenceTest()
     {
         var result = new LongestCommonSubsequence(FastaParser.Read(_filePath));

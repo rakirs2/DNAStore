@@ -2,10 +2,10 @@
 
 namespace BioTests.Analysis.Types;
 
-[TestClass()]
+[TestClass]
 public class HammingMatchTests
 {
-    [TestMethod()]
+    [TestMethod]
     public void HammingMatchTest()
     {
         var hm = new HammingMatch("abcde", 1);
@@ -14,7 +14,7 @@ public class HammingMatchTests
         Assert.AreEqual(1, hm.Tolerance);
     }
 
-    [TestMethod()]
+    [TestMethod]
     [ExpectedException(typeof(NotImplementedException))]
     public void IsMatchTest()
     {
@@ -22,21 +22,21 @@ public class HammingMatchTests
         hm.IsMatch("abcde");
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void IsMatchStrictTest()
     {
         var hm = new HammingMatch("abcde", 1);
         Assert.IsTrue(hm.IsMatchStrict("abcde"));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void IsMatchStrictTestOffBy1()
     {
         var hm = new HammingMatch("abcde", 1);
         Assert.IsTrue(hm.IsMatchStrict("abcdf"));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void IsMatchStrictTestOffByMoreThanTolerance()
     {
         var hm = new HammingMatch("abcff", 1);

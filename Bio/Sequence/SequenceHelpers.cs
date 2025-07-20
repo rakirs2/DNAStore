@@ -1,100 +1,10 @@
 ﻿using System.Text;
-
 using Base.Utils;
 
 namespace Bio.Sequence;
 
 public class SequenceHelpers
 {
-    // TODO: might be worth using a different string comparator if perf ever becomes an issue.
-    public static bool IsKnownRNADifferentiator(char c)
-    {
-        return DistinctRNAMarkers.Contains(char.ToUpperInvariant(c));
-    }
-
-    public static bool IsKnownProteinDifferentiator(char c)
-    {
-        return DistinctProteinMarkers.Contains(char.ToUpperInvariant(c));
-    }
-
-    public static bool IsValidRNA(char c)
-    {
-        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
-    }
-
-    public static bool IsValidDNA(char c)
-    {
-        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
-    }
-
-
-    public static List<string> AllPossibleKmersList(string kmers)
-    {
-        var output = new List<string>();
-        // TODO: check the pass by ref here (shouldn't be needed);
-        GeneratePerms(kmers.Length, ref kmers, ref output);
-        return output;
-    }
-
-    private static void GeneratePerms(int currentLength, ref string inputString, ref List<string> arrayToAddTo)
-    {
-        if (currentLength == 1)
-            arrayToAddTo.Add(inputString);
-        else
-            for (var i = 0; i < currentLength; i++)
-            {
-                GeneratePerms(currentLength - 1, ref inputString, ref arrayToAddTo);
-                if (currentLength % 2 == 0)
-                    inputString = StringUtils.SwapIndex(inputString, currentLength - 1, i);
-                else
-                    inputString = StringUtils.SwapIndex(inputString, 0, currentLength - 1);
-            }
-        //for i in range(n):
-        //generate(n - 1)
-        //if n % 2 == 0:
-        //nums[i], nums[n - 1] = nums[n - 1], nums[i]
-        //else:
-        //nums[0], nums[n - 1] = nums[n - 1], nums[0]
-    }
-
-    // Maybe this belongs on the codon class
-    public static string ConvertStringToProtein(string input)
-    {
-        if (input.Length % 3 != 0) throw new InvalidDataException("String must have length mod 3");
-
-        var convertedRNA = new StringBuilder();
-        var i = 0;
-        var hitStop = false;
-        while (i < input.Length && !hitStop)
-        {
-            var temp = RNAToProteinConverter(input.Substring(i, 3));
-            if (temp.Length == 1)
-            {
-                convertedRNA.Append(temp);
-                i += 3;
-            }
-            else
-            {
-                hitStop = true;
-            }
-        }
-
-        return convertedRNA.ToString();
-    }
-
-    public static string RNAToProteinConverter(string codon)
-    {
-        if (RNAToProteinCode.TryGetValue(codon, out var value))
-            return value;
-
-        throw new InvalidDataException("Value does not exist");
-    }
-
-    public static int NumberOfPossibleProteins(string protein)
-    {
-        return ProteinCodesToRNA[protein].Count;
-    }
-
     /*
         RNA/DNA
         A --> adenosine           M --> A C (amino)
@@ -247,4 +157,93 @@ public class SequenceHelpers
 
     private static readonly HashSet<char>
         DistinctProteinMarkers = ['E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*'];
+
+    // TODO: might be worth using a different string comparator if perf ever becomes an issue.
+    public static bool IsKnownRNADifferentiator(char c)
+    {
+        return DistinctRNAMarkers.Contains(char.ToUpperInvariant(c));
+    }
+
+    public static bool IsKnownProteinDifferentiator(char c)
+    {
+        return DistinctProteinMarkers.Contains(char.ToUpperInvariant(c));
+    }
+
+    public static bool IsValidRNA(char c)
+    {
+        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
+    }
+
+    public static bool IsValidDNA(char c)
+    {
+        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
+    }
+
+
+    public static List<string> AllPossibleKmersList(string kmers)
+    {
+        var output = new List<string>();
+        // TODO: check the pass by ref here (shouldn't be needed);
+        GeneratePerms(kmers.Length, ref kmers, ref output);
+        return output;
+    }
+
+    private static void GeneratePerms(int currentLength, ref string inputString, ref List<string> arrayToAddTo)
+    {
+        if (currentLength == 1)
+            arrayToAddTo.Add(inputString);
+        else
+            for (var i = 0; i < currentLength; i++)
+            {
+                GeneratePerms(currentLength - 1, ref inputString, ref arrayToAddTo);
+                if (currentLength % 2 == 0)
+                    inputString = StringUtils.SwapIndex(inputString, currentLength - 1, i);
+                else
+                    inputString = StringUtils.SwapIndex(inputString, 0, currentLength - 1);
+            }
+        //for i in range(n):
+        //generate(n - 1)
+        //if n % 2 == 0:
+        //nums[i], nums[n - 1] = nums[n - 1], nums[i]
+        //else:
+        //nums[0], nums[n - 1] = nums[n - 1], nums[0]
+    }
+
+    // Maybe this belongs on the codon class
+    public static string ConvertStringToProtein(string input)
+    {
+        if (input.Length % 3 != 0) throw new InvalidDataException("String must have length mod 3");
+
+        var convertedRNA = new StringBuilder();
+        var i = 0;
+        var hitStop = false;
+        while (i < input.Length && !hitStop)
+        {
+            var temp = RNAToProteinConverter(input.Substring(i, 3));
+            if (temp.Length == 1)
+            {
+                convertedRNA.Append(temp);
+                i += 3;
+            }
+            else
+            {
+                hitStop = true;
+            }
+        }
+
+        return convertedRNA.ToString();
+    }
+
+    public static string RNAToProteinConverter(string codon)
+    {
+        if (RNAToProteinCode.TryGetValue(codon, out var value))
+            return value;
+
+        throw new InvalidDataException("Value does not exist");
+    }
+
+    public static int NumberOfPossibleProteins(string protein)
+    {
+        return ProteinCodesToRNA[protein].Count;
+    }
 }

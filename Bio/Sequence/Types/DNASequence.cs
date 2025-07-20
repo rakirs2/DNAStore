@@ -1,30 +1,12 @@
 ﻿using System.Text;
-
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 
 public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), IDNA
 {
-    // Should this be static, should this be a class conversion
-    // For now, let's just let it be an explicit conversion, pay for the new class
-    public RNASequence TranscribeToRNA()
-    {
-        return new RNASequence(RawSequence.Replace('T', 'U'));
-    }
-
-    /// <summary>
-    /// Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
-    /// TODO: What if we can't do this all in memory?
-    /// </summary>
-    /// <returns></returns>
-    public DNASequence ToReverseComplement()
-    {
-        var dnaStrand = new StringBuilder();
-        for (var i = RawSequence.Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[RawSequence[i]]);
-
-        return new DNASequence(dnaStrand.ToString());
-    }
+    private static readonly Dictionary<char, char> ComplementDict = new()
+        { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
     public List<Tuple<int, int>> RestrictionSites()
     {
@@ -48,9 +30,29 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output;
     }
 
+    // Should this be static, should this be a class conversion
+    // For now, let's just let it be an explicit conversion, pay for the new class
+    public RNASequence TranscribeToRNA()
+    {
+        return new RNASequence(RawSequence.Replace('T', 'U'));
+    }
+
     /// <summary>
-    /// Simple algorithm using Open Reading frames. We go through each possible starting location.
-    /// An Open Reading Frame, by definition, must contain a start or Methionine and a stop codon.
+    ///     Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
+    ///     TODO: What if we can't do this all in memory?
+    /// </summary>
+    /// <returns></returns>
+    public DNASequence ToReverseComplement()
+    {
+        var dnaStrand = new StringBuilder();
+        for (var i = RawSequence.Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[RawSequence[i]]);
+
+        return new DNASequence(dnaStrand.ToString());
+    }
+
+    /// <summary>
+    ///     Simple algorithm using Open Reading frames. We go through each possible starting location.
+    ///     An Open Reading Frame, by definition, must contain a start or Methionine and a stop codon.
     /// </summary>
     /// <returns></returns>
     public List<ProteinSequence> GetCandidateProteinSequences()
@@ -69,13 +71,11 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         HashSet<string> filter = new();
         List<ProteinSequence> output = new();
         foreach (var sequence in values)
-        {
             if (!filter.Contains(sequence.RawSequence))
             {
                 output.Add(sequence);
                 filter.Add(sequence.RawSequence);
             }
-        }
 
 
         return output.ToList();
@@ -83,8 +83,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     public static void SingleReadToProteinSequences(DNASequence dnaSequence, ref List<ProteinSequence> output)
     {
-        for (int i = 0; i <= dnaSequence.RawSequence.Length - 3; i++)
-        {
+        for (var i = 0; i <= dnaSequence.RawSequence.Length - 3; i++)
             if (SequenceHelpers.DNAToProteinCode[dnaSequence.RawSequence.Substring(i, 3)].Equals("M"))
             {
                 var k = i + 3;
@@ -102,9 +101,5 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
                     k += 3;
                 }
             }
-        }
     }
-
-    private static readonly Dictionary<char, char> ComplementDict = new()
-        { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 }
