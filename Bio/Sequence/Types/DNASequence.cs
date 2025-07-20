@@ -1,4 +1,5 @@
 ﻿using System.Text;
+
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
@@ -14,13 +15,13 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         // if the reverse complement of the string 
         // n^2 complexity. There might be some interesting palindromic logic but let's avoid that for now
         var output = new List<Tuple<int, int>>();
-        for (var i = 0; i < RawSequence.Length; i++)
+        for (var i = 0; i < Length; i++)
         {
             var j = 4;
             // TODO: verify these
-            while (i + j <= RawSequence.Length && j <= 12)
+            while (i + j <= Length && j <= 12)
             {
-                var subStringDNA = new DNASequence(RawSequence.Substring(i, j));
+                var subStringDNA = new DNASequence(Substring(i, j));
                 var reverseComplement = subStringDNA.ToReverseComplement();
                 if (AreSequenceEqual(subStringDNA, reverseComplement)) output.Add(new Tuple<int, int>(i + 1, j));
                 j++;
@@ -34,7 +35,8 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     // For now, let's just let it be an explicit conversion, pay for the new class
     public RNASequence TranscribeToRNA()
     {
-        return new RNASequence(RawSequence.Replace('T', 'U'));
+        // TODO: maybe there's a better way to do this
+        return new RNASequence(ToString().Replace('T', 'U'));
     }
 
     /// <summary>
@@ -44,8 +46,9 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     /// <returns></returns>
     public DNASequence ToReverseComplement()
     {
+        // TODO: this should probably be all ints
         var dnaStrand = new StringBuilder();
-        for (var i = RawSequence.Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[RawSequence[i]]);
+        for (var i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
 
         return new DNASequence(dnaStrand.ToString());
     }
@@ -71,10 +74,10 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         HashSet<string> filter = new();
         List<ProteinSequence> output = new();
         foreach (var sequence in values)
-            if (!filter.Contains(sequence.RawSequence))
+            if (!filter.Contains(sequence.ToString()))
             {
                 output.Add(sequence);
-                filter.Add(sequence.RawSequence);
+                filter.Add(sequence.ToString());
             }
 
 
@@ -83,14 +86,14 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     public static void SingleReadToProteinSequences(DNASequence dnaSequence, ref List<ProteinSequence> output)
     {
-        for (var i = 0; i <= dnaSequence.RawSequence.Length - 3; i++)
-            if (SequenceHelpers.DNAToProteinCode[dnaSequence.RawSequence.Substring(i, 3)].Equals("M"))
+        for (var i = 0; i <= dnaSequence.Length - 3; i++)
+            if (SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(i, 3)].Equals("M"))
             {
                 var k = i + 3;
                 var seqToAdd = "M";
-                while (k <= dnaSequence.RawSequence.Length - 3)
+                while (k <= dnaSequence.Length - 3)
                 {
-                    var current = SequenceHelpers.DNAToProteinCode[dnaSequence.RawSequence.Substring(k, 3)];
+                    var current = SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(k, 3)];
                     if (current.Equals("Stop"))
                     {
                         output.Add(new ProteinSequence(seqToAdd));

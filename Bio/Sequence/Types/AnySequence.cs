@@ -29,7 +29,8 @@ public class AnySequence : ISequence
     }
     public long Length => RawSequence.Length;
 
-    public string RawSequence { get; set; }
+    private string RawSequence { get; set; }
+
     public string? Name { get; }
 
     /// <summary>
@@ -62,6 +63,10 @@ public class AnySequence : ISequence
 
     #region String Manipulators
 
+    public char this[int index] => RawSequence[index];
+
+    public string Substring(int i, int kmerLength) => RawSequence.Substring(i, kmerLength);
+
     #endregion
 
     /// <summary>
@@ -78,7 +83,7 @@ public class AnySequence : ISequence
 
         var result = 0;
         for (var i = 0; i < a.Length; i++)
-            if (a.RawSequence[i] != b.RawSequence[i])
+            if (a[i] != b[i])
                 result++;
 
         return result;

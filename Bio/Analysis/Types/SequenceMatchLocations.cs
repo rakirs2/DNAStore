@@ -18,8 +18,8 @@ public class SequenceMatchLocations : ISequenceMatchLocator
     public List<int> GetLocations()
     {
         var output = new List<int>();
-        for (var i = 0; i < _sequence.RawSequence.Length - _matchLogic.ExpectedLength; i++)
-            if (_matchLogic.IsMatchStrict(_sequence.RawSequence.Substring(i, _matchLogic.ExpectedLength)))
+        for (var i = 0; i < _sequence.Length - _matchLogic.ExpectedLength; i++)
+            if (_matchLogic.IsMatchStrict(_sequence.Substring(i, _matchLogic.ExpectedLength)))
                 output.Add(i);
 
         return output;

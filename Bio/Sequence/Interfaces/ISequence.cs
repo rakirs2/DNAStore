@@ -11,11 +11,6 @@ public interface ISequence
     long Length { get; }
 
     /// <summary>
-    ///     The full sequence getting stored.
-    /// </summary>
-    string RawSequence { get; }
-
-    /// <summary>
     ///     The name of the sequence at construction
     /// </summary>
     string? Name { get; }

@@ -10,7 +10,7 @@ public class DNASequenceTests
     {
         var sequence = new DNASequence("GATGGAACTTGACTACGTAAATT");
         var rnaSequence = sequence.TranscribeToRNA();
-        Assert.AreEqual("GAUGGAACUUGACUACGUAAAUU", rnaSequence.RawSequence);
+        Assert.AreEqual("GAUGGAACUUGACUACGUAAAUU", rnaSequence.ToString());
     }
 
     [TestMethod]
@@ -18,7 +18,7 @@ public class DNASequenceTests
     {
         var sequence = new DNASequence("AAAACCCGGT");
         var complement = sequence.ToReverseComplement();
-        Assert.AreEqual("ACCGGGTTTT", complement.RawSequence);
+        Assert.AreEqual("ACCGGGTTTT", complement.ToString());
     }
 
     [TestMethod]

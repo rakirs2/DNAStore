@@ -11,10 +11,10 @@ public class KmerCounter : IKmerCounter
     {
         KmerLength = kmerLength;
         // ok, we need to populate the right values here
-        for (var i = 0; i < sequence.RawSequence.Length - KmerLength + 1; i++)
+        for (var i = 0; i < sequence.Length - KmerLength + 1; i++)
         {
-            var currentWord = sequence.RawSequence.Substring(i, KmerLength);
-            if (Counts.ContainsKey(sequence.RawSequence.Substring(i, KmerLength)))
+            var currentWord = sequence.Substring(i, KmerLength);
+            if (Counts.ContainsKey(sequence.Substring(i, KmerLength)))
             {
                 Counts[currentWord] += 1;
                 if (Counts[currentWord] > CurrentHighestFrequency)

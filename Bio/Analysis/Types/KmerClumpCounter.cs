@@ -20,7 +20,7 @@ public class KmerClumpCounter : IKmerClumpCounter
         KmerLength = kmerLength;
         MinCount = minCount;
         // Always assume that we are adding to a proper Dictionary
-        for (var i = 0; i <= sequence.RawSequence.Length - KmerLength; i++)
+        for (var i = 0; i <= sequence.Length - KmerLength; i++)
         {
             while (_orderQueue.Count >= ScanLength)
             {
@@ -28,7 +28,7 @@ public class KmerClumpCounter : IKmerClumpCounter
                 _slidingCounter[temp] -= 1;
             }
 
-            var current = sequence.RawSequence.Substring(i, kmerLength);
+            var current = sequence.Substring(i, kmerLength);
             _orderQueue.Enqueue(current);
 
             _slidingCounter.TryAdd(current, 0);
