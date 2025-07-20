@@ -1,6 +1,7 @@
-﻿using System.Text;
+using System.Text;
 
 using Base.DataStructures;
+
 
 using Bio.Analysis.Types;
 using Bio.IO;
@@ -20,8 +21,23 @@ public class AnySequence : ISequence
     public string RawSequence { get; set; }
     public string? Name { get; }
 
+    public override bool Equals(object obj)
+    {
+        if (obj is AnySequence other)
+        {
+            return RawSequence == other.RawSequence;
+        }
+
+        return false;
+    }
+
+    public override string ToString()
+    {
+        return RawSequence;
+    }
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="motif"></param>
     /// <param name="isZeroIndex"></param>
@@ -119,7 +135,7 @@ public class AnySequence : ISequence
         foreach (var basePair in rawSequence)
             // TODO: virtual member call in constructor is an issue? why?
             // Ah it's a design flaw on my part -- what's a better way to do this
-            // abstract, 
+            // abstract,
 
             if (IsValid(basePair))
                 Counts.Add(basePair);
@@ -169,5 +185,10 @@ public class AnySequence : ISequence
         }
 
         return new AnySequence(outputString.ToString());
+    }
+
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException();
     }
 }

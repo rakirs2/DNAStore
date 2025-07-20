@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
 
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
@@ -55,6 +56,7 @@ internal class InputProcessor
                 "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
                 "GenerateFrequencyArray" => new GenerateFrequencyArray(),
                 "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
+                "CandidateProteinsFromDNA" => new CandidateProteinsFromDNA(),
                 "SplicedDNAToProtein" => new SplicedDNAToProtein(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
@@ -83,7 +85,7 @@ internal class InputProcessor
         protected abstract void CalculateResult();
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         protected abstract void OutputResult();
 
