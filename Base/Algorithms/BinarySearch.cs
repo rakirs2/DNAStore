@@ -2,7 +2,7 @@
 public static class BinarySearch
 {
     // TODO: generalize this, C# already has it
-    // A fun exercise would be to use this for 
+    // A fun exercise would be to use this for sequences
     // This assumes the array is already sorted.
     // TODO rename to "custom" something
     public static bool Contains(List<int> arrayToCheck, int value)
@@ -32,7 +32,7 @@ public static class BinarySearch
             int middle = left + ((right - left) / 2);
             if (arrayToCheck[middle] == value)
                 return middle;
-            else if (arrayToCheck[middle] < value)
+            if (arrayToCheck[middle] < value)
                 left = middle + 1;
             else
                 right = middle - 1;
@@ -41,12 +41,18 @@ public static class BinarySearch
         return -1;
     }
 
-    public static List<int> GetIndices(List<int> arrayToCheck, List<int> values)
+    public static List<int> GetIndices(List<int> arrayToCheck, List<int> values, bool oneIndex = false)
     {
         var output = new List<int>();
         foreach (var value in values)
         {
-            output.Add(GetIndexAt(arrayToCheck, value));
+            var index = GetIndexAt(arrayToCheck, value);
+            if (oneIndex)
+                output.Add(index == -1 ? -1 : index + 1);
+            else
+            {
+                output.Add(index);
+            }
         }
 
         return output;
