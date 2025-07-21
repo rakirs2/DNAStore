@@ -187,7 +187,7 @@ internal class InputProcessor
 
         protected override void OutputResult()
         {
-            foreach (var protein in _proteins) Console.WriteLine(protein.RawSequence);
+            foreach (var protein in _proteins) Console.WriteLine(protein);
         }
     }
 
@@ -363,7 +363,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = _dnaSequence?.ToReverseComplement().RawSequence;
+            output = _dnaSequence?.ToReverseComplement().ToString();
         }
 
         protected override void OutputResult()
@@ -465,7 +465,7 @@ internal class InputProcessor
 
         protected override void OutputResult()
         {
-            Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest().RawSequence}");
+            Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest()}");
         }
     }
 
@@ -711,7 +711,7 @@ internal class InputProcessor
 
         protected override void OutputResult()
         {
-            Console.WriteLine(matrix.GetProfileSequence().RawSequence);
+            Console.WriteLine(matrix.GetProfileSequence());
             Console.WriteLine(matrix.FrequencyMatrix());
         }
     }
@@ -853,7 +853,7 @@ internal class InputProcessor
 
         private void OutputResult()
         {
-            Console.WriteLine(_dnaSequence?.TranscribeToRNA().RawSequence);
+            Console.WriteLine(_dnaSequence?.TranscribeToRNA());
         }
     }
 

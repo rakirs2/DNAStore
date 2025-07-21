@@ -10,7 +10,7 @@ public class RNASequence : NucleotideSequence, IRNA
 
     public string GetExpectedProteinString()
     {
-        return SequenceHelpers.ConvertStringToProtein(RawSequence);
+        return SequenceHelpers.ConvertStringToProtein(ToString());
     }
 
     public int GetPotentialNumberOfDNAStrings(int mod)

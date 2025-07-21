@@ -100,7 +100,7 @@ public class AnySequenceTests
     {
         var seq1 = new AnySequence("abcde");
         var output = seq1.RemoveIntrons(new List<AnySequence> { new("a") });
-        Assert.AreEqual("bcde", output.RawSequence);
+        Assert.AreEqual("bcde", output.ToString());
     }
 
     [TestMethod]
@@ -108,7 +108,7 @@ public class AnySequenceTests
     {
         var seq1 = new AnySequence("abcde");
         var output = seq1.RemoveIntrons(new List<AnySequence> { new("e") });
-        Assert.AreEqual("abcd", output.RawSequence);
+        Assert.AreEqual("abcd", output.ToString());
     }
 
     [TestMethod]
@@ -117,6 +117,6 @@ public class AnySequenceTests
     {
         var seq1 = new AnySequence("abcde");
         var output = seq1.RemoveIntrons(null);
-        Assert.AreEqual("abcde", output.RawSequence);
+        Assert.AreEqual("abcde", output.ToString());
     }
 }

@@ -22,11 +22,11 @@ public abstract class NucleotideSequence : AnySequence, INucleotideSequence
         var globalMin = int.MaxValue;
         var currentMin = 0;
         var output = new List<int>();
-        for (var i = 0; i < RawSequence.Length; i++)
+        for (var i = 0; i < Length; i++)
         {
-            if (RawSequence[i].Equals('C')) currentMin -= 1;
+            if (this[i].Equals('C')) currentMin -= 1;
 
-            if (RawSequence[i].Equals('G')) currentMin += 1;
+            if (this[i].Equals('G')) currentMin += 1;
 
             // Preliminary prefix logic
             if (currentMin < globalMin)
