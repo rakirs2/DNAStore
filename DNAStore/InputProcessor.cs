@@ -2,6 +2,7 @@
 using System.Text;
 
 using Base.Algorithms;
+using Base.DataStructures;
 
 using Bio.Analysis.Types;
 using Bio.IO;
@@ -74,6 +75,7 @@ internal class InputProcessor
                 "CandidateProteinsFromDNA" => new CandidateProteinsFromDNA(),
                 "SplicedDNAToProtein" => new SplicedDNAToProtein(),
                 "BinarySearchArray" => new BinarySearchArray(),
+                "EdgeList" => new EdgeList(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -313,6 +315,50 @@ internal class InputProcessor
         protected override void OutputResult()
         {
             Console.WriteLine(string.Join(" ", output));
+        }
+    }
+    private class EdgeList : BaseExecutor
+    {
+        private List<Tuple<int, int>>? inputs = new();
+        private Graph graph = new();
+        private List<int>? output;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please Input the string in question");
+            var inputString = "";
+            while (true)
+            {
+                inputString = Console.ReadLine();
+                if (inputString.Equals("done"))
+                    break;
+
+                var temp = inputString?
+                    .Split(" ") // Split the string by the delimiter
+                    .Select(int.Parse) // Convert each substring to an integer
+                    .ToList();
+                inputs.Add(new Tuple<int, int>(temp[0], temp[1]));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            foreach (var input in inputs)
+            {
+                graph.Insert(input.Item1, input.Item2);
+            }
+        }
+
+        protected override void OutputResult()
+        {
+            var output = graph.GetEdgeList();
+            var edgeCounts = new List<int>() { };
+            foreach (var kvp in output)
+            {
+                edgeCounts.Add(kvp.Value.Count);
+            }
+
+            Console.WriteLine(string.Join(' ', edgeCounts));
         }
     }
     private class ClumpFinder : BaseExecutor
