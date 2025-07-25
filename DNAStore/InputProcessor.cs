@@ -4,6 +4,8 @@ using System.Text;
 using Base.Algorithms;
 using Base.DataStructures;
 
+using Base.Algorithms;
+
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Math;
@@ -287,6 +289,36 @@ internal class InputProcessor
         }
     }
     private class BinarySearchArray : BaseExecutor
+    {
+        private List<int>? inputs;
+        private List<int>? valuesToCheck;
+        private List<int>? output;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please Input the string in question");
+            var inputString = Console.ReadLine();
+            inputs = inputString?
+                .Split(" ") // Split the string by the delimiter
+                .Select(int.Parse) // Convert each substring to an integer
+                .ToList();
+            var valuesToCheckString = Console.ReadLine();
+            valuesToCheck = valuesToCheckString?
+                .Split(" ") // Split the string by the delimiter
+                .Select(int.Parse) // Convert each substring to an integer
+                .ToList();
+        }
+
+        protected override void CalculateResult()
+        {
+            output = BinarySearch.GetIndices(inputs, valuesToCheck, true);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine(string.Join(" ", output));
+        }
+    }    private class BinarySearchArray : BaseExecutor
     {
         private List<int>? inputs;
         private List<int>? valuesToCheck;
