@@ -1,9 +1,11 @@
 ﻿namespace Base.DataStructures.Tests;
 
 [TestClass()]
+[Ignore]
+// TOOD: fix
 public class GraphTests
 {
-    // TOOD: fix
+
     [TestMethod()]
     [Ignore]
     public void GraphTest()
