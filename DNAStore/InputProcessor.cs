@@ -76,6 +76,7 @@ internal class InputProcessor
                 "SplicedDNAToProtein" => new SplicedDNAToProtein(),
                 "BinarySearchArray" => new BinarySearchArray(),
                 "EdgeList" => new EdgeList(),
+                "EdgeToMakeTree" => new EdgesToMakeTree(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -361,6 +362,49 @@ internal class InputProcessor
             Console.WriteLine(string.Join(' ', edgeCounts));
         }
     }
+    private class EdgesToMakeTree : BaseExecutor
+    {
+        private List<Tuple<int, int>>? inputs = new();
+        private Graph<int>? graph;
+        private List<int>? output;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input the size of the array");
+            var inputString = Console.ReadLine();
+            if (int.TryParse(inputString, out var size))
+            {
+                graph = new Graph<int>(size);
+            }
+
+            while (true)
+            {
+                inputString = Console.ReadLine();
+                if (inputString.Equals("done"))
+                    break;
+
+                var temp = inputString?
+                    .Split(" ") // Split the string by the delimiter
+                    .Select(int.Parse) // Convert each substring to an integer
+                    .ToList();
+                inputs.Add(new Tuple<int, int>(temp[0], temp[1]));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            foreach (var input in inputs)
+            {
+                graph.Insert(input.Item1, input.Item2);
+            }
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine(graph.EdgesToMakeTree());
+        }
+    }
+
     private class ClumpFinder : BaseExecutor
     {
         private AnySequence? _a;
