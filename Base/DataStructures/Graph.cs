@@ -1,16 +1,15 @@
-﻿using Base.Utils;
+﻿namespace Base.DataStructures;
 
-namespace Base.DataStructures;
-
-// TODO: get this with generics as an exercise
-public class Graph
+public class Graph<T> : ICloneable, IEquatable<Graph<T>>
 {
-    public Graph()
+    private readonly SortedDictionary<T, HashSet<T>> tracker;
+
+    public Graph(IComparer<T>? comparer = null)
     {
-        tracker = new SortedDictionary<int, HashSet<int>>(new IntComparer());
+        tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
 
-    public void Insert(int start, int end)
+    public void Insert(T start, T end)
     {
         if (tracker.ContainsKey(start))
         {
@@ -18,7 +17,7 @@ public class Graph
         }
         else
         {
-            tracker[start] = new HashSet<int>() { end };
+            tracker[start] = new HashSet<T>() { end };
         }
 
         if (tracker.ContainsKey(end))
@@ -27,21 +26,59 @@ public class Graph
         }
         else
         {
-            tracker[end] = new HashSet<int>() { start };
+            tracker[end] = new HashSet<T>() { start };
         }
     }
 
-    public void Remove<T>(T item)
+    public void Remove(T item)
     {
         throw new NotImplementedException();
     }
 
-    public Dictionary<int, HashSet<int>> GetEdgeList()
+    public Dictionary<T, HashSet<T>> GetEdgeList()
     {
         return tracker.ToDictionary();
     }
 
+    public int EdgesToMakeTree()
+    {
+        // probably don't need the full clone here
+        var newTracker = Clone();
+
+        return 0;
+    }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 
 
-    private SortedDictionary<int, HashSet<int>> tracker;
+    protected bool Equals(Graph<T> other)
+    {
+        return GraphEquality(this, other);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != GetType()) return false;
+        return Equals((Graph<T>)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return tracker.GetHashCode();
+    }
+
+    public static bool GraphEquality(Graph<T> first, Graph<T> other)
+    {
+        return first.GetEdgeList().Count == other.GetEdgeList().Count && !first.GetEdgeList().Except(other.GetEdgeList()).Any();
+    }
+
+    bool IEquatable<Graph<T>>.Equals(Graph<T>? other)
+    {
+        return Equals(other);
+    }
 }

@@ -320,7 +320,7 @@ internal class InputProcessor
     private class EdgeList : BaseExecutor
     {
         private List<Tuple<int, int>>? inputs = new();
-        private Graph graph = new();
+        private Graph<int> graph = new();
         private List<int>? output;
 
         protected override void GetInputs()
