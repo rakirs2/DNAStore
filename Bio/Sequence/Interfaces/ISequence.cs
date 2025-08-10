@@ -26,4 +26,12 @@ public interface ISequence
     /// <param name="introns"></param>
     /// <returns></returns>
     public AnySequence RemoveIntrons(List<AnySequence> introns);
+
+    /// <summary>
+    /// Returns the indices of the first possible subsequence within the sequence
+    /// </summary>
+    /// <param name="subsequence"></param>
+    /// <param name="isZeroIndex"></param>
+    /// <returns></returns>
+    public List<int> FindFirstPossibleSubSequence(AnySequence subsequence, bool isZeroIndex = false);
 }

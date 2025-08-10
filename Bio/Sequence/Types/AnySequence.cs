@@ -164,8 +164,32 @@ public class AnySequence : ISequence
         return new AnySequence(outputString.ToString());
     }
 
+
     public override int GetHashCode()
     {
         throw new NotImplementedException();
+    }
+
+    public List<int> FindFirstPossibleSubSequence(AnySequence subsequence, bool isZeroIndex = false)
+    {
+        if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
+            return new List<int>();
+
+        var modifier = isZeroIndex ? 0 : 1;
+        var indices = new List<int>();
+        int i = 0;
+        int j = 0;
+        while (i < Length && j < subsequence.Length)
+        {
+            if (RawSequence[i].Equals(subsequence[j]))
+            {
+                indices.Add(i + modifier);
+                j++;
+            }
+
+            i++;
+        }
+
+        return indices;
     }
 }
