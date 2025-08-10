@@ -1,4 +1,4 @@
-﻿using Bio.Math;
+﻿using BioMath;
 
 namespace BioTests.Math;
 

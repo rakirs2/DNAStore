@@ -1,9 +1,7 @@
 ﻿using System.Numerics;
 
-namespace Bio.Math;
+namespace BioMath;
 
-// TODO: find a new namespace that's not math
-// Consider BioMath as a new project?
 public static class Probability
 {
     /// <summary>
@@ -18,7 +16,7 @@ public static class Probability
     {
         var total = k + m + n;
         var totalCombinations = 4 * Combinations(total, 2);
-        var dominant = 4 * Combinations(k, 2) + 4 * k * m + 4 * k * n + 3 * Combinations(m, 2) + 2 * m * n;
+        var dominant = (4 * Combinations(k, 2)) + (4 * k * m) + (4 * k * n) + (3 * Combinations(m, 2)) + (2 * m * n);
 
         return (double)(int)dominant / (int)totalCombinations;
     }
@@ -101,8 +99,8 @@ public static class Probability
 
         var newOutput = new List<string>();
         foreach (var bp in kmers)
-        foreach (var currentSequence in output)
-            newOutput.Add(bp + currentSequence);
+            foreach (var currentSequence in output)
+                newOutput.Add(bp + currentSequence);
 
         return newOutput;
     }

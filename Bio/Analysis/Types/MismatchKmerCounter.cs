@@ -1,5 +1,4 @@
 ﻿using Bio.Analysis.Interfaces;
-using Bio.Math;
 using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
@@ -23,7 +22,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
 
     public HashSet<string> GetKmers(string matchString, bool checkComplement = false)
     {
-        var listPossible = Probability.GenerateAllKmers(matchString, KmerLength);
+        var listPossible = BioMath.Probability.GenerateAllKmers(matchString, KmerLength);
         foreach (var kmer in listPossible) MismatchDictionaryTracker[kmer] = 0;
 
         var currentHighest = 0;
