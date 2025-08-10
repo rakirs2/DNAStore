@@ -79,6 +79,7 @@ internal class InputProcessor
                 "EdgeList" => new EdgeList(),
                 "EdgeToMakeTree" => new EdgesToMakeTree(),
                 "DistanceMatrix" => new DistanceMatrix(),
+                "GetFirstSubsequenceIndices" => new GetFirstSubsequenceIndices(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -165,6 +166,33 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             output = _matcher.GetKmers(_input);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{string.Join(' ', output)}");
+        }
+    }
+
+    private class GetFirstSubsequenceIndices : BaseExecutor
+    {
+        private AnySequence? mainSequence;
+        private AnySequence? subSequence;
+        private List<int>? output;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter main sequence");
+            mainSequence = new AnySequence(Console.ReadLine());
+
+            Console.WriteLine("Please enter the subsequence to be analyzed");
+            subSequence = new AnySequence(Console.ReadLine());
+
+        }
+
+        protected override void CalculateResult()
+        {
+            output = mainSequence.FindFirstPossibleSubSequence(subSequence);
         }
 
         protected override void OutputResult()
