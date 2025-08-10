@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Bio.Math;
+namespace BioMath;
 
 /// <summary>
 ///     Most of these sequence Analysis are some combination of dynamic programming and string searches

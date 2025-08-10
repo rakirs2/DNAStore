@@ -1,6 +1,6 @@
 ﻿using Base.Interfaces;
 
-using Bio.Math;
+using BioMath;
 using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
