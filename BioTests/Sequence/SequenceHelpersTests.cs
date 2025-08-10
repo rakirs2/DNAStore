@@ -5,7 +5,6 @@ namespace BioTests.Sequence;
 [TestClass]
 public class SequenceHelpersTests
 {
-    // TODO: there might be a corruptoin angle with all of these as well. For now, focus just on making sure these methods work
     private static readonly HashSet<char> KnownProteinSequenceDifferentiators =
         new() { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 

@@ -77,6 +77,7 @@ internal class InputProcessor
                 "BinarySearchArray" => new BinarySearchArray(),
                 "EdgeList" => new EdgeList(),
                 "EdgeToMakeTree" => new EdgesToMakeTree(),
+                "DistanceMatrix" => new DistanceMatrix(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -803,6 +804,32 @@ internal class InputProcessor
         {
             Console.WriteLine(matrix.GetProfileSequence());
             Console.WriteLine(matrix.FrequencyMatrix());
+        }
+    }
+
+    private class DistanceMatrix : BaseExecutor
+    {
+        private List<Fasta>? fastas;
+        private List<List<double>>? matrix;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var location = Console.ReadLine();
+            if (location != null) fastas = FastaParser.Read(location);
+        }
+
+        protected override void CalculateResult()
+        {
+            matrix = fastas.GenerateDistanceMatrix();
+        }
+
+        protected override void OutputResult()
+        {
+            for (int i = 0; i < matrix.Count; i++)
+            {
+                Console.WriteLine(String.Join(" ", matrix[i]));
+            }
         }
     }
 
