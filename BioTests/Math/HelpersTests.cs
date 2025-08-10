@@ -1,5 +1,7 @@
 ﻿using System.Numerics;
 
+using BioMath;
+
 namespace BioTests.Math;
 
 [TestClass]
