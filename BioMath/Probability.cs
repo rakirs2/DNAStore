@@ -4,6 +4,29 @@ namespace BioMath;
 
 public static class Probability
 {
+
+    public static int NumberOfSets(int i)
+    {
+        return (int)Math.Pow(2, i);
+    }
+
+    /// <summary>
+    /// Calculated it with modulo 1000000
+    /// TODO: this should be optimized to not need BigIntegers
+    /// </summary>
+    /// <param name="i"></param>
+    /// <returns></returns>
+    public static BigInteger NumberOfSetsLarge(int i)
+    {
+        BigInteger returnval = 1;
+        while (i > 0)
+        {
+            returnval *= 2;
+            i--;
+        }
+
+        return returnval % 1000000;
+    }
     /// <summary>
     ///     Given a population of x dominant, y heterozygous and z recessive individuals,
     ///     What is the percentage an offspring will have the dominant phenotype?

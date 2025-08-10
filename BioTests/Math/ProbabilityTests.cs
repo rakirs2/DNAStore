@@ -73,4 +73,17 @@ public class ProbabilityTests
             "tg", "tt"
         ]));
     }
+    
+    [TestMethod]
+    public void NumberOfSubSets()
+    {
+        Assert.AreEqual(4, Probability.NumberOfSets(2));
+        Assert.AreEqual(8, Probability.NumberOfSets(3));
+    }
+    
+    [TestMethod]
+    public void NumberOfSubSetsLarge()
+    {
+        Assert.AreEqual(966784, Probability.NumberOfSetsLarge(874));
+    }
 }
