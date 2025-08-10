@@ -19,7 +19,6 @@ public static class FastaParser
                 if (name != "" || currentSequence != "")
                 {
                     output.Add(new Fasta(name, currentSequence));
-                    name = "";
                     currentSequence = "";
                 }
 
