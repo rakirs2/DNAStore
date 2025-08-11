@@ -80,6 +80,7 @@ internal class InputProcessor
                 "EdgeToMakeTree" => new EdgesToMakeTree(),
                 "DistanceMatrix" => new DistanceMatrix(),
                 "GetFirstSubsequenceIndices" => new GetFirstSubsequenceIndices(),
+                "IncreasingAndDecreasingSubsequences" =>new GetLongestSubSequences(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -200,7 +201,33 @@ internal class InputProcessor
             Console.WriteLine($"{string.Join(' ', output)}");
         }
     }
+    private class GetLongestSubSequences : BaseExecutor
+    {
+        private List<int>? input;
+        private List<int>? increasing;
+        private List<int>? decreasing;
 
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter elements of array");
+            input =  Console.ReadLine().Split(' ')
+                .Select(s => int.Parse(s))
+                .ToList();
+        }
+
+        protected override void CalculateResult()
+        {
+            decreasing = input.LongestDecreasingSubsequence();
+            increasing = input.LongestIncreasingSubsequence();
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{string.Join(' ', increasing)}");
+            Console.WriteLine($"{string.Join(' ', decreasing)}");
+        }
+    }
+    
     private class CandidateProteinsFromDNA : BaseExecutor
     {
         private List<ProteinSequence>? _proteins;
