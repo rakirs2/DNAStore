@@ -1,5 +1,4 @@
 ﻿using System.Text;
-
 using Base.Utils;
 
 namespace Bio.Sequence;

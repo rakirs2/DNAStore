@@ -1,7 +1,5 @@
 using System.Text;
-
 using Base.DataStructures;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -27,9 +25,9 @@ public class AnySequence : ISequence
         Name = fasta.Name;
         ConstructionLogic(fasta.RawSequence);
     }
-    public long Length => RawSequence.Length;
 
     private string RawSequence { get; set; }
+    public long Length => RawSequence.Length;
 
     public string? Name { get; }
 
@@ -49,6 +47,57 @@ public class AnySequence : ISequence
         return output.ToArray();
     }
 
+    public AnySequence RemoveIntrons(List<AnySequence> introns)
+    {
+        if (introns == null) throw new ArgumentNullException();
+        var trie = new Trie();
+        foreach (var intron in introns) trie.AddWord(intron.RawSequence);
+
+        var outputString = new StringBuilder();
+
+        for (var i = 0; i < Length; i++)
+        {
+            var isValid = true;
+            for (var j = 0; j < trie.MaxStringLength; j++)
+            {
+                if (i + j > Length - 1) break;
+
+                if (trie.Search(RawSequence.Substring(i, j + 1)))
+                {
+                    i += j;
+                    isValid = false;
+                }
+            }
+
+            if (isValid) outputString.Append(RawSequence[i]);
+        }
+
+        return new AnySequence(outputString.ToString());
+    }
+
+    public List<int> FindFirstPossibleSubSequence(AnySequence subsequence, bool isZeroIndex = false)
+    {
+        if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
+            return new List<int>();
+
+        var modifier = isZeroIndex ? 0 : 1;
+        var indices = new List<int>();
+        var i = 0;
+        var j = 0;
+        while (i < Length && j < subsequence.Length)
+        {
+            if (RawSequence[i].Equals(subsequence[j]))
+            {
+                indices.Add(i + modifier);
+                j++;
+            }
+
+            i++;
+        }
+
+        return indices;
+    }
+
     public override bool Equals(object obj)
     {
         if (obj is AnySequence other) return RawSequence.Equals(other.RawSequence);
@@ -60,14 +109,6 @@ public class AnySequence : ISequence
     {
         return RawSequence;
     }
-
-    #region String Manipulators
-
-    public char this[int index] => RawSequence[index];
-
-    public string Substring(int i, int kmerLength) => RawSequence.Substring(i, kmerLength);
-
-    #endregion
 
     /// <summary>
     ///     Returns the hamming distance, the difference between any string at any given point.
@@ -111,8 +152,8 @@ public class AnySequence : ISequence
     ///     This is a pretty simple cleanup method that is implemented in each child class.
     /// </summary>
     /// <remarks>
-    /// We know that some classes have slight differences. We want to be as strict as possible when
-    /// creating classes because biology data is inherently a mess. 
+    ///     We know that some classes have slight differences. We want to be as strict as possible when
+    ///     creating classes because biology data is inherently a mess.
     /// </remarks>
     /// <param name="bp"></param>
     /// <returns></returns>
@@ -136,60 +177,20 @@ public class AnySequence : ISequence
                 throw new Exception();
     }
 
-    public AnySequence RemoveIntrons(List<AnySequence> introns)
-    {
-        if (introns == null) throw new ArgumentNullException();
-        var trie = new Trie();
-        foreach (var intron in introns) trie.AddWord(intron.RawSequence);
-
-        var outputString = new StringBuilder();
-
-        for (var i = 0; i < Length; i++)
-        {
-            var isValid = true;
-            for (var j = 0; j < trie.MaxStringLength; j++)
-            {
-                if (i + j > Length - 1) break;
-
-                if (trie.Search(RawSequence.Substring(i, j + 1)))
-                {
-                    i += j;
-                    isValid = false;
-                }
-            }
-
-            if (isValid) outputString.Append(RawSequence[i]);
-        }
-
-        return new AnySequence(outputString.ToString());
-    }
-
 
     public override int GetHashCode()
     {
         throw new NotImplementedException();
     }
 
-    public List<int> FindFirstPossibleSubSequence(AnySequence subsequence, bool isZeroIndex = false)
+    #region String Manipulators
+
+    public char this[int index] => RawSequence[index];
+
+    public string Substring(int i, int kmerLength)
     {
-        if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
-            return new List<int>();
-
-        var modifier = isZeroIndex ? 0 : 1;
-        var indices = new List<int>();
-        int i = 0;
-        int j = 0;
-        while (i < Length && j < subsequence.Length)
-        {
-            if (RawSequence[i].Equals(subsequence[j]))
-            {
-                indices.Add(i + modifier);
-                j++;
-            }
-
-            i++;
-        }
-
-        return indices;
+        return RawSequence.Substring(i, kmerLength);
     }
+
+    #endregion
 }

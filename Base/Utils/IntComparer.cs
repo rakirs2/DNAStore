@@ -1,4 +1,5 @@
 ﻿namespace Base.Utils;
+
 public class IntComparer : IComparer<int>
 {
     // TODO: tests

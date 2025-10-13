@@ -1,6 +1,5 @@
 ﻿using Bio.IO;
 using Bio.Sequence;
-
 using BioMath;
 
 namespace BioTests.IO;

@@ -1,7 +1,5 @@
 ﻿using System.Text;
-
 using Base.DataStructures;
-
 using Bio.Analysis.Interfaces;
 using Bio.IO;
 using Bio.Sequence.Types;

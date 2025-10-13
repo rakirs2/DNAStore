@@ -21,14 +21,14 @@ public interface ISequence
     long[] MotifLocations(Motif motif, bool isZeroIndex = false);
 
     /// <summary>
-    /// Assumes that the instance is the main sequence, removes all possible introns within the sequence
+    ///     Assumes that the instance is the main sequence, removes all possible introns within the sequence
     /// </summary>
     /// <param name="introns"></param>
     /// <returns></returns>
     public AnySequence RemoveIntrons(List<AnySequence> introns);
 
     /// <summary>
-    /// Returns the indices of the first possible subsequence within the sequence
+    ///     Returns the indices of the first possible subsequence within the sequence
     /// </summary>
     /// <param name="subsequence"></param>
     /// <param name="isZeroIndex"></param>

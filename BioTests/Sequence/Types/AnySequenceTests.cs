@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bio.Analysis.Types;
+﻿using Bio.Analysis.Types;
 using Bio.Sequence.Types;
 
 namespace BioTests.Sequence.Types;
@@ -121,14 +120,14 @@ public class AnySequenceTests
         Assert.AreEqual("abcde", output.ToString());
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void FindFirstPossibleSubSequenceTest()
     {
         var seq1 = new AnySequence("ACGTACGTGACG");
         var subseq = new AnySequence("GTA");
 
         var result = seq1.FindFirstPossibleSubSequence(subseq);
-        var expected = new List<int> { 3,4, 5 };
+        var expected = new List<int> { 3, 4, 5 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
 }

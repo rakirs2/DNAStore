@@ -173,7 +173,7 @@ public class SequenceHelpersTests
     public void PossibleKmersListTest()
     {
         var output = SequenceHelpers.AllPossibleKmersList("ACGT");
-        var expected = new List<string>()
+        var expected = new List<string>
         {
             "ACGT",
             "CAGT",
@@ -201,9 +201,6 @@ public class SequenceHelpersTests
             "ATCG"
         };
 
-        for (int i = 0; i < expected.Count; i++)
-        {
-            Assert.AreEqual(expected[i], output[i]);
-        }
+        for (var i = 0; i < expected.Count; i++) Assert.AreEqual(expected[i], output[i]);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Base.Interfaces;
-
-using BioMath;
 using Bio.Sequence.Types;
+using BioMath;
 
 namespace Bio.Analysis.Types;
 
@@ -17,7 +16,7 @@ public class FrequencyArray : IFrequencyArray
     public List<int> GetFrequencyArrayInLexicographicOrder(string kmerValues, int kmerLength)
     {
         // TODO: eventually making this sorted might have some value
-        List<string> allKmers = Probability.GenerateAllKmers(kmerValues, kmerLength);
+        var allKmers = Probability.GenerateAllKmers(kmerValues, kmerLength);
         Dictionary<string, int> counter = new();
         foreach (var kmer in allKmers) counter.Add(kmer, 0);
         for (var i = 0; i < _sequence.Length - kmerLength + 1; i++)

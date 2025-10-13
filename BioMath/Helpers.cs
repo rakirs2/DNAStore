@@ -50,6 +50,6 @@ public static class Helpers
 
     public static bool DoublesEqualWithinRange(double a, double b, double epsilon = 0.001)
     {
-        return System.Math.Abs(a - b) <= epsilon;
+        return Math.Abs(a - b) <= epsilon;
     }
 }

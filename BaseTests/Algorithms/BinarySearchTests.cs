@@ -1,22 +1,23 @@
 ﻿namespace Base.Algorithms.Tests;
 
-[TestClass()]
+[TestClass]
 public class BinarySearchTests
 {
-    private List<int> _array = new() { 1, 2, 3, 4, 5 };
-    [TestMethod()]
+    private readonly List<int> _array = new() { 1, 2, 3, 4, 5 };
+
+    [TestMethod]
     public void ContainsValueTrue()
     {
         Assert.IsTrue(BinarySearch.Contains(_array, 1));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void ContainsValueFalse()
     {
         Assert.IsFalse(BinarySearch.Contains(_array, 6));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void ContainsIndex()
     {
         Assert.AreEqual(0, BinarySearch.GetIndexAt(_array, 1));
@@ -25,15 +26,18 @@ public class BinarySearchTests
         Assert.AreEqual(-1, BinarySearch.GetIndexAt(_array, 0));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void GetIndicesTest()
     {
-        Assert.IsTrue(Enumerable.SequenceEqual(new List<int> { 1, 2, 3 }, BinarySearch.GetIndices(_array, new List<int>() { 2, 3, 4 })));
+        Assert.IsTrue(
+            new List<int> { 1, 2, 3 }.SequenceEqual(BinarySearch.GetIndices(_array, new List<int> { 2, 3, 4 })));
     }
 
-    [TestMethod()]
+    [TestMethod]
     public void BetterTest()
     {
-        Assert.IsTrue(Enumerable.SequenceEqual(new List<int> { 4, 1, -1, -1, 4, 2 }, BinarySearch.GetIndices(new List<int>() { 10, 20, 30, 40, 50 }, new List<int>() { 40, 10, 35, 15, 40, 20 }, true)));
+        Assert.IsTrue(new List<int> { 4, 1, -1, -1, 4, 2 }.SequenceEqual(
+            BinarySearch.GetIndices(new List<int> { 10, 20, 30, 40, 50 }, new List<int> { 40, 10, 35, 15, 40, 20 },
+                true)));
     }
 }

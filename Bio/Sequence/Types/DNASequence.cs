@@ -1,5 +1,4 @@
 ﻿using System.Text;
-
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;

@@ -1,15 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Text;
-
 using Base.Algorithms;
 using Base.DataStructures;
-
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Types;
-
 using BioMath;
-
 using Clients;
 
 namespace DNAStore;
@@ -80,7 +76,8 @@ internal class InputProcessor
                 "EdgeToMakeTree" => new EdgesToMakeTree(),
                 "DistanceMatrix" => new DistanceMatrix(),
                 "GetFirstSubsequenceIndices" => new GetFirstSubsequenceIndices(),
-                "IncreasingAndDecreasingSubsequences" =>new GetLongestSubSequences(),
+                "IncreasingAndDecreasingSubsequences" => new GetLongestSubSequences(),
+                "SetCalculations" => new SetCalculations(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -178,8 +175,8 @@ internal class InputProcessor
     private class GetFirstSubsequenceIndices : BaseExecutor
     {
         private AnySequence? mainSequence;
-        private AnySequence? subSequence;
         private List<int>? output;
+        private AnySequence? subSequence;
 
         protected override void GetInputs()
         {
@@ -188,7 +185,6 @@ internal class InputProcessor
 
             Console.WriteLine("Please enter the subsequence to be analyzed");
             subSequence = new AnySequence(Console.ReadLine());
-
         }
 
         protected override void CalculateResult()
@@ -201,16 +197,69 @@ internal class InputProcessor
             Console.WriteLine($"{string.Join(' ', output)}");
         }
     }
+
+    private class SetCalculations : BaseExecutor
+    {
+        private NumericalSet a;
+        private NumericalSet aComplement;
+        private NumericalSet aMinusB;
+        private NumericalSet b;
+        private NumericalSet bComplement;
+        private NumericalSet bMinusA;
+        private NumericalSet intersection;
+
+        private NumericalSet union;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter the maximum value");
+            var maxValue = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the values of set A");
+            var inputA = Console.ReadLine().Split(", ")
+                .Select(s => int.Parse(s))
+                .ToList();
+
+            Console.WriteLine("Enter the values of set B");
+            var inputB = Console.ReadLine().Split(", ")
+                .Select(s => int.Parse(s))
+                .ToList();
+
+            a = new NumericalSet(maxValue, inputA);
+            b = new NumericalSet(maxValue, inputB);
+        }
+
+        protected override void CalculateResult()
+        {
+            union = NumericalSet.Union(a, b);
+            intersection = NumericalSet.Intersection(a, b);
+            aMinusB = a - b;
+            bMinusA = b - a;
+            aComplement = a.GetComplement();
+            bComplement = b.GetComplement();
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine("Enter the output file location");
+            var fileLocation = Console.ReadLine();
+            var results = new[] { union, intersection, aMinusB, bMinusA, aComplement, bComplement };
+            var outputString = string.Join("\n", results.Select(r => r.ToString()));
+            Console.WriteLine($"{outputString}");
+            if (!string.IsNullOrWhiteSpace(fileLocation)) File.WriteAllText(fileLocation + "/output.txt", outputString);
+        }
+    }
+
     private class GetLongestSubSequences : BaseExecutor
     {
-        private List<int>? input;
-        private List<int>? increasing;
         private List<int>? decreasing;
+        private List<int>? increasing;
+        private List<int>? input;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Enter elements of array");
-            input =  Console.ReadLine().Split(' ')
+            input = Console.ReadLine().Split(' ')
                 .Select(s => int.Parse(s))
                 .ToList();
         }
@@ -227,7 +276,7 @@ internal class InputProcessor
             Console.WriteLine($"{string.Join(' ', decreasing)}");
         }
     }
-    
+
     private class CandidateProteinsFromDNA : BaseExecutor
     {
         private List<ProteinSequence>? _proteins;
@@ -344,11 +393,12 @@ internal class InputProcessor
             Console.WriteLine(_anySequence?.Counts);
         }
     }
+
     private class BinarySearchArray : BaseExecutor
     {
         private List<int>? inputs;
-        private List<int>? valuesToCheck;
         private List<int>? output;
+        private List<int>? valuesToCheck;
 
         protected override void GetInputs()
         {
@@ -375,10 +425,11 @@ internal class InputProcessor
             Console.WriteLine(string.Join(" ", output));
         }
     }
+
     private class EdgeList : BaseExecutor
     {
-        private List<Tuple<int, int>>? inputs = new();
-        private Graph<int> graph = new();
+        private readonly Graph<int> graph = new();
+        private readonly List<Tuple<int, int>>? inputs = new();
         private List<int>? output;
 
         protected override void GetInputs()
@@ -401,27 +452,22 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            foreach (var input in inputs)
-            {
-                graph.Insert(input.Item1, input.Item2);
-            }
+            foreach (var input in inputs) graph.Insert(input.Item1, input.Item2);
         }
 
         protected override void OutputResult()
         {
             var output = graph.GetEdgeList();
-            var edgeCounts = new List<int>() { };
-            foreach (var kvp in output)
-            {
-                edgeCounts.Add(kvp.Value.Count);
-            }
+            var edgeCounts = new List<int>();
+            foreach (var kvp in output) edgeCounts.Add(kvp.Value.Count);
 
             Console.WriteLine(string.Join(' ', edgeCounts));
         }
     }
+
     private class EdgesToMakeTree : BaseExecutor
     {
-        private List<Tuple<int, int>>? inputs = new();
+        private readonly List<Tuple<int, int>>? inputs = new();
         private Graph<int>? graph;
         private List<int>? output;
 
@@ -429,10 +475,7 @@ internal class InputProcessor
         {
             Console.WriteLine("Please input the size of the array");
             var inputString = Console.ReadLine();
-            if (int.TryParse(inputString, out var size))
-            {
-                graph = new Graph<int>(size);
-            }
+            if (int.TryParse(inputString, out var size)) graph = new Graph<int>(size);
 
             while (true)
             {
@@ -450,10 +493,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            foreach (var input in inputs)
-            {
-                graph.Insert(input.Item1, input.Item2);
-            }
+            foreach (var input in inputs) graph.Insert(input.Item1, input.Item2);
         }
 
         protected override void OutputResult()
@@ -882,10 +922,7 @@ internal class InputProcessor
 
         protected override void OutputResult()
         {
-            for (int i = 0; i < matrix.Count; i++)
-            {
-                Console.WriteLine(String.Join(" ", matrix[i]));
-            }
+            for (var i = 0; i < matrix.Count; i++) Console.WriteLine(string.Join(" ", matrix[i]));
         }
     }
 

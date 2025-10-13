@@ -1,4 +1,5 @@
 ﻿namespace Base.Algorithms;
+
 public static class BinarySearch
 {
     // TODO: generalize this, C# already has it
@@ -11,7 +12,7 @@ public static class BinarySearch
         var left = 0;
         while (left < right)
         {
-            int middle = left + ((right - left) / 2);
+            var middle = left + (right - left) / 2;
             if (arrayToCheck[middle] == value)
                 return true;
             if (arrayToCheck[middle] < value)
@@ -29,7 +30,7 @@ public static class BinarySearch
         var left = 0;
         while (left <= right)
         {
-            int middle = left + ((right - left) / 2);
+            var middle = left + (right - left) / 2;
             if (arrayToCheck[middle] == value)
                 return middle;
             if (arrayToCheck[middle] < value)
@@ -50,9 +51,7 @@ public static class BinarySearch
             if (oneIndex)
                 output.Add(index == -1 ? -1 : index + 1);
             else
-            {
                 output.Add(index);
-            }
         }
 
         return output;

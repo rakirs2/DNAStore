@@ -1,6 +1,6 @@
 ﻿namespace Base.DataStructures.Tests;
 
-[TestClass()]
+[TestClass]
 public class GraphTests
 {
     [TestMethod]

@@ -1,6 +1,6 @@
 ﻿namespace Bio.IO.Tests;
 
-[TestClass()]
+[TestClass]
 public class FastaListExtensionsTests
 {
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
@@ -11,7 +11,7 @@ public class FastaListExtensionsTests
     {
         var fastas = FastaParser.Read(_filePath);
         var output = fastas.GenerateDistanceMatrix();
-        var expected = new List<List<double>>()
+        var expected = new List<List<double>>
         {
             new()
             {
@@ -31,12 +31,8 @@ public class FastaListExtensionsTests
             }
         };
 
-        for (int i = 0; i < expected.Count; i++)
-        {
-            for (int j = 0; j < expected.Count; j++)
-            {
-                Assert.AreEqual(expected[i][j], output[i][j]);
-            }
-        }
+        for (var i = 0; i < expected.Count; i++)
+        for (var j = 0; j < expected.Count; j++)
+            Assert.AreEqual(expected[i][j], output[i][j]);
     }
 }
