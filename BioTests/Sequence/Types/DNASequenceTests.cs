@@ -107,4 +107,11 @@ public class DNASequenceTests
         var seq1 = DNASequence.FromNumber(0,2);
         Assert.AreEqual(new DNASequence("AA"), seq1);
     }
+    
+    [TestMethod]
+    public void NumberToDNAActualTest()
+    {
+        var seq1 = DNASequence.FromNumber(7939,7);
+        Assert.AreEqual(new DNASequence("CTTAAAT"), seq1);
+    }
 }
