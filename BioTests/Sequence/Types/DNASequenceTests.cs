@@ -72,4 +72,11 @@ public class DNASequenceTests
         // TODO: this is not the right way to test this
         Assert.IsTrue(expected.SequenceEqual(result));
     }
+
+    [TestMethod]
+    public void DnaToNumberTest()
+    {
+        var seq1 = new DNASequence("AGT");
+        Assert.AreEqual(11, seq1.ToNumber());
+    }
 }

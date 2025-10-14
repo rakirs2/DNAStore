@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Numerics;
+using System.Text;
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
@@ -29,7 +30,27 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         return output;
     }
+    
+    // TODO: longs and ints was a stupid decision
+    // ints all the way unless needed otherwise
+    public BigInteger ToNumber()
+    {
+        BigInteger output = 0;
+        for (int i = 0; i < Length; i++)
+        {
+            output += _charValueMapper[this[i]]*BigInteger.Pow(4, (int)Length - i - 1);
+        }
 
+        return output;
+    }
+
+    private Dictionary<char, int> _charValueMapper = new Dictionary<char, int>()
+    {
+        { 'A', 0 },
+        { 'C', 1 },
+        { 'G', 2 },
+        { 'T', 3 },
+    };
     // Should this be static, should this be a class conversion
     // For now, let's just let it be an explicit conversion, pay for the new class
     public RNASequence TranscribeToRNA()

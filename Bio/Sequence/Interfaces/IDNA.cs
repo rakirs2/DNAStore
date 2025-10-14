@@ -1,4 +1,6 @@
-﻿namespace Bio.Sequence.Interfaces;
+﻿using System.Numerics;
+
+namespace Bio.Sequence.Interfaces;
 
 public interface IDNA
 {
@@ -10,4 +12,13 @@ public interface IDNA
     /// </remarks>
     /// <returns></returns>
     List<Tuple<int, int>> RestrictionSites();
+
+    /// <summary>
+    /// Generates the given number for a given DNA sequence
+    /// </summary>
+    /// <remarks>
+    /// Optimistically assumes that the final number is less than DNA max size.
+    /// </remarks>
+    /// <returns></returns>
+    BigInteger ToNumber();
 }
