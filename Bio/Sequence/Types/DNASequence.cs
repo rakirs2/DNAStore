@@ -44,13 +44,46 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output;
     }
 
-    private Dictionary<char, int> _charValueMapper = new Dictionary<char, int>()
+    private static Dictionary<char, int> _charValueMapper = new Dictionary<char, int>()
     {
         { 'A', 0 },
         { 'C', 1 },
         { 'G', 2 },
         { 'T', 3 },
     };
+    
+    private static Dictionary<int, char> _valueCharMapper = new Dictionary<int, char>()
+    {
+        { 0, 'A' },
+        {  1, 'C' },
+        {  2, 'G' },
+        {  3, 'T' },
+    };
+
+    public static DNASequence FromNumber(int number, int k)
+    {
+        if (number == 0)
+        {
+            return new DNASequence(new string('A', k));
+        }
+        var pattern = new StringBuilder();
+
+        while (number > 0)
+        {
+            int remainder = (int)(number % 4);
+            pattern.Insert(0, _valueCharMapper[remainder]);
+            number /= 4;
+        }
+
+        // Pad the pattern with 'A's if its length is less than k.
+        while (pattern.Length < k)
+        {
+            pattern.Insert(0, 'A');
+        }
+
+        return new DNASequence(pattern.ToString());
+    }
+    
     // Should this be static, should this be a class conversion
     // For now, let's just let it be an explicit conversion, pay for the new class
     public RNASequence TranscribeToRNA()

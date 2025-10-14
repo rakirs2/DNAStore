@@ -79,4 +79,32 @@ public class DNASequenceTests
         var seq1 = new DNASequence("AGT");
         Assert.AreEqual(11, seq1.ToNumber());
     }
+    
+    [TestMethod]
+    public void NumberToDNATest()
+    {
+        var seq1 = DNASequence.FromNumber(11,3);
+        Assert.AreEqual(new DNASequence("AGT"), seq1);
+    }
+    
+    [TestMethod]
+    public void NumberToDNABaseCase()
+    {
+        var seq1 = DNASequence.FromNumber(0,0);
+        Assert.AreEqual(new DNASequence("A"), seq1);
+    }
+    
+    [TestMethod]
+    public void NumberToDNABaseCaseSimiliar()
+    {
+        var seq1 = DNASequence.FromNumber(0,1);
+        Assert.AreEqual(new DNASequence("A"), seq1);
+    }
+    
+    [TestMethod]
+    public void NumberToDNAPaddingTest()
+    {
+        var seq1 = DNASequence.FromNumber(0,2);
+        Assert.AreEqual(new DNASequence("AA"), seq1);
+    }
 }
