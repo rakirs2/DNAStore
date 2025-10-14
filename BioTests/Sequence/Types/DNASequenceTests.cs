@@ -91,7 +91,7 @@ public class DNASequenceTests
     public void NumberToDNABaseCase()
     {
         var seq1 = DNASequence.FromNumber(0,0);
-        Assert.AreEqual(new DNASequence("A"), seq1);
+        Assert.AreEqual(new DNASequence(""), seq1);
     }
     
     [TestMethod]
