@@ -1,5 +1,6 @@
 ﻿using Bio.Analysis.Types;
 using Bio.Sequence.Types;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioTests.Sequence.Types;
 
