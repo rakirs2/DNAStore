@@ -1,4 +1,5 @@
 ﻿using Bio.Sequence.Types;
+using System.Linq;
 
 namespace BioTests.Sequence.Types;
 
@@ -113,5 +114,18 @@ public class DNASequenceTests
     {
         var seq1 = DNASequence.FromNumber(7939,7);
         Assert.AreEqual(new DNASequence("CTTAAAT"), seq1);
+    }
+    
+    [TestMethod]
+    public void DNeighborList()
+    {
+        var seq = new DNASequence("CTTAAAT");
+        Assert.IsTrue(Enumerable.SequenceEqual( new List<DNASequence>(){seq},seq.GenerateDNeighbors(0)));
+    }
+    [TestMethod]
+    public void DNeighborListSingleLetter()
+    {
+        var seq = new DNASequence("C");
+        var output = seq.GenerateDNeighbors(1);
     }
 }

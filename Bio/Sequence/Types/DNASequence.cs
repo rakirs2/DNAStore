@@ -44,6 +44,29 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output;
     }
 
+    public List<DNASequence> GenerateDNeighbors(int d)
+    {
+        if (d == 0)
+        {
+            return new List<DNASequence>() { this };
+        }
+
+        if (Length == 1)
+        {
+            return new List<DNASequence>()
+            {
+                new DNASequence("A"),
+                new DNASequence("C"),
+                new DNASequence("G"),
+                new DNASequence("T")
+            };
+        }
+        
+        var output = new List<DNASequence>();
+        foreach
+        return output;
+    }
+
     private static Dictionary<char, int> _charValueMapper = new Dictionary<char, int>()
     {
         { 'A', 0 },

@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Bio.Sequence.Types;
 
 namespace Bio.Sequence.Interfaces;
 
@@ -21,4 +22,12 @@ public interface IDNA
     /// </remarks>
     /// <returns></returns>
     BigInteger ToNumber();
+
+    /// <summary>
+    /// Generates the list of a neighbors of a given sequence
+    /// with Hamming Distance allowance of 'd'
+    /// </summary>
+    /// <param name="d"></param>
+    /// <returns></returns>
+    List<DNASequence> GenerateDNeighbors(int d);
 }
