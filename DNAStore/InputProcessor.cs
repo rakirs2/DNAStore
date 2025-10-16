@@ -78,6 +78,7 @@ internal class InputProcessor
                 "GetFirstSubsequenceIndices" => new GetFirstSubsequenceIndices(),
                 "IncreasingAndDecreasingSubsequences" => new GetLongestSubSequences(),
                 "SetCalculations" => new SetCalculations(),
+                "KmerComposition" => new KmerComposition(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -604,6 +605,33 @@ internal class InputProcessor
         protected override void OutputResult()
         {
             Console.WriteLine($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
+        }
+    }
+    
+    private class KmerComposition : BaseExecutor
+    {
+        private DNASequence sequence;
+        private int[] kmerComposition;
+        private int kmerLength;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter Kmer length to be analyzed");
+            kmerLength = int.Parse(Console.ReadLine());
+            
+            Console.WriteLine("Please input sequence");
+            var inputString = Console.ReadLine();
+            sequence = new DNASequence(inputString);
+        }
+
+        protected override void CalculateResult()
+        {
+            kmerComposition = sequence.KmerComposition(kmerLength);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"{string.Join(' ', kmerComposition)}");
         }
     }
 

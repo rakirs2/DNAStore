@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.ComponentModel;
+using System.Numerics;
 using System.Text;
 using Bio.Sequence.Interfaces;
 
@@ -39,6 +40,33 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         for (int i = 0; i < Length; i++)
         {
             output += _charValueMapper[this[i]]*BigInteger.Pow(4, (int)Length - i - 1);
+        }
+
+        return output;
+    }
+    
+    // TODO: it might eventually make sense for this to be its own class. For now its fine
+    public int[] KmerComposition(int n)
+    {
+        if (n <= 0)
+            throw new ArgumentException("n must be positive");
+        var output = new int[(int) Math.Pow(4, n)];
+        for (int i = 0; i < Length - n +1; i++)
+        {
+            // this is effectively the same thing as "ToNumber()"
+            // however, we don't need all the overhead of the DNA class.
+            output[KmerToNumber(Substring(i, n))]++;
+        }
+
+        return output;
+    }
+
+    private static int KmerToNumber(string input)
+    {
+        int output = 0;
+        for (int i = 0; i < input.Length; i++)
+        {
+            output += _charValueMapper[input[i]]*(int)Math.Pow(4, (int)input.Length - i - 1);
         }
 
         return output;
