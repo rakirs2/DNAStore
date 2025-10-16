@@ -21,4 +21,11 @@ public interface IDNA
     /// </remarks>
     /// <returns></returns>
     BigInteger ToNumber();
+
+    /// <summary>
+    /// Returns an array of size 4^n where n is the length of the Kmers being analyzed.
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    int[] KmerComposition(int n);
 }

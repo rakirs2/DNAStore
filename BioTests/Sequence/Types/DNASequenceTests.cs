@@ -114,4 +114,38 @@ public class DNASequenceTests
         var seq1 = DNASequence.FromNumber(7939,7);
         Assert.AreEqual(new DNASequence("CTTAAAT"), seq1);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void GenerateKmerCompositionBadInput()
+    {
+        var seq = new DNASequence("acgt");
+        var _ = seq.KmerComposition(0);
+    }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void GenerateKmerCompositionBadInput2()
+    {
+        var seq = new DNASequence("acgt");
+        var _ = seq.KmerComposition(-1);
+    }
+    
+    [TestMethod]
+    public void GenerateKmerComposition()
+    {
+        var seq = new DNASequence("AAAAA");
+        var output = seq.KmerComposition(2);
+        var expected = new int[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        Assert.IsTrue(Enumerable.SequenceEqual(expected, output));
+    }
+    
+    [TestMethod]
+    public void GenerateKmerCompositionLarge()
+    {
+        var seq = new DNASequence("CTTCGAAAGTTTGGGCCGAGTCTTACAGTCGGTCTTGAAGCAAAGTAACGAACTCCACGGCCCTGACTACCGAACCAGTTGTGAGTACTCAACTGGGTGAGAGTGCAGTCCCTATTGAGTTTCCGAGACTCACCGGGATTTTCGATCCAGCCTCAGTCCAGTCTTGTGGCCAACTCACCAAATGACGTTGGAATATCCCTGTCTAGCTCACGCAGTACTTAGTAAGAGGTCGCTGCAGCGGGGCAAGGAGATCGGAAAATGTGCTCTATATGCGACTAAAGCTCCTAACTTACACGTAGACTTGCCCGTGTTAAAAACTCGGCTCACATGCTGTCTGCGGCTGGCTGTATACAGTATCTACCTAATACCCTTCAGTTCGCCGCACAAAAGCTGGGAGTTACCGCGGAAATCACAG");
+        var output = seq.KmerComposition(4);
+        var expected = new int[] {4, 1, 4, 3, 0, 1, 1, 5, 1, 3, 1, 2, 2, 1, 2, 0, 1, 1, 3, 1, 2, 1, 3, 1, 1, 1, 1, 2, 2, 5, 1, 3, 0, 2, 2, 1, 1, 1, 1, 3, 1, 0, 0, 1, 5, 5, 1, 5, 0, 2, 0, 2, 1, 2, 1, 1, 1, 2, 0, 1, 0, 0, 1, 1, 3, 2, 1, 0, 3, 2, 3, 0, 0, 2, 0, 8, 0, 0, 1, 0, 2, 1, 3, 0, 0, 0, 1, 4, 3, 2, 1, 1, 3, 1, 2, 1, 3, 1, 2, 1, 2, 1, 1, 1, 2, 3, 2, 1, 1, 0, 1, 1, 3, 2, 1, 2, 6, 2, 1, 1, 1, 2, 3, 3, 3, 2, 3, 0, 3, 2, 1, 1, 0, 0, 1, 4, 3, 0, 1, 5, 0, 2, 0, 1, 2, 1, 3, 0, 1, 2, 2, 1, 1, 0, 3, 0, 0, 4, 5, 0, 3, 0, 2, 1, 1, 3, 0, 3, 2, 2, 1, 1, 0, 2, 1, 0, 2, 2, 1, 2, 0, 2, 2, 5, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 1, 1, 3, 4, 0, 2, 1, 1, 0, 1, 2, 2, 1, 1, 1, 5, 2, 0, 3, 2, 1, 1, 2, 2, 3, 0, 3, 0, 1, 3, 1, 2, 3, 0, 2, 1, 2, 2, 1, 2, 3, 0, 1, 2, 3, 1, 1, 3, 1, 0, 1, 1, 3, 0, 2, 1, 2, 2, 0, 2, 1, 1};
+        Assert.IsTrue(Enumerable.SequenceEqual(expected, output));
+    }
 }
