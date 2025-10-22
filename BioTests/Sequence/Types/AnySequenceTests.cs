@@ -130,4 +130,13 @@ public class AnySequenceTests
         var expected = new List<int> { 3, 4, 5 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
+
+    [TestMethod]
+    public void OverlapTest()
+    {
+        AnySequence seq1 = new AnySequence("ACGTACGTGACG");
+        AnySequence seq2 = new AnySequence("GTGACGCATTTG");
+        Assert.AreEqual(6, AnySequence.CalculateOverlap(seq1, seq2));
+        Assert.AreEqual(0, AnySequence.CalculateOverlap(seq2, seq1));
+    }
 }

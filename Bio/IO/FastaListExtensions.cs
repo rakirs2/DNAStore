@@ -18,4 +18,20 @@ public static class FastaListExtensions
 
         return output;
     }
+
+    /// <summary>
+    /// Potentially wasteful. But can work
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static List<DNASequence> PostProcessAsDNASequence(this List<Fasta> list)
+    {
+        var output = new List<DNASequence>();
+        foreach (var fasta in list)
+        {
+            output.Add(new DNASequence((fasta.RawSequence)));
+        }
+        
+        return output;
+    }
 }

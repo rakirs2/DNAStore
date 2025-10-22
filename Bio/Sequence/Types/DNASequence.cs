@@ -163,7 +163,12 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         return output.ToList();
     }
-
+    
+    public static DNASequence operator +(DNASequence p1, DNASequence p2)
+    {
+        return new DNASequence(p1.RawSequence + p2.RawSequence);
+    }
+    
     public static void SingleReadToProteinSequences(DNASequence dnaSequence, ref List<ProteinSequence> output)
     {
         for (var i = 0; i <= dnaSequence.Length - 3; i++)
