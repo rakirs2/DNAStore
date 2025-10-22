@@ -164,7 +164,6 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output.ToList();
     }
     
-    // Overloading the addition operator (+)
     public static DNASequence operator +(DNASequence p1, DNASequence p2)
     {
         return new DNASequence(p1.RawSequence + p2.RawSequence);
