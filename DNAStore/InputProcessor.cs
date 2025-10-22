@@ -79,6 +79,7 @@ internal class InputProcessor
                 "IncreasingAndDecreasingSubsequences" => new GetLongestSubSequences(),
                 "SetCalculations" => new SetCalculations(),
                 "KmerComposition" => new KmerComposition(),
+                "GreedyStringAssembly" => new GreedyStringAssembly(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -683,6 +684,32 @@ internal class InputProcessor
             Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest()}");
         }
     }
+    
+    private class GreedyStringAssembly : BaseExecutor
+    {
+        private List<Fasta>? _fastas;
+        private List<DNASequence> _sequences;
+        private DNASequence _result;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var location = Console.ReadLine();
+            if (location != null) _fastas = FastaParser.Read(location);
+            _sequences = _fastas.PostProcessAsDNASequence();
+        }
+
+        protected override void CalculateResult()
+        {
+            _result = _sequences.GenerateLongestStringGreedy();
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine($"The longest concatenated sequences is: \n{_result}");
+        }
+    }
+
 
     private class MinGCSkewLocation : BaseExecutor
     {
