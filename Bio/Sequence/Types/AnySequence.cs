@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using Base.DataStructures;
 using Bio.Analysis.Types;
@@ -25,12 +26,18 @@ public class AnySequence : ISequence
         Name = fasta.Name;
         ConstructionLogic(fasta.RawSequence);
     }
-
-    private string RawSequence { get; set; }
+    
+    public string RawSequence { get; set; }
     public long Length => RawSequence.Length;
 
     public string? Name { get; }
 
+    // Overloading the addition operator (+)
+    public static AnySequence operator +(AnySequence p1, AnySequence p2)
+    {
+        return new AnySequence(p1.RawSequence + p2.RawSequence);
+    }
+    
     /// <summary>
     /// </summary>
     /// <param name="motif"></param>
@@ -186,11 +193,27 @@ public class AnySequence : ISequence
     #region String Manipulators
 
     public char this[int index] => RawSequence[index];
-
+    
+    public string Sequence => RawSequence;
+    public string this[Range range] => RawSequence[range];
     public string Substring(int i, int kmerLength)
     {
         return RawSequence.Substring(i, kmerLength);
     }
 
     #endregion
+    
+    public static int CalculateOverlap(AnySequence s1, AnySequence s2)
+    {
+        int maxOverlap = 0;
+        for (int i = 1; i <= Math.Min(s1.Length, s2.Length); i++)
+        {
+            if (s1.Sequence.EndsWith(s2.Substring(0, i)))
+            {
+                maxOverlap = i;
+            }
+        }
+        
+        return maxOverlap;
+    }
 }
