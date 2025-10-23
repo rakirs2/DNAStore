@@ -58,4 +58,51 @@ public static class DNASequenceListExtensions
             
         return copyOfList[0]; // The single remaining superstring
     }
+
+    /// <summary>
+    /// Generates a list of estimated error corrections. This is a deterministic algorithm.
+    /// </summary>
+    /// <remarks>
+    /// TODO: this should be generic and only in one location.
+    /// </remarks>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static List<ErrorCorrection> GenerateErrorCorrections(this List<DNASequence> list, int distance = 1)
+    {
+        var output = new List<ErrorCorrection>();
+        var dict = new Dictionary<DNASequence, int>();
+
+        HashSet<DNASequence> needsReview = new HashSet<DNASequence>();
+        foreach (var item in list)
+        {
+            if (dict.ContainsKey(item))
+            {
+                // the key exists at least once. We do not need to check this ever again.
+                dict[item]++;
+            }
+            else
+            {
+                dict.Add(item, 1);
+                needsReview.Add(item);
+            }
+        }
+
+        foreach (var item in needsReview)
+        {
+            if (!dict.ContainsKey(item))
+            {
+                // ok, we have something that need analysis
+                // we have 2 options --> 1 go through the list of the options and see if there exists a valid point match
+                // with Hamming Distance 1. 
+                // we need to verify this with the ReverseComplement as well.
+
+                foreach (var knownReads in list)
+                {
+                    if()
+                }
+            }
+        }
+        
+        return output;
+    }
 }
