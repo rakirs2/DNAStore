@@ -64,6 +64,7 @@ public static class DNASequenceListExtensions
     /// </summary>
     /// <remarks>
     /// TODO: this should be generic and only in one location.
+    /// TODO: this hsould be handled by its own data structure
     /// </remarks>
     /// <param name="list"></param>
     /// <returns></returns>
@@ -89,16 +90,29 @@ public static class DNASequenceListExtensions
 
         foreach (var item in needsReview)
         {
-            if (!dict.ContainsKey(item))
+            if (dict.ContainsKey(item) &&  dict[item] == 1)
             {
                 // ok, we have something that need analysis
                 // we have 2 options --> 1 go through the list of the options and see if there exists a valid point match
                 // with Hamming Distance 1. 
                 // we need to verify this with the ReverseComplement as well.
 
-                foreach (var knownReads in list)
+                foreach (var knownRead in list)
                 {
-                    if()
+                    if(knownRead.Equals(item))
+                        continue;
+                    
+                    if (AnySequence.HammingDistance(knownRead, item) <= distance)
+                    {
+                        output.Add(new ErrorCorrection(item, knownRead));
+                        break;
+                    }
+                    
+                    if (AnySequence.HammingDistance(knownRead.ToReverseComplement(), item) <= distance)
+                    {
+                        output.Add(new ErrorCorrection(item, knownRead));
+                        break;
+                    }
                 }
             }
         }

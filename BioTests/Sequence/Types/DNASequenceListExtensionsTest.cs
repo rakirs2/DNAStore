@@ -30,6 +30,6 @@ public class DnaSequenceListExtensionsTest
         
         var errorCorrections = dnaList.GenerateErrorCorrections();
         Assert.AreEqual(1, errorCorrections.Count());
-        Assert.AreEqual(expectedErrorCorrections, errorCorrections);
+        Assert.IsTrue(Enumerable.SequenceEqual(expectedErrorCorrections, errorCorrections));
     }
 }

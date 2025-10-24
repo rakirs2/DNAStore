@@ -124,7 +124,7 @@ public class AnySequence : ISequence
     ///     This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
     ///     Also, hamming distance to hash difference seems intriguing if nothing else
     /// </remarks>
-    public static long HammingDistance(AnySequence a, AnySequence b)
+    public static int HammingDistance(AnySequence a, AnySequence b)
     {
         if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
 
@@ -186,10 +186,10 @@ public class AnySequence : ISequence
 
     public override int GetHashCode()
     {
-        throw new NotImplementedException();
+        return RawSequence.GetHashCode();
     }
 
-    #region String Manipulators
+    #region String Accessors
 
     public char this[int index] => RawSequence[index];
     
