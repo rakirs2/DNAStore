@@ -20,11 +20,11 @@ public class ErrorCorrectionTest
         var seq1 = new DNASequence("ACGT");
         var seq2 = new DNASequence("ACGC");
         var seq3 = new DNASequence("ACGG");
-        object obj1 = new Object();
+        var obj1 = new object();
         var errorCorrection = new ErrorCorrection(seq1, seq2);
         var equalErrorCorrection = new ErrorCorrection(seq1, seq2);
         var unequalErrorCorrection = new ErrorCorrection(seq1, seq3);
-        
+
         Assert.AreNotEqual(errorCorrection, obj1);
         Assert.AreEqual(equalErrorCorrection, errorCorrection);
         Assert.AreNotEqual(unequalErrorCorrection, errorCorrection);

@@ -14,16 +14,16 @@ public interface IDNA
     List<Tuple<int, int>> RestrictionSites();
 
     /// <summary>
-    /// Generates the given number for a given DNA sequence
+    ///     Generates the given number for a given DNA sequence
     /// </summary>
     /// <remarks>
-    /// Optimistically assumes that the final number is less than DNA max size.
+    ///     Optimistically assumes that the final number is less than DNA max size.
     /// </remarks>
     /// <returns></returns>
     BigInteger ToNumber();
 
     /// <summary>
-    /// Returns an array of size 4^n where n is the length of the Kmers being analyzed.
+    ///     Returns an array of size 4^n where n is the length of the Kmers being analyzed.
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>

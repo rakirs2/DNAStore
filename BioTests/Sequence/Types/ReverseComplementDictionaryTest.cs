@@ -5,14 +5,13 @@ namespace BioTests.Sequence.Types;
 [TestClass]
 public class ReverseComplementDictionaryTest
 {
-
     [TestMethod]
     public void EmptyAccess()
     {
         var dict = new ReverseComplementDictionary();
         Assert.AreEqual(0, dict[new DNASequence("")]);
     }
-    
+
     [TestMethod]
     public void EmptySequencesAreNotTracked()
     {
@@ -20,7 +19,7 @@ public class ReverseComplementDictionaryTest
         dict.Add(new DNASequence(""));
         Assert.AreEqual(0, dict[new DNASequence("")]);
     }
-    
+
     [TestMethod]
     public void SimpleInsertion()
     {
