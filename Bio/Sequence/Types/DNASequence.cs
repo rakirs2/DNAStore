@@ -9,6 +9,22 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
+    private static readonly Dictionary<char, int> _charValueMapper = new()
+    {
+        { 'A', 0 },
+        { 'C', 1 },
+        { 'G', 2 },
+        { 'T', 3 }
+    };
+
+    private static readonly Dictionary<int, char> _valueCharMapper = new()
+    {
+        { 0, 'A' },
+        { 1, 'C' },
+        { 2, 'G' },
+        { 3, 'T' }
+    };
+
     public List<Tuple<int, int>> RestrictionSites()
     {
         // Simple, unoptimized algorithm, iterate through string
@@ -30,87 +46,58 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         return output;
     }
-    
+
     // TODO: longs and ints was a stupid decision
     // ints all the way unless needed otherwise
     public BigInteger ToNumber()
     {
         BigInteger output = 0;
-        for (int i = 0; i < Length; i++)
-        {
-            output += _charValueMapper[this[i]]*BigInteger.Pow(4, (int)Length - i - 1);
-        }
+        for (var i = 0; i < Length; i++) output += _charValueMapper[this[i]] * BigInteger.Pow(4, (int)Length - i - 1);
 
         return output;
     }
-    
+
     // TODO: it might eventually make sense for this to be its own class. For now its fine
     public int[] KmerComposition(int n)
     {
         if (n <= 0)
             throw new ArgumentException("n must be positive");
-        var output = new int[(int) Math.Pow(4, n)];
-        for (int i = 0; i < Length - n +1; i++)
-        {
+        var output = new int[(int)Math.Pow(4, n)];
+        for (var i = 0; i < Length - n + 1; i++)
             // this is effectively the same thing as "ToNumber()"
             // however, we don't need all the overhead of the DNA class.
             output[KmerToNumber(Substring(i, n))]++;
-        }
 
         return output;
     }
 
     private static int KmerToNumber(string input)
     {
-        int output = 0;
-        for (int i = 0; i < input.Length; i++)
-        {
-            output += _charValueMapper[input[i]]*(int)Math.Pow(4, (int)input.Length - i - 1);
-        }
+        var output = 0;
+        for (var i = 0; i < input.Length; i++)
+            output += _charValueMapper[input[i]] * (int)Math.Pow(4, input.Length - i - 1);
 
         return output;
     }
 
-    private static Dictionary<char, int> _charValueMapper = new Dictionary<char, int>()
-    {
-        { 'A', 0 },
-        { 'C', 1 },
-        { 'G', 2 },
-        { 'T', 3 },
-    };
-    
-    private static Dictionary<int, char> _valueCharMapper = new Dictionary<int, char>()
-    {
-        { 0, 'A' },
-        {  1, 'C' },
-        {  2, 'G' },
-        {  3, 'T' },
-    };
-
     public static DNASequence FromNumber(int number, int k)
     {
-        if (number == 0)
-        {
-            return new DNASequence(new string('A', k));
-        }
+        if (number == 0) return new DNASequence(new string('A', k));
         var pattern = new StringBuilder();
 
         while (number > 0)
         {
-            int remainder = (int)(number % 4);
+            var remainder = number % 4;
             pattern.Insert(0, _valueCharMapper[remainder]);
             number /= 4;
         }
 
         // Pad the pattern with 'A's if its length is less than k.
-        while (pattern.Length < k)
-        {
-            pattern.Insert(0, 'A');
-        }
+        while (pattern.Length < k) pattern.Insert(0, 'A');
 
         return new DNASequence(pattern.ToString());
     }
-    
+
     // Should this be static, should this be a class conversion
     // For now, let's just let it be an explicit conversion, pay for the new class
     public RNASequence TranscribeToRNA()
@@ -163,12 +150,12 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         return output.ToList();
     }
-    
+
     public static DNASequence operator +(DNASequence p1, DNASequence p2)
     {
         return new DNASequence(p1.RawSequence + p2.RawSequence);
     }
-    
+
     public static void SingleReadToProteinSequences(DNASequence dnaSequence, ref List<ProteinSequence> output)
     {
         for (var i = 0; i <= dnaSequence.Length - 3; i++)

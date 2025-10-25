@@ -25,18 +25,12 @@ public class AnySequence : ISequence
         Name = fasta.Name;
         ConstructionLogic(fasta.RawSequence);
     }
-    
+
     public string RawSequence { get; set; }
     public long Length => RawSequence.Length;
 
     public string? Name { get; }
 
-    // Overloading the addition operator (+)
-    public static AnySequence operator +(AnySequence p1, AnySequence p2)
-    {
-        return new AnySequence(p1.RawSequence + p2.RawSequence);
-    }
-    
     /// <summary>
     /// </summary>
     /// <param name="motif"></param>
@@ -104,6 +98,12 @@ public class AnySequence : ISequence
         return indices;
     }
 
+    // Overloading the addition operator (+)
+    public static AnySequence operator +(AnySequence p1, AnySequence p2)
+    {
+        return new AnySequence(p1.RawSequence + p2.RawSequence);
+    }
+
     public override bool Equals(object obj)
     {
         if (obj is AnySequence other) return RawSequence.Equals(other.RawSequence);
@@ -124,7 +124,7 @@ public class AnySequence : ISequence
     ///     This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
     ///     Also, hamming distance to hash difference seems intriguing if nothing else
     /// </remarks>
-    public static long HammingDistance(AnySequence a, AnySequence b)
+    public static int HammingDistance(AnySequence a, AnySequence b)
     {
         if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
 
@@ -186,33 +186,30 @@ public class AnySequence : ISequence
 
     public override int GetHashCode()
     {
-        throw new NotImplementedException();
+        return RawSequence.GetHashCode();
     }
 
-    #region String Manipulators
+    public static int CalculateOverlap(AnySequence s1, AnySequence s2)
+    {
+        var maxOverlap = 0;
+        for (var i = 1; i <= Math.Min(s1.Length, s2.Length); i++)
+            if (s1.Sequence.EndsWith(s2.Substring(0, i)))
+                maxOverlap = i;
+
+        return maxOverlap;
+    }
+
+    #region String Accessors
 
     public char this[int index] => RawSequence[index];
-    
+
     public string Sequence => RawSequence;
     public string this[Range range] => RawSequence[range];
+
     public string Substring(int i, int kmerLength)
     {
         return RawSequence.Substring(i, kmerLength);
     }
 
     #endregion
-    
-    public static int CalculateOverlap(AnySequence s1, AnySequence s2)
-    {
-        int maxOverlap = 0;
-        for (int i = 1; i <= Math.Min(s1.Length, s2.Length); i++)
-        {
-            if (s1.Sequence.EndsWith(s2.Substring(0, i)))
-            {
-                maxOverlap = i;
-            }
-        }
-        
-        return maxOverlap;
-    }
 }

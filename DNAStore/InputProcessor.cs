@@ -80,6 +80,7 @@ internal class InputProcessor
                 "SetCalculations" => new SetCalculations(),
                 "KmerComposition" => new KmerComposition(),
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
+                "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -608,18 +609,45 @@ internal class InputProcessor
             Console.WriteLine($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
         }
     }
-    
+
+    private class PossibleErrorCorrections : BaseExecutor
+    {
+        private List<DNASequence>? _dnaSequence;
+        private List<ErrorCorrection>? _errorCorrections;
+        private List<Fasta>? fastas;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var location = Console.ReadLine();
+            if (location != null) fastas = FastaParser.Read(location);
+            _dnaSequence = fastas.PostProcessAsDNASequence();
+        }
+
+        protected override void CalculateResult()
+        {
+            _errorCorrections = _dnaSequence.GenerateErrorCorrections();
+        }
+
+        protected override void OutputResult()
+        {
+            foreach (var item in _errorCorrections) Console.WriteLine(item);
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            File.WriteAllText(desktopPath + "/output.txt", string.Join('\n', _errorCorrections));
+        }
+    }
+
     private class KmerComposition : BaseExecutor
     {
-        private DNASequence sequence;
         private int[] kmerComposition;
         private int kmerLength;
+        private DNASequence sequence;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Enter Kmer length to be analyzed");
             kmerLength = int.Parse(Console.ReadLine());
-            
+
             Console.WriteLine("Please input sequence");
             var inputString = Console.ReadLine();
             sequence = new DNASequence(inputString);
@@ -684,12 +712,12 @@ internal class InputProcessor
             Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest()}");
         }
     }
-    
+
     private class GreedyStringAssembly : BaseExecutor
     {
         private List<Fasta>? _fastas;
-        private List<DNASequence> _sequences;
         private DNASequence _result;
+        private List<DNASequence> _sequences;
 
         protected override void GetInputs()
         {

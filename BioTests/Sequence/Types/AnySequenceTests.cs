@@ -134,8 +134,8 @@ public class AnySequenceTests
     [TestMethod]
     public void OverlapTest()
     {
-        AnySequence seq1 = new AnySequence("ACGTACGTGACG");
-        AnySequence seq2 = new AnySequence("GTGACGCATTTG");
+        var seq1 = new AnySequence("ACGTACGTGACG");
+        var seq2 = new AnySequence("GTGACGCATTTG");
         Assert.AreEqual(6, AnySequence.CalculateOverlap(seq1, seq2));
         Assert.AreEqual(0, AnySequence.CalculateOverlap(seq2, seq1));
     }

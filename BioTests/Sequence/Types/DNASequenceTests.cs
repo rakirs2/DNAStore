@@ -79,39 +79,39 @@ public class DNASequenceTests
         var seq1 = new DNASequence("AGT");
         Assert.AreEqual(11, seq1.ToNumber());
     }
-    
+
     [TestMethod]
     public void NumberToDNATest()
     {
-        var seq1 = DNASequence.FromNumber(11,3);
+        var seq1 = DNASequence.FromNumber(11, 3);
         Assert.AreEqual(new DNASequence("AGT"), seq1);
     }
-    
+
     [TestMethod]
     public void NumberToDNABaseCase()
     {
-        var seq1 = DNASequence.FromNumber(0,0);
+        var seq1 = DNASequence.FromNumber(0, 0);
         Assert.AreEqual(new DNASequence(""), seq1);
     }
-    
+
     [TestMethod]
     public void NumberToDNABaseCaseSimiliar()
     {
-        var seq1 = DNASequence.FromNumber(0,1);
+        var seq1 = DNASequence.FromNumber(0, 1);
         Assert.AreEqual(new DNASequence("A"), seq1);
     }
-    
+
     [TestMethod]
     public void NumberToDNAPaddingTest()
     {
-        var seq1 = DNASequence.FromNumber(0,2);
+        var seq1 = DNASequence.FromNumber(0, 2);
         Assert.AreEqual(new DNASequence("AA"), seq1);
     }
-    
+
     [TestMethod]
     public void NumberToDNAActualTest()
     {
-        var seq1 = DNASequence.FromNumber(7939,7);
+        var seq1 = DNASequence.FromNumber(7939, 7);
         Assert.AreEqual(new DNASequence("CTTAAAT"), seq1);
     }
 
@@ -122,7 +122,7 @@ public class DNASequenceTests
         var seq = new DNASequence("acgt");
         var _ = seq.KmerComposition(0);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void GenerateKmerCompositionBadInput2()
@@ -130,22 +130,33 @@ public class DNASequenceTests
         var seq = new DNASequence("acgt");
         var _ = seq.KmerComposition(-1);
     }
-    
+
     [TestMethod]
     public void GenerateKmerComposition()
     {
         var seq = new DNASequence("AAAAA");
         var output = seq.KmerComposition(2);
-        var expected = new int[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        Assert.IsTrue(Enumerable.SequenceEqual(expected, output));
+        var expected = new[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        Assert.IsTrue(expected.SequenceEqual(output));
     }
-    
+
     [TestMethod]
     public void GenerateKmerCompositionLarge()
     {
-        var seq = new DNASequence("CTTCGAAAGTTTGGGCCGAGTCTTACAGTCGGTCTTGAAGCAAAGTAACGAACTCCACGGCCCTGACTACCGAACCAGTTGTGAGTACTCAACTGGGTGAGAGTGCAGTCCCTATTGAGTTTCCGAGACTCACCGGGATTTTCGATCCAGCCTCAGTCCAGTCTTGTGGCCAACTCACCAAATGACGTTGGAATATCCCTGTCTAGCTCACGCAGTACTTAGTAAGAGGTCGCTGCAGCGGGGCAAGGAGATCGGAAAATGTGCTCTATATGCGACTAAAGCTCCTAACTTACACGTAGACTTGCCCGTGTTAAAAACTCGGCTCACATGCTGTCTGCGGCTGGCTGTATACAGTATCTACCTAATACCCTTCAGTTCGCCGCACAAAAGCTGGGAGTTACCGCGGAAATCACAG");
+        var seq = new DNASequence(
+            "CTTCGAAAGTTTGGGCCGAGTCTTACAGTCGGTCTTGAAGCAAAGTAACGAACTCCACGGCCCTGACTACCGAACCAGTTGTGAGTACTCAACTGGGTGAGAGTGCAGTCCCTATTGAGTTTCCGAGACTCACCGGGATTTTCGATCCAGCCTCAGTCCAGTCTTGTGGCCAACTCACCAAATGACGTTGGAATATCCCTGTCTAGCTCACGCAGTACTTAGTAAGAGGTCGCTGCAGCGGGGCAAGGAGATCGGAAAATGTGCTCTATATGCGACTAAAGCTCCTAACTTACACGTAGACTTGCCCGTGTTAAAAACTCGGCTCACATGCTGTCTGCGGCTGGCTGTATACAGTATCTACCTAATACCCTTCAGTTCGCCGCACAAAAGCTGGGAGTTACCGCGGAAATCACAG");
         var output = seq.KmerComposition(4);
-        var expected = new int[] {4, 1, 4, 3, 0, 1, 1, 5, 1, 3, 1, 2, 2, 1, 2, 0, 1, 1, 3, 1, 2, 1, 3, 1, 1, 1, 1, 2, 2, 5, 1, 3, 0, 2, 2, 1, 1, 1, 1, 3, 1, 0, 0, 1, 5, 5, 1, 5, 0, 2, 0, 2, 1, 2, 1, 1, 1, 2, 0, 1, 0, 0, 1, 1, 3, 2, 1, 0, 3, 2, 3, 0, 0, 2, 0, 8, 0, 0, 1, 0, 2, 1, 3, 0, 0, 0, 1, 4, 3, 2, 1, 1, 3, 1, 2, 1, 3, 1, 2, 1, 2, 1, 1, 1, 2, 3, 2, 1, 1, 0, 1, 1, 3, 2, 1, 2, 6, 2, 1, 1, 1, 2, 3, 3, 3, 2, 3, 0, 3, 2, 1, 1, 0, 0, 1, 4, 3, 0, 1, 5, 0, 2, 0, 1, 2, 1, 3, 0, 1, 2, 2, 1, 1, 0, 3, 0, 0, 4, 5, 0, 3, 0, 2, 1, 1, 3, 0, 3, 2, 2, 1, 1, 0, 2, 1, 0, 2, 2, 1, 2, 0, 2, 2, 5, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 1, 1, 3, 4, 0, 2, 1, 1, 0, 1, 2, 2, 1, 1, 1, 5, 2, 0, 3, 2, 1, 1, 2, 2, 3, 0, 3, 0, 1, 3, 1, 2, 3, 0, 2, 1, 2, 2, 1, 2, 3, 0, 1, 2, 3, 1, 1, 3, 1, 0, 1, 1, 3, 0, 2, 1, 2, 2, 0, 2, 1, 1};
-        Assert.IsTrue(Enumerable.SequenceEqual(expected, output));
+        var expected = new[]
+        {
+            4, 1, 4, 3, 0, 1, 1, 5, 1, 3, 1, 2, 2, 1, 2, 0, 1, 1, 3, 1, 2, 1, 3, 1, 1, 1, 1, 2, 2, 5, 1, 3, 0, 2, 2, 1,
+            1, 1, 1, 3, 1, 0, 0, 1, 5, 5, 1, 5, 0, 2, 0, 2, 1, 2, 1, 1, 1, 2, 0, 1, 0, 0, 1, 1, 3, 2, 1, 0, 3, 2, 3, 0,
+            0, 2, 0, 8, 0, 0, 1, 0, 2, 1, 3, 0, 0, 0, 1, 4, 3, 2, 1, 1, 3, 1, 2, 1, 3, 1, 2, 1, 2, 1, 1, 1, 2, 3, 2, 1,
+            1, 0, 1, 1, 3, 2, 1, 2, 6, 2, 1, 1, 1, 2, 3, 3, 3, 2, 3, 0, 3, 2, 1, 1, 0, 0, 1, 4, 3, 0, 1, 5, 0, 2, 0, 1,
+            2, 1, 3, 0, 1, 2, 2, 1, 1, 0, 3, 0, 0, 4, 5, 0, 3, 0, 2, 1, 1, 3, 0, 3, 2, 2, 1, 1, 0, 2, 1, 0, 2, 2, 1, 2,
+            0, 2, 2, 5, 2, 2, 1, 1, 2, 1, 2, 2, 2, 2, 1, 1, 3, 4, 0, 2, 1, 1, 0, 1, 2, 2, 1, 1, 1, 5, 2, 0, 3, 2, 1, 1,
+            2, 2, 3, 0, 3, 0, 1, 3, 1, 2, 3, 0, 2, 1, 2, 2, 1, 2, 3, 0, 1, 2, 3, 1, 1, 3, 1, 0, 1, 1, 3, 0, 2, 1, 2, 2,
+            0, 2, 1, 1
+        };
+        Assert.IsTrue(expected.SequenceEqual(output));
     }
 }
