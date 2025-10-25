@@ -64,53 +64,53 @@ public static class DNASequenceListExtensions
     /// </summary>
     /// <remarks>
     /// TODO: this should be generic and only in one location.
-    /// TODO: this hsould be handled by its own data structure
+    /// TODO: this should be handled by its own data structure
     /// </remarks>
     /// <param name="list"></param>
     /// <returns></returns>
     public static List<ErrorCorrection> GenerateErrorCorrections(this List<DNASequence> list, int distance = 1)
     {
         var output = new List<ErrorCorrection>();
-        var dict = new Dictionary<DNASequence, int>();
+        var dict = new ReverseComplementDictionary();
 
         HashSet<DNASequence> needsReview = new HashSet<DNASequence>();
         foreach (var item in list)
         {
-            if (dict.ContainsKey(item))
+            if (dict[item] == 0)
             {
-                // the key exists at least once. We do not need to check this ever again.
-                dict[item]++;
-            }
-            else
-            {
-                dict.Add(item, 1);
                 needsReview.Add(item);
             }
+            
+            dict.Add(item);
         }
 
         foreach (var item in needsReview)
         {
-            if (dict.ContainsKey(item) &&  dict[item] == 1)
+            if ( dict[item] == 1)
             {
                 // ok, we have something that need analysis
                 // we have 2 options --> 1 go through the list of the options and see if there exists a valid point match
-                // with Hamming Distance 1. 
-                // we need to verify this with the ReverseComplement as well.
-
+                // with the Hamming Distance 
                 foreach (var knownRead in list)
                 {
                     if(knownRead.Equals(item))
                         continue;
+
+                    var rc = knownRead.ToReverseComplement();
+                    if (rc.Equals(item))
+                    {
+                        continue;
+                    }
                     
-                    if (AnySequence.HammingDistance(knownRead, item) <= distance)
+                    if (AnySequence.HammingDistance(knownRead, item) == distance && dict[knownRead] >=2)
                     {
                         output.Add(new ErrorCorrection(item, knownRead));
                         break;
                     }
                     
-                    if (AnySequence.HammingDistance(knownRead.ToReverseComplement(), item) <= distance)
+                    if (AnySequence.HammingDistance(knownRead.ToReverseComplement(), item) == distance && dict[knownRead.ToReverseComplement()] >=2)
                     {
-                        output.Add(new ErrorCorrection(item, knownRead));
+                        output.Add(new ErrorCorrection(item, knownRead.ToReverseComplement()));
                         break;
                     }
                 }

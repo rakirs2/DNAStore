@@ -80,6 +80,7 @@ internal class InputProcessor
                 "SetCalculations" => new SetCalculations(),
                 "KmerComposition" => new KmerComposition(),
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
+                "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -606,6 +607,36 @@ internal class InputProcessor
         protected override void OutputResult()
         {
             Console.WriteLine($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
+        }
+    }
+    
+    private class PossibleErrorCorrections : BaseExecutor
+    {
+        private List<Fasta>? fastas;
+        private List<DNASequence>? _dnaSequence;
+        private List<ErrorCorrection>? _errorCorrections;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var location = Console.ReadLine();
+            if (location != null) fastas = FastaParser.Read(location);
+            _dnaSequence = fastas.PostProcessAsDNASequence();
+        }
+
+        protected override void CalculateResult()
+        {
+            _errorCorrections = _dnaSequence.GenerateErrorCorrections();
+        }
+
+        protected override void OutputResult()
+        {
+            foreach(var item in _errorCorrections)
+            {
+                Console.WriteLine(item);
+            }
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            File.WriteAllText(desktopPath +"/output.txt", string.Join('\n', _errorCorrections));
         }
     }
     
