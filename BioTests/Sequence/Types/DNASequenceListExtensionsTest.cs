@@ -1,5 +1,4 @@
 using Bio.Sequence.Types;
-using JetBrains.Annotations;
 
 namespace BioTests.Sequence.Types;
 
