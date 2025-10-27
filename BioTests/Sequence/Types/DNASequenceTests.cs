@@ -17,7 +17,7 @@ public class DNASequenceTests
     public void ReverseComplementTest()
     {
         var sequence = new DNASequence("AAAACCCGGT");
-        var complement = sequence.ToReverseComplement();
+        var complement = sequence.GetReverseComplement();
         Assert.AreEqual("ACCGGGTTTT", complement.ToString());
     }
 

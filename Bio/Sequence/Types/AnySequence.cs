@@ -10,7 +10,7 @@ namespace Bio.Sequence.Types;
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
 ///     know what type of string we are analyzing.
 /// </summary>
-public class AnySequence : ISequence
+public class AnySequence : ISequence, IComparable
 {
     public BasePairDictionary Counts = new();
 
@@ -114,6 +114,14 @@ public class AnySequence : ISequence
     public override string ToString()
     {
         return RawSequence;
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is AnySequence other)
+            return RawSequence.CompareTo(other.RawSequence);
+
+        throw new ArgumentException("Object is not a sequence");
     }
 
     /// <summary>

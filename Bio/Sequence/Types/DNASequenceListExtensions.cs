@@ -87,7 +87,7 @@ public static class DNASequenceListExtensions
                     if (knownRead.Equals(item))
                         continue;
 
-                    var rc = knownRead.ToReverseComplement();
+                    var rc = knownRead.GetReverseComplement();
                     if (rc.Equals(item)) continue;
 
                     if (AnySequence.HammingDistance(knownRead, item) == distance && dict[knownRead] >= 2)
@@ -96,10 +96,10 @@ public static class DNASequenceListExtensions
                         break;
                     }
 
-                    if (AnySequence.HammingDistance(knownRead.ToReverseComplement(), item) == distance &&
-                        dict[knownRead.ToReverseComplement()] >= 2)
+                    if (AnySequence.HammingDistance(knownRead.GetReverseComplement(), item) == distance &&
+                        dict[knownRead.GetReverseComplement()] >= 2)
                     {
-                        output.Add(new ErrorCorrection(item, knownRead.ToReverseComplement()));
+                        output.Add(new ErrorCorrection(item, knownRead.GetReverseComplement()));
                         break;
                     }
                 }

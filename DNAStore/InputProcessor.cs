@@ -553,7 +553,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = _dnaSequence?.ToReverseComplement().ToString();
+            output = _dnaSequence?.GetReverseComplement().ToString();
         }
 
         protected override void OutputResult()

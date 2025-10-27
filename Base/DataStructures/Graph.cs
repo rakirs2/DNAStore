@@ -1,22 +1,31 @@
 ﻿namespace Base.DataStructures;
 
-public class Graph<T> : ICloneable, IEquatable<Graph<T>>
+/// <summary>
+/// Simple directed graph implementation. The graph goes from ed
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
 {
     private readonly int _numNodes;
-    private readonly SortedDictionary<T, HashSet<T>> tracker;
+    private readonly SortedDictionary<T, HashSet<T>> _tracker;
     private int _numEdges;
 
     public Graph(int numNodes, IComparer<T>? comparer = null)
     {
-        tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
-        for (var i = 1; i <= numNodes; i++) tracker[(T)(object)i] = new HashSet<T>();
+        _tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
+        for (var i = 1; i <= numNodes; i++) _tracker[(T)(object)i] = new HashSet<T>();
 
         _numNodes = numNodes;
     }
 
+    public Graph()
+    {
+        _tracker = new SortedDictionary<T, HashSet<T>>();
+    }
+
     public Graph(IComparer<T>? comparer = null)
     {
-        tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
+        _tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
 
     public object Clone()
@@ -26,20 +35,20 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>>
 
     bool IEquatable<Graph<T>>.Equals(Graph<T>? other)
     {
-        return Equals(other);
+        return other != null && Equals(other);
     }
 
     public void Insert(T start, T end)
     {
-        if (tracker.ContainsKey(start))
-            tracker[start].Add(end);
+        if (_tracker.TryGetValue(start, out var value))
+            value.Add(end);
         else
-            tracker[start] = new HashSet<T> { end };
+            _tracker[start] = [end];
 
-        if (tracker.ContainsKey(end))
-            tracker[end].Add(start);
+        if (_tracker.TryGetValue(end, out var value1))
+            value1.Add(start);
         else
-            tracker[end] = new HashSet<T> { start };
+            _tracker[end] = [start];
         // TODO: Currently, this implementation does not check for duplicate edges.
         _numEdges++;
     }
@@ -48,10 +57,14 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>>
     {
         throw new NotImplementedException();
     }
-
+    
+    /// <summary>
+    /// This should return an edge list with no counts
+    /// </summary>
+    /// <returns></returns>
     public Dictionary<T, HashSet<T>> GetEdgeList()
     {
-        return tracker.ToDictionary();
+        return _tracker.ToDictionary();
     }
 
     public int EdgesToMakeTree()
@@ -62,25 +75,27 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>>
     }
 
 
-    protected bool Equals(Graph<T> other)
+    private bool Equals(Graph<T> other)
     {
         return GraphEquality(this, other);
     }
 
     public override bool Equals(object? obj)
     {
-        if (obj is null) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != GetType()) return false;
-        return Equals((Graph<T>)obj);
+        if (obj is null)
+            return false;
+        if (ReferenceEquals(this, obj))
+            return true;
+
+        return obj.GetType() == GetType() && Equals((Graph<T>)obj);
     }
 
     public override int GetHashCode()
     {
-        return tracker.GetHashCode();
+        return _tracker.GetHashCode();
     }
 
-    public static bool GraphEquality(Graph<T> first, Graph<T> other)
+    private static bool GraphEquality(Graph<T> first, Graph<T> other)
     {
         return first.GetEdgeList().Count == other.GetEdgeList().Count &&
                !first.GetEdgeList().Except(other.GetEdgeList()).Any();

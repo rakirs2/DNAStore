@@ -42,7 +42,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     private int AnalyzeKmer(int i, string key, int currentHighest, bool checkComplement)
     {
         var stringToCheck = key;
-        if (checkComplement) stringToCheck = new DNASequence(key).ToReverseComplement().ToString();
+        if (checkComplement) stringToCheck = new DNASequence(key).GetReverseComplement().ToString();
 
         if (AnySequence.HammingDistance(_sequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
         {
