@@ -1,7 +1,8 @@
 namespace Base.DataStructures;
 
 /// <summary>
-/// Possible overdone. Buty we ned some space for directed vs non directed implementations
+/// Simple Directed graph implementation
+/// separation between directed and undirected is handled at insertion time.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class DirectedGraph<T> : UndirectedGraph<T> 
