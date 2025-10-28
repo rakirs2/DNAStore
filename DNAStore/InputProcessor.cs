@@ -81,6 +81,7 @@ internal class InputProcessor
                 "KmerComposition" => new KmerComposition(),
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
+                "DeBrujinString" => new DeBrujinString(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -610,6 +611,37 @@ internal class InputProcessor
         }
     }
 
+    private class DeBrujinString : BaseExecutor
+    {
+        private IEnumerable<string> text;
+        private DeBrujin deBrujin = new();
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var location = Console.ReadLine();
+            if (location != null)
+            {
+                text = File.ReadLines(location);
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            foreach (var item in text)
+            {
+                deBrujin.GenerateFromString(item);
+            }
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine(deBrujin.GetEdgeList());
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            File.WriteAllText(desktopPath + "/output.txt", deBrujin.GetEdgeList());
+        }
+    }
+    
     private class PossibleErrorCorrections : BaseExecutor
     {
         private List<DNASequence>? _dnaSequence;
