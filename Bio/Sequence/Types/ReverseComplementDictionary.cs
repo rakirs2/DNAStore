@@ -12,8 +12,7 @@ public class ReverseComplementDictionary
 {
     private readonly Dictionary<DNASequence, int> _inputs = new();
     private readonly Dictionary<DNASequence, int> _reverseComplements = new();
-
-
+    
     #region Dictionary implementations
 
     /// <summary>

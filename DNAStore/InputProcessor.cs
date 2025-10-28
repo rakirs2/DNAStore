@@ -431,7 +431,7 @@ internal class InputProcessor
 
     private class EdgeList : BaseExecutor
     {
-        private readonly Graph<int> graph = new();
+        private readonly UndirectedGraph<int> _undirectedGraph = new();
         private readonly List<Tuple<int, int>>? inputs = new();
         private List<int>? output;
 
@@ -455,12 +455,12 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            foreach (var input in inputs) graph.Insert(input.Item1, input.Item2);
+            foreach (var input in inputs) _undirectedGraph.Insert(input.Item1, input.Item2);
         }
 
         protected override void OutputResult()
         {
-            var output = graph.GetEdgeList();
+            var output = _undirectedGraph.GetEdgeList();
             var edgeCounts = new List<int>();
             foreach (var kvp in output) edgeCounts.Add(kvp.Value.Count);
 
@@ -471,14 +471,14 @@ internal class InputProcessor
     private class EdgesToMakeTree : BaseExecutor
     {
         private readonly List<Tuple<int, int>>? inputs = new();
-        private Graph<int>? graph;
+        private UndirectedGraph<int>? graph;
         private List<int>? output;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the size of the array");
             var inputString = Console.ReadLine();
-            if (int.TryParse(inputString, out var size)) graph = new Graph<int>(size);
+            if (int.TryParse(inputString, out var size)) graph = new UndirectedGraph<int>(size);
 
             while (true)
             {

@@ -1,16 +1,16 @@
 ﻿namespace Base.DataStructures;
 
 /// <summary>
-/// Simple directed graph implementation. The graph goes from ed
+/// Simple undirected graph implementation.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
+public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> where T : notnull
 {
     private readonly int _numNodes;
-    private readonly SortedDictionary<T, HashSet<T>> _tracker;
-    private int _numEdges;
+    protected readonly SortedDictionary<T, HashSet<T>> _tracker;
+    protected int NumEdges;
 
-    public Graph(int numNodes, IComparer<T>? comparer = null)
+    public UndirectedGraph(int numNodes, IComparer<T>? comparer = null)
     {
         _tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
         for (var i = 1; i <= numNodes; i++) _tracker[(T)(object)i] = new HashSet<T>();
@@ -18,12 +18,12 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
         _numNodes = numNodes;
     }
 
-    public Graph()
+    public UndirectedGraph()
     {
         _tracker = new SortedDictionary<T, HashSet<T>>();
     }
 
-    public Graph(IComparer<T>? comparer = null)
+    public UndirectedGraph(IComparer<T>? comparer = null)
     {
         _tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
@@ -33,12 +33,12 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
         return MemberwiseClone();
     }
 
-    bool IEquatable<Graph<T>>.Equals(Graph<T>? other)
+    bool IEquatable<UndirectedGraph<T>>.Equals(UndirectedGraph<T>? other)
     {
         return other != null && Equals(other);
     }
 
-    public void Insert(T start, T end)
+    public virtual void Insert(T start, T end)
     {
         if (_tracker.TryGetValue(start, out var value))
             value.Add(end);
@@ -49,8 +49,9 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
             value1.Add(start);
         else
             _tracker[end] = [start];
+        
         // TODO: Currently, this implementation does not check for duplicate edges.
-        _numEdges++;
+        NumEdges++;
     }
 
     public void Remove(T item)
@@ -71,11 +72,11 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
     {
         // every node that doesn't have a value is an unconnected node
         // so we need to find the total number of unconnected nodes
-        return _numNodes - _numEdges - 1; // -1 because a tree with n nodes has n-1 edges
+        return _numNodes - NumEdges - 1; // -1 because a tree with n nodes has n-1 edges
     }
 
 
-    private bool Equals(Graph<T> other)
+    private bool Equals(UndirectedGraph<T> other)
     {
         return GraphEquality(this, other);
     }
@@ -87,7 +88,7 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
         if (ReferenceEquals(this, obj))
             return true;
 
-        return obj.GetType() == GetType() && Equals((Graph<T>)obj);
+        return obj.GetType() == GetType() && Equals((UndirectedGraph<T>)obj);
     }
 
     public override int GetHashCode()
@@ -95,7 +96,7 @@ public class Graph<T> : ICloneable, IEquatable<Graph<T>> where T : notnull
         return _tracker.GetHashCode();
     }
 
-    private static bool GraphEquality(Graph<T> first, Graph<T> other)
+    private static bool GraphEquality(UndirectedGraph<T> first, UndirectedGraph<T> other)
     {
         return first.GetEdgeList().Count == other.GetEdgeList().Count &&
                !first.GetEdgeList().Except(other.GetEdgeList()).Any();

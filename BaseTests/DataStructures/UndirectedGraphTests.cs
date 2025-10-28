@@ -1,14 +1,14 @@
 ﻿namespace Base.DataStructures.Tests;
 
 [TestClass]
-public class GraphTests
+public class UndirectedGraphTests
 {
     [TestMethod]
     public void Clone()
     {
-        var graph = new Graph<int>();
+        var graph = new UndirectedGraph<int>();
         graph.Insert(1, 2);
-        var clone = (Graph<int>)graph.Clone();
+        var clone = (UndirectedGraph<int>)graph.Clone();
         Assert.AreNotSame(graph, clone);
         Assert.AreEqual(graph, clone);
     }
@@ -16,7 +16,7 @@ public class GraphTests
     [TestMethod]
     public void EdgesToTree()
     {
-        var graph = new Graph<int>(10);
+        var graph = new UndirectedGraph<int>(10);
         graph.Insert(1, 2);
         graph.Insert(2, 8);
         graph.Insert(4, 10);

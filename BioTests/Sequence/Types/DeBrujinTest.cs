@@ -1,4 +1,3 @@
-using System.Text;
 using Bio.Sequence.Types;
 namespace BioTests.Sequence.Types;
 
@@ -18,22 +17,32 @@ public class DeBrujinTest
     {
         var graph = new DeBrujin();
         graph.GenerateFromString("ACGT");
-        var something = graph.GetEdgeList();
-        var output = new List<string>();
-        foreach (var kvp in something)
-        {
-            var sb = new StringBuilder();
-            sb.Append("(");
-            sb.Append(kvp.Key);
-            sb.Append(") ");
-            foreach (var value in kvp.Value)
-            {
-                sb.Append(value);
-            }
-            sb.Append(")");
-            var test =  sb.ToString();
-        }
+        Assert.AreEqual("(ACG, CGT)", graph.GetEdgeList());
+    }
 
-        var idea = string.Join('\n', output);
+    [TestMethod]
+    public void SimpleString()
+    {
+        var graph = new DeBrujin();
+        graph.GenerateFromString("TGAT");
+        Assert.AreEqual("(ATC, TCA)\n(TGA, GAT)", graph.GetEdgeList());
+        
+    }
+    
+    [TestMethod]
+    public void GivenProblem()
+    {
+        var graph = new DeBrujin();
+        graph.GenerateFromString("TGAT");
+        graph.GenerateFromString("CATG");
+        graph.GenerateFromString("TCAT");
+        graph.GenerateFromString("ATGC");
+        graph.GenerateFromString("CATC");
+        graph.GenerateFromString("CATC");
+        
+        var edgeList = graph.GetEdgeList();
+        
+        // NOTE: there's a slight ordering issue but it shouldn't matter with adjacency lists.
+        Assert.AreEqual("(ATC, TCA)\n(ATG, TGA)\n(ATG, TGC)\n(CAT, ATG)\n(CAT, ATC)\n(GAT, ATG)\n(GCA, CAT)\n(TCA, CAT)\n(TGA, GAT)", edgeList);
     }
 }
