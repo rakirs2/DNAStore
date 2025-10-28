@@ -12,8 +12,7 @@ public class ReverseComplementDictionary
 {
     private readonly Dictionary<DNASequence, int> _inputs = new();
     private readonly Dictionary<DNASequence, int> _reverseComplements = new();
-
-
+    
     #region Dictionary implementations
 
     /// <summary>
@@ -26,7 +25,7 @@ public class ReverseComplementDictionary
         if (key.Length == 0) return;
         if (!_inputs.TryAdd(key, 1)) _inputs[key]++;
 
-        var rc = key.ToReverseComplement();
+        var rc = key.GetReverseComplement();
         if (!_reverseComplements.TryAdd(rc, 1)) _reverseComplements[rc]++;
     }
 

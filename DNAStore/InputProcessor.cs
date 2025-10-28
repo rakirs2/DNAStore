@@ -81,6 +81,7 @@ internal class InputProcessor
                 "KmerComposition" => new KmerComposition(),
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
+                "DeBrujinString" => new DeBrujinString(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -431,7 +432,7 @@ internal class InputProcessor
 
     private class EdgeList : BaseExecutor
     {
-        private readonly Graph<int> graph = new();
+        private readonly UndirectedGraph<int> _undirectedGraph = new();
         private readonly List<Tuple<int, int>>? inputs = new();
         private List<int>? output;
 
@@ -455,12 +456,12 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            foreach (var input in inputs) graph.Insert(input.Item1, input.Item2);
+            foreach (var input in inputs) _undirectedGraph.Insert(input.Item1, input.Item2);
         }
 
         protected override void OutputResult()
         {
-            var output = graph.GetEdgeList();
+            var output = _undirectedGraph.GetEdgeList();
             var edgeCounts = new List<int>();
             foreach (var kvp in output) edgeCounts.Add(kvp.Value.Count);
 
@@ -471,14 +472,14 @@ internal class InputProcessor
     private class EdgesToMakeTree : BaseExecutor
     {
         private readonly List<Tuple<int, int>>? inputs = new();
-        private Graph<int>? graph;
+        private UndirectedGraph<int>? graph;
         private List<int>? output;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the size of the array");
             var inputString = Console.ReadLine();
-            if (int.TryParse(inputString, out var size)) graph = new Graph<int>(size);
+            if (int.TryParse(inputString, out var size)) graph = new UndirectedGraph<int>(size);
 
             while (true)
             {
@@ -553,7 +554,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = _dnaSequence?.ToReverseComplement().ToString();
+            output = _dnaSequence?.GetReverseComplement().ToString();
         }
 
         protected override void OutputResult()
@@ -610,6 +611,37 @@ internal class InputProcessor
         }
     }
 
+    private class DeBrujinString : BaseExecutor
+    {
+        private IEnumerable<string> text;
+        private DeBrujin deBrujin = new();
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var location = Console.ReadLine();
+            if (location != null)
+            {
+                text = File.ReadLines(location);
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            foreach (var item in text)
+            {
+                deBrujin.GenerateFromString(item);
+            }
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine(deBrujin.GetEdgeList());
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            File.WriteAllText(desktopPath + "/output.txt", deBrujin.GetEdgeList());
+        }
+    }
+    
     private class PossibleErrorCorrections : BaseExecutor
     {
         private List<DNASequence>? _dnaSequence;

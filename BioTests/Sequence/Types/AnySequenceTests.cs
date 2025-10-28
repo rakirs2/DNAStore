@@ -139,4 +139,24 @@ public class AnySequenceTests
         Assert.AreEqual(6, AnySequence.CalculateOverlap(seq1, seq2));
         Assert.AreEqual(0, AnySequence.CalculateOverlap(seq2, seq1));
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void InvalidTypeThrows()
+    {
+        var seq1 = new AnySequence("ACGTACGTGACG");
+        seq1.CompareTo("something");
+    }
+
+    [TestMethod]
+    public void CompareToEqual()
+    {
+        var seq1 = new AnySequence("ABCD");
+        var seq2 = new AnySequence("ABCD");
+        var seq3 = new AnySequence("ABC");
+        var seq4 = new AnySequence("ABCE");
+        Assert.AreEqual(0, seq1.CompareTo(seq2));
+        Assert.AreEqual(1, seq1.CompareTo(seq3));
+        Assert.AreEqual(-1, seq1.CompareTo(seq4));
+    }
 }

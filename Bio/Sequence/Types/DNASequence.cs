@@ -38,7 +38,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
             while (i + j <= Length && j <= 12)
             {
                 var subStringDNA = new DNASequence(Substring(i, j));
-                var reverseComplement = subStringDNA.ToReverseComplement();
+                var reverseComplement = subStringDNA.GetReverseComplement();
                 if (AreSequenceEqual(subStringDNA, reverseComplement)) output.Add(new Tuple<int, int>(i + 1, j));
                 j++;
             }
@@ -111,7 +111,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     ///     TODO: What if we can't do this all in memory?
     /// </summary>
     /// <returns></returns>
-    public DNASequence ToReverseComplement()
+    public DNASequence GetReverseComplement()
     {
         // TODO: this should probably be all ints
         var dnaStrand = new StringBuilder();
@@ -134,7 +134,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         // var complement = ToReverseComplement();
 
         SingleReadToProteinSequences(this, ref values);
-        SingleReadToProteinSequences(ToReverseComplement(), ref values);
+        SingleReadToProteinSequences(GetReverseComplement(), ref values);
         // TODO: This is terrible, terrible perf wise and bad form.
         // But, it might be the right answer for now
 
