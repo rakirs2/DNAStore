@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using Base.DataStructures;
 using Bio.Analysis.Types;
@@ -10,7 +11,7 @@ namespace Bio.Sequence.Types;
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
 ///     know what type of string we are analyzing.
 /// </summary>
-public class AnySequence : ISequence, IComparable
+public class AnySequence : ISequence, IComparable, IEnumerable<char>
 {
     public BasePairDictionary Counts = new();
 
@@ -104,6 +105,11 @@ public class AnySequence : ISequence, IComparable
         return new AnySequence(p1.RawSequence + p2.RawSequence);
     }
 
+    public IEnumerator<char> GetEnumerator()
+    {
+        return RawSequence.GetEnumerator();
+    }
+
     public override bool Equals(object obj)
     {
         if (obj is AnySequence other) return RawSequence.Equals(other.RawSequence);
@@ -114,6 +120,11 @@ public class AnySequence : ISequence, IComparable
     public override string ToString()
     {
         return RawSequence;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
     public int CompareTo(object? obj)

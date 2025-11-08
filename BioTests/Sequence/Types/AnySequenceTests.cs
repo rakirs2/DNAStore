@@ -159,4 +159,20 @@ public class AnySequenceTests
         Assert.AreEqual(1, seq1.CompareTo(seq3));
         Assert.AreEqual(-1, seq1.CompareTo(seq4));
     }
+
+    [TestMethod]
+    public void EnumerableChar()
+    {
+        var  seq1 = new AnySequence("ABCD");
+        var expected = "ABCD";
+        using (var enumerator = seq1.GetEnumerator())
+        {
+            for (int i = 0; i < expected.Length; i++)
+            {
+                enumerator.MoveNext();
+                Assert.AreEqual(expected[i], enumerator.Current);
+            }
+            Assert.IsFalse(enumerator.MoveNext());
+        }
+    }
 }
