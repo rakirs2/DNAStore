@@ -11,4 +11,11 @@ public class AlignmentMatrixTest
     {
         Assert.IsNotNull(new AlignmentMatrix("a", "a"));
     }
+
+    [TestMethod]
+    public void ToString()
+    {
+        var am = new AlignmentMatrix("a", "a");
+        Assert.AreEqual("(none, 0), (none, 0)\n(none, 0), (none, 0)", am.ToString());
+    }
 }

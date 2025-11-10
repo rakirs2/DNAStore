@@ -1,18 +1,19 @@
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Text;
 using Base.Interfaces;
+using Base.Utils;
 
 namespace Base.DataStructures;
 
 public class AlignmentMatrix : IAlignmentMatrix
 {
-    private List<List<Node>> _matrix;
+    private Node[,] _matrix;
     public AlignmentMatrix(string a, string b)
     {
-        Node[,] _matrix = new Node[a.Length +1,b.Length+1];
+         _matrix = new Node[a.Length +1,b.Length+1];
         for (int i=0;i<(a.Length+1)*(b.Length+1);i++) _matrix[i%(a.Length+1),i/(a.Length+1)]=new Node(); 
         
-
         for (int i = 0; i < a.Length; i++)
         {
             for (int j = 0; j < b.Length; j++)
@@ -32,6 +33,29 @@ public class AlignmentMatrix : IAlignmentMatrix
         }
         public Direction Pointer { get; set; }
         public int Value { get; set; }
+
+        public override string ToString()
+        {
+            return "(" + Pointer + ", "  + Value + ")";
+        }
+    }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        for (int row = 0; row < _matrix.GetLength(0); row++)
+        {
+            // Is this necessary
+            IEnumerable<Node> rowValues = MatrixUtils.GetRow(_matrix, row);
+            // Iterate through rows
+            sb.Append(string.Join(", ", rowValues));
+            if (row!= _matrix.GetLength(1) - 1)
+            {
+                sb.AppendLine();
+            }
+        }
+
+        return sb.ToString();
     }
     
     private enum Direction
