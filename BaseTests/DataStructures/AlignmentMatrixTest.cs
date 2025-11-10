@@ -16,7 +16,7 @@ public class AlignmentMatrixTest
     public void ToString()
     {
         var am = new AlignmentMatrix("a", "a");
-        Assert.AreEqual("(none, 0), (none, 0)\n(none, 0), (none, 0)", am.ToString());
+        Assert.AreEqual("(None, 0), (None, 0)\n(None, 0), (Match, 1)", am.ToString());
     }
 
     [TestMethod]
