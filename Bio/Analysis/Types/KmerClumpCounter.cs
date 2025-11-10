@@ -10,6 +10,7 @@ public class KmerClumpCounter : IKmerClumpCounter
 
     private readonly Dictionary<string, int> _slidingCounter = new();
 
+    // TODO: something
     // TODO: there's probably some work to generalize this later
     // TODO: Design phil -- do I really care if there's calculations going on construction?
     // TODO: Get a separate calculate step for all of these data structures
