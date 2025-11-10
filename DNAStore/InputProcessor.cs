@@ -82,6 +82,7 @@ internal class InputProcessor
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "DeBrujinString" => new DeBrujinString(),
+                "LongestCommonSubsequenceAlignment" => new LongestCommonSubsequenceAlignment(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -611,6 +612,30 @@ internal class InputProcessor
         }
     }
 
+    private class LongestCommonSubsequenceAlignment : BaseExecutor
+    {
+        private string _a;
+        private string _b;
+        private string _result;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("sequence A");
+            _a = Console.ReadLine();
+            Console.WriteLine("sequence B");
+            _b = Console.ReadLine();
+        }
+
+        protected override void CalculateResult()
+        {
+            _result = AlignmentMatrix.LongestCommonSubSequence(_a, _b);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine(_result);
+        }
+    }
+    
     private class DeBrujinString : BaseExecutor
     {
         private IEnumerable<string> text;

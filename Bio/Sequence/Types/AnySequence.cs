@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Data.SqlTypes;
 using System.Text;
 using Base.DataStructures;
 using Bio.Analysis.Types;
@@ -216,6 +217,11 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
                 maxOverlap = i;
 
         return maxOverlap;
+    }
+
+    public static AnySequence LongestCommonSubsequence(AnySequence s1, AnySequence s2)
+    {
+        return new AnySequence(AlignmentMatrix.LongestCommonSubSequence(s1.RawSequence, s2.RawSequence));
     }
 
     #region String Accessors
