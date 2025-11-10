@@ -24,6 +24,7 @@ public class AlignmentMatrix : IAlignmentMatrix
         }
     }
 
+    // TODO: I think this should be held as an external object as things get more abstracted.
     private class Node
     {
         public Node()
@@ -45,14 +46,9 @@ public class AlignmentMatrix : IAlignmentMatrix
         var sb = new StringBuilder();
         for (int row = 0; row < _matrix.GetLength(0); row++)
         {
-            // Is this necessary
-            IEnumerable<Node> rowValues = MatrixUtils.GetRow(_matrix, row);
-            // Iterate through rows
-            sb.Append(string.Join(", ", rowValues));
+            sb.Append(string.Join<Node>(", ", MatrixUtils.GetRow(_matrix, row)));
             if (row!= _matrix.GetLength(1) - 1)
-            {
                 sb.AppendLine();
-            }
         }
 
         return sb.ToString();
@@ -68,7 +64,6 @@ public class AlignmentMatrix : IAlignmentMatrix
 
     public string LongestCommonSubSequence()
     {
-        
         return null;
     }
 }
