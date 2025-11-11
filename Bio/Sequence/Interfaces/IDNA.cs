@@ -2,13 +2,13 @@
 
 namespace Bio.Sequence.Interfaces;
 
-public interface IDNA
+public interface IDna
 {
     /// <summary>
     ///     Returns the list of all possible restriction sites and their lengths
     /// </summary>
     /// <remarks>
-    ///     It's worth noting that restriction sites are usually lengths 4-8. This defaults to all of length 4-12
+    ///     It's worth noting that restriction sites are usually lengths 4-8.
     /// </remarks>
     /// <returns></returns>
     List<Tuple<int, int>> RestrictionSites();
@@ -28,4 +28,13 @@ public interface IDNA
     /// <param name="n"></param>
     /// <returns></returns>
     int[] KmerComposition(int n);
+    
+    /// <summary>
+    ///     Returns the unique Kmer strings as a hashset
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    HashSet<string> KmerCompositionUniqueString(int n);
+
+    double RandomStringProbability(double gcContent);
 }

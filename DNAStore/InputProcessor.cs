@@ -43,13 +43,13 @@ internal class InputProcessor
             Console.WriteLine("Calculating");
             CalculateResult();
             _stopwatch.Stop();
-            FormatOutput();
             OutputResult();
             ReportMetrics();
         }
 
         public static IExecutor GetExecutorFromString(string input)
         {
+            // TODO: case insensitivity/auto registration?
             return input switch
             {
                 "SequenceAnalysis" => new SequenceAnalysis(),
@@ -91,6 +91,7 @@ internal class InputProcessor
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "DeBrujinString" => new DeBrujinString(),
                 "LongestCommonSubsequenceAlignment" => new LongestCommonSubsequenceAlignment(),
+                "RandomStringProbability" => new RandomStringProbability(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -107,18 +108,15 @@ internal class InputProcessor
         protected abstract void CalculateResult();
 
         /// <summary>
+        /// Controls the basic output flow. Everything should go to the output.txt file on the desktop along with
+        /// a clean print to the console.
         /// </summary>
-        /// // TODO: this should be private
-        protected virtual void OutputResult()
+        private void OutputResult()
         {
             Console.WriteLine($"{_output}");
             WriteToDesktopOutputFile(_output);
         }
-
-        protected virtual void FormatOutput()
-        {
-            
-        }
+        
         private void ReportMetrics()
         {
             Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
@@ -129,9 +127,6 @@ internal class InputProcessor
     private class HammingSequenceMatch : BaseExecutor
     {
         private SequenceMatchLocations? _matcher;
-
-
-        private List<int>? output;
 
         protected override void GetInputs()
         {
@@ -151,12 +146,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = _matcher.GetLocations();
-        }
-
-        protected override void FormatOutput()
-        {
-            _output = string.Join(' ', output);
+            _output = string.Join(' ', _matcher.GetLocations());
         }
     }
 
@@ -185,12 +175,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = _matcher.GetKmers(_input);
-        }
-
-        protected override void FormatOutput()
-        {
-            _output = string.Join(' ', output);
+            _output = string.Join(' ', _matcher.GetKmers(_input));
         }
     }
 
@@ -211,12 +196,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = mainSequence.FindFirstPossibleSubSequence(subSequence);
-        }
-
-        protected override void FormatOutput()
-        {
-            _output = string.Join(' ', output);
+            _output = string.Join(' ', mainSequence.FindFirstPossibleSubSequence(subSequence));
         }
     }
 
@@ -259,10 +239,6 @@ internal class InputProcessor
             bMinusA = b - a;
             aComplement = a.GetComplement();
             bComplement = b.GetComplement();
-        }
-
-        protected override void FormatOutput()
-        {
             var results = new[] { union, intersection, aMinusB, bMinusA, aComplement, bComplement };
             _output = string.Join("\n", results.Select(r => r.ToString()));
         }
@@ -286,10 +262,6 @@ internal class InputProcessor
         {
             decreasing = input.LongestDecreasingSubsequence();
             increasing = input.LongestIncreasingSubsequence();
-        }
-
-        protected override void FormatOutput()
-        {
             _output = string.Join(' ', increasing) + '\n' + string.Join(' ', decreasing);
         }
     }
@@ -308,12 +280,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _proteins = _sequence.GetCandidateProteinSequences();
-        }
-
-        protected override void FormatOutput()
-        {
-            _output = string.Join('\n', _proteins);
+            _output = string.Join('\n', _sequence.GetCandidateProteinSequences());
         }
     }
 
@@ -374,10 +341,6 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             _matcher.GetKmers(_input);
-        }
-
-        protected override void FormatOutput()
-        {
             _output = string.Join(' ', _matcher.HighestFrequencyKmers);
         }
     }
@@ -396,10 +359,6 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             _anySequence = new AnySequence(_inputString ?? string.Empty);
-        }
-
-        protected override void FormatOutput()
-        {
             _output = _anySequence?.Counts.ToString();
         }
     }
@@ -496,18 +455,13 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             foreach (var input in inputs) graph.Insert(input.Item1, input.Item2);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine(graph.EdgesToMakeTree());
+            _output = graph.EdgesToMakeTree().ToString();
         }
     }
 
     private class ClumpFinder : BaseExecutor
     {
         private AnySequence? _a;
-        private KmerClumpCounter? _clumpCounter;
 
         private int _kmerLength;
         private int _minCount;
@@ -529,19 +483,14 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _clumpCounter = new KmerClumpCounter(_a, _windowSize, _kmerLength, _minCount);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"{string.Join(' ', _clumpCounter.ValidKmers)}");
+            var clumpCounter = new KmerClumpCounter(_a, _windowSize, _kmerLength, _minCount);
+            _output = string.Join(' ', clumpCounter.ValidKmers);
         }
     }
 
     private class DNAComplement : BaseExecutor
     {
         private DNASequence? _dnaSequence;
-        private string? output;
 
         protected override void GetInputs()
         {
@@ -552,12 +501,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = _dnaSequence?.GetReverseComplement().ToString();
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"The complement is {output}");
+            _output = _dnaSequence?.GetReverseComplement().ToString();
         }
     }
 
@@ -568,21 +512,17 @@ internal class InputProcessor
         /// </summary>
         protected override void CalculateResult()
         {
-        }
-
-        protected override void GetInputs()
-        {
-        }
-
-        protected override void OutputResult()
-        {
             StringBuilder theWhy = new();
             theWhy.Append("Welcome to DNA Store, a C# based implementation of everything bioinformatics related. ");
             theWhy.Append(
                 "Today is 4/30/2025. At some point of analyzing file streams, I realized I want to focus on the life stream in my spare time. ");
             theWhy.Append("I really do miss Biology and Chemistry. They were my first loves for a reason.");
+            
+            _output = theWhy.ToString();
+        }
 
-            Console.WriteLine(theWhy.ToString());
+        protected override void GetInputs()
+        {
         }
     }
 
@@ -601,20 +541,43 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             largestGCContent = fastas?.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
+            _output = string.Format($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
         }
     }
+    
+    private class RandomStringProbability : BaseExecutor
+    {
+        DNASequence sequence;
+        private List<double> gcPercentages;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Input DNA sequence");
+            sequence = new DNASequence(Console.ReadLine());
+            gcPercentages = new List<double>();
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                gcPercentages.Add(double.Parse(input));
+            }
+        }
 
-    // TODO: all of these should output to desktop by default
+        protected override void CalculateResult()
+        {
+            var output = new List<double>();
+            foreach (var percentage in gcPercentages)
+            {
+                output.Add(Math.Round(sequence.RandomStringProbability(percentage), 3));
+            }
+            
+            _output = string.Join(' ', output);
+        }
+    }
+    
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
         private string _b;
-        private string _result;
 
         protected override void GetInputs()
         {
@@ -626,12 +589,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _result = AlignmentMatrix.LongestCommonSubSequence(_a, _b);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine(_result);
+            _output = AlignmentMatrix.LongestCommonSubSequence(_a, _b);
         }
     }
 
@@ -650,11 +608,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             foreach (var item in text) deBrujin.GenerateFromString(item);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine(deBrujin.GetEdgeList());
+            _output = deBrujin.GetEdgeList();
         }
     }
 
@@ -675,13 +629,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             _errorCorrections = _dnaSequence.GenerateErrorCorrections();
-        }
-
-        protected override void OutputResult()
-        {
-            foreach (var item in _errorCorrections) Console.WriteLine(item);
-            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            File.WriteAllText(desktopPath + "/output.txt", string.Join('\n', _errorCorrections));
+            _output = string.Join('\n', _errorCorrections);
         }
     }
 
@@ -703,12 +651,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            kmerComposition = sequence.KmerComposition(kmerLength);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"{string.Join(' ', kmerComposition)}");
+            _output = string.Join(' ', sequence.KmerComposition(kmerLength));
         }
     }
 
@@ -730,15 +673,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            kmerComposition = sequence.KmerCompositionUniqueString(kmerLength);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine("Output:");
-            var output = string.Join('\n', kmerComposition);
-            Console.WriteLine($"{output}");
-            File.WriteAllText("./output.txt", output);
+            _output = string.Join('\n', sequence.KmerCompositionUniqueString(kmerLength));
         }
     }
 
@@ -746,7 +681,6 @@ internal class InputProcessor
     {
         private AnySequence? a;
         private AnySequence? b;
-        private long result;
 
         protected override void GetInputs()
         {
@@ -758,12 +692,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            result = AnySequence.HammingDistance(a, b);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"The HammingDistance Distance between both sequences is: {result}");
+            _output = AnySequence.HammingDistance(a, b).ToString();
         }
     }
 
@@ -783,11 +712,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             _result = new Bio.Analysis.Types.LongestCommonSubsequence(_fastas);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"A longest common subsequence is: \n{_result.GetAnyLongest()}");
+            _output =  _result.GetAnyLongest().ToString();
         }
     }
 
@@ -807,12 +732,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _result = _sequences.GenerateLongestStringGreedy();
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"The longest concatenated sequences is: \n{_result}");
+            _output = _sequences.GenerateLongestStringGreedy().ToString();
         }
     }
 
@@ -831,12 +751,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = sequence.CalculateMinPrefixGCSkew();
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"{string.Join(' ', output)}");
+           _output = string.Join(' ', sequence.CalculateMinPrefixGCSkew());
         }
     }
 
@@ -865,12 +780,8 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             result = a.MotifLocations(b, _isZeroIndex);
-        }
-
-        protected override void OutputResult()
-        {
             var indexType = _isZeroIndex ? "Zero" : "One";
-            Console.WriteLine($"The {indexType}-Index Locations are: \n{string.Join(" ", result)}");
+            _output = string.Join(" ", result);
         }
     }
 
@@ -892,11 +803,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             result = Probability.GenerateAllKmers(possibleValues, k);
-        }
-
-        protected override void OutputResult()
-        {
-            foreach (var possibleValue in result) Console.WriteLine(possibleValue);
+            _output = string.Join('\n', result);
         }
     }
 
@@ -918,13 +825,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             result = Probability.GenerateAllKmersAndSubKmers(possibleValues, k);
-        }
-
-        protected override void OutputResult()
-        {
-            foreach (var possibleValue in result) Console.WriteLine(possibleValue);
-
-            File.WriteAllText("./output.txt", string.Join('\n', result));
+            _output =  string.Join("\n", result);
         }
     }
 
@@ -949,12 +850,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            result = _frequencyArray.GetFrequencyArrayInLexicographicOrder(_values, _length);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"{string.Join(" ", result)}");
+            _output = string.Join(' ', _frequencyArray.GetFrequencyArrayInLexicographicOrder(_values, _length));
         }
     }
 
@@ -973,12 +869,10 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             _overlapGraph = new OverlapGraph(_fastas, 3);
-        }
-
-        protected override void OutputResult()
-        {
+            var sb = new StringBuilder();
             foreach (var tuple in _overlapGraph.GetOverlaps())
-                Console.WriteLine(tuple.Item1.Name + " " + tuple.Item2.Name);
+                sb.Append(tuple.Item1.Name + " " + tuple.Item2.Name);
+            _output = sb.ToString();
         }
     }
 
@@ -1005,12 +899,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = Probability.PercentDominant(k, m, n);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"The percent Dominant is {output}");
+            _output = Probability.PercentDominant(k, m, n).ToString();
         }
     }
 
@@ -1030,13 +919,13 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             values = Probability.GetPermutations(Enumerable.Range(1, total), total);
-        }
-
-        protected override void OutputResult()
-        {
-            // Yes, double counting, not good but let's build there
-            Console.WriteLine(values.Count());
-            foreach (var row in values) Console.WriteLine(string.Join(" ", row));
+            var sb = new StringBuilder();
+            sb.Append(values.Count());
+            sb.AppendLine();
+            foreach (var row in values)
+            {
+                sb.Append(string.Join(" ", row));
+            }
         }
     }
 
@@ -1055,12 +944,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             matrix = new ProfileMatrix(fastas);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine(matrix.GetProfileSequence());
-            Console.WriteLine(matrix.FrequencyMatrix());
+            _output = matrix.GetProfileSequence().ToString() + '\n' + matrix.FrequencyMatrix().ToString();
         }
     }
 
@@ -1079,11 +963,10 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             matrix = fastas.GenerateDistanceMatrix();
-        }
-
-        protected override void OutputResult()
-        {
-            for (var i = 0; i < matrix.Count; i++) Console.WriteLine(string.Join(" ", matrix[i]));
+            var sb = new StringBuilder();
+            for (var i = 0; i < matrix.Count; i++) sb.Append(string.Join(" ", matrix[i]));
+            
+            _output = sb.ToString();
         }
     }
 
@@ -1119,16 +1002,17 @@ internal class InputProcessor
         {
             foreach (var seq in sequencesToCompare)
                 output.Add(seq.MotifLocations(KnownMotifs.NGlycostatin));
-        }
-
-        protected override void OutputResult()
-        {
+            
+            var sb = new StringBuilder();
+            
             for (var i = 0; i < sequencesToCompare.Count; i++)
                 if (output[i].Length > 0)
                 {
-                    Console.WriteLine($"{inputNames[i]}");
-                    Console.WriteLine($"{string.Join(" ", output[i])}");
+                    sb.Append($"{inputNames[i]}");
+                    sb.Append($"{string.Join(" ", output[i])}");
                 }
+            
+            _output = sb.ToString();
         }
     }
 
@@ -1148,12 +1032,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            result = protein.NumberOfPossibleRNA();
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"{result}");
+            _output = protein.NumberOfPossibleRNA().ToString();
         }
     }
 
@@ -1171,12 +1050,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _result = _protein.MolecularWeight;
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine(_result);
+            _output = _protein.MolecularWeight.ToString();
         }
     }
 
@@ -1196,11 +1070,12 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             output = sequence.RestrictionSites();
-        }
-
-        protected override void OutputResult()
-        {
-            foreach (var tuple in output) Console.WriteLine($"{tuple.Item1} {tuple.Item2}");
+            var sb = new StringBuilder();
+            foreach (var tuple in output)
+            {
+                sb.Append($"{tuple.Item1} {tuple.Item2}");
+                sb.AppendLine();
+            }
         }
     }
 
@@ -1242,12 +1117,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            _result = _a.GetExpectedProteinString();
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"The translated protein between both sequences is:\n{_result}");
+            _output = _a.GetExpectedProteinString();
         }
     }
 }
