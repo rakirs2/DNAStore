@@ -79,7 +79,7 @@ internal class InputProcessor
                 "IncreasingAndDecreasingSubsequences" => new GetLongestSubSequences(),
                 "SetCalculations" => new SetCalculations(),
                 "KmerComposition" => new KmerComposition(),
-                "KmerCompositionString" => new KmerCompositionStringOutput(),
+                "KmerCompositionString" => new KmerCompositionString(),
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "DeBrujinString" => new DeBrujinString(),
@@ -723,7 +723,7 @@ internal class InputProcessor
         }
     }
     
-    private class KmerCompositionStringOutput : BaseExecutor
+    private class KmerCompositionString : BaseExecutor
     {
         private HashSet<string> kmerComposition;
         private int kmerLength;
