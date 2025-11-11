@@ -49,6 +49,7 @@ internal class InputProcessor
 
         public static IExecutor GetExecutorFromString(string input)
         {
+            // TODO: case insensitivity/auto registration?
             return input switch
             {
                 "SequenceAnalysis" => new SequenceAnalysis(),
@@ -90,6 +91,7 @@ internal class InputProcessor
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "DeBrujinString" => new DeBrujinString(),
                 "LongestCommonSubsequenceAlignment" => new LongestCommonSubsequenceAlignment(),
+                "RandomStringProbability" => new RandomStringProbability(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -540,6 +542,35 @@ internal class InputProcessor
         {
             largestGCContent = fastas?.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
             _output = string.Format($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
+        }
+    }
+    
+    private class RandomStringProbability : BaseExecutor
+    {
+        DNASequence sequence;
+        private List<double> gcPercentages;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Input DNA sequence");
+            sequence = new DNASequence(Console.ReadLine());
+            gcPercentages = new List<double>();
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                gcPercentages.Add(double.Parse(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var output = new List<double>();
+            foreach (var percentage in gcPercentages)
+            {
+                output.Add(Math.Round(sequence.RandomStringProbability(percentage), 3));
+            }
+            
+            _output = string.Join(' ', output);
         }
     }
     
