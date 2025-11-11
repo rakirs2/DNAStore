@@ -159,4 +159,26 @@ public class DNASequenceTests
         };
         Assert.IsTrue(expected.SequenceEqual(output));
     }
+
+    [TestMethod]
+    public void GenerateKmerCompositionUniqueSTrings()
+    {
+        var seq = new DNASequence("CAATCCAAC");
+        var output = seq.KmerCompositionUniqueString(5);
+        var expected = new HashSet<string>()
+        {
+            "AATCC",
+            "ATCCA",
+            "CAATC",
+            "CCAAC",
+            "TCCAA"
+        };
+
+        foreach (var val in expected)
+        {
+            output.Remove(val);
+        }
+        
+        Assert.IsTrue(output.Count ==0);
+    }
 }

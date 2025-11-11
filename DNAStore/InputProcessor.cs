@@ -79,6 +79,7 @@ internal class InputProcessor
                 "IncreasingAndDecreasingSubsequences" => new GetLongestSubSequences(),
                 "SetCalculations" => new SetCalculations(),
                 "KmerComposition" => new KmerComposition(),
+                "KmerCompositionString" => new KmerCompositionString(),
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "DeBrujinString" => new DeBrujinString(),
@@ -612,11 +613,13 @@ internal class InputProcessor
         }
     }
 
+    // TODO: all of these should output to desktop by default
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
         private string _b;
         private string _result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("sequence A");
@@ -635,28 +638,22 @@ internal class InputProcessor
             Console.WriteLine(_result);
         }
     }
-    
+
     private class DeBrujinString : BaseExecutor
     {
+        private readonly DeBrujin deBrujin = new();
         private IEnumerable<string> text;
-        private DeBrujin deBrujin = new();
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
             var location = Console.ReadLine();
-            if (location != null)
-            {
-                text = File.ReadLines(location);
-            }
+            if (location != null) text = File.ReadLines(location);
         }
 
         protected override void CalculateResult()
         {
-            foreach (var item in text)
-            {
-                deBrujin.GenerateFromString(item);
-            }
+            foreach (var item in text) deBrujin.GenerateFromString(item);
         }
 
         protected override void OutputResult()
@@ -666,7 +663,7 @@ internal class InputProcessor
             File.WriteAllText(desktopPath + "/output.txt", deBrujin.GetEdgeList());
         }
     }
-    
+
     private class PossibleErrorCorrections : BaseExecutor
     {
         private List<DNASequence>? _dnaSequence;
@@ -718,6 +715,36 @@ internal class InputProcessor
         protected override void OutputResult()
         {
             Console.WriteLine($"{string.Join(' ', kmerComposition)}");
+        }
+    }
+
+    private class KmerCompositionString : BaseExecutor
+    {
+        private HashSet<string> kmerComposition;
+        private int kmerLength;
+        private DNASequence sequence;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter Kmer length to be analyzed");
+            kmerLength = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please input sequence");
+            var inputString = Console.ReadLine();
+            sequence = new DNASequence(inputString);
+        }
+
+        protected override void CalculateResult()
+        {
+            kmerComposition = sequence.KmerCompositionUniqueString(kmerLength);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine("Output:");
+            var output = string.Join('\n', kmerComposition);
+            Console.WriteLine($"{output}");
+            File.WriteAllText("./output.txt", output);
         }
     }
 
