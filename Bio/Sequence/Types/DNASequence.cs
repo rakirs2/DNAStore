@@ -70,7 +70,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         return output;
     }
-    
+
     public HashSet<string> KmerCompositionUniqueString(int n)
     {
         if (n <= 0)
@@ -86,19 +86,16 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     public double RandomStringProbability(double gcContent)
     {
-        Dictionary<char, double> bpToPercentage = new Dictionary<char, double>(new CaseInsensitiveCharComparer())
+        var bpToPercentage = new Dictionary<char, double>(new CaseInsensitiveCharComparer())
         {
             { 'g', gcContent / 2 },
             { 'c', gcContent / 2 },
             { 't', (1 - gcContent) / 2 },
             { 'a', (1 - gcContent) / 2 }
         };
-        
-        double percentage = 0.0;
-        foreach (char bp in RawSequence)
-        {
-            percentage += Math.Log10(bpToPercentage[bp]);
-        }
+
+        var percentage = 0.0;
+        foreach (var bp in RawSequence) percentage += Math.Log10(bpToPercentage[bp]);
 
         return percentage;
     }

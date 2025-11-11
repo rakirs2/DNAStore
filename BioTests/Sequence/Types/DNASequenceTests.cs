@@ -165,7 +165,7 @@ public class DNASequenceTests
     {
         var seq = new DNASequence("CAATCCAAC");
         var output = seq.KmerCompositionUniqueString(5);
-        var expected = new HashSet<string>()
+        var expected = new HashSet<string>
         {
             "AATCC",
             "ATCCA",
@@ -174,12 +174,9 @@ public class DNASequenceTests
             "TCCAA"
         };
 
-        foreach (var val in expected)
-        {
-            output.Remove(val);
-        }
-        
-        Assert.IsTrue(output.Count ==0);
+        foreach (var val in expected) output.Remove(val);
+
+        Assert.IsTrue(output.Count == 0);
     }
 
     [TestMethod]
@@ -187,6 +184,6 @@ public class DNASequenceTests
     {
         var seq = new DNASequence("ACGATACAA");
         var output = seq.RandomStringProbability(0.129);
-        Assert.AreEqual(-5.737 , double.Round(output, 3));
+        Assert.AreEqual(-5.737, double.Round(output, 3));
     }
 }

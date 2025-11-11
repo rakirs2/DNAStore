@@ -28,7 +28,7 @@ public interface IDna
     /// <param name="n"></param>
     /// <returns></returns>
     int[] KmerComposition(int n);
-    
+
     /// <summary>
     ///     Returns the unique Kmer strings as a hashset
     /// </summary>

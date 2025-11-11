@@ -1,4 +1,3 @@
-
 using Base.DataStructures;
 
 namespace BaseTests.DataStructures;

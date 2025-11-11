@@ -33,8 +33,9 @@ internal class InputProcessor
 
     private abstract class BaseExecutor : IExecutor
     {
-        private Stopwatch? _stopwatch;
         protected string? _output;
+        private Stopwatch? _stopwatch;
+
         public void Run()
         {
             GetInputs();
@@ -108,15 +109,15 @@ internal class InputProcessor
         protected abstract void CalculateResult();
 
         /// <summary>
-        /// Controls the basic output flow. Everything should go to the output.txt file on the desktop along with
-        /// a clean print to the console.
+        ///     Controls the basic output flow. Everything should go to the output.txt file on the desktop along with
+        ///     a clean print to the console.
         /// </summary>
         private void OutputResult()
         {
             Console.WriteLine($"{_output}");
             WriteToDesktopOutputFile(_output);
         }
-        
+
         private void ReportMetrics()
         {
             Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
@@ -386,7 +387,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            var temp  =  BinarySearch.GetIndices(inputs, valuesToCheck, true);
+            var temp = BinarySearch.GetIndices(inputs, valuesToCheck, true);
             _output = string.Join(" ", temp);
         }
     }
@@ -517,7 +518,7 @@ internal class InputProcessor
             theWhy.Append(
                 "Today is 4/30/2025. At some point of analyzing file streams, I realized I want to focus on the life stream in my spare time. ");
             theWhy.Append("I really do miss Biology and Chemistry. They were my first loves for a reason.");
-            
+
             _output = theWhy.ToString();
         }
 
@@ -544,11 +545,12 @@ internal class InputProcessor
             _output = string.Format($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
         }
     }
-    
+
     private class RandomStringProbability : BaseExecutor
     {
-        DNASequence sequence;
         private List<double> gcPercentages;
+        private DNASequence sequence;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Input DNA sequence");
@@ -566,14 +568,12 @@ internal class InputProcessor
         {
             var output = new List<double>();
             foreach (var percentage in gcPercentages)
-            {
                 output.Add(Math.Round(sequence.RandomStringProbability(percentage), 3));
-            }
-            
+
             _output = string.Join(' ', output);
         }
     }
-    
+
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
@@ -712,7 +712,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             _result = new Bio.Analysis.Types.LongestCommonSubsequence(_fastas);
-            _output =  _result.GetAnyLongest().ToString();
+            _output = _result.GetAnyLongest().ToString();
         }
     }
 
@@ -751,7 +751,7 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-           _output = string.Join(' ', sequence.CalculateMinPrefixGCSkew());
+            _output = string.Join(' ', sequence.CalculateMinPrefixGCSkew());
         }
     }
 
@@ -825,7 +825,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             result = Probability.GenerateAllKmersAndSubKmers(possibleValues, k);
-            _output =  string.Join("\n", result);
+            _output = string.Join("\n", result);
         }
     }
 
@@ -922,10 +922,7 @@ internal class InputProcessor
             var sb = new StringBuilder();
             sb.Append(values.Count());
             sb.AppendLine();
-            foreach (var row in values)
-            {
-                sb.Append(string.Join(" ", row));
-            }
+            foreach (var row in values) sb.Append(string.Join(" ", row));
         }
     }
 
@@ -944,7 +941,7 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             matrix = new ProfileMatrix(fastas);
-            _output = matrix.GetProfileSequence().ToString() + '\n' + matrix.FrequencyMatrix().ToString();
+            _output = matrix.GetProfileSequence().ToString() + '\n' + matrix.FrequencyMatrix();
         }
     }
 
@@ -965,7 +962,7 @@ internal class InputProcessor
             matrix = fastas.GenerateDistanceMatrix();
             var sb = new StringBuilder();
             for (var i = 0; i < matrix.Count; i++) sb.Append(string.Join(" ", matrix[i]));
-            
+
             _output = sb.ToString();
         }
     }
@@ -1002,16 +999,16 @@ internal class InputProcessor
         {
             foreach (var seq in sequencesToCompare)
                 output.Add(seq.MotifLocations(KnownMotifs.NGlycostatin));
-            
+
             var sb = new StringBuilder();
-            
+
             for (var i = 0; i < sequencesToCompare.Count; i++)
                 if (output[i].Length > 0)
                 {
                     sb.Append($"{inputNames[i]}");
                     sb.Append($"{string.Join(" ", output[i])}");
                 }
-            
+
             _output = sb.ToString();
         }
     }

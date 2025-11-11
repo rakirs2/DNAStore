@@ -139,7 +139,7 @@ public class AnySequenceTests
         Assert.AreEqual(6, AnySequence.CalculateOverlap(seq1, seq2));
         Assert.AreEqual(0, AnySequence.CalculateOverlap(seq2, seq1));
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void InvalidTypeThrows()
@@ -163,15 +163,16 @@ public class AnySequenceTests
     [TestMethod]
     public void EnumerableChar()
     {
-        var  seq1 = new AnySequence("ABCD");
+        var seq1 = new AnySequence("ABCD");
         var expected = "ABCD";
         using (var enumerator = seq1.GetEnumerator())
         {
-            for (int i = 0; i < expected.Length; i++)
+            for (var i = 0; i < expected.Length; i++)
             {
                 enumerator.MoveNext();
                 Assert.AreEqual(expected[i], enumerator.Current);
             }
+
             Assert.IsFalse(enumerator.MoveNext());
         }
     }

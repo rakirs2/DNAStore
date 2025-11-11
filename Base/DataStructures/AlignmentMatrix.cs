@@ -6,9 +6,9 @@ namespace Base.DataStructures;
 
 public class AlignmentMatrix : IAlignmentMatrix
 {
-    private readonly Node[,] _matrix;
     private readonly string _a;
     private readonly string _b;
+    private readonly Node[,] _matrix;
 
     public AlignmentMatrix(string a, string b)
     {
@@ -45,47 +45,6 @@ public class AlignmentMatrix : IAlignmentMatrix
             }
     }
 
-    // TODO: I think this should be held as an external object as things get more abstracted.
-    private class Node
-    {
-        public Node()
-        {
-            Direction = Direction.None;
-            Value = 0;
-        }
-
-        public Direction Direction { get; set; }
-        public int Value { get; set; }
-
-        public override string ToString()
-        {
-            return "(" + Direction + ", " + Value + ")";
-        }
-    }
-
-    public override string ToString()
-    {
-        var sb = new StringBuilder();
-        for (var row = 0; row < _matrix.GetLength(0); row++)
-        {
-            sb.Append(string.Join<Node>(", ", MatrixUtils.GetRow(_matrix, row)));
-            if (row != _matrix.GetLength(1) - 1)
-                sb.AppendLine();
-        }
-
-        return sb.ToString();
-    }
-
-    // TODO: consider using flags
-    private enum Direction
-    {
-        None = 0,
-        Match = 1,
-        Left = 2,
-        Up = 4,
-        Both = 8
-    }
-
     public string LongestCommonSubSequence()
     {
         // The table is built; now to traceback
@@ -120,8 +79,49 @@ public class AlignmentMatrix : IAlignmentMatrix
         return sb.ToString();
     }
 
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        for (var row = 0; row < _matrix.GetLength(0); row++)
+        {
+            sb.Append(string.Join<Node>(", ", MatrixUtils.GetRow(_matrix, row)));
+            if (row != _matrix.GetLength(1) - 1)
+                sb.AppendLine();
+        }
+
+        return sb.ToString();
+    }
+
     public static string LongestCommonSubSequence(string a, string b)
     {
         return new AlignmentMatrix(a, b).LongestCommonSubSequence();
+    }
+
+    // TODO: I think this should be held as an external object as things get more abstracted.
+    private class Node
+    {
+        public Node()
+        {
+            Direction = Direction.None;
+            Value = 0;
+        }
+
+        public Direction Direction { get; set; }
+        public int Value { get; set; }
+
+        public override string ToString()
+        {
+            return "(" + Direction + ", " + Value + ")";
+        }
+    }
+
+    // TODO: consider using flags
+    private enum Direction
+    {
+        None = 0,
+        Match = 1,
+        Left = 2,
+        Up = 4,
+        Both = 8
     }
 }

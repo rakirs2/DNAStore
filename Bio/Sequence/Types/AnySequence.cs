@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Data.SqlTypes;
 using System.Text;
 using Base.DataStructures;
 using Bio.Analysis.Types;
@@ -29,6 +28,25 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     }
 
     public string RawSequence { get; set; }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is AnySequence other)
+            return RawSequence.CompareTo(other.RawSequence);
+
+        throw new ArgumentException("Object is not a sequence");
+    }
+
+    public IEnumerator<char> GetEnumerator()
+    {
+        return RawSequence.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
     public long Length => RawSequence.Length;
 
     public string? Name { get; }
@@ -106,11 +124,6 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return new AnySequence(p1.RawSequence + p2.RawSequence);
     }
 
-    public IEnumerator<char> GetEnumerator()
-    {
-        return RawSequence.GetEnumerator();
-    }
-
     public override bool Equals(object obj)
     {
         if (obj is AnySequence other) return RawSequence.Equals(other.RawSequence);
@@ -121,19 +134,6 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     public override string ToString()
     {
         return RawSequence;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public int CompareTo(object? obj)
-    {
-        if (obj is AnySequence other)
-            return RawSequence.CompareTo(other.RawSequence);
-
-        throw new ArgumentException("Object is not a sequence");
     }
 
     /// <summary>
