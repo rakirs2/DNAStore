@@ -619,6 +619,7 @@ internal class InputProcessor
         private string _a;
         private string _b;
         private string _result;
+
         protected override void GetInputs()
         {
             Console.WriteLine("sequence A");
@@ -637,28 +638,22 @@ internal class InputProcessor
             Console.WriteLine(_result);
         }
     }
-    
+
     private class DeBrujinString : BaseExecutor
     {
+        private readonly DeBrujin deBrujin = new();
         private IEnumerable<string> text;
-        private DeBrujin deBrujin = new();
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
             var location = Console.ReadLine();
-            if (location != null)
-            {
-                text = File.ReadLines(location);
-            }
+            if (location != null) text = File.ReadLines(location);
         }
 
         protected override void CalculateResult()
         {
-            foreach (var item in text)
-            {
-                deBrujin.GenerateFromString(item);
-            }
+            foreach (var item in text) deBrujin.GenerateFromString(item);
         }
 
         protected override void OutputResult()
@@ -668,7 +663,7 @@ internal class InputProcessor
             File.WriteAllText(desktopPath + "/output.txt", deBrujin.GetEdgeList());
         }
     }
-    
+
     private class PossibleErrorCorrections : BaseExecutor
     {
         private List<DNASequence>? _dnaSequence;
@@ -722,7 +717,7 @@ internal class InputProcessor
             Console.WriteLine($"{string.Join(' ', kmerComposition)}");
         }
     }
-    
+
     private class KmerCompositionString : BaseExecutor
     {
         private HashSet<string> kmerComposition;
@@ -750,7 +745,6 @@ internal class InputProcessor
             var output = string.Join('\n', kmerComposition);
             Console.WriteLine($"{output}");
             File.WriteAllText("./output.txt", output);
-
         }
     }
 
