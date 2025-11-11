@@ -1,7 +1,7 @@
 ﻿namespace Base.DataStructures;
 
 /// <summary>
-/// Simple undirected graph implementation.
+///     Simple undirected graph implementation.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> where T : notnull
@@ -49,7 +49,7 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
             value1.Add(start);
         else
             _tracker[end] = [start];
-        
+
         // TODO: Currently, this implementation does not check for duplicate edges.
         NumEdges++;
     }
@@ -58,9 +58,9 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
     {
         throw new NotImplementedException();
     }
-    
+
     /// <summary>
-    /// This should return an edge list with no counts
+    ///     This should return an edge list with no counts
     /// </summary>
     /// <returns></returns>
     public Dictionary<T, HashSet<T>> GetEdgeList()
