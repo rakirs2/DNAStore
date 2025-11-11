@@ -79,6 +79,7 @@ internal class InputProcessor
                 "IncreasingAndDecreasingSubsequences" => new GetLongestSubSequences(),
                 "SetCalculations" => new SetCalculations(),
                 "KmerComposition" => new KmerComposition(),
+                "KmerCompositionString" => new KmerCompositionStringOutput(),
                 "GreedyStringAssembly" => new GreedyStringAssembly(),
                 "PossibleErrorCorrections" => new PossibleErrorCorrections(),
                 "DeBrujinString" => new DeBrujinString(),
@@ -612,6 +613,7 @@ internal class InputProcessor
         }
     }
 
+    // TODO: all of these should output to desktop by default
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
@@ -718,6 +720,37 @@ internal class InputProcessor
         protected override void OutputResult()
         {
             Console.WriteLine($"{string.Join(' ', kmerComposition)}");
+        }
+    }
+    
+    private class KmerCompositionStringOutput : BaseExecutor
+    {
+        private HashSet<string> kmerComposition;
+        private int kmerLength;
+        private DNASequence sequence;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter Kmer length to be analyzed");
+            kmerLength = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Please input sequence");
+            var inputString = Console.ReadLine();
+            sequence = new DNASequence(inputString);
+        }
+
+        protected override void CalculateResult()
+        {
+            kmerComposition = sequence.KmerCompositionUniqueString(kmerLength);
+        }
+
+        protected override void OutputResult()
+        {
+            Console.WriteLine("Output:");
+            var output = string.Join('\n', kmerComposition);
+            Console.WriteLine($"{output}");
+            File.WriteAllText("./output.txt", output);
+
         }
     }
 

@@ -57,7 +57,6 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output;
     }
 
-    // TODO: it might eventually make sense for this to be its own class. For now its fine
     public int[] KmerComposition(int n)
     {
         if (n <= 0)
@@ -67,6 +66,19 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
             // this is effectively the same thing as "ToNumber()"
             // however, we don't need all the overhead of the DNA class.
             output[KmerToNumber(Substring(i, n))]++;
+
+        return output;
+    }
+    
+    public HashSet<string> KmerCompositionUniqueString(int n)
+    {
+        if (n <= 0)
+            throw new ArgumentException("n must be positive");
+        var output = new HashSet<string>();
+        for (var i = 0; i < Length - n + 1; i++)
+            // this is effectively the same thing as "ToNumber()"
+            // however, we don't need all the overhead of the DNA class.
+            output.Add(Substring(i, n));
 
         return output;
     }
