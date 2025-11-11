@@ -1,10 +1,11 @@
 ﻿using System.Numerics;
 using System.Text;
+using Base.Utils;
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 
-public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), IDNA
+public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), IDna
 {
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
@@ -81,6 +82,25 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
             output.Add(Substring(i, n));
 
         return output;
+    }
+
+    public double RandomStringProbability(double gcContent)
+    {
+        Dictionary<char, double> bpToPercentage = new Dictionary<char, double>(new CaseInsensitiveCharComparer())
+        {
+            { 'g', gcContent / 2 },
+            { 'c', gcContent / 2 },
+            { 't', (1 - gcContent) / 2 },
+            { 'a', (1 - gcContent) / 2 }
+        };
+        
+        double percentage = 0.0;
+        foreach (char bp in RawSequence)
+        {
+            percentage += Math.Log10(bpToPercentage[bp]);
+        }
+
+        return percentage;
     }
 
     private static int KmerToNumber(string input)

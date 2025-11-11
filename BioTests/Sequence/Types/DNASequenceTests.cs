@@ -181,4 +181,12 @@ public class DNASequenceTests
         
         Assert.IsTrue(output.Count ==0);
     }
+
+    [TestMethod]
+    public void RandomStringTest()
+    {
+        var seq = new DNASequence("ACGATACAA");
+        var output = seq.RandomStringProbability(0.129);
+        Assert.AreEqual(-5.737 , double.Round(output, 3));
+    }
 }
