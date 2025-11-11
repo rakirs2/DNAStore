@@ -17,6 +17,12 @@ internal class InputProcessor
         return BaseExecutor.GetExecutorFromString(request);
     }
 
+    private static void WriteToDesktopOutputFile(string filecontents)
+    {
+        var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        File.WriteAllText(desktopPath + "/output.txt", filecontents);
+    }
+
     public interface IExecutor
     {
         /// <summary>
@@ -28,7 +34,7 @@ internal class InputProcessor
     private abstract class BaseExecutor : IExecutor
     {
         private Stopwatch? _stopwatch;
-
+        protected string? _output;
         public void Run()
         {
             GetInputs();
@@ -37,6 +43,7 @@ internal class InputProcessor
             Console.WriteLine("Calculating");
             CalculateResult();
             _stopwatch.Stop();
+            FormatOutput();
             OutputResult();
             ReportMetrics();
         }
@@ -101,8 +108,17 @@ internal class InputProcessor
 
         /// <summary>
         /// </summary>
-        protected abstract void OutputResult();
+        /// // TODO: this should be private
+        protected virtual void OutputResult()
+        {
+            Console.WriteLine($"{_output}");
+            WriteToDesktopOutputFile(_output);
+        }
 
+        protected virtual void FormatOutput()
+        {
+            
+        }
         private void ReportMetrics()
         {
             Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
@@ -138,9 +154,9 @@ internal class InputProcessor
             output = _matcher.GetLocations();
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            Console.WriteLine($"{string.Join(' ', output)}");
+            _output = string.Join(' ', output);
         }
     }
 
@@ -172,9 +188,9 @@ internal class InputProcessor
             output = _matcher.GetKmers(_input);
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            Console.WriteLine($"{string.Join(' ', output)}");
+            _output = string.Join(' ', output);
         }
     }
 
@@ -198,9 +214,9 @@ internal class InputProcessor
             output = mainSequence.FindFirstPossibleSubSequence(subSequence);
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            Console.WriteLine($"{string.Join(' ', output)}");
+            _output = string.Join(' ', output);
         }
     }
 
@@ -245,14 +261,10 @@ internal class InputProcessor
             bComplement = b.GetComplement();
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            Console.WriteLine("Enter the output file location");
-            var fileLocation = Console.ReadLine();
             var results = new[] { union, intersection, aMinusB, bMinusA, aComplement, bComplement };
-            var outputString = string.Join("\n", results.Select(r => r.ToString()));
-            Console.WriteLine($"{outputString}");
-            if (!string.IsNullOrWhiteSpace(fileLocation)) File.WriteAllText(fileLocation + "/output.txt", outputString);
+            _output = string.Join("\n", results.Select(r => r.ToString()));
         }
     }
 
@@ -276,10 +288,9 @@ internal class InputProcessor
             increasing = input.LongestIncreasingSubsequence();
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            Console.WriteLine($"{string.Join(' ', increasing)}");
-            Console.WriteLine($"{string.Join(' ', decreasing)}");
+            _output = string.Join(' ', increasing) + '\n' + string.Join(' ', decreasing);
         }
     }
 
@@ -300,9 +311,9 @@ internal class InputProcessor
             _proteins = _sequence.GetCandidateProteinSequences();
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            foreach (var protein in _proteins) Console.WriteLine(protein);
+            _output = string.Join('\n', _proteins);
         }
     }
 
@@ -312,7 +323,6 @@ internal class InputProcessor
         private readonly List<AnySequence>? _introns = new();
 
         private DNASequence? _input;
-        private string? _output;
 
         protected override void GetInputs()
         {
@@ -336,11 +346,6 @@ internal class InputProcessor
             var dnaSequence = new DNASequence(splicedSequence.ToString());
             var rnaSequence = dnaSequence.TranscribeToRNA();
             _output = rnaSequence.GetExpectedProteinString();
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine($"{_output}");
         }
     }
 
@@ -371,16 +376,15 @@ internal class InputProcessor
             _matcher.GetKmers(_input);
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            Console.WriteLine($"{string.Join(' ', _matcher.HighestFrequencyKmers)}");
+            _output = string.Join(' ', _matcher.HighestFrequencyKmers);
         }
     }
 
     private class SequenceAnalysis : BaseExecutor
     {
         private AnySequence? _anySequence;
-
         private string? _inputString;
 
         protected override void GetInputs()
@@ -394,9 +398,9 @@ internal class InputProcessor
             _anySequence = new AnySequence(_inputString ?? string.Empty);
         }
 
-        protected override void OutputResult()
+        protected override void FormatOutput()
         {
-            Console.WriteLine(_anySequence?.Counts);
+            _output = _anySequence?.Counts.ToString();
         }
     }
 
@@ -423,12 +427,8 @@ internal class InputProcessor
 
         protected override void CalculateResult()
         {
-            output = BinarySearch.GetIndices(inputs, valuesToCheck, true);
-        }
-
-        protected override void OutputResult()
-        {
-            Console.WriteLine(string.Join(" ", output));
+            var temp  =  BinarySearch.GetIndices(inputs, valuesToCheck, true);
+            _output = string.Join(" ", temp);
         }
     }
 
@@ -459,15 +459,11 @@ internal class InputProcessor
         protected override void CalculateResult()
         {
             foreach (var input in inputs) _undirectedGraph.Insert(input.Item1, input.Item2);
-        }
-
-        protected override void OutputResult()
-        {
             var output = _undirectedGraph.GetEdgeList();
             var edgeCounts = new List<int>();
             foreach (var kvp in output) edgeCounts.Add(kvp.Value.Count);
 
-            Console.WriteLine(string.Join(' ', edgeCounts));
+            _output = string.Join(' ', edgeCounts);
         }
     }
 
@@ -659,8 +655,6 @@ internal class InputProcessor
         protected override void OutputResult()
         {
             Console.WriteLine(deBrujin.GetEdgeList());
-            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            File.WriteAllText(desktopPath + "/output.txt", deBrujin.GetEdgeList());
         }
     }
 
