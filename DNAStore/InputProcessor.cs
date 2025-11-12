@@ -96,7 +96,6 @@ internal class InputProcessor
                 "RandomStringProbability" => new RandomStringProbability(),
                 "InsertionSortSwaps"=> new InsertionSortSwaps(),
                 "DoubleDegreeArray" => new DoubleDegreeArray(),
-                "MajorityElement" => new MajorityElement(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
