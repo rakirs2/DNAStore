@@ -11,6 +11,7 @@ using Clients;
 namespace DNAStore;
 
 //TODO: clean out inputs
+// TODO: there shoudl be a subclass for multiple arrays
 internal class InputProcessor
 {
     public static IExecutor GetExecutor(string request)
@@ -96,6 +97,7 @@ internal class InputProcessor
                 "RandomStringProbability" => new RandomStringProbability(),
                 "InsertionSortSwaps"=> new InsertionSortSwaps(),
                 "DoubleDegreeArray" => new DoubleDegreeArray(),
+                "MergeTwoSorted" => new MergeTwoSorted(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -247,6 +249,31 @@ internal class InputProcessor
             Output = string.Join("\n", results.Select(r => r.ToString()));
         }
     }
+    
+    private class MergeTwoSorted : BaseExecutor
+    {
+        private int[] a;
+        private int[] b;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter the values of list A");
+            a = Console.ReadLine().Split(" ")
+                .Select(s => int.Parse(s))
+                .ToArray();
+
+            Console.WriteLine("Enter the values of set B");
+            b = Console.ReadLine().Split(" ")
+                .Select(s => int.Parse(s))
+                .ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = string.Join(" ", MergeSort<int>.Merge2SortedArrays(a, b));
+        }
+    }
+
 
     private class GetLongestSubSequences : BaseExecutor
     {
