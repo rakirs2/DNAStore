@@ -93,6 +93,7 @@ internal class InputProcessor
                 "DeBrujinString" => new DeBrujinString(),
                 "LongestCommonSubsequenceAlignment" => new LongestCommonSubsequenceAlignment(),
                 "RandomStringProbability" => new RandomStringProbability(),
+                "InsertionSortSwaps"=> new InsertionSortSwaps(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -574,6 +575,26 @@ internal class InputProcessor
         }
     }
 
+    private class InsertionSortSwaps : BaseExecutor
+    {
+        private List<int> values;
+
+        protected override void GetInputs()
+        {
+            values = new List<int>();
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                values.Add(int.Parse(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            _output = InsertionSorter<int>.NumberOfSwapsInList(values).ToString();
+        }
+    }
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
