@@ -96,6 +96,7 @@ internal class InputProcessor
                 "RandomStringProbability" => new RandomStringProbability(),
                 "InsertionSortSwaps"=> new InsertionSortSwaps(),
                 "DoubleDegreeArray" => new DoubleDegreeArray(),
+                "MajorityElement" => new MajorityElement(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -430,6 +431,40 @@ internal class InputProcessor
         }
     }
 
+    private class MajorityElement : BaseExecutor
+    {
+        private List<List<int>?>? inputs = new();
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please add the integer arrays");
+            var inputString = "";
+            while (true)
+            {
+                inputString = Console.ReadLine();
+                if (inputString.Equals("done"))
+                    break;
+                
+                inputs.Add(inputString?
+                    .Split(" ") // Split the string by the delimiter
+                    .Select(int.Parse) // Convert each substring to an integer
+                    .ToList());
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var temp = new List<int>();
+            foreach (var input in inputs)
+            {
+                var val = MajorityElement<int>.SimpleDictionary(input);
+                temp.Add( val== 0 ? -1 : val);
+            }
+
+            Output = string.Join(' ', temp);
+        }
+    }
+    
     private class EdgesToMakeTree : BaseExecutor
     {
         private readonly List<Tuple<int, int>>? inputs = new();
