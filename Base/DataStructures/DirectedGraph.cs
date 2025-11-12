@@ -9,10 +9,10 @@ public class DirectedGraph<T> : UndirectedGraph<T>
 {
     public override void Insert(T start, T end)
     {
-        if (_tracker.TryGetValue(start, out var value))
+        if (EdgeList.TryGetValue(start, out var value))
             value.Add(end);
         else
-            _tracker[start] = [end];
+            EdgeList[start] = [end];
 
         NumEdges++;
     }

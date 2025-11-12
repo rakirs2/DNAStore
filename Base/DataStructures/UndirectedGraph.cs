@@ -1,31 +1,32 @@
 ﻿namespace Base.DataStructures;
 
+// TODO: this needs to be fixed. It's fine for now, but the hierarchy/naming is confusing.
 /// <summary>
 ///     Simple undirected graph implementation.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> where T : notnull
 {
-    private readonly int _numNodes;
-    protected readonly SortedDictionary<T, HashSet<T>> _tracker;
+    public int NumNodes { get; }
+    protected readonly SortedDictionary<T, HashSet<T>> EdgeList;
     protected int NumEdges;
 
     public UndirectedGraph(int numNodes, IComparer<T>? comparer = null)
     {
-        _tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
-        for (var i = 1; i <= numNodes; i++) _tracker[(T)(object)i] = new HashSet<T>();
+        EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
+        for (var i = 1; i <= numNodes; i++) EdgeList[(T)(object)i] = new HashSet<T>();
 
-        _numNodes = numNodes;
+        NumNodes = numNodes;
     }
 
     public UndirectedGraph()
     {
-        _tracker = new SortedDictionary<T, HashSet<T>>();
+        EdgeList = new SortedDictionary<T, HashSet<T>>();
     }
 
     public UndirectedGraph(IComparer<T>? comparer = null)
     {
-        _tracker = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
+        EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
 
     public object Clone()
@@ -40,15 +41,15 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
 
     public virtual void Insert(T start, T end)
     {
-        if (_tracker.TryGetValue(start, out var value))
+        if (EdgeList.TryGetValue(start, out var value))
             value.Add(end);
         else
-            _tracker[start] = [end];
+            EdgeList[start] = [end];
 
-        if (_tracker.TryGetValue(end, out var value1))
+        if (EdgeList.TryGetValue(end, out var value1))
             value1.Add(start);
         else
-            _tracker[end] = [start];
+            EdgeList[end] = [start];
 
         // TODO: Currently, this implementation does not check for duplicate edges.
         NumEdges++;
@@ -65,14 +66,14 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
     /// <returns></returns>
     public Dictionary<T, HashSet<T>> GetEdgeList()
     {
-        return _tracker.ToDictionary();
+        return EdgeList.ToDictionary();
     }
 
     public int EdgesToMakeTree()
     {
         // every node that doesn't have a value is an unconnected node
         // so we need to find the total number of unconnected nodes
-        return _numNodes - NumEdges - 1; // -1 because a tree with n nodes has n-1 edges
+        return NumNodes - NumEdges - 1; // -1 because a tree with n nodes has n-1 edges
     }
 
 
@@ -93,7 +94,7 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
 
     public override int GetHashCode()
     {
-        return _tracker.GetHashCode();
+        return EdgeList.GetHashCode();
     }
 
     private static bool GraphEquality(UndirectedGraph<T> first, UndirectedGraph<T> other)
