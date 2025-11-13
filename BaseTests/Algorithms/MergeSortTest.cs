@@ -1,5 +1,4 @@
 using Base.Algorithms;
-using JetBrains.Annotations;
 
 namespace BaseTests.Algorithms;
 
