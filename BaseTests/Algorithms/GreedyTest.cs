@@ -17,7 +17,7 @@ public class GreedyTest
     public void MinCoinsActual()
     {
         var coins = new int[]{1,3,5,11};
-        Assert.AreEqual(2, Greedy.LeastCoins(coins, 19762));
+        Assert.AreEqual(1798, Greedy.LeastCoins(coins, 19762));
     }
     
     [TestMethod]
