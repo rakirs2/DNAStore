@@ -10,7 +10,7 @@ using Clients;
 
 namespace DNAStore;
 
-//TODO: clean out inputs
+// TODO: clean out inputs
 // TODO: there shoudl be a subclass for multiple arrays
 internal class InputProcessor
 {
@@ -35,8 +35,8 @@ internal class InputProcessor
 
     private abstract class BaseExecutor : IExecutor
     {
-        protected string? Output;
         private Stopwatch? _stopwatch;
+        protected string? Output;
 
         public void Run()
         {
@@ -83,6 +83,7 @@ internal class InputProcessor
                 "SplicedDNAToProtein" => new SplicedDNAToProtein(),
                 "BinarySearchArray" => new BinarySearchArray(),
                 "EdgeList" => new EdgeList(),
+                "MajorityElement" => new MajorityElement(),
                 "EdgeToMakeTree" => new EdgesToMakeTree(),
                 "DistanceMatrix" => new DistanceMatrix(),
                 "GetFirstSubsequenceIndices" => new GetFirstSubsequenceIndices(),
@@ -95,10 +96,11 @@ internal class InputProcessor
                 "DeBrujinString" => new DeBrujinString(),
                 "LongestCommonSubsequenceAlignment" => new LongestCommonSubsequenceAlignment(),
                 "RandomStringProbability" => new RandomStringProbability(),
-                "InsertionSortSwaps"=> new InsertionSortSwaps(),
+                "InsertionSortSwaps" => new InsertionSortSwaps(),
                 "DoubleDegreeArray" => new DoubleDegreeArray(),
                 "MergeTwoSorted" => new MergeTwoSorted(),
                 "DNeighborhood" => new DNeighborhood(),
+                "MotifEnumeration" => new MotifEnumeration(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -250,7 +252,7 @@ internal class InputProcessor
             Output = string.Join("\n", results.Select(r => r.ToString()));
         }
     }
-    
+
     private class MergeTwoSorted : BaseExecutor
     {
         private int[] a;
@@ -319,9 +321,9 @@ internal class InputProcessor
     private class DNeighborhood : BaseExecutor
     {
         private readonly List<AnySequence>? _introns = new();
+        private int _d;
 
         private DnaSequence? _input;
-        private int _d;
 
         protected override void GetInputs()
         {
@@ -337,7 +339,7 @@ internal class InputProcessor
             Output = string.Join("\n", neighbors);
         }
     }
-    
+
     // TODO: this should be a single fasta read
     private class SplicedDNAToProtein : BaseExecutor
     {
@@ -482,7 +484,7 @@ internal class InputProcessor
 
     private class MajorityElement : BaseExecutor
     {
-        private List<List<int>?>? inputs = new();
+        private readonly List<List<int>?>? inputs = new();
 
         protected override void GetInputs()
         {
@@ -493,7 +495,7 @@ internal class InputProcessor
                 inputString = Console.ReadLine();
                 if (inputString.Equals("done"))
                     break;
-                
+
                 inputs.Add(inputString?
                     .Split(" ") // Split the string by the delimiter
                     .Select(int.Parse) // Convert each substring to an integer
@@ -507,13 +509,13 @@ internal class InputProcessor
             foreach (var input in inputs)
             {
                 var val = MajorityElement<int>.SimpleDictionary(input);
-                temp.Add( val== 0 ? -1 : val);
+                temp.Add(val == 0 ? -1 : val);
             }
 
             Output = string.Join(' ', temp);
         }
     }
-    
+
     private class EdgesToMakeTree : BaseExecutor
     {
         private readonly List<Tuple<int, int>>? inputs = new();
@@ -546,7 +548,7 @@ internal class InputProcessor
             Output = graph.EdgesToMakeTree().ToString();
         }
     }
-    
+
     private class DoubleDegreeArray : BaseExecutor
     {
         private readonly List<Tuple<int, int>>? inputs = new();
@@ -581,12 +583,10 @@ internal class InputProcessor
             foreach (var kvp in edgeList)
             {
                 var temp = 0;
-                foreach (var edge in kvp.Value)
-                {
-                    temp += edgeList[edge].Count;
-                }
-                array[kvp.Key-1]= temp;
+                foreach (var edge in kvp.Value) temp += edgeList[edge].Count;
+                array[kvp.Key - 1] = temp;
             }
+
             Output = string.Join(" ", array);
         }
     }
@@ -725,6 +725,7 @@ internal class InputProcessor
             Output = InsertionSorter<int>.NumberOfSwapsInList(values).ToString();
         }
     }
+
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
@@ -781,6 +782,33 @@ internal class InputProcessor
         {
             _errorCorrections = _dnaSequence.GenerateErrorCorrections();
             Output = string.Join('\n', _errorCorrections);
+        }
+    }
+
+    private class MotifEnumeration : BaseExecutor
+    {
+        private readonly List<DnaSequence>? _dnaSequences = new();
+        private int _distance;
+        private int _kmerLength;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("please input kmerLength");
+            _kmerLength = int.Parse(Console.ReadLine());
+            Console.WriteLine("please input distance");
+            _distance = int.Parse(Console.ReadLine());
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                _dnaSequences.Add(new DnaSequence(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var commonMotifs = _dnaSequences.MotifEnumeration(_kmerLength, _distance);
+            Output = string.Join(' ', commonMotifs);
         }
     }
 

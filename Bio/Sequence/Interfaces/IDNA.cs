@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using Bio.Sequence.Types;
 
 namespace Bio.Sequence.Interfaces;
 
@@ -40,7 +39,7 @@ public interface IDna
     double RandomStringProbability(double gcContent);
 
     /// <summary>
-    /// Generates the list of 
+    ///     Generates the list of kmers that are within the hamming distance specified
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>

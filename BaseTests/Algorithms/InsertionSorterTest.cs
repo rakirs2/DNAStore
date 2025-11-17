@@ -5,7 +5,6 @@ namespace BaseTests.Algorithms;
 [TestClass]
 public class InsertionSorterTest
 {
-
     [TestMethod]
     public void SimpleCounter()
     {
@@ -13,7 +12,7 @@ public class InsertionSorterTest
         {
             6, 10, 4, 5, 1, 2
         };
-        
+
         Assert.AreEqual(12, InsertionSorter<int>.NumberOfSwapsInList(values));
     }
 }

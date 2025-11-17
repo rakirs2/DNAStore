@@ -34,4 +34,12 @@ public interface ISequence
     /// <param name="isZeroIndex"></param>
     /// <returns></returns>
     public List<int> FindFirstPossibleSubSequence(AnySequence subsequence, bool isZeroIndex = false);
+
+    /// <summary>
+    ///     Returns if the DNAString
+    /// </summary>
+    /// <param name="stringToMatch"></param>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    public bool ContainsString(string stringToMatch, int distance);
 }

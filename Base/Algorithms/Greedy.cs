@@ -7,17 +7,11 @@ public class Greedy
         var coinTracker = new int[target + 1];
         Array.Fill(coinTracker, target + 1);
         coinTracker[0] = 0;
-        for (int i = 1; i <= target; i++)
-        {
+        for (var i = 1; i <= target; i++)
             foreach (var coin in coinValues)
-            {
                 if (coin <= i)
-                {
                     coinTracker[i] = Math.Min(coinTracker[i], coinTracker[i - coin] + 1);
-                }
-            }
-        }
-        
-        return  coinTracker[target] > target ? -1 : coinTracker[target];
+
+        return coinTracker[target] > target ? -1 : coinTracker[target];
     }
 }

@@ -205,7 +205,7 @@ public class DnaSequenceTests
             "ACT",
             "ACG"
         };
-        
+
         Assert.IsTrue(output.SetEquals(expected));
     }
 }
