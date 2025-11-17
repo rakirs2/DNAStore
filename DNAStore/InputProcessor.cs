@@ -83,6 +83,7 @@ internal class InputProcessor
                 "SplicedDNAToProtein" => new SplicedDNAToProtein(),
                 "BinarySearchArray" => new BinarySearchArray(),
                 "EdgeList" => new EdgeList(),
+                "MajorityElement" => new MajorityElement(),
                 "EdgeToMakeTree" => new EdgesToMakeTree(),
                 "DistanceMatrix" => new DistanceMatrix(),
                 "GetFirstSubsequenceIndices" => new GetFirstSubsequenceIndices(),
@@ -99,6 +100,7 @@ internal class InputProcessor
                 "DoubleDegreeArray" => new DoubleDegreeArray(),
                 "MergeTwoSorted" => new MergeTwoSorted(),
                 "DNeighborhood" => new DNeighborhood(),
+                "MotifEnumeration" => new MotifEnumeration(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -781,6 +783,33 @@ internal class InputProcessor
         {
             _errorCorrections = _dnaSequence.GenerateErrorCorrections();
             Output = string.Join('\n', _errorCorrections);
+        }
+    }
+    
+    private class MotifEnumeration : BaseExecutor
+    {
+        private List<DnaSequence>? _dnaSequences = new();
+        private int _distance;
+        private int _kmerLength;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("please input kmerLength");
+            _kmerLength = int.Parse(Console.ReadLine());
+            Console.WriteLine("please input distance");
+            _distance = int.Parse(Console.ReadLine());
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                _dnaSequences.Add(new DnaSequence(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var commonMotifs = _dnaSequences.MotifEnumeration(_kmerLength, _distance);
+            Output = string.Join(' ', commonMotifs);
         }
     }
 
