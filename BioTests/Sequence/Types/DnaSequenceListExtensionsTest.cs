@@ -59,7 +59,7 @@ public class DnaSequenceListExtensionsTest
         Assert.AreEqual(3, errorCorrections.Count());
         Assert.IsTrue(expectedErrorCorrections.SequenceEqual(errorCorrections));
     }
-    
+
     [TestMethod]
     public void MotifEnumerationTest()
     {
@@ -72,14 +72,14 @@ public class DnaSequenceListExtensionsTest
         };
 
         var output = dnaList.MotifEnumeration(3, 1);
-        var expected = new HashSet<string>()
+        var expected = new HashSet<string>
         {
             "ATA",
             "ATT",
             "GTT",
             "TTT"
         };
-        
+
         Assert.IsTrue(output.SetEquals(expected));
     }
 }

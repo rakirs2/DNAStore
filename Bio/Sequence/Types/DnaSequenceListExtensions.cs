@@ -120,32 +120,23 @@ public static class DnaSequenceListExtensions
         {
             var currentKmers = item.KmerCompositionUniqueString(k);
             foreach (var kmer in currentKmers)
-            {
-                foreach(var possible in  new DnaSequence(kmer).DNeighborhood(distance))
-                {
-                    allPatterns.Add(possible);
-                }
-            }
+            foreach (var possible in new DnaSequence(kmer).DNeighborhood(distance))
+                allPatterns.Add(possible);
         }
-        
+
         foreach (var item in allPatterns)
         {
-            bool inAll = true;
+            var inAll = true;
             foreach (var seq in DnaSequences)
-            {
                 if (!seq.ContainsString(item, distance))
                 {
                     inAll = false;
                     break;
                 }
-            }
 
-            if (inAll)
-            {
-                patterns.Add(item);
-            }
+            if (inAll) patterns.Add(item);
         }
-        
+
         return patterns;
     }
 }

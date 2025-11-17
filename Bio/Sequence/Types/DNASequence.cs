@@ -26,13 +26,14 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 3, 'T' }
     };
 
-    private static HashSet<char> ValidAlphabet = new HashSet<char>()
+    private static readonly HashSet<char> ValidAlphabet = new()
     {
         'A',
         'C',
         'G',
         'T'
     };
+
     public List<Tuple<int, int>> RestrictionSites()
     {
         // Simple, unoptimized algorithm, iterate through string
@@ -107,14 +108,15 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return percentage;
     }
 
-    public HashSet<string> DNeighborhood( int d)
+    public HashSet<string> DNeighborhood(int d)
     {
-        HashSet<string> neighborhood = new HashSet<string>(){RawSequence};
+        var neighborhood = new HashSet<string> { RawSequence };
         GenerateNeighborhoodRecursive(RawSequence.ToCharArray(), d, 0, neighborhood);
         return neighborhood;
     }
 
-    private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex, HashSet<string> neighborhood)
+    private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex,
+        HashSet<string> neighborhood)
     {
         // Base case: if no more distance allowed, add the current pattern to the neighborhood
         if (remainingDistance == 0)
@@ -125,25 +127,20 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         // Base case: if we've reached the end of the string, and still have remaining distance,
         // it means we can't make enough changes within the string length, so we stop.
-        if (startIndex == currentPatternChars.Length)
-        {
-            return;
-        }
+        if (startIndex == currentPatternChars.Length) return;
 
         // Option 1: Don't change the character at the current position
         GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance, startIndex + 1, neighborhood);
 
         // Option 2: Change the character at the current position
-        char originalChar = currentPatternChars[startIndex];
-        foreach (char newChar in ValidAlphabet)
-        {
+        var originalChar = currentPatternChars[startIndex];
+        foreach (var newChar in ValidAlphabet)
             if (newChar != originalChar)
             {
                 currentPatternChars[startIndex] = newChar;
                 GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance - 1, startIndex + 1, neighborhood);
             }
-        }
-        
+
         // Backtrack: restore the original character for subsequent calls
         currentPatternChars[startIndex] = originalChar;
     }

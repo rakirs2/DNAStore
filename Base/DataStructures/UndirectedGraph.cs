@@ -7,7 +7,6 @@
 /// <typeparam name="T"></typeparam>
 public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> where T : notnull
 {
-    public int NumNodes { get; }
     protected readonly SortedDictionary<T, HashSet<T>> EdgeList;
     protected int NumEdges;
 
@@ -28,6 +27,8 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
     {
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
+
+    public int NumNodes { get; }
 
     public object Clone()
     {

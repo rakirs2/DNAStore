@@ -14,6 +14,7 @@ namespace Bio.Sequence.Types;
 public class AnySequence : ISequence, IComparable, IEnumerable<char>
 {
     public BasePairDictionary Counts = new();
+
     public AnySequence(string rawSequence, string? name = null)
     {
         Name = name;
@@ -119,11 +120,9 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
 
     public bool ContainsString(string stringToMatch, int distance)
     {
-        for (var i = 0; i < Length-stringToMatch.Length+1; i++)
-        {
-            if(HammingDistance(RawSequence.Substring(i, stringToMatch.Length),stringToMatch ) <= distance )
+        for (var i = 0; i < Length - stringToMatch.Length + 1; i++)
+            if (HammingDistance(RawSequence.Substring(i, stringToMatch.Length), stringToMatch) <= distance)
                 return true;
-        }
 
         return false;
     }
