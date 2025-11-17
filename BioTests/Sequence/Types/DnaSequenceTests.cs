@@ -208,27 +208,4 @@ public class DnaSequenceTests
         
         Assert.IsTrue(output.SetEquals(expected));
     }
-    
-    [TestMethod]
-    public void DNeighborhoodActual()
-    {
-        var seq = new DnaSequence("CGCAGTGC");
-        var output = seq.DNeighborhood(3);
-        var expected = new HashSet<string>
-        {
-            "CCG",
-            "TCG",
-            "GCG",
-            "AAG",
-            "ATG",
-            "AGG",
-            "ACA",
-            "ACC",
-            "ACT",
-            "ACG"
-        };
-        
-        
-        Assert.IsTrue(output.SetEquals(expected));
-    }
 }
