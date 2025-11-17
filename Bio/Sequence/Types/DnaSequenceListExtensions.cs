@@ -1,6 +1,6 @@
 namespace Bio.Sequence.Types;
 
-public static class DNASequenceListExtensions
+public static class DnaSequenceListExtensions
 {
     /// <summary>
     ///     This is an incredibly greedy, n^2 implementation. We are just going to go down the list and concatenate the best
@@ -105,5 +105,47 @@ public static class DNASequenceListExtensions
                 }
 
         return output;
+    }
+
+    /// <summary>
+    ///     Generates the list of kmers that are within the hamming distance specified
+    /// </summary>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    public static HashSet<string> MotifEnumeration(this List<DnaSequence> DnaSequences, int k, int distance)
+    {
+        var patterns = new HashSet<string>();
+        var allPatterns = new HashSet<string>();
+        foreach (var item in DnaSequences)
+        {
+            var currentKmers = item.KmerCompositionUniqueString(k);
+            foreach (var kmer in currentKmers)
+            {
+                foreach(var possible in  new DnaSequence(kmer).DNeighborhood(distance))
+                {
+                    allPatterns.Add(possible);
+                }
+            }
+        }
+        
+        foreach (var item in allPatterns)
+        {
+            bool inAll = true;
+            foreach (var seq in DnaSequences)
+            {
+                if (!seq.ContainsString(item, distance))
+                {
+                    inAll = false;
+                    break;
+                }
+            }
+
+            if (inAll)
+            {
+                patterns.Add(item);
+            }
+        }
+        
+        return patterns;
     }
 }

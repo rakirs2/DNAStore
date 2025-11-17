@@ -117,6 +117,17 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return indices;
     }
 
+    public bool ContainsString(string stringToMatch, int distance)
+    {
+        for (var i = 0; i < Length-stringToMatch.Length+1; i++)
+        {
+            if(HammingDistance(RawSequence.Substring(i, stringToMatch.Length),stringToMatch ) <= distance )
+                return true;
+        }
+
+        return false;
+    }
+
     // Overloading the addition operator (+)
     public static AnySequence operator +(AnySequence p1, AnySequence p2)
     {

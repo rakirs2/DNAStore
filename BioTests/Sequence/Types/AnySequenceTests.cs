@@ -176,4 +176,11 @@ public class AnySequenceTests
             Assert.IsFalse(enumerator.MoveNext());
         }
     }
+
+    [TestMethod]
+    public void ContainsStringWithHammingDistance()
+    {
+        var seq1 = new AnySequence("AAAAAAAAT");
+        Assert.IsTrue(seq1.ContainsString("TT", 1));
+    }
 }
