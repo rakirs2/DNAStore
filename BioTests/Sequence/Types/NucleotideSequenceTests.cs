@@ -9,7 +9,7 @@ public class NucleotideSequenceTests
     public void GetMinSkew()
     {
         var dnaSequence =
-            new DNASequence(
+            new DnaSequence(
                 "CCTATCGGTGGATTAGCATGTCCCTGTACGTTTCGCCGCGAACTAGTTCACACGGCTTGATGGCAAATGGTTTTTCCGGCGACCGTAATCGTCCACCGAG");
         var output = dnaSequence.CalculateMinPrefixGCSkew();
         Assert.IsTrue(new List<int> { 53, 97 }.SequenceEqual(output));

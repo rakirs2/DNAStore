@@ -9,23 +9,23 @@ public class ReverseComplementDictionaryTest
     public void EmptyAccess()
     {
         var dict = new ReverseComplementDictionary();
-        Assert.AreEqual(0, dict[new DNASequence("")]);
+        Assert.AreEqual(0, dict[new DnaSequence("")]);
     }
 
     [TestMethod]
     public void EmptySequencesAreNotTracked()
     {
         var dict = new ReverseComplementDictionary();
-        dict.Add(new DNASequence(""));
-        Assert.AreEqual(0, dict[new DNASequence("")]);
+        dict.Add(new DnaSequence(""));
+        Assert.AreEqual(0, dict[new DnaSequence("")]);
     }
 
     [TestMethod]
     public void SimpleInsertion()
     {
         var dict = new ReverseComplementDictionary();
-        dict.Add(new DNASequence("A"));
-        Assert.AreEqual(1, dict[new DNASequence("A")]);
-        Assert.AreEqual(1, dict[new DNASequence("T")]);
+        dict.Add(new DnaSequence("A"));
+        Assert.AreEqual(1, dict[new DnaSequence("A")]);
+        Assert.AreEqual(1, dict[new DnaSequence("T")]);
     }
 }

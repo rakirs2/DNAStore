@@ -6,10 +6,10 @@ namespace Bio.Sequence.Types;
 ///     Returns suggested error correction for a given class
 ///     TODO: consider abstracting this to RNA as well
 /// </summary>
-public class ErrorCorrection(DNASequence a, DNASequence b) : IErrorCorrection<DNASequence>
+public class ErrorCorrection(DnaSequence a, DnaSequence b) : IErrorCorrection<DnaSequence>
 {
-    public DNASequence Previous { get; } = a;
-    public DNASequence Suggested { get; } = b;
+    public DnaSequence Previous { get; } = a;
+    public DnaSequence Suggested { get; } = b;
 
     public override string ToString()
     {

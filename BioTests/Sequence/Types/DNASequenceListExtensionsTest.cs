@@ -8,14 +8,14 @@ public class DnaSequenceListExtensionsTest
     [TestMethod]
     public void GenerateErrorCorrectionsReturnsNonNull()
     {
-        var dnaList = new List<DNASequence>();
+        var dnaList = new List<DnaSequence>();
         Assert.IsNotNull(dnaList.GenerateErrorCorrections());
     }
 
     [TestMethod]
     public void ReturnsSingleErrorCorrectionForSimpleCase()
     {
-        var dnaList = new List<DNASequence>
+        var dnaList = new List<DnaSequence>
         {
             new("TCATC"),
             new("TCATC"),
@@ -24,7 +24,7 @@ public class DnaSequenceListExtensionsTest
 
         var expectedErrorCorrections = new List<ErrorCorrection>
         {
-            new(new DNASequence("TCATG"), new DNASequence("TCATC"))
+            new(new DnaSequence("TCATG"), new DnaSequence("TCATC"))
         };
 
         var errorCorrections = dnaList.GenerateErrorCorrections();
@@ -35,7 +35,7 @@ public class DnaSequenceListExtensionsTest
     [TestMethod]
     public void ReturnsSingleErrorCorrectionForMultipleCases()
     {
-        var dnaList = new List<DNASequence>
+        var dnaList = new List<DnaSequence>
         {
             new("TCATC"),
             new("TTCAT"),
@@ -50,9 +50,9 @@ public class DnaSequenceListExtensionsTest
 
         var expectedErrorCorrections = new List<ErrorCorrection>
         {
-            new(new DNASequence("TTCAT"), new DNASequence("TTGAT")),
-            new(new DNASequence("GAGGA"), new DNASequence("GATGA")),
-            new(new DNASequence("TTTCC"), new DNASequence("TTTCA"))
+            new(new DnaSequence("TTCAT"), new DnaSequence("TTGAT")),
+            new(new DnaSequence("GAGGA"), new DnaSequence("GATGA")),
+            new(new DnaSequence("TTTCC"), new DnaSequence("TTTCA"))
         };
 
         var errorCorrections = dnaList.GenerateErrorCorrections();

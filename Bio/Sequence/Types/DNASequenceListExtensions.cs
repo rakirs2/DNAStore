@@ -9,7 +9,7 @@ public static class DNASequenceListExtensions
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static DNASequence GenerateLongestStringGreedy(this List<DNASequence> list)
+    public static DnaSequence GenerateLongestStringGreedy(this List<DnaSequence> list)
     {
         // create a shallow copy. We are not manipulating anything in the original list
         var copyOfList = list.ToList();
@@ -37,7 +37,7 @@ public static class DNASequenceListExtensions
 
             if (maxOverlap == 0) // No overlaps, just concatenate remaining
             {
-                var result = new DNASequence("");
+                var result = new DnaSequence("");
                 foreach (var r in list) result += r;
                 return result;
             }
@@ -49,7 +49,7 @@ public static class DNASequenceListExtensions
             if (bestJ > bestI) copyOfList.RemoveAt(bestJ - 1);
             else copyOfList.RemoveAt(bestJ);
 
-            copyOfList.Add(new DNASequence(mergedString));
+            copyOfList.Add(new DnaSequence(mergedString));
         }
 
         return copyOfList[0]; // The single remaining superstring
@@ -64,12 +64,12 @@ public static class DNASequenceListExtensions
     /// </remarks>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static List<ErrorCorrection> GenerateErrorCorrections(this List<DNASequence> list, int distance = 1)
+    public static List<ErrorCorrection> GenerateErrorCorrections(this List<DnaSequence> list, int distance = 1)
     {
         var output = new List<ErrorCorrection>();
         var dict = new ReverseComplementDictionary();
 
-        var needsReview = new HashSet<DNASequence>();
+        var needsReview = new HashSet<DnaSequence>();
         foreach (var item in list)
         {
             if (dict[item] == 0) needsReview.Add(item);
