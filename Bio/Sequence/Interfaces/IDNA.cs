@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Bio.Sequence.Types;
 
 namespace Bio.Sequence.Interfaces;
 
@@ -37,4 +38,11 @@ public interface IDna
     HashSet<string> KmerCompositionUniqueString(int n);
 
     double RandomStringProbability(double gcContent);
+
+    /// <summary>
+    /// Generates the list of 
+    /// </summary>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    HashSet<string> DNeighborhood(int distance);
 }

@@ -98,6 +98,7 @@ internal class InputProcessor
                 "InsertionSortSwaps"=> new InsertionSortSwaps(),
                 "DoubleDegreeArray" => new DoubleDegreeArray(),
                 "MergeTwoSorted" => new MergeTwoSorted(),
+                "DNeighborhood" => new DNeighborhood(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -301,12 +302,12 @@ internal class InputProcessor
     {
         private List<ProteinSequence>? _proteins;
 
-        private DNASequence? _sequence;
+        private DnaSequence? _sequence;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the DNAstring");
-            _sequence = new DNASequence(Console.ReadLine());
+            _sequence = new DnaSequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
@@ -315,17 +316,39 @@ internal class InputProcessor
         }
     }
 
+    private class DNeighborhood : BaseExecutor
+    {
+        private readonly List<AnySequence>? _introns = new();
+
+        private DnaSequence? _input;
+        private int _d;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the full sequence");
+            _input = new DnaSequence(Console.ReadLine());
+            Console.WriteLine("distance allowed");
+            _d = int.Parse(Console.ReadLine());
+        }
+
+        protected override void CalculateResult()
+        {
+            var neighbors = _input.DNeighborhood(_d);
+            Output = string.Join("\n", neighbors);
+        }
+    }
+    
     // TODO: this should be a single fasta read
     private class SplicedDNAToProtein : BaseExecutor
     {
         private readonly List<AnySequence>? _introns = new();
 
-        private DNASequence? _input;
+        private DnaSequence? _input;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the full sequence");
-            _input = new DNASequence(Console.ReadLine());
+            _input = new DnaSequence(Console.ReadLine());
 
             var input = "z";
 
@@ -333,7 +356,7 @@ internal class InputProcessor
             {
                 input = Console.ReadLine();
                 if (input.Equals("done")) break;
-                _introns.Add(new DNASequence(input));
+                _introns.Add(new DnaSequence(input));
             }
         }
 
@@ -341,7 +364,7 @@ internal class InputProcessor
         {
             // TODO: this is terrible, figure out how I want this later
             var splicedSequence = _input.RemoveIntrons(_introns);
-            var dnaSequence = new DNASequence(splicedSequence.ToString());
+            var dnaSequence = new DnaSequence(splicedSequence.ToString());
             var rnaSequence = dnaSequence.TranscribeToRNA();
             Output = rnaSequence.GetExpectedProteinString();
         }
@@ -599,13 +622,13 @@ internal class InputProcessor
 
     private class DNAComplement : BaseExecutor
     {
-        private DNASequence? _dnaSequence;
+        private DnaSequence? _dnaSequence;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the DNA in question");
             var inputString = Console.ReadLine();
-            if (inputString != null) _dnaSequence = new DNASequence(inputString);
+            if (inputString != null) _dnaSequence = new DnaSequence(inputString);
         }
 
         protected override void CalculateResult()
@@ -657,12 +680,12 @@ internal class InputProcessor
     private class RandomStringProbability : BaseExecutor
     {
         private List<double> gcPercentages;
-        private DNASequence sequence;
+        private DnaSequence sequence;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Input DNA sequence");
-            sequence = new DNASequence(Console.ReadLine());
+            sequence = new DnaSequence(Console.ReadLine());
             gcPercentages = new List<double>();
             while (true)
             {
@@ -742,7 +765,7 @@ internal class InputProcessor
 
     private class PossibleErrorCorrections : BaseExecutor
     {
-        private List<DNASequence>? _dnaSequence;
+        private List<DnaSequence>? _dnaSequence;
         private List<ErrorCorrection>? _errorCorrections;
         private List<Fasta>? fastas;
 
@@ -765,7 +788,7 @@ internal class InputProcessor
     {
         private int[] kmerComposition;
         private int kmerLength;
-        private DNASequence sequence;
+        private DnaSequence sequence;
 
         protected override void GetInputs()
         {
@@ -774,7 +797,7 @@ internal class InputProcessor
 
             Console.WriteLine("Please input sequence");
             var inputString = Console.ReadLine();
-            sequence = new DNASequence(inputString);
+            sequence = new DnaSequence(inputString);
         }
 
         protected override void CalculateResult()
@@ -787,7 +810,7 @@ internal class InputProcessor
     {
         private HashSet<string> kmerComposition;
         private int kmerLength;
-        private DNASequence sequence;
+        private DnaSequence sequence;
 
         protected override void GetInputs()
         {
@@ -796,7 +819,7 @@ internal class InputProcessor
 
             Console.WriteLine("Please input sequence");
             var inputString = Console.ReadLine();
-            sequence = new DNASequence(inputString);
+            sequence = new DnaSequence(inputString);
         }
 
         protected override void CalculateResult()
@@ -847,8 +870,8 @@ internal class InputProcessor
     private class GreedyStringAssembly : BaseExecutor
     {
         private List<Fasta>? _fastas;
-        private DNASequence _result;
-        private List<DNASequence> _sequences;
+        private DnaSequence _result;
+        private List<DnaSequence> _sequences;
 
         protected override void GetInputs()
         {
@@ -874,7 +897,7 @@ internal class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Enter Sequence To be analyzed");
-            sequence = new DNASequence(Console.ReadLine());
+            sequence = new DnaSequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
@@ -1184,12 +1207,12 @@ internal class InputProcessor
     {
         private List<Tuple<int, int>>? output;
 
-        private DNASequence? sequence;
+        private DnaSequence? sequence;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Enter Sequence To be analyzed");
-            sequence = new DNASequence(Console.ReadLine());
+            sequence = new DnaSequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
@@ -1207,7 +1230,7 @@ internal class InputProcessor
 
     private class TranscribeDna : IExecutor
     {
-        private DNASequence? _dnaSequence;
+        private DnaSequence? _dnaSequence;
 
         public void Run()
         {
@@ -1219,7 +1242,7 @@ internal class InputProcessor
         {
             Console.WriteLine("Please input the DNA in question");
             var inputString = Console.ReadLine();
-            if (inputString != null) _dnaSequence = new DNASequence(inputString);
+            if (inputString != null) _dnaSequence = new DnaSequence(inputString);
         }
 
         private void OutputResult()

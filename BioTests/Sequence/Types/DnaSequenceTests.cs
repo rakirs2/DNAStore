@@ -3,12 +3,12 @@
 namespace BioTests.Sequence.Types;
 
 [TestClass]
-public class DNASequenceTests
+public class DnaSequenceTests
 {
     [TestMethod]
     public void TranscribeToRNATest()
     {
-        var sequence = new DNASequence("GATGGAACTTGACTACGTAAATT");
+        var sequence = new DnaSequence("GATGGAACTTGACTACGTAAATT");
         var rnaSequence = sequence.TranscribeToRNA();
         Assert.AreEqual("GAUGGAACUUGACUACGUAAAUU", rnaSequence.ToString());
     }
@@ -16,7 +16,7 @@ public class DNASequenceTests
     [TestMethod]
     public void ReverseComplementTest()
     {
-        var sequence = new DNASequence("AAAACCCGGT");
+        var sequence = new DnaSequence("AAAACCCGGT");
         var complement = sequence.GetReverseComplement();
         Assert.AreEqual("ACCGGGTTTT", complement.ToString());
     }
@@ -24,7 +24,7 @@ public class DNASequenceTests
     [TestMethod]
     public void RestrictionSitesTest()
     {
-        var sequence = new DNASequence("TCAATGCATGCGGGTCTATATGCAT");
+        var sequence = new DnaSequence("TCAATGCATGCGGGTCTATATGCAT");
         var actual = sequence.RestrictionSites();
         var expected = new List<Tuple<int, int>>
         {
@@ -44,7 +44,7 @@ public class DNASequenceTests
     [TestMethod]
     public void GetCandidateProteinSequencesTest()
     {
-        var testDNASequence = new DNASequence("ATGTAG");
+        var testDNASequence = new DnaSequence("ATGTAG");
         var result = testDNASequence.GetCandidateProteinSequences();
         var expected = new List<ProteinSequence>
         {
@@ -58,7 +58,7 @@ public class DNASequenceTests
     public void GetCandidateProteinSequencesWithReverseComplementTest()
     {
         var testDNASequence =
-            new DNASequence(
+            new DnaSequence(
                 "AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG");
         var result = testDNASequence.GetCandidateProteinSequences();
         var expected = new List<ProteinSequence>
@@ -76,50 +76,50 @@ public class DNASequenceTests
     [TestMethod]
     public void DnaToNumberTest()
     {
-        var seq1 = new DNASequence("AGT");
+        var seq1 = new DnaSequence("AGT");
         Assert.AreEqual(11, seq1.ToNumber());
     }
 
     [TestMethod]
     public void NumberToDNATest()
     {
-        var seq1 = DNASequence.FromNumber(11, 3);
-        Assert.AreEqual(new DNASequence("AGT"), seq1);
+        var seq1 = DnaSequence.FromNumber(11, 3);
+        Assert.AreEqual(new DnaSequence("AGT"), seq1);
     }
 
     [TestMethod]
     public void NumberToDNABaseCase()
     {
-        var seq1 = DNASequence.FromNumber(0, 0);
-        Assert.AreEqual(new DNASequence(""), seq1);
+        var seq1 = DnaSequence.FromNumber(0, 0);
+        Assert.AreEqual(new DnaSequence(""), seq1);
     }
 
     [TestMethod]
     public void NumberToDNABaseCaseSimiliar()
     {
-        var seq1 = DNASequence.FromNumber(0, 1);
-        Assert.AreEqual(new DNASequence("A"), seq1);
+        var seq1 = DnaSequence.FromNumber(0, 1);
+        Assert.AreEqual(new DnaSequence("A"), seq1);
     }
 
     [TestMethod]
     public void NumberToDNAPaddingTest()
     {
-        var seq1 = DNASequence.FromNumber(0, 2);
-        Assert.AreEqual(new DNASequence("AA"), seq1);
+        var seq1 = DnaSequence.FromNumber(0, 2);
+        Assert.AreEqual(new DnaSequence("AA"), seq1);
     }
 
     [TestMethod]
     public void NumberToDNAActualTest()
     {
-        var seq1 = DNASequence.FromNumber(7939, 7);
-        Assert.AreEqual(new DNASequence("CTTAAAT"), seq1);
+        var seq1 = DnaSequence.FromNumber(7939, 7);
+        Assert.AreEqual(new DnaSequence("CTTAAAT"), seq1);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void GenerateKmerCompositionBadInput()
     {
-        var seq = new DNASequence("acgt");
+        var seq = new DnaSequence("acgt");
         var _ = seq.KmerComposition(0);
     }
 
@@ -127,14 +127,14 @@ public class DNASequenceTests
     [ExpectedException(typeof(ArgumentException))]
     public void GenerateKmerCompositionBadInput2()
     {
-        var seq = new DNASequence("acgt");
+        var seq = new DnaSequence("acgt");
         var _ = seq.KmerComposition(-1);
     }
 
     [TestMethod]
     public void GenerateKmerComposition()
     {
-        var seq = new DNASequence("AAAAA");
+        var seq = new DnaSequence("AAAAA");
         var output = seq.KmerComposition(2);
         var expected = new[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         Assert.IsTrue(expected.SequenceEqual(output));
@@ -143,7 +143,7 @@ public class DNASequenceTests
     [TestMethod]
     public void GenerateKmerCompositionLarge()
     {
-        var seq = new DNASequence(
+        var seq = new DnaSequence(
             "CTTCGAAAGTTTGGGCCGAGTCTTACAGTCGGTCTTGAAGCAAAGTAACGAACTCCACGGCCCTGACTACCGAACCAGTTGTGAGTACTCAACTGGGTGAGAGTGCAGTCCCTATTGAGTTTCCGAGACTCACCGGGATTTTCGATCCAGCCTCAGTCCAGTCTTGTGGCCAACTCACCAAATGACGTTGGAATATCCCTGTCTAGCTCACGCAGTACTTAGTAAGAGGTCGCTGCAGCGGGGCAAGGAGATCGGAAAATGTGCTCTATATGCGACTAAAGCTCCTAACTTACACGTAGACTTGCCCGTGTTAAAAACTCGGCTCACATGCTGTCTGCGGCTGGCTGTATACAGTATCTACCTAATACCCTTCAGTTCGCCGCACAAAAGCTGGGAGTTACCGCGGAAATCACAG");
         var output = seq.KmerComposition(4);
         var expected = new[]
@@ -163,7 +163,7 @@ public class DNASequenceTests
     [TestMethod]
     public void GenerateKmerCompositionUniqueSTrings()
     {
-        var seq = new DNASequence("CAATCCAAC");
+        var seq = new DnaSequence("CAATCCAAC");
         var output = seq.KmerCompositionUniqueString(5);
         var expected = new HashSet<string>
         {
@@ -182,8 +182,30 @@ public class DNASequenceTests
     [TestMethod]
     public void RandomStringTest()
     {
-        var seq = new DNASequence("ACGATACAA");
+        var seq = new DnaSequence("ACGATACAA");
         var output = seq.RandomStringProbability(0.129);
         Assert.AreEqual(-5.737, double.Round(output, 3));
+    }
+
+    [TestMethod]
+    public void DNeighborhood()
+    {
+        var seq = new DnaSequence("ACG");
+        var output = seq.DNeighborhood(1);
+        var expected = new HashSet<string>
+        {
+            "CCG",
+            "TCG",
+            "GCG",
+            "AAG",
+            "ATG",
+            "AGG",
+            "ACA",
+            "ACC",
+            "ACT",
+            "ACG"
+        };
+        
+        Assert.IsTrue(output.SetEquals(expected));
     }
 }

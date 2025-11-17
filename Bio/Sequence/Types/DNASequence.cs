@@ -5,12 +5,12 @@ using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 
-public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), IDna
+public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), IDna
 {
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
-    private static readonly Dictionary<char, int> _charValueMapper = new()
+    private static readonly Dictionary<char, int> CharValueMapper = new()
     {
         { 'A', 0 },
         { 'C', 1 },
@@ -18,7 +18,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 'T', 3 }
     };
 
-    private static readonly Dictionary<int, char> _valueCharMapper = new()
+    private static readonly Dictionary<int, char> ValueCharMapper = new()
     {
         { 0, 'A' },
         { 1, 'C' },
@@ -26,6 +26,13 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 3, 'T' }
     };
 
+    private static HashSet<char> ValidAlphabet = new HashSet<char>()
+    {
+        'A',
+        'C',
+        'G',
+        'T'
+    };
     public List<Tuple<int, int>> RestrictionSites()
     {
         // Simple, unoptimized algorithm, iterate through string
@@ -38,7 +45,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
             // TODO: verify these
             while (i + j <= Length && j <= 12)
             {
-                var subStringDNA = new DNASequence(Substring(i, j));
+                var subStringDNA = new DnaSequence(Substring(i, j));
                 var reverseComplement = subStringDNA.GetReverseComplement();
                 if (AreSequenceEqual(subStringDNA, reverseComplement)) output.Add(new Tuple<int, int>(i + 1, j));
                 j++;
@@ -53,7 +60,7 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     public BigInteger ToNumber()
     {
         BigInteger output = 0;
-        for (var i = 0; i < Length; i++) output += _charValueMapper[this[i]] * BigInteger.Pow(4, (int)Length - i - 1);
+        for (var i = 0; i < Length; i++) output += CharValueMapper[this[i]] * BigInteger.Pow(4, (int)Length - i - 1);
 
         return output;
     }
@@ -100,31 +107,72 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return percentage;
     }
 
+    public HashSet<string> DNeighborhood( int d)
+    {
+        HashSet<string> neighborhood = new HashSet<string>(){RawSequence};
+        GenerateNeighborhoodRecursive(RawSequence.ToCharArray(), d, 0, neighborhood);
+        return neighborhood;
+    }
+
+    private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex, HashSet<string> neighborhood)
+    {
+        // Base case: if no more distance allowed, add the current pattern to the neighborhood
+        if (remainingDistance == 0)
+        {
+            neighborhood.Add(new string(currentPatternChars));
+            return;
+        }
+
+        // Base case: if we've reached the end of the string, and still have remaining distance,
+        // it means we can't make enough changes within the string length, so we stop.
+        if (startIndex == currentPatternChars.Length)
+        {
+            return;
+        }
+
+        // Option 1: Don't change the character at the current position
+        GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance, startIndex + 1, neighborhood);
+
+        // Option 2: Change the character at the current position
+        char originalChar = currentPatternChars[startIndex];
+        foreach (char newChar in ValidAlphabet)
+        {
+            if (newChar != originalChar)
+            {
+                currentPatternChars[startIndex] = newChar;
+                GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance - 1, startIndex + 1, neighborhood);
+            }
+        }
+        
+        // Backtrack: restore the original character for subsequent calls
+        currentPatternChars[startIndex] = originalChar;
+    }
+
     private static int KmerToNumber(string input)
     {
         var output = 0;
         for (var i = 0; i < input.Length; i++)
-            output += _charValueMapper[input[i]] * (int)Math.Pow(4, input.Length - i - 1);
+            output += CharValueMapper[input[i]] * (int)Math.Pow(4, input.Length - i - 1);
 
         return output;
     }
 
-    public static DNASequence FromNumber(int number, int k)
+    public static DnaSequence FromNumber(int number, int k)
     {
-        if (number == 0) return new DNASequence(new string('A', k));
+        if (number == 0) return new DnaSequence(new string('A', k));
         var pattern = new StringBuilder();
 
         while (number > 0)
         {
             var remainder = number % 4;
-            pattern.Insert(0, _valueCharMapper[remainder]);
+            pattern.Insert(0, ValueCharMapper[remainder]);
             number /= 4;
         }
 
         // Pad the pattern with 'A's if its length is less than k.
         while (pattern.Length < k) pattern.Insert(0, 'A');
 
-        return new DNASequence(pattern.ToString());
+        return new DnaSequence(pattern.ToString());
     }
 
     // Should this be static, should this be a class conversion
@@ -140,13 +188,13 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
     ///     TODO: What if we can't do this all in memory?
     /// </summary>
     /// <returns></returns>
-    public DNASequence GetReverseComplement()
+    public DnaSequence GetReverseComplement()
     {
         // TODO: this should probably be all ints
         var dnaStrand = new StringBuilder();
         for (var i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
 
-        return new DNASequence(dnaStrand.ToString());
+        return new DnaSequence(dnaStrand.ToString());
     }
 
     /// <summary>
@@ -180,12 +228,12 @@ public class DNASequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output.ToList();
     }
 
-    public static DNASequence operator +(DNASequence p1, DNASequence p2)
+    public static DnaSequence operator +(DnaSequence p1, DnaSequence p2)
     {
-        return new DNASequence(p1.RawSequence + p2.RawSequence);
+        return new DnaSequence(p1.RawSequence + p2.RawSequence);
     }
 
-    public static void SingleReadToProteinSequences(DNASequence dnaSequence, ref List<ProteinSequence> output)
+    public static void SingleReadToProteinSequences(DnaSequence dnaSequence, ref List<ProteinSequence> output)
     {
         for (var i = 0; i <= dnaSequence.Length - 3; i++)
             if (SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(i, 3)].Equals("M"))

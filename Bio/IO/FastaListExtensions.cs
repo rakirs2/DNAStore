@@ -24,10 +24,10 @@ public static class FastaListExtensions
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static List<DNASequence> PostProcessAsDNASequence(this List<Fasta> list)
+    public static List<DnaSequence> PostProcessAsDNASequence(this List<Fasta> list)
     {
-        var output = new List<DNASequence>();
-        foreach (var fasta in list) output.Add(new DNASequence(fasta.RawSequence));
+        var output = new List<DnaSequence>();
+        foreach (var fasta in list) output.Add(new DnaSequence(fasta.RawSequence));
 
         return output;
     }

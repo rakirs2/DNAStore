@@ -10,8 +10,8 @@ namespace Bio.Sequence.Types;
 /// </remarks>
 public class ReverseComplementDictionary
 {
-    private readonly Dictionary<DNASequence, int> _inputs = new();
-    private readonly Dictionary<DNASequence, int> _reverseComplements = new();
+    private readonly Dictionary<DnaSequence, int> _inputs = new();
+    private readonly Dictionary<DnaSequence, int> _reverseComplements = new();
 
     #region Dictionary implementations
 
@@ -20,7 +20,7 @@ public class ReverseComplementDictionary
     ///     1 sequence at a time.
     /// </summary>
     /// <param name="key"></param>
-    public void Add(DNASequence key)
+    public void Add(DnaSequence key)
     {
         if (key.Length == 0) return;
         if (!_inputs.TryAdd(key, 1)) _inputs[key]++;
@@ -29,7 +29,7 @@ public class ReverseComplementDictionary
         if (!_reverseComplements.TryAdd(rc, 1)) _reverseComplements[rc]++;
     }
 
-    public int this[DNASequence index]
+    public int this[DnaSequence index]
     {
         get
         {
