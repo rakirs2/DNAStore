@@ -98,20 +98,20 @@ public class DnaSequenceListExtensionsTest
         var output = dnaList.MedianString(3);
         Assert.IsTrue(output.Contains("GAC"));
     }
-    
+
     [TestMethod]
     public void MedianStringTestEdges()
     {
         var dnaList = new List<DnaSequence>
         {
             new("AAG"),
-            new("AAT"),
+            new("AAT")
         };
 
         var output = dnaList.MedianString(3);
         Assert.IsTrue(output.Contains("AAG"));
     }
-    
+
     [TestMethod]
     public void MedianStringKmerNotInSet()
     {
@@ -121,13 +121,13 @@ public class DnaSequenceListExtensionsTest
             new("ACA"),
             new("AGA"),
             new("AAT"),
-            new("AAC"),
+            new("AAC")
         };
 
         var output = dnaList.MedianString(3);
         Assert.IsTrue(output.Contains("AAA"));
     }
-    
+
     [TestMethod]
     public void MedianStringLengthKmer()
     {

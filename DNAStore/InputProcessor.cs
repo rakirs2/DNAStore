@@ -1,4 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Base.Algorithms;
 using Base.DataStructures;
@@ -10,9 +13,8 @@ using Clients;
 
 namespace DNAStore;
 
-// TODO: clean out inputs
 // TODO: there shoudl be a subclass for multiple arrays
-internal class InputProcessor
+static class InputProcessor
 {
     public static IExecutor GetExecutor(string request)
     {
@@ -25,6 +27,31 @@ internal class InputProcessor
         File.WriteAllText(desktopPath + "/output.txt", filecontents);
     }
 
+    public class ExecutorRegistry
+    {
+        private static Dictionary<string, IExecutor>? _map;
+
+        [ModuleInitializer]
+        public static void Initialize()
+        {
+            _map = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => typeof(IExecutor).IsAssignableFrom(t) && !t.IsAbstract)
+                .Where(t => t.GetCustomAttribute<Executor>() != null)
+                .ToDictionary(
+                    t => t.Name, // use class name automatically
+                    t => (IExecutor)Activator.CreateInstance(t)!
+                );
+        }
+
+        public static IExecutor Get(string name)
+        {
+            return _map.TryGetValue(name, out var exe)
+                ? exe
+                : new SequenceAnalysis(); // your fallback
+        }
+    }
+
     public interface IExecutor
     {
         /// <summary>
@@ -33,6 +60,12 @@ internal class InputProcessor
         void Run();
     }
 
+    [AttributeUsage(AttributeTargets.Class)]
+    private class Executor : Attribute
+    {
+    }
+
+    [Executor]
     private abstract class BaseExecutor : IExecutor
     {
         private Stopwatch? _stopwatch;
@@ -52,59 +85,7 @@ internal class InputProcessor
 
         public static IExecutor GetExecutorFromString(string input)
         {
-            // TODO: case insensitivity/auto registration?
-            return input switch
-            {
-                "SequenceAnalysis" => new SequenceAnalysis(),
-                "DNAToRNA" => new TranscribeDna(),
-                "DNAComplement" => new DNAComplement(),
-                "GCContent" => new GCContent(),
-                "HammingDistance" => new HammingDistance(),
-                "TranslateRNA" => new TranslateRNA(),
-                "PercentDominant" => new PercentDominant(),
-                "Permutations" => new Permutations(),
-                "MotifFinder" => new MotifFinder(),
-                "ProfileMatrix" => new ProfileMatrixExecutor(),
-                "ProteinWeight" => new ProteinWeight(),
-                "OverlapGraph" => new OverlapGraphExecutor(),
-                "LongestCommonSubsequence" => new LongestCommonSubsequence(),
-                "ProteinMotif" => new ProteinMotifFinder(),
-                "ProteinToNumRNA" => new ProteinToNumRNACount(),
-                "ClumpFinder" => new ClumpFinder(),
-                "MinGCSkewLocation" => new MinGCSkewLocation(),
-                "RestrictionSites" => new RestrictionSites(),
-                "HammingSequenceMatch" => new HammingSequenceMatch(),
-                "GenerateLexicographicKmers" => new GenerateLexicographicKmers(),
-                "HammingFuzzyMatch" => new HammingFuzzyMatch(),
-                "GenerateLexicographicKmersAndSubKmers" => new GenerateLexicographicKmersAndSubKmers(),
-                "GenerateFrequencyArray" => new GenerateFrequencyArray(),
-                "MaxKmersWithComplementFuzzy" => new HammingFuzzyMatchWithComplement(),
-                "CandidateProteinsFromDNA" => new CandidateProteinsFromDNA(),
-                "SplicedDNAToProtein" => new SplicedDNAToProtein(),
-                "BinarySearchArray" => new BinarySearchArray(),
-                "EdgeList" => new EdgeList(),
-                "MajorityElement" => new MajorityElement(),
-                "EdgeToMakeTree" => new EdgesToMakeTree(),
-                "DistanceMatrix" => new DistanceMatrix(),
-                "GetFirstSubsequenceIndices" => new GetFirstSubsequenceIndices(),
-                "IncreasingAndDecreasingSubsequences" => new GetLongestSubSequences(),
-                "SetCalculations" => new SetCalculations(),
-                "KmerComposition" => new KmerComposition(),
-                "KmerCompositionString" => new KmerCompositionString(),
-                "GreedyStringAssembly" => new GreedyStringAssembly(),
-                "PossibleErrorCorrections" => new PossibleErrorCorrections(),
-                "DeBrujinString" => new DeBrujinString(),
-                "LongestCommonSubsequenceAlignment" => new LongestCommonSubsequenceAlignment(),
-                "RandomStringProbability" => new RandomStringProbability(),
-                "InsertionSortSwaps" => new InsertionSortSwaps(),
-                "DoubleDegreeArray" => new DoubleDegreeArray(),
-                "MergeTwoSorted" => new MergeTwoSorted(),
-                "DNeighborhood" => new DNeighborhood(),
-                "MotifEnumeration" => new MotifEnumeration(),
-                "MedianString" => new MedianString(),
-                "why" => new EasterEgg(),
-                _ => new SequenceAnalysis() // probably safe to do it this way
-            };
+            return ExecutorRegistry.Get(input);
         }
 
         /// <summary>
@@ -132,8 +113,8 @@ internal class InputProcessor
             Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
         }
     }
-
-
+    
+    // TODO: there should be a way to avoid the analyzer for this
     private class HammingSequenceMatch : BaseExecutor
     {
         private SequenceMatchLocations? _matcher;
@@ -277,7 +258,6 @@ internal class InputProcessor
             Output = string.Join(" ", MergeSort<int>.Merge2SortedArrays(a, b));
         }
     }
-
 
     private class GetLongestSubSequences : BaseExecutor
     {
@@ -809,7 +789,7 @@ internal class InputProcessor
             Output = commonMotifs[0];
         }
     }
-    
+
     private class MotifEnumeration : BaseExecutor
     {
         private readonly List<DnaSequence>? _dnaSequences = new();
