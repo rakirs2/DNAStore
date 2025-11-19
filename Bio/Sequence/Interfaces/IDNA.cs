@@ -44,4 +44,9 @@ public interface IDna
     /// <param name="distance"></param>
     /// <returns></returns>
     HashSet<string> DNeighborhood(int distance);
+
+    /// <summary>
+    ///     Returns the minimum distance of a given kmer against the given DNA strand.    
+    /// </summary>
+    int GetMinimumDistanceForKmer(string kmer);
 }
