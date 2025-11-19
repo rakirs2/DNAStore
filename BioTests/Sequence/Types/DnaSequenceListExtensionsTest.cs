@@ -82,4 +82,63 @@ public class DnaSequenceListExtensionsTest
 
         Assert.IsTrue(output.SetEquals(expected));
     }
+
+    [TestMethod]
+    public void MedianString()
+    {
+        var dnaList = new List<DnaSequence>
+        {
+            new("AAATTGACGCAT"),
+            new("GACGACCACGTT"),
+            new("CGTCAGCGCCTG"),
+            new("GCTGAGCACCGG"),
+            new("AGTACGGGACAG")
+        };
+
+        var output = dnaList.MedianString(3);
+        Assert.IsTrue(output.Contains("GAC"));
+    }
+    
+    [TestMethod]
+    public void MedianStringTestEdges()
+    {
+        var dnaList = new List<DnaSequence>
+        {
+            new("AAG"),
+            new("AAT"),
+        };
+
+        var output = dnaList.MedianString(3);
+        Assert.IsTrue(output.Contains("AAG"));
+    }
+    
+    [TestMethod]
+    public void MedianStringKmerNotInSet()
+    {
+        var dnaList = new List<DnaSequence>
+        {
+            new("ATA"),
+            new("ACA"),
+            new("AGA"),
+            new("AAT"),
+            new("AAC"),
+        };
+
+        var output = dnaList.MedianString(3);
+        Assert.IsTrue(output.Contains("AAA"));
+    }
+    
+    [TestMethod]
+    public void MedianStringLengthKmer()
+    {
+        var dnaList = new List<DnaSequence>
+        {
+            new("ACGT"),
+            new("ACGT"),
+            new("ACGT")
+        };
+
+        var output = dnaList.MedianString(3);
+        Assert.IsTrue(output.Contains("ACG"));
+    }
 }

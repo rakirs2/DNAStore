@@ -44,4 +44,8 @@ public interface IDna
     /// <param name="distance"></param>
     /// <returns></returns>
     HashSet<string> DNeighborhood(int distance);
+
+    ///
+    ///
+    int GetMinimumDistanceForKmer(string kmer);
 }

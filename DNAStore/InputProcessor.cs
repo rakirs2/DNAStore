@@ -101,6 +101,7 @@ internal class InputProcessor
                 "MergeTwoSorted" => new MergeTwoSorted(),
                 "DNeighborhood" => new DNeighborhood(),
                 "MotifEnumeration" => new MotifEnumeration(),
+                "MedianString" => new MedianString(),
                 "why" => new EasterEgg(),
                 _ => new SequenceAnalysis() // probably safe to do it this way
             };
@@ -785,6 +786,30 @@ internal class InputProcessor
         }
     }
 
+    private class MedianString : BaseExecutor
+    {
+        private readonly List<DnaSequence>? _dnaSequences = new();
+        private int _kmerLength;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("please input kmerLength");
+            _kmerLength = int.Parse(Console.ReadLine());
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                _dnaSequences.Add(new DnaSequence(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var commonMotifs = _dnaSequences.MedianString(_kmerLength);
+            Output = commonMotifs[0];
+        }
+    }
+    
     private class MotifEnumeration : BaseExecutor
     {
         private readonly List<DnaSequence>? _dnaSequences = new();
