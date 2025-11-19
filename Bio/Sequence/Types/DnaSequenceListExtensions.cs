@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using BioMath;
 
 namespace Bio.Sequence.Types;
@@ -142,9 +141,9 @@ public static class DnaSequenceListExtensions
 
         return patterns;
     }
-    
+
     /// <summary>
-    /// Returns the median string of the set of sequences
+    ///     Returns the median string of the set of sequences
     /// </summary>
     /// <param name="sequences"></param>
     /// <param name="size"></param>
@@ -157,21 +156,15 @@ public static class DnaSequenceListExtensions
         {
             var currentMin = int.MinValue;
             foreach (var sequence in sequences)
-            {
                 currentMin = Math.Max(currentMin, sequence.GetMinimumDistanceForKmer(kmer));
-            }
 
             if (results.ContainsKey(currentMin))
-            {
                 results[currentMin].Add(kmer);
-            }
 
             else
-            {
-                results[currentMin] = new List<string>() { kmer };
-            }
+                results[currentMin] = new List<string> { kmer };
         }
-        
+
         return results[results.Keys.Min()];
     }
 }

@@ -117,16 +117,11 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     public int GetMinimumDistanceForKmer(string kmer)
     {
-        if (kmer.Length > RawSequence.Length)
-        {
-            throw new ArgumentException();
-        }
+        if (kmer.Length > RawSequence.Length) throw new ArgumentException();
 
         var minimum = int.MaxValue;
-        for (int i = 0; i < RawSequence.Length - kmer.Length + 1; i++)
-        {
+        for (var i = 0; i < RawSequence.Length - kmer.Length + 1; i++)
             minimum = Math.Min(minimum, HammingDistance(Substring(i, kmer.Length), kmer));
-        }
 
         return minimum;
     }
@@ -160,7 +155,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         // Backtrack: restore the original character for subsequent calls
         currentPatternChars[startIndex] = originalChar;
     }
-    
+
     private static int KmerToNumber(string input)
     {
         var output = 0;
@@ -209,7 +204,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         return new DnaSequence(dnaStrand.ToString());
     }
-    
+
     /// <summary>
     ///     Simple algorithm using Open Reading frames. We go through each possible starting location.
     ///     An Open Reading Frame, by definition, must contain a start or Methionine and a stop codon.
