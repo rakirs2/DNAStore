@@ -14,8 +14,6 @@ namespace Bio.Sequence.Types;
 public class AnySequence : ISequence, IComparable, IEnumerable<char>
 {
     public BasePairDictionary Counts = new();
-    private object? _current;
-    private string _current1;
 
     public AnySequence(string rawSequence, string? name = null)
     {
@@ -155,12 +153,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     {
         return RawSequence;
     }
-
-    public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     /// <summary>
     ///     Returns the hamming distance, the difference between any string at any given point.
     ///     Hamming distance requires both sequences to be the same length.
@@ -262,6 +255,4 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     }
 
     #endregion
-
-    public object? Current { get; }
 }
