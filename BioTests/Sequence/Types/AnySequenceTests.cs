@@ -183,4 +183,17 @@ public class AnySequenceTests
         var seq1 = new AnySequence("AAAAAAAAT");
         Assert.IsTrue(seq1.ContainsString("TT", 1));
     }
+
+    [TestMethod]
+    public void KmerEnumerator()
+    {
+        var seq1 = new AnySequence("AAAAAAAA");
+        var counter = 0;
+        foreach (var something in seq1.GetKmerEnumerator(2))
+        {
+            counter++;
+        }
+
+        Assert.AreEqual(7, counter);
+    }
 }

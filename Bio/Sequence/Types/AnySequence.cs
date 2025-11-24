@@ -14,6 +14,8 @@ namespace Bio.Sequence.Types;
 public class AnySequence : ISequence, IComparable, IEnumerable<char>
 {
     public BasePairDictionary Counts = new();
+    private object? _current;
+    private string _current1;
 
     public AnySequence(string rawSequence, string? name = null)
     {
@@ -47,6 +49,15 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return GetEnumerator();
     }
 
+    // TODO: this needs to be seriously thought through.
+    public IEnumerable<string> GetKmerEnumerator(int k)
+    {
+        for (var i = 0; i < Length - k + 1; i++)
+        {
+            yield return RawSequence.Substring(k, i);
+        }
+    }
+    
     public long Length => RawSequence.Length;
 
     public string? Name { get; }
@@ -143,6 +154,11 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     public override string ToString()
     {
         return RawSequence;
+    }
+
+    public void Dispose()
+    {
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -246,4 +262,6 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     }
 
     #endregion
+
+    public object? Current { get; }
 }
