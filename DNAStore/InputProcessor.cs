@@ -169,6 +169,40 @@ static class InputProcessor
             Output = string.Join(' ', _matcher.GetKmers(_input));
         }
     }
+    
+    private class DnaProfileHighestLikelihoodString: BaseExecutor
+    {
+        private DnaSequence _sequence;
+        private ProbabilityProfile _matrix;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the match sequence, usually ACGT");
+            _sequence = new DnaSequence(( Console.ReadLine()));
+            List<List<double>> profileValues = new();
+            var input = "";
+            while (true)
+            {
+                input =  Console.ReadLine();
+                if (input == "done")
+                {
+                    break;
+                }
+                
+                var inputA =input.Split(" ")
+                    .Select(s => double.Parse(s))
+                    .ToList();
+                profileValues.Add(inputA);
+            }
+
+            _matrix = new ProbabilityProfile(profileValues, "ACGT");
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = _matrix.HighestLikelihood(_sequence);
+        }
+    }
 
     private class GetFirstSubsequenceIndices : BaseExecutor
     {

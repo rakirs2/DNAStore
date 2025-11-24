@@ -47,6 +47,15 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return GetEnumerator();
     }
 
+    // TODO: this needs to be seriously thought through.
+    public IEnumerable<string> GetKmerEnumerator(int k)
+    {
+        for (var i = 0; i < Length - k + 1; i++)
+        {
+            yield return RawSequence.Substring(k, i);
+        }
+    }
+    
     public long Length => RawSequence.Length;
 
     public string? Name { get; }
@@ -144,7 +153,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     {
         return RawSequence;
     }
-
+    
     /// <summary>
     ///     Returns the hamming distance, the difference between any string at any given point.
     ///     Hamming distance requires both sequences to be the same length.
