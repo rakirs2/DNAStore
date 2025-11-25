@@ -115,7 +115,6 @@ public class AlignmentMatrix : IAlignmentMatrix
         }
     }
 
-    // TODO: consider using flags
     private enum Direction
     {
         None = 0,

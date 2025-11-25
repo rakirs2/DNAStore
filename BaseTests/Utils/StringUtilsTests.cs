@@ -11,21 +11,21 @@ public class StringUtilsTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidDataException))]
+    [ExpectedException(typeof(ArgumentException))]
     public void SwapIndexTestOutOfBoundsNegative()
     {
         var output = StringUtils.SwapIndex("test", -1, 1);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidDataException))]
+    [ExpectedException(typeof(ArgumentException))]
     public void SwapIndexTestOutOfBoundsGreaterThanLength()
     {
         var output = StringUtils.SwapIndex("test", 5, 1);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidDataException))]
+    [ExpectedException(typeof(ArgumentException))]
     public void SwapIndexTestOutOfBoundsNullString()
     {
         var output = StringUtils.SwapIndex(null, 5, 1);
