@@ -57,6 +57,6 @@ public class BasePairDictionaryTests
         basePairDictionary.Add('c');
         basePairDictionary.Add('c');
         basePairDictionary.Add('d');
-        Assert.AreEqual("c: 2;d: 1;", basePairDictionary.ToString());
+        Assert.AreEqual("{\"c\":2,\"d\":1}", basePairDictionary.ToString());
     }
 }
