@@ -354,8 +354,7 @@ static class InputProcessor
             Output = string.Join("\n", neighbors);
         }
     }
-
-    // TODO: this should be a single fasta read
+    
     private class SplicedDNAToProtein : BaseExecutor
     {
         private readonly List<AnySequence>? _introns = new();
@@ -379,7 +378,6 @@ static class InputProcessor
 
         protected override void CalculateResult()
         {
-            // TODO: this is terrible, figure out how I want this later
             var splicedSequence = _input.RemoveIntrons(_introns);
             var dnaSequence = new DnaSequence(splicedSequence.ToString());
             var rnaSequence = dnaSequence.TranscribeToRNA();
@@ -654,9 +652,6 @@ static class InputProcessor
 
     private class EasterEgg : BaseExecutor
     {
-        /// <summary>
-        ///     TODO: for a different day, let's make a new executor here to get rid of these ugly overrides
-        /// </summary>
         protected override void CalculateResult()
         {
             StringBuilder theWhy = new();
@@ -1199,11 +1194,9 @@ static class InputProcessor
             while (true)
             {
                 Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
-                // TODO, create a generic non try catch for this to prevent nulls/io errors
                 var input = Console.ReadLine();
 
-                // TODO: I hate these-- get these as a rule
-                if (input.Equals("complete", StringComparison.InvariantCultureIgnoreCase)) break;
+                if (input.Equals("done", StringComparison.InvariantCultureIgnoreCase)) break;
 
                 // TODO: async all the way
                 var seq = UniprotClient.GetAsync(input).Result;
