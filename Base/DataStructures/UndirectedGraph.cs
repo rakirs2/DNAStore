@@ -1,6 +1,5 @@
 ﻿namespace Base.DataStructures;
 
-// TODO: this needs to be fixed. It's fine for now, but the hierarchy/naming is confusing.
 /// <summary>
 ///     Simple undirected graph implementation.
 /// </summary>

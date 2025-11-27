@@ -289,7 +289,7 @@ static class InputProcessor
 
         protected override void CalculateResult()
         {
-            Output = string.Join(" ", MergeSort<int>.Merge2SortedArrays(a, b));
+            Output = string.Join(" ", Sorters<int>.Merge2SortedArrays(a, b));
         }
     }
 
