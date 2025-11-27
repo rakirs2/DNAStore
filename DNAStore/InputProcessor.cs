@@ -217,6 +217,24 @@ internal static class InputProcessor
             Output = string.Join(" ", _list);
         }
     }
+    
+    private class InversionCounter : BaseExecutor
+    {
+        private int[] _list;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Input the list to be sorted as a single list");
+            _list = Console.ReadLine().Split(" ")
+                .Select(s => int.Parse(s))
+                .ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = Sorters<int>.InPlaceMergeSort(ref _list).ToString();
+        }
+    }
 
     private class GetFirstSubsequenceIndices : BaseExecutor
     {
