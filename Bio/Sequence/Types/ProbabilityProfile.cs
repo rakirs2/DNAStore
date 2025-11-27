@@ -4,18 +4,16 @@ namespace Bio.Sequence.Types;
 
 public class ProbabilityProfile
 {
-    private Dictionary<char, List<double>> _probabilities = new Dictionary<char, List<double>>(new CaseInsensitiveCharComparer());
-    private int size;
+    private readonly Dictionary<char, List<double>> _probabilities = new(new CaseInsensitiveCharComparer());
+    private readonly int size;
+
     public ProbabilityProfile(List<List<double>> probabilities, string values)
     {
         size = probabilities[0].Count;
-        for (int i = 0; i < values.Length; i++)
+        for (var i = 0; i < values.Length; i++)
         {
-            if (probabilities[i].Count != size)
-            {
-                throw new ArgumentException();
-            }
-            
+            if (probabilities[i].Count != size) throw new ArgumentException();
+
             _probabilities[values[i]] = probabilities[i];
         }
     }
@@ -27,10 +25,7 @@ public class ProbabilityProfile
         foreach (var kmer in sequence.KmerCompositionUniqueString(size))
         {
             var temp = 1.0;
-            for(int i = 0; i <  kmer.Length; i++)
-            {
-                temp*= _probabilities[kmer[i]][i];
-            }
+            for (var i = 0; i < kmer.Length; i++) temp *= _probabilities[kmer[i]][i];
 
             if (temp > current)
             {
@@ -38,7 +33,7 @@ public class ProbabilityProfile
                 ret = kmer;
             }
         }
-        
+
         return ret;
     }
 }

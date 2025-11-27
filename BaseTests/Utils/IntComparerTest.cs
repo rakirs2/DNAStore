@@ -5,7 +5,7 @@ namespace BaseTests.Utils;
 [TestClass]
 public class IntComparerTest
 {
-    private readonly IntComparer _comparer = new IntComparer();
+    private readonly IntComparer _comparer = new();
 
     [TestMethod]
     public void Int()

@@ -1,80 +1,66 @@
 namespace Base.Algorithms;
 
-public class Sorters<T> where T : IComparable<T>
+public static class Sorters<T> where T : IComparable<T>
 {
-    // The main function that sorts the array arr[left...right]
-    public static void MergeSort(ref T[] array)
+    public static void InPlaceMergeSort(ref T[] array)
     {
         MergeSort(ref array, 0, array.Length - 1);
     }
 
     private static void MergeSort(ref T[] array, int left, int right)
     {
-        // Base case: a list with 0 or 1 element is already sorted
         if (left >= right) return;
-        // Find the middle point
         var mid = (left + right) / 2;
 
-        // Recursively sort first and second halves
         MergeSort(ref array, left, mid);
         MergeSort(ref array, mid + 1, right);
 
-        // Merge the sorted halves
         Merge(array, left, mid, right);
     }
 
-    // Merges two subarrays of arr[]
-    // First subarray is arr[left...mid]
-    // Second subarray is arr[mid+1...right]
     private static void Merge(T[] arr, int left, int mid, int right)
     {
-        // Calculate lengths of the two subarrays
         var n1 = mid - left + 1;
         var n2 = right - mid;
 
-        // Create temporary arrays
-        var leftArray = new T[n1];
-        var rightArray = new T[n2];
+        var tempLeftArray = new T[n1];
+        var tempRightArray = new T[n2];
 
-        // Copy data to temporary arrays LeftArray[] and RightArray[]
-        for (var x = 0; x < n1; x++) leftArray[x] = arr[left + x];
+        for (var x = 0; x < n1; x++) tempLeftArray[x] = arr[left + x];
 
         for (var y = 0; y < n2; y++)
-            rightArray[y] = arr[mid + 1 + y];
+            tempRightArray[y] = arr[mid + 1 + y];
 
-        // Merge the temporary arrays back into arr[left...right]
         var i = 0;
-        var j = 0; // Initial indexes of first and second subarrays
-        var k = left; // Initial index of merged subarray
+        var j = 0;
+        var k = left;
 
         while (i < n1 && j < n2)
         {
-            if (leftArray[i].CompareTo(rightArray[j]) <= 0)
+            if (tempLeftArray[i].CompareTo(tempRightArray[j]) <= 0)
             {
-                arr[k] = leftArray[i];
+                arr[k] = tempLeftArray[i];
                 i++;
             }
             else
             {
-                arr[k] = rightArray[j];
+                arr[k] = tempRightArray[j];
                 j++;
             }
 
             k++;
         }
 
-        // Copy the remaining elements of LeftArray[], if any
         while (i < n1)
         {
-            arr[k] = leftArray[i];
+            arr[k] = tempLeftArray[i];
             i++;
             k++;
         }
 
-        // Copy the remaining elements of RightArray[], if any
         while (j < n2)
         {
-            arr[k] = rightArray[j];
+            arr[k] = tempRightArray[j];
             j++;
             k++;
         }
@@ -82,16 +68,11 @@ public class Sorters<T> where T : IComparable<T>
 
     public static T[] Merge2SortedArrays(T[] a, T[] b)
     {
-        // Handle edge cases where one or both arrays are empty
         if (a == null || a.Length == 0) return b;
         if (b == null || b.Length == 0) return a;
 
-        // Create a new array to store the merged result
         var result = new T[a.Length + b.Length];
-
-        // Call the recursive helper function
         MergeRecursiveHelper(a, b, result, 0, 0, 0);
-
         return result;
     }
 
