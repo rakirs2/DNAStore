@@ -20,4 +20,12 @@ public class SortersTest
         Sorters<int>.InPlaceMergeSort(ref a);
         Assert.IsTrue(new[] { -5, 2, 4, 10, 11, 12, 18 }.SequenceEqual(a));
     }
+
+    [TestMethod]
+    public void CountInversions()
+    {
+        var a = new[] { -6, 1, 15, 8, 10 };
+        var inversions = Sorters<int>.InPlaceMergeSort(ref a);
+        Assert.AreEqual(2, inversions);
+    }
 }

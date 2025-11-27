@@ -2,23 +2,23 @@ namespace Base.Algorithms;
 
 public static class Sorters<T> where T : IComparable<T>
 {
-    public static void InPlaceMergeSort(ref T[] array)
+    public static long InPlaceMergeSort(ref T[] array)
     {
-        MergeSort(ref array, 0, array.Length - 1);
+        return MergeSort(ref array, 0, array.Length - 1);
     }
 
-    private static void MergeSort(ref T[] array, int left, int right)
+    private static long MergeSort(ref T[] array, int left, int right)
     {
-        if (left >= right) return;
+        if (left >= right) return 0;
         var mid = (left + right) / 2;
+        
+        var leftInv = MergeSort(ref array, left, mid);
+        var rightInv =MergeSort(ref array, mid + 1, right);
 
-        MergeSort(ref array, left, mid);
-        MergeSort(ref array, mid + 1, right);
-
-        Merge(array, left, mid, right);
+        return leftInv + rightInv + Merge(array, left, mid, right);
     }
 
-    private static void Merge(T[] arr, int left, int mid, int right)
+    private static long Merge(T[] arr, int left, int mid, int right)
     {
         var n1 = mid - left + 1;
         var n2 = right - mid;
@@ -33,6 +33,7 @@ public static class Sorters<T> where T : IComparable<T>
 
         var i = 0;
         var j = 0;
+        long inversions = 0;
         var k = left;
 
         while (i < n1 && j < n2)
@@ -45,6 +46,7 @@ public static class Sorters<T> where T : IComparable<T>
             else
             {
                 arr[k] = tempRightArray[j];
+                inversions += tempLeftArray.Length - i;
                 j++;
             }
 
@@ -64,6 +66,8 @@ public static class Sorters<T> where T : IComparable<T>
             j++;
             k++;
         }
+
+        return inversions;
     }
 
     public static T[] Merge2SortedArrays(T[] a, T[] b)
