@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,8 +12,7 @@ using Clients;
 
 namespace DNAStore;
 
-// TODO: there shoudl be a subclass for multiple arrays
-static class InputProcessor
+internal static class InputProcessor
 {
     public static IExecutor GetExecutor(string request)
     {
@@ -113,7 +111,7 @@ static class InputProcessor
             Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
         }
     }
-    
+
     // TODO: there should be a way to avoid the analyzer for this
     private class HammingSequenceMatch : BaseExecutor
     {
@@ -169,27 +167,24 @@ static class InputProcessor
             Output = string.Join(' ', _matcher.GetKmers(_input));
         }
     }
-    
-    private class DnaProfileHighestLikelihoodString: BaseExecutor
+
+    private class DnaProfileHighestLikelihoodString : BaseExecutor
     {
-        private DnaSequence _sequence;
         private ProbabilityProfile _matrix;
+        private DnaSequence _sequence;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the match sequence, usually ACGT");
-            _sequence = new DnaSequence(( Console.ReadLine()));
+            _sequence = new DnaSequence(Console.ReadLine());
             List<List<double>> profileValues = new();
             var input = "";
             while (true)
             {
-                input =  Console.ReadLine();
-                if (input == "done")
-                {
-                    break;
-                }
-                
-                var inputA =input.Split(" ")
+                input = Console.ReadLine();
+                if (input == "done") break;
+
+                var inputA = input.Split(" ")
                     .Select(s => double.Parse(s))
                     .ToList();
                 profileValues.Add(inputA);
@@ -201,6 +196,25 @@ static class InputProcessor
         protected override void CalculateResult()
         {
             Output = _matrix.HighestLikelihood(_sequence);
+        }
+    }
+
+    private class MergeSort : BaseExecutor
+    {
+        private int[] _list;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Input the list to be sorted as a single list");
+            _list = Console.ReadLine().Split(" ")
+                .Select(s => int.Parse(s))
+                .ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            Sorters<int>.InPlaceMergeSort(ref _list);
+            Output = string.Join(" ", _list);
         }
     }
 
@@ -289,7 +303,7 @@ static class InputProcessor
 
         protected override void CalculateResult()
         {
-            Output = string.Join(" ", MergeSort<int>.Merge2SortedArrays(a, b));
+            Output = string.Join(" ", Sorters<int>.Merge2SortedArrays(a, b));
         }
     }
 
@@ -354,7 +368,7 @@ static class InputProcessor
             Output = string.Join("\n", neighbors);
         }
     }
-    
+
     private class SplicedDNAToProtein : BaseExecutor
     {
         private readonly List<AnySequence>? _introns = new();
