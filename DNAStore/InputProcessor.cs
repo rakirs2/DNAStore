@@ -168,6 +168,54 @@ internal static class InputProcessor
         }
     }
 
+    private class ThreeSum : BaseExecutor
+    {
+        private List<List<int>> _lists = new List<List<int>>();
+        private DnaSequence _sequence;
+
+        protected override void GetInputs()
+        {
+            List<List<double>> profileValues = new();
+            var input = "";
+            while (true)
+            {
+                input = Console.ReadLine();
+                if (input == "done") break;
+
+                var inputA = input.Split(" ")
+                    .Select(s => int.Parse(s))
+                    .ToList();
+                _lists.Add(inputA);
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var values = new  List<List<List<int>>>();
+            foreach (var list in _lists)
+            {
+                values.Add(Search.ThreeSumNoSort(list, 0));
+            }
+
+            var sb = new StringBuilder();
+            foreach (var list in values)
+            {
+                if (list.Count == 0)
+                {
+                    sb.Append("-1");
+                }
+                else
+                {
+                    List<int> incrementedList = list[0].Select(x => x + 1).ToList();
+                    sb.Append(string.Join(" ", incrementedList));
+                }
+                
+                sb.Append("\n");
+            }
+            
+            Output =  sb.ToString();
+        }
+    }
     private class DnaProfileHighestLikelihoodString : BaseExecutor
     {
         private ProbabilityProfile _matrix;
