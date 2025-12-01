@@ -16,10 +16,10 @@ public class SimpleProfileMatrix : IProfileMatrix
     {
         if (inputs is null)
             throw new ArgumentNullException(nameof(inputs));
-        
-        if(inputs.Count == 0)
+
+        if (inputs.Count == 0)
             throw new ArgumentException("Input list is empty", nameof(inputs));
-        
+
         LengthOfSequences = inputs[0].RawSequence.Length;
         listOfFrequencies = new List<BasePairDictionary>();
 

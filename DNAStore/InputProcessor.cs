@@ -170,7 +170,7 @@ internal static class InputProcessor
 
     private class ThreeSum : BaseExecutor
     {
-        private List<List<int>> _lists = new List<List<int>>();
+        private readonly List<List<int>> _lists = new();
         private DnaSequence _sequence;
 
         protected override void GetInputs()
@@ -191,11 +191,8 @@ internal static class InputProcessor
 
         protected override void CalculateResult()
         {
-            var values = new  List<List<List<int>>>();
-            foreach (var list in _lists)
-            {
-                values.Add(Search.ThreeSumNoSort(list, 0));
-            }
+            var values = new List<List<List<int>>>();
+            foreach (var list in _lists) values.Add(Search.ThreeSumNoSort(list, 0));
 
             var sb = new StringBuilder();
             foreach (var list in values)
@@ -206,16 +203,17 @@ internal static class InputProcessor
                 }
                 else
                 {
-                    List<int> incrementedList = list[0].Select(x => x + 1).ToList();
+                    var incrementedList = list[0].Select(x => x + 1).ToList();
                     sb.Append(string.Join(" ", incrementedList));
                 }
-                
+
                 sb.Append("\n");
             }
-            
-            Output =  sb.ToString();
+
+            Output = sb.ToString();
         }
     }
+
     private class DnaProfileHighestLikelihoodString : BaseExecutor
     {
         private ProbabilityProfile _matrix;
@@ -265,7 +263,7 @@ internal static class InputProcessor
             Output = string.Join(" ", _list);
         }
     }
-    
+
     private class InversionCounter : BaseExecutor
     {
         private int[] _list;
