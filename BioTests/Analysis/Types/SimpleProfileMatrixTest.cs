@@ -4,7 +4,7 @@ using Bio.IO;
 namespace BioTests.Analysis.Types;
 
 [TestClass]
-public class ProfileMatrixTests
+public class SimpleProfileMatrixTests
 {
     private readonly string _expectedFrequencyMatrix =
         "A: 5 1 0 0 5 5 0 0\nC: 0 0 1 4 2 0 6 1\nG: 1 1 6 3 0 1 0 0\nT: 1 5 0 0 0 1 1 6\n";
@@ -15,9 +15,23 @@ public class ProfileMatrixTests
     [TestMethod]
     public void ProfileMatrixTest()
     {
-        var result = new ProfileMatrix(FastaParser.Read(_filePath));
+        var result = new SimpleProfileMatrix(FastaParser.Read(_filePath));
         Assert.AreEqual(7, result.QuantityAnalyzed);
         Assert.AreEqual(8, result.LengthOfSequences);
         Assert.AreEqual(_expectedFrequencyMatrix, result.FrequencyMatrix());
+    }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void SimpleProfileMatrixNullInput()
+    {
+        var result = new SimpleProfileMatrix(null);
+    }
+    
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void SimpleProfileMatrixNoInput()
+    {
+        var result = new SimpleProfileMatrix(new List<Fasta>());
     }
 }

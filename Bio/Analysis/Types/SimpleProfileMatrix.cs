@@ -7,14 +7,19 @@ using Bio.Sequence.Types;
 namespace Bio.Analysis.Types;
 
 // For now, it's fine if it's accessible, but if the only use case is for a fasta read, it should probably be subclassed and interfaced
-public class ProfileMatrix : IProfileMatrix
+public class SimpleProfileMatrix : IProfileMatrix
 {
     private readonly HashSet<char> listOfChars = new();
     private readonly List<BasePairDictionary> listOfFrequencies;
 
-    public ProfileMatrix(IList<Fasta> inputs)
+    public SimpleProfileMatrix(IList<Fasta> inputs)
     {
-        // TODO null, 0 length
+        if (inputs is null)
+            throw new ArgumentNullException(nameof(inputs));
+        
+        if(inputs.Count == 0)
+            throw new ArgumentException("Input list is empty", nameof(inputs));
+        
         LengthOfSequences = inputs[0].RawSequence.Length;
         listOfFrequencies = new List<BasePairDictionary>();
 
