@@ -167,4 +167,20 @@ public static class DnaSequenceListExtensions
 
         return results[results.Keys.Min()];
     }
+
+    public static List<string> GreedyMotifSearch(this List<DnaSequence> sequences, int k)
+    {
+        var bestMotifs = new List<string>();
+        foreach (var sequence in sequences)
+        {
+            bestMotifs.Add(sequence.Substring(0, k));
+        }
+        
+        foreach (var kmer in sequences[0]){}
+        for (int i = 1; i < sequences.Count; i++)
+        {
+            
+        }
+        return null;
+    }
 }

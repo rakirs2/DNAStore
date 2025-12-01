@@ -127,10 +127,9 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return false;
     }
 
-    // TODO: this needs to be seriously thought through.
     public IEnumerable<string> GetKmerEnumerator(int k)
     {
-        for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(k, i);
+        for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(i, k);
     }
 
     // Overloading the addition operator (+)
@@ -138,6 +137,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     {
         return new AnySequence(p1.RawSequence + p2.RawSequence);
     }
+    
 
     public override bool Equals(object obj)
     {
@@ -222,7 +222,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     public override int GetHashCode()
     {
         return RawSequence.GetHashCode();
-    }
+    } 
 
     public static int CalculateOverlap(AnySequence s1, AnySequence s2)
     {
@@ -238,7 +238,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     {
         return new AnySequence(AlignmentMatrix.LongestCommonSubSequence(s1.RawSequence, s2.RawSequence));
     }
-
+    
     #region String Accessors
 
     public char this[int index] => RawSequence[index];
