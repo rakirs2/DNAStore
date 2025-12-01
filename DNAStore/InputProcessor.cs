@@ -1222,7 +1222,7 @@ internal static class InputProcessor
     private class ProfileMatrixExecutor : BaseExecutor
     {
         private IList<Fasta>? fastas;
-        private ProfileMatrix? matrix;
+        private SimpleProfileMatrix? matrix;
 
         protected override void GetInputs()
         {
@@ -1233,7 +1233,7 @@ internal static class InputProcessor
 
         protected override void CalculateResult()
         {
-            matrix = new ProfileMatrix(fastas);
+            matrix = new SimpleProfileMatrix(fastas);
             Output = matrix.GetProfileSequence().ToString() + '\n' + matrix.FrequencyMatrix();
         }
     }

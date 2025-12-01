@@ -11,9 +11,9 @@ public static class Sorters<T> where T : IComparable<T>
     {
         if (left >= right) return 0;
         var mid = (left + right) / 2;
-        
+
         var leftInv = MergeSort(ref array, left, mid);
-        var rightInv =MergeSort(ref array, mid + 1, right);
+        var rightInv = MergeSort(ref array, mid + 1, right);
 
         return leftInv + rightInv + Merge(array, left, mid, right);
     }
