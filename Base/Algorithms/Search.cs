@@ -8,28 +8,28 @@ public static class Search
     {
         // Use a HashSet to store unique triplets (sorting each triplet ensures uniqueness regardless of order)
         var result = new HashSet<List<int>>(ListEqualityComparer<int>.Default);
-        
-        for (int i = 0; i < inputArray.Count - 2; i++)
+
+        for (var i = 0; i < inputArray.Count - 2; i++)
         {
             // Use a secondary HashSet inside the loop to track numbers seen so far for the current 'i'
             var seen = new Dictionary<int, int>();
-            int targetSum = -inputArray[i]; // Target for the remaining two numbers
+            var targetSum = -inputArray[i]; // Target for the remaining two numbers
 
-            for (int j = i + 1; j < inputArray.Count; j++)
+            for (var j = i + 1; j < inputArray.Count; j++)
             {
-                int needed = targetSum - inputArray[j];
+                var needed = targetSum - inputArray[j];
 
                 if (seen.ContainsKey(needed))
                 {
                     // Found a triplet: nums[i], nums[j], needed
-                    var triplet = new List<int> { i,j, seen[needed] };
+                    var triplet = new List<int> { i, j, seen[needed] };
                     triplet.Sort(); // Sort the triplet to handle duplicates in the result set
                     result.Add(triplet);
                 }
-                
+
                 // Add the current number to the 'seen' set for future checks
                 // TODO: this is restrictive. It should work for duplicates
-                if(!seen.ContainsKey(inputArray[j]))
+                if (!seen.ContainsKey(inputArray[j]))
                     seen.Add(inputArray[j], j);
             }
         }
