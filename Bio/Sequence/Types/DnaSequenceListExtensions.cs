@@ -168,19 +168,58 @@ public static class DnaSequenceListExtensions
         return results[results.Keys.Min()];
     }
 
+    /// <summary>
+    /// Genreates list of best possible kmers
+    /// </summary>
+    /// <remarks>
+    /// BestMotifs ← motif matrix formed by first k-mers in each string
+    ///     from Dna
+    /// for each k-mer Motif in the first string from Dna
+    ///     Motif1 ← Motif
+    /// for i = 2 to t
+    /// form Profile from motifs Motif1, …, Motifi - 1
+    /// Motif_i ← Profile-most probable k-mer in the i-th string
+    ///     in Dna
+    ///     Motifs ← (Motif1, …, Motift)
+    /// if Score(Motifs) < Score(BestMotifs)
+    /// BestMotifs ← Motifs
+    /// return BestMotifs
+    /// </remarks>
+    /// <param name="sequences">the list of sequences</param>
+    /// <param name="k">kmerLength</param>
+    /// <returns></returns>
     public static List<string> GreedyMotifSearch(this List<DnaSequence> sequences, int k)
     {
+
         var bestMotifs = new List<string>();
         foreach (var sequence in sequences)
         {
             bestMotifs.Add(sequence.Substring(0, k));
         }
-        
-        foreach (var kmer in sequences[0]){}
-        for (int i = 1; i < sequences.Count; i++)
+
+        int i = 0;
+        foreach (var kmer in sequences[0].GetKmerEnumerator(k))
         {
+            var motif_1 = kmer;
+            // Form Profile
+            // TODO: score function
+            // TDOO: matrix profile
+            var listOfMotifs = sequences.GenerateKmersAtLocation(i,k);
             
+            i++;
         }
+        
         return null;
+    }
+
+    public static List<string> GenerateKmersAtLocation(this List<DnaSequence> sequences, int i, int k)
+    {
+        var retVal = new List<string>();
+        foreach (var seq in sequences)
+        {
+            retVal.Add(seq.Substring(i,k ));
+        }
+        
+        return retVal;
     }
 }
