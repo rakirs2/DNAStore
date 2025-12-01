@@ -26,13 +26,14 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 3, 'T' }
     };
 
-    private static readonly HashSet<char> ValidAlphabet = new()
+    public static readonly HashSet<char> ValidAlphabet = new(new CaseInsensitiveCharComparer())
     {
         'A',
         'C',
         'G',
         'T'
     };
+    
 
     public List<Tuple<int, int>> RestrictionSites()
     {

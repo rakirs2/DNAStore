@@ -7,7 +7,8 @@ using Bio.Sequence.Types;
 namespace Bio.Analysis.Types;
 
 // For now, it's fine if it's accessible, but if the only use case is for a fasta read, it should probably be subclassed and interfaced
-public class ProfileMatrix : IProfileMatrix
+// TODO: how can I make this better/extensible for everything.
+public class ProfileMatrix<T> : IProfileMatrix where T: IValidChars
 {
     private readonly HashSet<char> listOfChars = new();
     private readonly List<BasePairDictionary> listOfFrequencies;

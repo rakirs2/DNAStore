@@ -1,5 +1,6 @@
 ﻿using Bio.Analysis.Types;
 using Bio.IO;
+using Bio.Sequence.Types;
 
 namespace BioTests.Analysis.Types;
 
@@ -15,7 +16,7 @@ public class ProfileMatrixTests
     [TestMethod]
     public void ProfileMatrixTest()
     {
-        var result = new ProfileMatrix(FastaParser.Read(_filePath));
+        var result = new ProfileMatrix<DnaSequence>(FastaParser.Read(_filePath));
         Assert.AreEqual(7, result.QuantityAnalyzed);
         Assert.AreEqual(8, result.LengthOfSequences);
         Assert.AreEqual(_expectedFrequencyMatrix, result.FrequencyMatrix());

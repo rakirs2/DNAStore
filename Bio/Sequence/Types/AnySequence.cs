@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Text;
 using Base.DataStructures;
+using Base.Utils;
+using Bio.Analysis.Interfaces;
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -11,7 +13,7 @@ namespace Bio.Sequence.Types;
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
 ///     know what type of string we are analyzing.
 /// </summary>
-public class AnySequence : ISequence, IComparable, IEnumerable<char>
+public class AnySequence : ISequence, IComparable, IEnumerable<char>, IValidChars
 {
     public BasePairDictionary Counts = new();
 
@@ -252,4 +254,11 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     }
 
     #endregion
+    
+    public virtual HashSet<char> ValidChars { get; } =
+        new HashSet<char>(AlphabetGenerator.GetAllAlphabetChars(), new CaseInsensitiveCharComparer());
+    public bool IsValidChar(char c)
+    {
+        return ValidChars.Contains(c);
+    }
 }
