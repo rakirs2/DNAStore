@@ -193,4 +193,29 @@ public class AnySequenceTests
 
         Assert.AreEqual(7, counter);
     }
+    
+    [TestMethod]
+    public void KmerEnumeratorVerify()
+    {
+        var seq1 = new AnySequence("ABCDEFGH");
+        var counter = 0;
+        HashSet<string> expected = new HashSet<string>()
+        {
+            "AB",
+            "BC",
+            "CD",
+            "DE",
+            "EF",
+            "FG",
+            "GH",
+        };
+
+        var actual = new HashSet<string>();
+        foreach (var something in seq1.GetKmerEnumerator(2))
+        {
+            actual.Add(something);
+        };
+
+        Assert.IsTrue(expected.SetEquals(actual));
+    }
 }

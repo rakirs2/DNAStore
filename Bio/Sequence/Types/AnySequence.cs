@@ -130,7 +130,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     // TODO: this needs to be seriously thought through.
     public IEnumerable<string> GetKmerEnumerator(int k)
     {
-        for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(k, i);
+        for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(i, k);
     }
 
     // Overloading the addition operator (+)
