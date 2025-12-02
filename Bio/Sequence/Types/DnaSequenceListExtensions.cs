@@ -173,24 +173,36 @@ public static class DnaSequenceListExtensions
     // TODO make this go in "AnySequence Extensions
     public static List<string> GreedyMotifSearch(this List<DnaSequence> sequences, int k, int t)
     {
-        // populate bestMotifs with initial for each string.
-        var bestMotifs = sequences.Select(sequence => sequence.Substring(0, k)).ToList();
-        var indexOfMotif = 0;
-        foreach (var kmer in sequences[0].GetKmerEnumerator(k))
+        List<Motif> initialMotifs = new List<Motif>();
+        var length = sequences[0].Length;
+        foreach (var sequence in sequences)
         {
-            var motifs = new List<string>(t);
-            var temp = kmer;
-            var motifProfileInputs = new List<Motif>();
-            motifProfileInputs.Add(new Motif(kmer));
-            for (int i = 1; i < sequences.Count; i++)
-            {
-                motifProfileInputs.Add(new Motif(sequences[i].Substring(indexOfMotif, k)));
-            }
-
-            var profile = new MotifProfile<DnaSequence>(motifProfileInputs);
-            indexOfMotif += 1;
+            initialMotifs.Add(new Motif(sequence.RawSequence));
         }
         
-        return bestMotifs.Select(sequence => sequence.Substring(0, k)).ToList();;
+        var bestMotifs = new MotifProfile<DnaSequence>(initialMotifs);
+        
+        for (int i = 0; i <=length - k ; i++)
+        {
+            List<Motif> currentMotifs = new List<Motif>(){new (sequences[0].Substring(i, k))};
+            for (int j = 1; j < t ; j++)
+            {
+                MotifProfile<DnaSequence> profile = new MotifProfile<DnaSequence>(currentMotifs);
+                currentMotifs.Add(new Motif(profile.MostProbableKmer(sequences[j], k)));
+            }
+            
+            var currentProfile = new MotifProfile<DnaSequence>(currentMotifs);
+            if (currentProfile.Score() < bestMotifs.Score())
+            {
+                bestMotifs = currentProfile;
+            }
+        }
+
+        var output = new List<string>();
+        foreach (var motif in bestMotifs.Motifs)
+        {
+            output.Add(motif.ToString());
+        }
+        return output;
     }
 }

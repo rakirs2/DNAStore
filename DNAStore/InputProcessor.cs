@@ -681,6 +681,30 @@ internal static class InputProcessor
             Output = string.Join(" ", array);
         }
     }
+    
+    private class GreedyMotifSearch : BaseExecutor
+    {
+        private int k;
+        private List<DnaSequence> sequences = new List<DnaSequence>();
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the kmer lengths");
+            k = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please enter sequences");
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                sequences.Add(new DnaSequence(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = string.Join('\n', sequences.GreedyMotifSearch(k, sequences.Count));
+        }
+    }
 
     private class ClumpFinder : BaseExecutor
     {

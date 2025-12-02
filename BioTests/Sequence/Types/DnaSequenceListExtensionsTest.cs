@@ -162,7 +162,8 @@ public class DnaSequenceListExtensionsTest
             "CAA",
             "CAA"
         };
-        
-        Assert.AreEqual(expectedOutput, inputs.GreedyMotifSearch(3, 5));
+
+        var actual = inputs.GreedyMotifSearch(3, 5);
+        Assert.AreEqual(expectedOutput, actual);
     }
 }

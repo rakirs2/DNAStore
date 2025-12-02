@@ -29,4 +29,9 @@ public class Motif : IMotif
     
     public string Name { get; }
     public string InputMotif { get; }
+
+    public override string ToString()
+    {
+        return InputMotif;
+    }
 }

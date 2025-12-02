@@ -1,3 +1,5 @@
+using Bio.Analysis.Types;
+
 namespace Bio.Analysis.Interfaces;
 
 public interface IMotifProfile
@@ -7,4 +9,5 @@ public interface IMotifProfile
     public string Consensus { get; }
     public int Score();
     public int Length { get; }
+    public List<Motif> Motifs { get; }
 }
