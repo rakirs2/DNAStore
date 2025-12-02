@@ -175,7 +175,7 @@ public static class DnaSequenceListExtensions
         return results[results.Keys.Min()];
     }
 
-    public static List<string> GreedyMotifSearch(this List<DnaSequence> sequences, int k, int t)
+    public static List<string> GreedyMotifSearch(this List<DnaSequence> sequences, int k, int t, bool usePseudocounts = false)
     {
         var bestMotifs = new List<string>();
         foreach (var seq in sequences)
@@ -191,7 +191,9 @@ public static class DnaSequenceListExtensions
 
             for (int j = 1; j < t; j++)
             {
-                double[,] profile = CreateProfile(currentMotifs, k);
+                double[,] profile = usePseudocounts
+                    ? CreateProfileWithPseudocounts(currentMotifs, k):
+                CreateProfile(currentMotifs, k);
 
                 string bestMatch = GetProfileMostProbableKmer(sequences[j], k, profile);
                 currentMotifs.Add(bestMatch);
@@ -206,6 +208,32 @@ public static class DnaSequenceListExtensions
         return bestMotifs;
     }
 
+    // Creates Profile Matrix with Laplace Pseudocounts (+1)
+    private static double[,] CreateProfileWithPseudocounts(List<string> motifs, int k)
+    {
+        double[,] profile = new double[4, k];
+        int t = motifs.Count;
+
+        for (int col = 0; col < k; col++)
+        {
+            // Step A: Count occurrences
+            int[] counts = new int[4]; 
+            foreach (string motif in motifs)
+            {
+                counts[NucleotideToIndex[motif[col]]]++;
+            }
+
+            // Step B: Apply Laplace Rule (Add 1 to numerator, Add 4 to denominator)
+            for (int row = 0; row < 4; row++)
+            {
+                // prob = (count + 1) / (total_rows + 4)
+                profile[row, col] = (double)(counts[row] + 1) / (t + 4);
+            }
+        }
+
+        return profile;
+    }
+    
     private static double[,] CreateProfile(List<string> motifs, int k)
     {
         double[,] profile = new double[4, k];

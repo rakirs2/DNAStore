@@ -544,10 +544,14 @@ internal static class InputProcessor
     {
         private List<DnaSequence> _inputs = new();
         private int k;
+        private bool usePseudocounts;
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the kmer length");
             k = int.Parse(Console.ReadLine());
+            
+            Console.WriteLine("Would you like to use psudocounts? (true/false)");
+            usePseudocounts = bool.Parse(Console.ReadLine());
             var inputString = "";
             Console.WriteLine("Enter the strings and end with 'done'");
             while (true)
@@ -561,7 +565,7 @@ internal static class InputProcessor
 
         protected override void CalculateResult()
         {
-            var motifs = _inputs.GreedyMotifSearch(k, _inputs.Count);
+            var motifs = _inputs.GreedyMotifSearch(k, _inputs.Count, usePseudocounts);
             Output = string.Join('\n', motifs);
         }
     }
