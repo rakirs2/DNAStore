@@ -1,4 +1,5 @@
-﻿using Bio.Sequence.Interfaces;
+﻿using Bio.Analysis.Interfaces;
+using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 

@@ -1050,7 +1050,7 @@ internal static class InputProcessor
     {
         private bool _isZeroIndex;
         private AnySequence? a;
-        private Motif? b;
+        private RegexMotif? b;
         private long[]? result;
 
         protected override void GetInputs()
@@ -1061,7 +1061,7 @@ internal static class InputProcessor
             var motifString = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
             var expectedLength = int.Parse(Console.ReadLine());
-            b = new Motif(motifString, expectedLength);
+            b = new RegexMotif(motifString, expectedLength);
 
             Console.WriteLine("Is Zero Index 'y'");
             var input = Console.ReadLine();
@@ -1305,7 +1305,7 @@ internal static class InputProcessor
 
     private class ProteinToNumRNACount : BaseExecutor
     {
-        private Motif? b;
+        private RegexMotif? b;
 
         private ProteinSequence? protein;
         private long result;

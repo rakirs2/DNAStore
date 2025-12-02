@@ -1,4 +1,6 @@
+using Bio.Analysis.Types;
 using BioMath;
+using BioTests.Analysis.Types;
 
 namespace Bio.Sequence.Types;
 
@@ -174,10 +176,27 @@ public static class DnaSequenceListExtensions
         var bestMotifs = new List<string>();
         foreach (var sequence in sequences)
         {
-            bestMotifs.Add(sequence.Substring(0,k));
+            bestMotifs.Add(sequence.Substring(0, k));
+        }
+
+        int indexOfMotif = 0;
+        foreach (var kmer in sequences[0].GetKmerEnumerator(k))
+        {
+            var temp = kmer;
+            var motifProfileInputs = new List<Motif>();
+            motifProfileInputs.Add(new Motif(kmer));
+            for (int i = 1; i < sequences.Count; i++)
+            {
+                motifProfileInputs.Add(new Motif(sequences[i].Substring(indexOfMotif, k)));
+            }
+
+            var profile = new MotifProfile<DnaSequence>(motifProfileInputs);
+
+            indexOfMotif += 1;
         }
         
-        
-        return bestMotifs;
+            
+
+    return bestMotifs;
     }
 }

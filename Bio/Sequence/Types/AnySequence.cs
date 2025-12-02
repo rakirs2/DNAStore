@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Text;
 using Base.DataStructures;
+using Bio.Analysis.Interfaces;
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -53,15 +54,15 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
 
     /// <summary>
     /// </summary>
-    /// <param name="motif"></param>
+    /// <param name="regexMotif"></param>
     /// <param name="isZeroIndex"></param>
     /// <returns></returns>
-    public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
+    public long[] MotifLocations(RegexMotif regexMotif, bool isZeroIndex = false)
     {
         var modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
-        for (var i = 0; i < Length - motif.ExpectedLength; i++)
-            if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
+        for (var i = 0; i < Length - regexMotif.ExpectedLength; i++)
+            if (regexMotif.IsMatchStrict(RawSequence.Substring(i, regexMotif.ExpectedLength)))
                 output.Add(i + modifier);
 
         return output.ToArray();
@@ -170,7 +171,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
 
         return result;
     }
-
+    
     public static int HammingDistance(string a, string b)
     {
         if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");

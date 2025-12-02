@@ -5,5 +5,5 @@
 /// </summary>
 public static class KnownMotifs
 {
-    public static Motif NGlycostatin => new("N{P}[ST]{P}", 4, "N-Glycosatin");
+    public static RegexMotif NGlycostatin => new("N{P}[ST]{P}", 4, "N-Glycosatin");
 }

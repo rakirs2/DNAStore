@@ -2,7 +2,7 @@
 
 namespace Bio.Sequence.Interfaces;
 
-public interface IDna
+public interface IDna :IStrictSequence
 {
     /// <summary>
     ///     Returns the list of all possible restriction sites and their lengths

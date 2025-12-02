@@ -1,6 +1,6 @@
 ﻿namespace Bio.Sequence.Interfaces;
 
-public interface IProtein
+public interface IProtein : IStrictSequence
 {
     /// <summary>
     ///     Returns the molecular weight of a given protein

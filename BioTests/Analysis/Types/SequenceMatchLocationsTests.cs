@@ -12,7 +12,7 @@ public class SequenceMatchLocationsTests
         var seq = new AnySequence(
             "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC");
 
-        var matchLocations = new SequenceMatchLocations(seq, new Motif("CGCCC", 5));
+        var matchLocations = new SequenceMatchLocations(seq, new RegexMotif("CGCCC", 5));
         var output = matchLocations.GetLocations();
         Assert.IsTrue(output.SequenceEqual(new List<int> { 0 }));
     }

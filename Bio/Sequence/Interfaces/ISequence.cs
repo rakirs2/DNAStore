@@ -16,9 +16,9 @@ public interface ISequence
     string? Name { get; }
 
     /// <summary>
-    ///     Returns all locations of a given motif
+    ///     Returns all locations of a given regexMotif
     /// </summary>
-    long[] MotifLocations(Motif motif, bool isZeroIndex = false);
+    long[] MotifLocations(RegexMotif regexMotif, bool isZeroIndex = false);
 
     /// <summary>
     ///     Assumes that the instance is the main sequence, removes all possible introns within the sequence
