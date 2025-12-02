@@ -4,6 +4,13 @@ namespace Bio.Sequence.Types;
 
 public static class DnaSequenceListExtensions
 {
+    private static readonly Dictionary<char, int> NucleotideToIndex = new Dictionary<char, int>
+    {
+        { 'A', 0 }, { 'C', 1 }, { 'G', 2 }, { 'T', 3 }
+    };
+
+    private static readonly char[] IndexToNucleotide = { 'A', 'C', 'G', 'T' };
+
     /// <summary>
     ///     This is an incredibly greedy, n^2 implementation. We are just going to go down the list and concatenate the best
     ///     match
@@ -166,5 +173,115 @@ public static class DnaSequenceListExtensions
         }
 
         return results[results.Keys.Min()];
+    }
+
+    public static List<string> GreedyMotifSearch(this List<DnaSequence> sequences, int k, int t)
+    {
+        var bestMotifs = new List<string>();
+        foreach (var seq in sequences)
+        {
+            bestMotifs.Add(seq.Substring(0, k));
+        }
+
+        var firstDna = sequences[0];
+        for (int i = 0; i <= firstDna.Length - k; i++)
+        {
+            var motif1 = firstDna.Substring(i, k);
+            var currentMotifs = new List<string> { motif1 };
+
+            for (int j = 1; j < t; j++)
+            {
+                double[,] profile = CreateProfile(currentMotifs, k);
+
+                string bestMatch = GetProfileMostProbableKmer(sequences[j], k, profile);
+                currentMotifs.Add(bestMatch);
+            }
+
+            if (Score(currentMotifs) < Score(bestMotifs))
+            {
+                bestMotifs = currentMotifs;
+            }
+        }
+
+        return bestMotifs;
+    }
+
+    private static double[,] CreateProfile(List<string> motifs, int k)
+    {
+        double[,] profile = new double[4, k];
+        int t = motifs.Count;
+
+        for (int col = 0; col < k; col++)
+        {
+            foreach (string motif in motifs)
+            {
+                char nucleotide = motif[col];
+                profile[NucleotideToIndex[nucleotide], col]++;
+            }
+
+            for (int row = 0; row < 4; row++)
+            {
+                profile[row, col] /= t;
+            }
+        }
+
+        return profile;
+    }
+
+    // Finds the k-mer in a text that has the highest probability according to the profile
+    
+    // TODO: all of this needs to be reformatted/rethought out
+    private static string GetProfileMostProbableKmer(DnaSequence text, int k, double[,] profile)
+    {
+        double maxProb = -1.0;
+        string bestKmer = text.Substring(0, k); // Default to first k-mer
+
+        for (int i = 0; i <= text.Length - k; i++)
+        {
+            string kmer = text.Substring(i, k);
+            double currentProb = 1.0;
+
+            for (int j = 0; j < k; j++)
+            {
+                char nucleotide = kmer[j];
+                currentProb *= profile[NucleotideToIndex[nucleotide], j];
+            }
+
+            // If strictly greater, update. 
+            // This implicitly handles the rule: "if ties, pick the first occurrence"
+            if (currentProb > maxProb)
+            {
+                maxProb = currentProb;
+                bestKmer = kmer;
+            }
+        }
+
+        return bestKmer;
+    }
+
+    // Calculates the Score (Sum of Hamming distances from the Consensus string)
+    // A lower score is better.
+    private static int Score(List<string> motifs)
+    {
+        int k = motifs[0].Length;
+        int t = motifs.Count;
+        int score = 0;
+
+        for (int col = 0; col < k; col++)
+        {
+            // Count frequencies in this column
+            int[] counts = new int[4];
+            foreach (string motif in motifs)
+            {
+                counts[NucleotideToIndex[motif[col]]]++;
+            }
+
+            // The score for this column is the number of "unpopular" letters
+            // i.e., Total Rows - Max Frequency
+            int maxFreq = counts.Max();
+            score += (t - maxFreq);
+        }
+
+        return score;
     }
 }
