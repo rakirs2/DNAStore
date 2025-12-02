@@ -141,4 +141,29 @@ public class DnaSequenceListExtensionsTest
         var output = dnaList.MedianString(3);
         Assert.IsTrue(output.Contains("ACG"));
     }
+
+    [TestMethod]
+    public void GreedyMotifSearchGiven()
+    {
+        var inputs = new List<DnaSequence>
+        {
+            new("GGCGTTCAGGCA"),
+            new("AAGAATCAGTCA"),
+            new("CAAGGAGTTCGC"),
+            new("CACGTCAATCAC"),
+            new("CAATAATATTCG")
+        };
+
+        var actual = inputs.GreedyMotifSearch(3, 5);
+        var expected = new List<string>
+        {
+            "CAG",
+            "CAG",
+            "CAA",
+            "CAA",
+            "CAA"
+        };
+
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
 }

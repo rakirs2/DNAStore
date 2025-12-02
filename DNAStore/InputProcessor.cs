@@ -540,6 +540,32 @@ internal static class InputProcessor
         }
     }
 
+    private class GreedyMotifSearch : BaseExecutor
+    {
+        private List<DnaSequence> _inputs = new();
+        private int k;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the kmer length");
+            k = int.Parse(Console.ReadLine());
+            var inputString = "";
+            Console.WriteLine("Enter the strings and end with 'done'");
+            while (true)
+            {
+                inputString = Console.ReadLine();
+                if (inputString.Equals("done"))
+                    break;
+                _inputs.Add(new DnaSequence(inputString));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var motifs = _inputs.GreedyMotifSearch(k, _inputs.Count);
+            Output = string.Join('\n', motifs);
+        }
+    }
+    
     private class EdgeList : BaseExecutor
     {
         private readonly UndirectedGraph<int> _undirectedGraph = new();
