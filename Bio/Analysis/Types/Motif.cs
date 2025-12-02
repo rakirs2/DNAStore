@@ -18,7 +18,9 @@ public class Motif : IMotif
         return InputMotif.Equals(input);
     }
 
+    public char this[int index] => InputMotif[index];
     public string this[Range range] =>InputMotif[range];
+    public int Length =>InputMotif.Length;
 
     public virtual bool IsMatchStrict(string input)
     {

@@ -6,7 +6,7 @@ using Bio.Sequence.Types;
 
 namespace Bio.Analysis.Types;
 
-// For now, it's fine if it's accessible, but if the only use case is for a fasta read, it should probably be subclassed and interfaced
+// TODO: remove this
 public class SimpleProfileMatrix : IProfileMatrix
 {
     private readonly HashSet<char> listOfChars = new();

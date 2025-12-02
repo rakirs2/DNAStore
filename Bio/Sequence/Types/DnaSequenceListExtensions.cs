@@ -170,18 +170,15 @@ public static class DnaSequenceListExtensions
         return results[results.Keys.Min()];
     }
 
+    // TODO make this go in "AnySequence Extensions
     public static List<string> GreedyMotifSearch(this List<DnaSequence> sequences, int k, int t)
     {
-        // populate bestMotifs
-        var bestMotifs = new List<string>();
-        foreach (var sequence in sequences)
-        {
-            bestMotifs.Add(sequence.Substring(0, k));
-        }
-
-        int indexOfMotif = 0;
+        // populate bestMotifs with initial for each string.
+        var bestMotifs = sequences.Select(sequence => sequence.Substring(0, k)).ToList();
+        var indexOfMotif = 0;
         foreach (var kmer in sequences[0].GetKmerEnumerator(k))
         {
+            var motifs = new List<string>(t);
             var temp = kmer;
             var motifProfileInputs = new List<Motif>();
             motifProfileInputs.Add(new Motif(kmer));
@@ -191,12 +188,9 @@ public static class DnaSequenceListExtensions
             }
 
             var profile = new MotifProfile<DnaSequence>(motifProfileInputs);
-
             indexOfMotif += 1;
         }
         
-            
-
-    return bestMotifs;
+        return bestMotifs.Select(sequence => sequence.Substring(0, k)).ToList();;
     }
 }

@@ -42,6 +42,4 @@ public abstract class NucleotideSequence : AnySequence, INucleotideSequence
 
         return output.ToArray();
     }
-
-    public static HashSet<char> GetValidInputs { get; }
 }

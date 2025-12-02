@@ -6,4 +6,5 @@ public interface IMotifProfile
     public Dictionary<char, List<double>> MotifProbabilities { get; }
     public string Consensus { get; }
     public int Score();
+    public int Length { get; }
 }

@@ -1,3 +1,4 @@
+using Bio.Analysis.Types;
 using Bio.Sequence.Types;
 using BioTests.Analysis.Types;
 using JetBrains.Annotations;
@@ -5,13 +6,33 @@ using JetBrains.Annotations;
 namespace BioTests.Analysis.Types;
 
 [TestClass]
-[TestSubject(typeof(MotifProfile<>))]
 public class MotifProfileTest
 {
 
     [TestMethod]
-    public void METHOD()
+    [ExpectedException(typeof(ArgumentException))]
+    public void MotifProfileInputJaggedMotifs()
     {
-        var temp = new MotifProfile<DnaSequence>(null);
+        var input = new List<Motif>();
+        input.Add(new Motif("ACGT"));
+        input.Add(new Motif("ACGTA"));
+        _ = new MotifProfile<DnaSequence>(input);
     }
+    
+    [TestMethod]
+    public void MotifProfileGiven()
+    {
+        var inputs = new List<Motif>
+        {
+            new ("GGCGTTCAGGCA"),
+            new ("AAGAATCAGTCA"),
+            new ("CAAGGAGTTCGC"),
+            new ("CACGTCAATCAC"),
+            new("CAATAATATTCG")
+        };
+     
+        var output = new MotifProfile<DnaSequence>(inputs);
+        Assert.AreEqual("CACGTTCATTCC", output.Consensus);
+    }
+    
 }

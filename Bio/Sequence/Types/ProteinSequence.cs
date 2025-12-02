@@ -47,5 +47,5 @@ public class ProteinSequence : AnySequence, IProtein
     }
 
     // TODO: this needs clarity/implementation
-    public static HashSet<char> GetValidInputs => throw new NotImplementedException();
+    public static HashSet<char> ValidAlphabet => throw new NotImplementedException();
 }

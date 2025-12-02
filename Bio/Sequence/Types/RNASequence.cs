@@ -1,4 +1,5 @@
-﻿using Bio.Analysis.Interfaces;
+﻿using Base.Utils;
+using Bio.Analysis.Interfaces;
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
@@ -23,4 +24,12 @@ public class RNASequence : NucleotideSequence, IRNA
     {
         return SequenceHelpers.IsValidRNA(c);
     }
+    
+    public static HashSet<char> ValidAlphabet { get; } = new(new CaseInsensitiveCharComparer())
+    {
+        'A',
+        'C',
+        'G',
+        'U'
+    };
 }

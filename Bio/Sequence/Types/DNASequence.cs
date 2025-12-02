@@ -18,7 +18,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 'T', 3 }
     };
 
-    private static readonly Dictionary<int, char> ValueCharMapper = new()
+    public static readonly Dictionary<int, char> ValueCharMapper = new()
     {
         { 0, 'A' },
         { 1, 'C' },
@@ -26,7 +26,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 3, 'T' }
     };
 
-    private static readonly HashSet<char> ValidAlphabet = new()
+    public static HashSet<char> ValidAlphabet { get; } = new(new CaseInsensitiveCharComparer())
     {
         'A',
         'C',
