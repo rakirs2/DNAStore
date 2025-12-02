@@ -166,4 +166,28 @@ public class DnaSequenceListExtensionsTest
 
         Assert.IsTrue(expected.SequenceEqual(actual));
     }
+    [TestMethod]
+    public void GreedyMotifSearchGivenPseudocounts()
+    {
+        var inputs = new List<DnaSequence>
+        {
+            new("GGCGTTCAGGCA"),
+            new("AAGAATCAGTCA"),
+            new("CAAGGAGTTCGC"),
+            new("CACGTCAATCAC"),
+            new("CAATAATATTCG")
+        };
+
+        var actual = inputs.GreedyMotifSearch(3, 5, true);
+        var expected = new List<string>
+        {
+            "TTC",
+            "ATC",
+            "TTC",
+            "ATC",
+            "TTC"
+        };
+
+        Assert.IsTrue(expected.SequenceEqual(actual));
+    }
 }
