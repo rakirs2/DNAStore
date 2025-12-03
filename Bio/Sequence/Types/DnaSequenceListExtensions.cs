@@ -3,7 +3,7 @@ using BioMath;
 namespace Bio.Sequence.Types;
 
 /// <summary>
-/// TODO: refactor this to be more 'object oriented'
+/// TODO: refactor this to be more 'object oriented' and improve understanding
 /// Notes, trying out some "vibish" coding here. Algorithms aren't that hard to implement so I'm not minimizing learning
 ///
 /// In general, it's really good at a constrained problem. However, integration is quite hard.
@@ -23,6 +23,10 @@ namespace Bio.Sequence.Types;
 ///     8. Try rewriting with the new approach.
 ///     9. If all else fails, copy, paste, and refactor.
 /// </summary>
+/// <remarks>
+///     In basically 3 hours, 'solved' a lot of problems. I'm not sure I understand it much better compared to when
+///     I started. I have gists, not deep knowledge.
+/// </remarks>.
 public static class DnaSequenceListExtensions
 {
     private static readonly Dictionary<char, int> NucleotideToIndex = new Dictionary<char, int>
@@ -250,14 +254,104 @@ public static class DnaSequenceListExtensions
         return bestMotifs;
     }
     
+    public static List<string> GibbsSampler(this List<DnaSequence> sequences, int k, int t, int N, int randomStarts)
+    {
+        List<string> globalBestMotifs = null;
+        int globalBestScore = int.MaxValue;
+
+        // Gibbs Sampler is a randomized algorithm, so we run it multiple times 
+        // to avoid getting stuck in a local optimum.
+        for (int i = 0; i < randomStarts; i++)
+        {
+            List<string> currentBestMotifs = RunSingleGibbsPass(k, t, N, sequences);
+            int currentScore = Score(currentBestMotifs);
+
+            if (globalBestMotifs == null || currentScore < globalBestScore)
+            {
+                globalBestScore = currentScore;
+                globalBestMotifs = currentBestMotifs;
+            }
+        }
+
+        return globalBestMotifs;
+    }
+    
+    private static List<string> RunSingleGibbsPass(int k, int t, int N, List<DnaSequence> dnaSequences)
+    {
+        // 1. Randomly select k-mers from each string to form initial Motifs
+        List<string> motifs = RandomlyInitializeMotifs(k, dnaSequences);
+        
+        List<string> bestMotifs = new List<string>(motifs);
+        int bestScore = Score(bestMotifs);
+
+        // 2. Iterate N times
+        for (int j = 0; j < N; j++)
+        {
+            // a. Randomly choose one sequence index (i) to exclude/update
+            int i = random.Value.Next(t);
+
+            // b. Create a profile from all motifs EXCEPT motif[i]
+            List<string> subsetMotifs = new List<string>(motifs);
+            subsetMotifs.RemoveAt(i); // Remove the motif at index i temporarily
+            
+            double[,] profile = CreateProfileWithPseudocounts(subsetMotifs, k);
+
+            // c. Generate a new motif for sequence i based on the profile probabilities
+            motifs[i] = ProfileRandomlyGeneratedKmer(dnaSequences[i], k, profile);
+
+            // d. Check if the new set is better than the best seen in this run
+            int currentScore = Score(motifs);
+            if (currentScore < bestScore)
+            {
+                bestScore = currentScore;
+                bestMotifs = new List<string>(motifs);
+            }
+        }
+
+        return bestMotifs;
+    }
+    
+    // Weighted Random Selection (Roulette Wheel Selection)
+    private static string ProfileRandomlyGeneratedKmer(DnaSequence text, int k, double[,] profile)
+    {
+        // A hack
+        int n = (int)text.Length;
+        List<double> probabilities = new List<double>();
+        
+        // 1. Calculate probability for every possible k-mer in the text
+        for (int i = 0; i <= n - k; i++)
+        {
+            string kmer = text.Substring(i, k);
+            double prob = 1.0;
+            for (int j = 0; j < k; j++)
+            {
+                prob *= profile[NucleotideToIndex[kmer[j]], j];
+            }
+            probabilities.Add(prob);
+        }
+
+        // 2. Normalize and select randomly
+        double sum = probabilities.Sum();
+        double randomValue = random.Value.NextDouble() * sum;
+        
+        double currentSum = 0;
+        for (int i = 0; i < probabilities.Count; i++)
+        {
+            currentSum += probabilities[i];
+            if (currentSum >= randomValue)
+            {
+                return text.Substring(i, k);
+            }
+        }
+        
+        // Fallback (rare rounding edge case)
+        return text.Substring(probabilities.Count - 1, k);
+    }
+    
     private static List<string> RunSingleSearch(List<DnaSequence> dna, int k, int t, bool usePseudocounts = true)
     {
         // 1. Randomly select initial k-mers (Motifs)
-        List<string> motifs = new List<string>();
-        foreach (var seq in dna)
-        {
-            motifs.Add(seq.GetRandomKmer(k));
-        }
+        List<string> motifs = RandomlyInitializeMotifs(k,dna);
 
         List<string> bestMotifs = new List<string>(motifs);
         int bestScore = Score(bestMotifs);
@@ -291,6 +385,16 @@ public static class DnaSequenceListExtensions
                 return bestMotifs;
             }
         }
+    }
+    
+    private static List<string> RandomlyInitializeMotifs(int k, List<DnaSequence> dna)
+    {
+        List<string> randomMotifs = new List<string>();
+        foreach (var seq in dna)
+        {
+            randomMotifs.Add(seq.GetRandomKmer(k));
+        }
+        return randomMotifs;
     }
 
     // Creates Profile Matrix with Laplace Pseudocounts (+1)
@@ -397,4 +501,6 @@ public static class DnaSequenceListExtensions
 
         return score;
     }
+
+    private static Lazy<Random> random = new Lazy<Random>();
 }

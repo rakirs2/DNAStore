@@ -12,6 +12,7 @@ using Clients;
 
 namespace DNAStore;
 
+// Eventually delete this whole thing
 internal static class InputProcessor
 {
     public static IExecutor GetExecutor(string request)
@@ -596,6 +597,36 @@ internal static class InputProcessor
         protected override void CalculateResult()
         {
             var motifs = _inputs.RandomMotifSearch(k, _inputs.Count, iterations);
+            Output = string.Join('\n', motifs);
+        }
+    }
+    
+    private class GibbsSampler : BaseExecutor
+    {
+        private List<DnaSequence> _inputs = new();
+        private int k;
+        private int iterations;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the kmer length");
+            k = int.Parse(Console.ReadLine());
+            
+            Console.WriteLine("How many iterations");
+            iterations = int.Parse(Console.ReadLine());
+            var inputString = "";
+            Console.WriteLine("Enter the strings and end with 'done'");
+            while (true)
+            {
+                inputString = Console.ReadLine();
+                if (inputString.Equals("done"))
+                    break;
+                _inputs.Add(new DnaSequence(inputString));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var motifs = _inputs.GibbsSampler(k, _inputs.Count, iterations, 20);
             Output = string.Join('\n', motifs);
         }
     }
