@@ -230,14 +230,14 @@ public static class DnaSequenceListExtensions
         return bestMotifs;
     }
     
-    public static List<string> RandomMotifSearch(this List<DnaSequence> sequences, int k, int t, int iterations)
+    public static List<string> RandomMotifSearch(this List<DnaSequence> sequences, int k, int t, int iterations, bool usePseudocounts = true)
     {
         List<string> bestMotifs = null;
         int bestScore = int.MaxValue;
 
         for (int i = 0; i < iterations; i++)
         {
-            var currentMotifs = RunSingleSearch(sequences, k, t);
+            var currentMotifs = RunSingleSearch(sequences, k, t, usePseudocounts: usePseudocounts);
             int currentScore = Score(currentMotifs);
 
             if (bestMotifs == null || currentScore < bestScore)

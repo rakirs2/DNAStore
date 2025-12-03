@@ -204,7 +204,7 @@ public class DnaSequenceListExtensionsTest
             new("AATCCACCAGCTCCACGTGCAATGTTGGCCTA")
         };
 
-        var actual = inputs.RandomMotifSearch(8, 5, 1000);
+        var actual = inputs.RandomMotifSearch(8, 5, 1000, true);
         var expected = new List<string>
         {
             "TCTCGGGG",
