@@ -127,13 +127,28 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return false;
     }
 
-    // TODO: this needs to be seriously thought through.
+    /// <summary>
+    /// NOTE: THis currently only works on int length
+    /// </summary>
+    /// <param name="k"></param>
+    /// <returns></returns>
+    public string GetRandomKmer(int k)
+    {
+        if (Length > int.MaxValue)
+        {
+            throw new ArgumentOutOfRangeException("k", "Length is too large, only works for int length");
+        }
+        return Substring(_random.Value.Next((int)Length-k), k);
+    }
+
     public IEnumerable<string> GetKmerEnumerator(int k)
     {
         for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(k, i);
     }
 
     // Overloading the addition operator (+)
+    // TODO; this should be type agnostic. Consider how you really want this to be going forwards.
+    // TODO; It should also throw if we try adding two types of non equal types
     public static AnySequence operator +(AnySequence p1, AnySequence p2)
     {
         return new AnySequence(p1.RawSequence + p2.RawSequence);
@@ -238,7 +253,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     {
         return new AnySequence(AlignmentMatrix.LongestCommonSubSequence(s1.RawSequence, s2.RawSequence));
     }
-
+    
     #region String Accessors
 
     public char this[int index] => RawSequence[index];
@@ -252,4 +267,6 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     }
 
     #endregion
+    
+    private static Lazy<Random> _random = new ();
 }
