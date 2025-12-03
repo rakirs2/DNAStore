@@ -2,15 +2,34 @@ using BioMath;
 
 namespace Bio.Sequence.Types;
 
+/// <summary>
+/// TODO: refactor this to be more 'object oriented'
+/// Notes, trying out some "vibish" coding here. Algorithms aren't that hard to implement so i'm not minimizing learning
+///
+/// In general, it's really good at a constrained problem. However, integration is quite hard.
+/// The code it generates isn't always extensible but it's close enough that it solves the prompt.
+///
+/// There are some caveats to this. However, one should not neglect the usefulness of this as a tool
+/// and the pitfalls of this approach. If the goal is to maximize learning, it's a bad tool. If the goal is
+/// to get unstuck, it's a good tool. If the goal is to mix and match getting things done with learning a little, it is
+/// quite good. In general, I like the following approach:
+///     1. Trying to write code fresh
+///     2. Reverting to source material if stuck
+///     3. Try again
+///     4. Write unit tests
+///     5. If still stuck, try one more code write
+///     6. Ask AI
+///     7. Verify AI results and understand
+///     8. Try rewriting with the new approach.
+///     9. If all else fails, copy, paste, and refactor.
+/// </summary>
 public static class DnaSequenceListExtensions
 {
     private static readonly Dictionary<char, int> NucleotideToIndex = new Dictionary<char, int>
     {
         { 'A', 0 }, { 'C', 1 }, { 'G', 2 }, { 'T', 3 }
     };
-
-    private static readonly char[] IndexToNucleotide = { 'A', 'C', 'G', 'T' };
-
+    
     /// <summary>
     ///     This is an incredibly greedy, n^2 implementation. We are just going to go down the list and concatenate the best
     ///     match
@@ -72,6 +91,7 @@ public static class DnaSequenceListExtensions
     ///     TODO: this should be handled by its own data structure
     /// </remarks>
     /// <param name="list"></param>
+    /// <param name="distance"></param>
     /// <returns></returns>
     public static List<ErrorCorrection> GenerateErrorCorrections(this List<DnaSequence> list, int distance = 1)
     {
@@ -119,13 +139,15 @@ public static class DnaSequenceListExtensions
     /// <summary>
     ///     Generates the list of kmers that are within the hamming distance specified
     /// </summary>
+    /// <param name="dnaSequences"></param>
+    /// <param name="k"></param>
     /// <param name="distance"></param>
     /// <returns></returns>
-    public static HashSet<string> MotifEnumeration(this List<DnaSequence> DnaSequences, int k, int distance)
+    public static HashSet<string> MotifEnumeration(this List<DnaSequence> dnaSequences, int k, int distance)
     {
         var patterns = new HashSet<string>();
         var allPatterns = new HashSet<string>();
-        foreach (var item in DnaSequences)
+        foreach (var item in dnaSequences)
         {
             var currentKmers = item.KmerCompositionUniqueString(k);
             foreach (var kmer in currentKmers)
@@ -136,7 +158,7 @@ public static class DnaSequenceListExtensions
         foreach (var item in allPatterns)
         {
             var inAll = true;
-            foreach (var seq in DnaSequences)
+            foreach (var seq in dnaSequences)
                 if (!seq.ContainsString(item, distance))
                 {
                     inAll = false;
@@ -169,7 +191,7 @@ public static class DnaSequenceListExtensions
                 results[currentMin].Add(kmer);
 
             else
-                results[currentMin] = new List<string> { kmer };
+                results[currentMin] = [kmer];
         }
 
         return results[results.Keys.Min()];
