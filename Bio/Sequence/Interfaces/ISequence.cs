@@ -42,4 +42,6 @@ public interface ISequence
     /// <param name="distance"></param>
     /// <returns></returns>
     public bool ContainsString(string stringToMatch, int distance);
+
+    public string GetRandomKmer(int k);
 }

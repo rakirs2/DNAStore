@@ -193,4 +193,26 @@ public class AnySequenceTests
 
         Assert.AreEqual(7, counter);
     }
+
+    [TestMethod]
+    public void RandomKmerGenerator()
+    {
+        var seq1 = new AnySequence("FEZLWBDYZGJQFSMZAJTADAYAXTNXODMV");
+        var s1 = seq1.GetRandomKmer(5);
+        var s2 = seq1.GetRandomKmer(5);
+        var s3 = seq1.GetRandomKmer(5);
+        
+        Console.WriteLine(s1);
+        Console.WriteLine(s2);
+        Console.WriteLine(s3);
+        // assert 2/3 work. This should be 
+        var counter = 0;
+        if (s1.Equals(s2))
+            counter++;
+        if(s1.Equals(s3))
+            counter++;
+        if (s2.Equals(s3))
+            counter++;
+        Assert.IsTrue(counter <=1);
+    }
 }

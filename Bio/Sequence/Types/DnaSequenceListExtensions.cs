@@ -4,7 +4,7 @@ namespace Bio.Sequence.Types;
 
 /// <summary>
 /// TODO: refactor this to be more 'object oriented'
-/// Notes, trying out some "vibish" coding here. Algorithms aren't that hard to implement so i'm not minimizing learning
+/// Notes, trying out some "vibish" coding here. Algorithms aren't that hard to implement so I'm not minimizing learning
 ///
 /// In general, it's really good at a constrained problem. However, integration is quite hard.
 /// The code it generates isn't always extensible but it's close enough that it solves the prompt.
@@ -228,6 +228,69 @@ public static class DnaSequenceListExtensions
         }
 
         return bestMotifs;
+    }
+    
+    public static List<string> RandomMotifSearch(this List<DnaSequence> sequences, int k, int t, int iterations, bool usePseudocounts = true)
+    {
+        List<string> bestMotifs = null;
+        int bestScore = int.MaxValue;
+
+        for (int i = 0; i < iterations; i++)
+        {
+            var currentMotifs = RunSingleSearch(sequences, k, t, usePseudocounts: usePseudocounts);
+            int currentScore = Score(currentMotifs);
+
+            if (bestMotifs == null || currentScore < bestScore)
+            {
+                bestScore = currentScore;
+                bestMotifs = currentMotifs;
+            }
+        }
+
+        return bestMotifs;
+    }
+    
+    private static List<string> RunSingleSearch(List<DnaSequence> dna, int k, int t, bool usePseudocounts = true)
+    {
+        // 1. Randomly select initial k-mers (Motifs)
+        List<string> motifs = new List<string>();
+        foreach (var seq in dna)
+        {
+            motifs.Add(seq.GetRandomKmer(k));
+        }
+
+        List<string> bestMotifs = new List<string>(motifs);
+        int bestScore = Score(bestMotifs);
+
+        // 2. Iteratively improve Motifs
+        while (true)
+        {
+            // Create Profile with Pseudocounts (Laplace Succession)
+            double[,] profile = usePseudocounts
+                ? CreateProfileWithPseudocounts(motifs, k):
+                CreateProfile(motifs, k);
+
+            // Form new Motifs based on the profile
+            List<string> newMotifs = new List<string>();
+            foreach (var seq in dna)
+            {
+                newMotifs.Add(GetProfileMostProbableKmer(seq, k, profile));
+            }
+
+            int currentScore = Score(newMotifs);
+
+            // If score improves, update and continue; otherwise, we reached a local optimum
+            if (currentScore < bestScore)
+            {
+                bestScore = currentScore;
+                bestMotifs = newMotifs;
+                motifs = newMotifs;
+            }
+            else
+            {
+                return bestMotifs;
+            }
+        }
     }
 
     // Creates Profile Matrix with Laplace Pseudocounts (+1)
