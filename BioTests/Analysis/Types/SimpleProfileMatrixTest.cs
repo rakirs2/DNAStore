@@ -20,14 +20,14 @@ public class SimpleProfileMatrixTests
         Assert.AreEqual(8, result.LengthOfSequences);
         Assert.AreEqual(_expectedFrequencyMatrix, result.FrequencyMatrix());
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentNullException))]
     public void SimpleProfileMatrixNullInput()
     {
         var result = new SimpleProfileMatrix(null);
     }
-    
+
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void SimpleProfileMatrixNoInput()

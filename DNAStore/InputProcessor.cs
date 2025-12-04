@@ -22,7 +22,7 @@ internal static class InputProcessor
 
     private static void WriteToDesktopOutputFile(string filecontents)
     {
-        var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         File.WriteAllText(desktopPath + "/output.txt", filecontents);
     }
 
@@ -113,7 +113,30 @@ internal static class InputProcessor
         }
     }
 
-    // TODO: there should be a way to avoid the analyzer for this
+
+    private class PatternAndDistance : BaseExecutor
+    {
+        private string _pattern;
+        private List<AnySequence> _sequences;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter the pattern to match");
+            _pattern = Console.ReadLine();
+
+            Console.WriteLine("Please enter the strings");
+
+            _sequences = Console.ReadLine().Split(" ")
+                .Select(s => new AnySequence(s))
+                .ToList();
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = AnySequence.DistancePatternAndString(_pattern, _sequences).ToString();
+        }
+    }
+
     private class HammingSequenceMatch : BaseExecutor
     {
         private SequenceMatchLocations? _matcher;
@@ -121,11 +144,11 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the match sequence");
-            var inputString = Console.ReadLine();
+            string? inputString = Console.ReadLine();
 
             Console.WriteLine("Please enter the tolerance");
 
-            var tolerance = int.Parse(Console.ReadLine());
+            int tolerance = int.Parse(Console.ReadLine());
             var matchLogic = new HammingMatch(inputString, tolerance);
 
             Console.WriteLine("Please enter the sequence to be analyzed");
@@ -152,10 +175,10 @@ internal static class InputProcessor
             _input = Console.ReadLine();
 
             Console.WriteLine("Please enter the length of the Kmer");
-            var kmerLength = int.Parse(Console.ReadLine());
+            int kmerLength = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the tolerance");
-            var tolerance = int.Parse(Console.ReadLine());
+            int tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
             var sequence = new AnySequence(Console.ReadLine());
@@ -171,7 +194,7 @@ internal static class InputProcessor
 
     private class ThreeSum : BaseExecutor
     {
-        private List<List<int>> _lists = new List<List<int>>();
+        private List<List<int>> _lists = new();
         private DnaSequence _sequence;
 
         protected override void GetInputs()
@@ -192,11 +215,8 @@ internal static class InputProcessor
 
         protected override void CalculateResult()
         {
-            var values = new  List<List<List<int>>>();
-            foreach (var list in _lists)
-            {
-                values.Add(Search.ThreeSumNoSort(list, 0));
-            }
+            var values = new List<List<List<int>>>();
+            foreach (var list in _lists) values.Add(Search.ThreeSumNoSort(list, 0));
 
             var sb = new StringBuilder();
             foreach (var list in values)
@@ -207,16 +227,17 @@ internal static class InputProcessor
                 }
                 else
                 {
-                    List<int> incrementedList = list[0].Select(x => x + 1).ToList();
+                    var incrementedList = list[0].Select(x => x + 1).ToList();
                     sb.Append(string.Join(" ", incrementedList));
                 }
-                
+
                 sb.Append("\n");
             }
-            
-            Output =  sb.ToString();
+
+            Output = sb.ToString();
         }
     }
+
     private class DnaProfileHighestLikelihoodString : BaseExecutor
     {
         private ProbabilityProfile _matrix;
@@ -266,7 +287,7 @@ internal static class InputProcessor
             Output = string.Join(" ", _list);
         }
     }
-    
+
     private class InversionCounter : BaseExecutor
     {
         private int[] _list;
@@ -321,7 +342,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Enter the maximum value");
-            var maxValue = int.Parse(Console.ReadLine());
+            int maxValue = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Enter the values of set A");
             var inputA = Console.ReadLine().Split(", ")
@@ -477,10 +498,10 @@ internal static class InputProcessor
             _input = Console.ReadLine();
 
             Console.WriteLine("Please enter the length of the Kmer");
-            var kmerLength = int.Parse(Console.ReadLine());
+            int kmerLength = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the tolerance");
-            var tolerance = int.Parse(Console.ReadLine());
+            int tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
             var sequence = new AnySequence(Console.ReadLine());
@@ -522,12 +543,12 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please Input the string in question");
-            var inputString = Console.ReadLine();
+            string? inputString = Console.ReadLine();
             inputs = inputString?
                 .Split(" ") // Split the string by the delimiter
                 .Select(int.Parse) // Convert each substring to an integer
                 .ToList();
-            var valuesToCheckString = Console.ReadLine();
+            string? valuesToCheckString = Console.ReadLine();
             valuesToCheck = valuesToCheckString?
                 .Split(" ") // Split the string by the delimiter
                 .Select(int.Parse) // Convert each substring to an integer
@@ -546,11 +567,12 @@ internal static class InputProcessor
         private List<DnaSequence> _inputs = new();
         private int k;
         private bool usePseudocounts;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the kmer length");
             k = int.Parse(Console.ReadLine());
-            
+
             Console.WriteLine("Would you like to use psudocounts? (true/false)");
             usePseudocounts = bool.Parse(Console.ReadLine());
             var inputString = "";
@@ -570,17 +592,18 @@ internal static class InputProcessor
             Output = string.Join('\n', motifs);
         }
     }
-    
+
     private class RandomMotifSearch : BaseExecutor
     {
         private List<DnaSequence> _inputs = new();
         private int k;
         private int iterations;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the kmer length");
             k = int.Parse(Console.ReadLine());
-            
+
             Console.WriteLine("How many iterations");
             iterations = int.Parse(Console.ReadLine());
             var inputString = "";
@@ -600,17 +623,18 @@ internal static class InputProcessor
             Output = string.Join('\n', motifs);
         }
     }
-    
+
     private class GibbsSampler : BaseExecutor
     {
         private List<DnaSequence> _inputs = new();
         private int k;
         private int iterations;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the kmer length");
             k = int.Parse(Console.ReadLine());
-            
+
             Console.WriteLine("How many iterations");
             iterations = int.Parse(Console.ReadLine());
             var inputString = "";
@@ -630,7 +654,7 @@ internal static class InputProcessor
             Output = string.Join('\n', motifs);
         }
     }
-    
+
     private class EdgeList : BaseExecutor
     {
         private readonly UndirectedGraph<int> _undirectedGraph = new();
@@ -692,7 +716,7 @@ internal static class InputProcessor
             var temp = new List<int>();
             foreach (var input in inputs)
             {
-                var val = MajorityElement<int>.SimpleDictionary(input);
+                int val = MajorityElement<int>.SimpleDictionary(input);
                 temp.Add(val == 0 ? -1 : val);
             }
 
@@ -709,8 +733,8 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the size of the array");
-            var inputString = Console.ReadLine();
-            if (int.TryParse(inputString, out var size)) graph = new UndirectedGraph<int>(size);
+            string? inputString = Console.ReadLine();
+            if (int.TryParse(inputString, out int size)) graph = new UndirectedGraph<int>(size);
 
             while (true)
             {
@@ -742,8 +766,8 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the size of the array");
-            var inputString = Console.ReadLine();
-            if (int.TryParse(inputString, out var size)) graph = new UndirectedGraph<int>(size);
+            string? inputString = Console.ReadLine();
+            if (int.TryParse(inputString, out int size)) graph = new UndirectedGraph<int>(size);
 
             while (true)
             {
@@ -767,7 +791,7 @@ internal static class InputProcessor
             foreach (var kvp in edgeList)
             {
                 var temp = 0;
-                foreach (var edge in kvp.Value) temp += edgeList[edge].Count;
+                foreach (int edge in kvp.Value) temp += edgeList[edge].Count;
                 array[kvp.Key - 1] = temp;
             }
 
@@ -811,7 +835,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input the DNA in question");
-            var inputString = Console.ReadLine();
+            string? inputString = Console.ReadLine();
             if (inputString != null) _dnaSequence = new DnaSequence(inputString);
         }
 
@@ -847,7 +871,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) fastas = FastaParser.Read(location);
         }
 
@@ -870,7 +894,7 @@ internal static class InputProcessor
             gcPercentages = new List<double>();
             while (true)
             {
-                var input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 if (input.Equals("done")) break;
                 gcPercentages.Add(double.Parse(input));
             }
@@ -879,7 +903,7 @@ internal static class InputProcessor
         protected override void CalculateResult()
         {
             var output = new List<double>();
-            foreach (var percentage in gcPercentages)
+            foreach (double percentage in gcPercentages)
                 output.Add(Math.Round(sequence.RandomStringProbability(percentage), 3));
 
             Output = string.Join(' ', output);
@@ -895,7 +919,7 @@ internal static class InputProcessor
             values = new List<int>();
             while (true)
             {
-                var input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 if (input.Equals("done")) break;
                 values.Add(int.Parse(input));
             }
@@ -934,13 +958,13 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) text = File.ReadLines(location);
         }
 
         protected override void CalculateResult()
         {
-            foreach (var item in text) deBrujin.GenerateFromString(item);
+            foreach (string item in text) deBrujin.GenerateFromString(item);
             Output = deBrujin.GetEdgeList();
         }
     }
@@ -954,7 +978,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) fastas = FastaParser.Read(location);
             _dnaSequence = fastas.PostProcessAsDNASequence();
         }
@@ -977,7 +1001,7 @@ internal static class InputProcessor
             _kmerLength = int.Parse(Console.ReadLine());
             while (true)
             {
-                var input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 if (input.Equals("done")) break;
                 _dnaSequences.Add(new DnaSequence(input));
             }
@@ -1004,7 +1028,7 @@ internal static class InputProcessor
             _distance = int.Parse(Console.ReadLine());
             while (true)
             {
-                var input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 if (input.Equals("done")) break;
                 _dnaSequences.Add(new DnaSequence(input));
             }
@@ -1029,7 +1053,7 @@ internal static class InputProcessor
             kmerLength = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please input sequence");
-            var inputString = Console.ReadLine();
+            string? inputString = Console.ReadLine();
             sequence = new DnaSequence(inputString);
         }
 
@@ -1051,7 +1075,7 @@ internal static class InputProcessor
             kmerLength = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please input sequence");
-            var inputString = Console.ReadLine();
+            string? inputString = Console.ReadLine();
             sequence = new DnaSequence(inputString);
         }
 
@@ -1089,7 +1113,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) _fastas = FastaParser.Read(location);
         }
 
@@ -1109,7 +1133,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) _fastas = FastaParser.Read(location);
             _sequences = _fastas.PostProcessAsDNASequence();
         }
@@ -1151,20 +1175,20 @@ internal static class InputProcessor
             Console.WriteLine("Please enter the first sequence");
             a = new AnySequence(Console.ReadLine());
             Console.WriteLine("Please enter the motif");
-            var motifString = Console.ReadLine();
+            string? motifString = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
-            var expectedLength = int.Parse(Console.ReadLine());
+            int expectedLength = int.Parse(Console.ReadLine());
             b = new Motif(motifString, expectedLength);
 
             Console.WriteLine("Is Zero Index 'y'");
-            var input = Console.ReadLine();
+            string? input = Console.ReadLine();
             _isZeroIndex = input.Equals("y", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override void CalculateResult()
         {
             result = a.MotifLocations(b, _isZeroIndex);
-            var indexType = _isZeroIndex ? "Zero" : "One";
+            string indexType = _isZeroIndex ? "Zero" : "One";
             Output = string.Join(" ", result);
         }
     }
@@ -1246,7 +1270,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) _fastas = FastaParser.Read(location);
         }
 
@@ -1271,7 +1295,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("k");
-            var inputString = Console.ReadLine();
+            string? inputString = Console.ReadLine();
             k = uint.Parse(inputString);
             Console.WriteLine("m");
             inputString = Console.ReadLine();
@@ -1318,7 +1342,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) fastas = FastaParser.Read(location);
         }
 
@@ -1337,7 +1361,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
+            string? location = Console.ReadLine();
             if (location != null) fastas = FastaParser.Read(location);
         }
 
@@ -1365,7 +1389,7 @@ internal static class InputProcessor
             while (true)
             {
                 Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
-                var input = Console.ReadLine();
+                string? input = Console.ReadLine();
 
                 if (input.Equals("done", StringComparison.InvariantCultureIgnoreCase)) break;
 
@@ -1472,7 +1496,7 @@ internal static class InputProcessor
         private void GetInputs()
         {
             Console.WriteLine("Please input the DNA in question");
-            var inputString = Console.ReadLine();
+            string? inputString = Console.ReadLine();
             if (inputString != null) _dnaSequence = new DnaSequence(inputString);
         }
 

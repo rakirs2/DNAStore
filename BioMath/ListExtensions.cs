@@ -8,28 +8,28 @@ public static class ListExtensions
         var ret = new List<int>();
         var dp = new List<(int, int)>(); // Stores (-value, index) pairs
         var prv = new Dictionary<int, int>(); // Stores previous index for each element
-        var count = list.Count;
+        int count = list.Count;
 
         // Process array in reverse order
-        for (var index = count - 1; index >= 0; --index)
+        for (int index = count - 1; index >= 0; --index)
         {
-            var end = -list[index];
+            int end = -list[index];
 
             // Binary search to find insertion point of the next highest
             int l = 0, r = dp.Count;
             while (l < r)
             {
-                var m = l + (r - l) / 2;
+                int m = l + (r - l) / 2;
                 if (dp[m].Item1 < end)
                     l = m + 1;
                 else
                     r = m;
             }
 
-            var i = l;
+            int i = l;
 
             // Default previous index
-            var tmp = -1;
+            int tmp = -1;
 
             if (i == dp.Count)
             {
@@ -46,11 +46,11 @@ public static class ListExtensions
         }
 
         // Reconstruct the LIS
-        var cur = dp[^1].Item2;
+        int cur = dp[^1].Item2;
         while (cur >= 0)
         {
             ret.Add(list[cur]);
-            cur = prv.TryGetValue(cur, out var value) ? value : -1;
+            cur = prv.TryGetValue(cur, out int value) ? value : -1;
         }
 
         return ret;

@@ -20,7 +20,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("a");
         var b = new AnySequence("ab");
-        var result = AnySequence.HammingDistance(a, b);
+        int result = AnySequence.HammingDistance(a, b);
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("ac");
         var b = new AnySequence("ab");
-        var result = AnySequence.HammingDistance(a, b);
+        int result = AnySequence.HammingDistance(a, b);
         Assert.AreEqual(1, result);
     }
 
@@ -37,7 +37,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
         var b = new AnySequence("CATCGTAATGACGGCCT");
-        var result = AnySequence.HammingDistance(a, b);
+        int result = AnySequence.HammingDistance(a, b);
         Assert.AreEqual(7, result);
     }
 
@@ -46,7 +46,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        var result = a.MotifLocations(b);
+        long[] result = a.MotifLocations(b);
         var expected = new long[] { 1 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -56,7 +56,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        var result = a.MotifLocations(b, true);
+        long[] result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -66,7 +66,7 @@ public class AnySequenceTests
     {
         var a = new AnySequence("GATATATGCATATACTT");
         var b = new Motif("ATAT", 4);
-        var result = a.MotifLocations(b);
+        long[] result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -189,7 +189,7 @@ public class AnySequenceTests
     {
         var seq1 = new AnySequence("AAAAAAAA");
         var counter = 0;
-        foreach (var something in seq1.GetKmerEnumerator(2)) counter++;
+        foreach (string something in seq1.GetKmerEnumerator(2)) counter++;
 
         Assert.AreEqual(7, counter);
     }
@@ -198,21 +198,32 @@ public class AnySequenceTests
     public void RandomKmerGenerator()
     {
         var seq1 = new AnySequence("FEZLWBDYZGJQFSMZAJTADAYAXTNXODMV");
-        var s1 = seq1.GetRandomKmer(5);
-        var s2 = seq1.GetRandomKmer(5);
-        var s3 = seq1.GetRandomKmer(5);
-        
-        Console.WriteLine(s1);
-        Console.WriteLine(s2);
-        Console.WriteLine(s3);
-        // assert 2/3 work. This should be 
+        string s1 = seq1.GetRandomKmer(5);
+        string s2 = seq1.GetRandomKmer(5);
+        string s3 = seq1.GetRandomKmer(5);
+
+        // assert 2/3 work. This should be sufficient for a random setup.
         var counter = 0;
         if (s1.Equals(s2))
             counter++;
-        if(s1.Equals(s3))
+        if (s1.Equals(s3))
             counter++;
         if (s2.Equals(s3))
             counter++;
-        Assert.IsTrue(counter <=1);
+        Assert.IsTrue(counter <= 1);
+    }
+
+    [TestMethod]
+    public void DistanceBetweenPattern()
+    {
+        List<AnySequence> sequences = new()
+        {
+            new("TTACCTTAAC"),
+            new("GATATCTGTC"),
+            new("ACGGCGTTCG"),
+            new("CCCTAAAGAG"),
+            new("CGTCAGAGGT")
+        };
+        Assert.AreEqual(5, AnySequence.DistancePatternAndString("AAA", sequences));
     }
 }

@@ -17,7 +17,7 @@ public static class StringUtils
             throw new ArgumentException();
 
         // Swaps characters in a string.
-        var array = input.ToCharArray();
+        char[]? array = input.ToCharArray();
         (array[indexA], array[indexB]) = (array[indexB], array[indexA]);
         return new string(array);
     }

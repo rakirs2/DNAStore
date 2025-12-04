@@ -39,7 +39,7 @@ public class DeBrujinTest
         graph.GenerateFromString("CATC");
         graph.GenerateFromString("CATC");
 
-        var edgeList = graph.GetEdgeList();
+        string? edgeList = graph.GetEdgeList();
 
         // NOTE: there's a slight ordering issue but it shouldn't matter with adjacency lists.
         Assert.AreEqual(

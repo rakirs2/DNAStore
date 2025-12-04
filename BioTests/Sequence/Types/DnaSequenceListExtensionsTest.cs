@@ -166,7 +166,7 @@ public class DnaSequenceListExtensionsTest
 
         Assert.IsTrue(expected.SequenceEqual(actual));
     }
-    
+
     [TestMethod]
     public void GreedyMotifSearchGivenPseudocounts()
     {
@@ -191,7 +191,7 @@ public class DnaSequenceListExtensionsTest
 
         Assert.IsTrue(expected.SequenceEqual(actual));
     }
-    
+
     [TestMethod]
     public void RandomMotifSearch()
     {

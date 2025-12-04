@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Text;
+using System.Xml;
 using Base.DataStructures;
 using Bio.Analysis.Types;
 using Bio.IO;
@@ -58,7 +59,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     /// <returns></returns>
     public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
     {
-        var modifier = isZeroIndex ? 0 : 1;
+        int modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
         for (var i = 0; i < Length - motif.ExpectedLength; i++)
             if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
@@ -100,7 +101,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
             return new List<int>();
 
-        var modifier = isZeroIndex ? 0 : 1;
+        int modifier = isZeroIndex ? 0 : 1;
         var indices = new List<int>();
         var i = 0;
         var j = 0;
@@ -135,15 +136,13 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     public string GetRandomKmer(int k)
     {
         if (Length > int.MaxValue)
-        {
             throw new ArgumentOutOfRangeException("k", "Length is too large, only works for int length");
-        }
-        return Substring(_random.Value.Next((int)Length-k), k);
+        return Substring(_random.Value.Next((int)Length - k), k);
     }
 
     public IEnumerable<string> GetKmerEnumerator(int k)
     {
-        for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(k, i);
+        for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(i, k);
     }
 
     // Overloading the addition operator (+)
@@ -198,7 +197,30 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return result;
     }
 
-    // TODO: there still needs to be a determination made if this should or should not be case-sensitive
+    /// <summary>
+    /// Finds the sum of the minimum distance of a pattern on each sequence.
+    /// </summary>
+    /// <param name="pattern"></param>
+    /// <param name="sequences"></param>
+    /// <returns></returns>
+    public static int DistancePatternAndString(string pattern, List<AnySequence> sequences)
+    {
+        var distance = 0;
+        foreach (var sequence in sequences)
+        {
+            var tempDist = int.MaxValue;
+            foreach (string kmer in sequence.GetKmerEnumerator(pattern.Length))
+            {
+                int currentDist = HammingDistance(pattern, kmer);
+                if (currentDist < tempDist) tempDist = currentDist;
+            }
+
+            distance += tempDist;
+        }
+
+        return distance;
+    }
+
     public static bool AreSequenceEqual(AnySequence a, AnySequence b)
     {
         return a.RawSequence.Equals(b.RawSequence);
@@ -222,7 +244,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     {
         RawSequence = rawSequence;
 
-        foreach (var basePair in rawSequence)
+        foreach (char basePair in rawSequence)
             // TODO: virtual member call in constructor is an issue? why?
             // Ah it's a design flaw on my part -- what's a better way to do this
             // abstract,
@@ -253,7 +275,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     {
         return new AnySequence(AlignmentMatrix.LongestCommonSubSequence(s1.RawSequence, s2.RawSequence));
     }
-    
+
     #region String Accessors
 
     public char this[int index] => RawSequence[index];
@@ -267,6 +289,6 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     }
 
     #endregion
-    
-    private static Lazy<Random> _random = new ();
+
+    private static Lazy<Random> _random = new();
 }
