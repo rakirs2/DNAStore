@@ -16,10 +16,10 @@ public class SimpleProfileMatrix : IProfileMatrix
     {
         if (inputs is null)
             throw new ArgumentNullException(nameof(inputs));
-        
-        if(inputs.Count == 0)
+
+        if (inputs.Count == 0)
             throw new ArgumentException("Input list is empty", nameof(inputs));
-        
+
         LengthOfSequences = inputs[0].RawSequence.Length;
         listOfFrequencies = new List<BasePairDictionary>();
 
@@ -62,9 +62,9 @@ public class SimpleProfileMatrix : IProfileMatrix
     public string FrequencyMatrix()
     {
         var stringBuilder = new StringBuilder();
-        var characters = listOfChars.ToArray();
+        char[]? characters = listOfChars.ToArray();
         Array.Sort(characters);
-        foreach (var bp in characters)
+        foreach (char bp in characters)
         {
             stringBuilder.Append(bp + ":");
             for (var i = 0; i < LengthOfSequences; i++)

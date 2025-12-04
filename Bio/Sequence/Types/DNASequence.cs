@@ -103,7 +103,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         };
 
         var percentage = 0.0;
-        foreach (var bp in RawSequence) percentage += Math.Log10(bpToPercentage[bp]);
+        foreach (char bp in RawSequence) percentage += Math.Log10(bpToPercentage[bp]);
 
         return percentage;
     }
@@ -144,8 +144,8 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance, startIndex + 1, neighborhood);
 
         // Option 2: Change the character at the current position
-        var originalChar = currentPatternChars[startIndex];
-        foreach (var newChar in ValidAlphabet)
+        char originalChar = currentPatternChars[startIndex];
+        foreach (char newChar in ValidAlphabet)
             if (newChar != originalChar)
             {
                 currentPatternChars[startIndex] = newChar;
@@ -172,7 +172,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         while (number > 0)
         {
-            var remainder = number % 4;
+            int remainder = number % 4;
             pattern.Insert(0, ValueCharMapper[remainder]);
             number /= 4;
         }
@@ -187,20 +187,17 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     // For now, let's just let it be an explicit conversion, pay for the new class
     public RNASequence TranscribeToRNA()
     {
-        // TODO: maybe there's a better way to do this
         return new RNASequence(ToString().Replace('T', 'U'));
     }
 
     /// <summary>
     ///     Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
-    ///     TODO: What if we can't do this all in memory?
     /// </summary>
     /// <returns></returns>
     public DnaSequence GetReverseComplement()
     {
-        // TODO: this should probably be all ints
         var dnaStrand = new StringBuilder();
-        for (var i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
+        for (long i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
 
         return new DnaSequence(dnaStrand.ToString());
     }
@@ -246,11 +243,11 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         for (var i = 0; i <= dnaSequence.Length - 3; i++)
             if (SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(i, 3)].Equals("M"))
             {
-                var k = i + 3;
+                int k = i + 3;
                 var seqToAdd = "M";
                 while (k <= dnaSequence.Length - 3)
                 {
-                    var current = SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(k, 3)];
+                    string current = SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(k, 3)];
                     if (current.Equals("Stop"))
                     {
                         output.Add(new ProteinSequence(seqToAdd));

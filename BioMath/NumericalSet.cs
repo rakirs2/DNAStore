@@ -40,7 +40,7 @@ public class NumericalSet : ISet<int>
     public static NumericalSet Union(NumericalSet a, NumericalSet b)
     {
         var output = new NumericalSet(a.MaxValue, a.Values.ToList());
-        foreach (var value in b.Values) output.Add(value);
+        foreach (int value in b.Values) output.Add(value);
 
         return output;
     }
@@ -48,7 +48,7 @@ public class NumericalSet : ISet<int>
     public static NumericalSet Intersection(NumericalSet a, NumericalSet b)
     {
         var output = new NumericalSet(a.MaxValue, new List<int>());
-        foreach (var value in b.Values)
+        foreach (int value in b.Values)
             if (a.Values.Contains(value))
                 output.Add(value);
 
@@ -58,7 +58,7 @@ public class NumericalSet : ISet<int>
     public static NumericalSet operator -(NumericalSet a, NumericalSet b)
     {
         var output = new NumericalSet(a.MaxValue, a.Values.ToList());
-        foreach (var value in b.Values) output.Remove(value);
+        foreach (int value in b.Values) output.Remove(value);
 
         return output;
     }
@@ -66,7 +66,7 @@ public class NumericalSet : ISet<int>
     public static NumericalSet operator +(NumericalSet a, NumericalSet b)
     {
         var output = new NumericalSet(a.MaxValue, a.Values.ToList());
-        foreach (var value in b.Values) output.Add(value);
+        foreach (int value in b.Values) output.Add(value);
 
         return output;
     }

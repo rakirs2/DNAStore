@@ -14,7 +14,7 @@ public class ProteinSequence : AnySequence, IProtein
         get
         {
             double output = 0;
-            foreach (var character in ToString()) output += Reference.MolecularWeightsDictionary[character];
+            foreach (char character in ToString()) output += Reference.MolecularWeightsDictionary[character];
             return output;
         }
     }
@@ -23,7 +23,7 @@ public class ProteinSequence : AnySequence, IProtein
     public int NumberOfPossibleRNA(int modulo = (int)1e6)
     {
         BigInteger result = 1;
-        foreach (var protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
+        foreach (char protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
         // finally, we need to account for the stop
         result *= SequenceHelpers.NumberOfPossibleProteins("Stop");
         var modulo2 = new BigInteger(modulo);
