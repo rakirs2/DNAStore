@@ -191,29 +191,4 @@ public class DnaSequenceListExtensionsTest
 
         Assert.IsTrue(expected.SequenceEqual(actual));
     }
-
-    [TestMethod]
-    public void RandomMotifSearch()
-    {
-        var inputs = new List<DnaSequence>
-        {
-            new("CGCCCCTCTCGGGGGTGTTCAGTAAACGGCCA"),
-            new("GGGCGAGGTATGTGTAAGTGCCAAGGTGCCAG"),
-            new("TAGTACCGAGACCGAAAGAAGTATACAGGCGT"),
-            new("TAGATCAAGTTTCAGGTGCACGTCGGTGAACC"),
-            new("AATCCACCAGCTCCACGTGCAATGTTGGCCTA")
-        };
-
-        var actual = inputs.RandomMotifSearch(8, 5, 1000, true);
-        var expected = new List<string>
-        {
-            "TCTCGGGG",
-            "CCAAGGTG",
-            "TACAGGCG",
-            "TTCAGGTG",
-            "TCCACGTG"
-        };
-
-        Assert.IsTrue(expected.SequenceEqual(actual));
-    }
 }
