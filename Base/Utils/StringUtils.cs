@@ -1,4 +1,6 @@
-﻿namespace Base.Utils;
+﻿using System.Text;
+
+namespace Base.Utils;
 
 public static class StringUtils
 {
@@ -20,5 +22,17 @@ public static class StringUtils
         char[]? array = input.ToCharArray();
         (array[indexA], array[indexB]) = (array[indexB], array[indexA]);
         return new string(array);
+    }
+
+    public static string ForceJoinPerfectOrder(this List<string> sequences)
+    {
+        var sb = new StringBuilder();
+        sb.Append(sequences[0][..^1]);
+        foreach(var seq in sequences)
+        {
+            sb.Append(seq[^1]);
+        }
+        
+        return sb.ToString();
     }
 }

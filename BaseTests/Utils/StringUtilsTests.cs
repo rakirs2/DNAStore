@@ -30,4 +30,17 @@ public class StringUtilsTests
     {
         string? output = StringUtils.SwapIndex(null, 5, 1);
     }
+
+    [TestMethod]
+    public void ForceJoinPerfectOrderOffByOne()
+    {
+        var strings = new List<string>()
+        {
+            "abc",
+            "bcd",
+            "cde"
+        };
+        
+        Assert.AreEqual("abcde", strings.ForceJoinPerfectOrder());
+    }
 }

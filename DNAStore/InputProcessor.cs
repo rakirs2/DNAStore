@@ -4,11 +4,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Base.Algorithms;
 using Base.DataStructures;
+using Base.Utils;
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Types;
 using BioMath;
 using Clients;
+using Microsoft.VisualBasic;
 
 namespace DNAStore;
 
@@ -931,6 +933,25 @@ internal static class InputProcessor
         }
     }
 
+    private class ForceJoinPerfectOrder : BaseExecutor
+    {
+        private List<string> sequences = new List<string>();
+        protected override void GetInputs()
+        {
+           Console.WriteLine("Enter all of the sequences IN ORDER. Enter done when complete");
+           while (true)
+           {
+               string? input = Console.ReadLine();
+               if (input.Equals("done")) break;
+               sequences.Add(input);
+           }
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = sequences.ForceJoinPerfectOrder();
+        }
+    }
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
