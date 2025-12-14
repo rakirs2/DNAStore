@@ -86,4 +86,10 @@ public class ProbabilityTests
     {
         Assert.AreEqual(966784, Probability.NumberOfSetsLarge(874));
     }
+
+    [TestMethod]
+    public void Bernoulli()
+    {
+        Assert.AreEqual(0.8, Probability.SimpleBernoulli(.2, 0));
+    }
 }

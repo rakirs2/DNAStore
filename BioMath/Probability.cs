@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using MathNet.Numerics.Distributions;
 
 namespace BioMath;
 
@@ -161,5 +162,11 @@ public static class Probability
         total += 0.5 * Aaaa * children;
         total += 0 * aaaa * children;
         return total;
+    }
+
+    public static double SimpleBernoulli(double percentage, int k)
+    {
+        var b = new Bernoulli(percentage);
+        return b.Probability(k);
     }
 }
