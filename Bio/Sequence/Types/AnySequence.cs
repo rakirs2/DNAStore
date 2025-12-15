@@ -2,6 +2,7 @@ using System.Collections;
 using System.Text;
 using System.Xml;
 using Base.DataStructures;
+using Base.Utils;
 using Bio.Analysis.Types;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
@@ -138,6 +139,16 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         if (Length > int.MaxValue)
             throw new ArgumentOutOfRangeException("k", "Length is too large, only works for int length");
         return Substring(_random.Value.Next((int)Length - k), k);
+    }
+
+    public int EditDistance(AnySequence other)
+    {
+        if (other.GetType() != GetType())
+        {
+            throw new ArgumentException("Both must be of the same type");
+        }
+        
+        return StringUtils.LevenshteinDistance(RawSequence, other.RawSequence);
     }
 
     public IEnumerable<string> GetKmerEnumerator(int k)

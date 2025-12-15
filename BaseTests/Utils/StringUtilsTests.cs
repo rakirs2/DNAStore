@@ -1,4 +1,6 @@
-﻿namespace Base.Utils.Tests;
+﻿using Base.Utils;
+
+namespace BaseTests.Utils;
 
 [TestClass]
 public class StringUtilsTests
@@ -11,24 +13,21 @@ public class StringUtilsTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void SwapIndexTestOutOfBoundsNegative()
     {
-        string? output = StringUtils.SwapIndex("test", -1, 1);
+        Assert.ThrowsExactly<ArgumentException>(() => StringUtils.SwapIndex("test", -1, 1));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void SwapIndexTestOutOfBoundsGreaterThanLength()
     {
-        string? output = StringUtils.SwapIndex("test", 5, 1);
+        Assert.ThrowsExactly<ArgumentException>(() => StringUtils.SwapIndex("test", 5, 1));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void SwapIndexTestOutOfBoundsNullString()
     {
-        string? output = StringUtils.SwapIndex(null, 5, 1);
+        Assert.ThrowsExactly<ArgumentException>(() => StringUtils.SwapIndex(null, 5, 1));
     }
 
     [TestMethod]
@@ -42,5 +41,33 @@ public class StringUtilsTests
         };
         
         Assert.AreEqual("abcde", strings.ForceJoinPerfectOrder());
+    }
+
+    [TestMethod]
+    public void LevenshteinDistanceSame()
+    {
+        Assert.AreEqual(0, StringUtils.LevenshteinDistance("test", "test"));
+    }
+    
+    [TestMethod]
+    public void LevenshteinDistanceEmptyFirst()
+    {
+        Assert.AreEqual(4, StringUtils.LevenshteinDistance("", "test"));
+    }
+    
+    [TestMethod]
+    public void LevenshteinDistanceEmptySecond()
+    {
+        Assert.AreEqual(4, StringUtils.LevenshteinDistance("test", ""));
+    }
+    [TestMethod]
+    public void LevenshteinDistanceSimpleKnownExample()
+    {
+        Assert.AreEqual(3, StringUtils.LevenshteinDistance("kitten", "sitting"));
+    }
+    [TestMethod]
+    public void GivenMethod()
+    {
+        Assert.AreEqual(5, StringUtils.LevenshteinDistance("PLEASANTLY", "MEANLY"));
     }
 }

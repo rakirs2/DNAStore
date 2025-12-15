@@ -15,12 +15,11 @@ public class AnySequenceTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidDataException))]
     public void HammingMismatchedLengths()
     {
         var a = new AnySequence("a");
         var b = new AnySequence("ab");
-        int result = AnySequence.HammingDistance(a, b);
+        Assert.ThrowsExactly<InvalidDataException>(() => AnySequence.HammingDistance(a, b));
     }
 
     [TestMethod]
@@ -141,11 +140,10 @@ public class AnySequenceTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void InvalidTypeThrows()
     {
         var seq1 = new AnySequence("ACGTACGTGACG");
-        seq1.CompareTo("something");
+        Assert.ThrowsExactly<ArgumentException>(() => seq1.CompareTo("something"));
     }
 
     [TestMethod]
@@ -225,5 +223,13 @@ public class AnySequenceTests
             new("CGTCAGAGGT")
         };
         Assert.AreEqual(5, AnySequence.DistancePatternAndString("AAA", sequences));
+    }
+
+    [TestMethod]
+    public void InvalidEditDistance()
+    {
+        DnaSequence seq1 = new DnaSequence("AAA");
+        RNASequence seq2 = new RNASequence("UUU");
+        Assert.ThrowsExactly<ArgumentException>(() =>seq1.EditDistance(seq2));
     }
 }
