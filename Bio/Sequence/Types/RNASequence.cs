@@ -2,6 +2,7 @@
 
 namespace Bio.Sequence.Types;
 
+// TODO: rename to RnaSequence
 public class RNASequence : NucleotideSequence, IRNA
 {
     public RNASequence(string rawSequence) : base(rawSequence)

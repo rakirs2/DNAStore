@@ -44,4 +44,6 @@ public interface ISequence
     public bool ContainsString(string stringToMatch, int distance);
 
     public string GetRandomKmer(int k);
+    
+    public int EditDistance(AnySequence other);
 }
