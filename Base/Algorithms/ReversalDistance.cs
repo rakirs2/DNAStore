@@ -72,4 +72,29 @@ public class ReversalDistance
     {
         return new ReversalDistance(a, b).Calculate();
     }
+    
+    /// <summary>
+    /// Really simple definition. if the n+1st term is lt the nth term
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    public static int CountSignedBreakpoints(int[] p)
+    {
+        List<int> extendedP = new List<int> { 0 };
+        extendedP.AddRange(p);
+        // Force add a last element
+        extendedP.Add(p.Length + 1);
+
+        int breakpoints = 0;
+        
+        for (int i = 0; i < extendedP.Count - 1; i++)
+        {
+            if (extendedP[i + 1] - extendedP[i] != 1)
+            {
+                breakpoints++;
+            }
+        }
+
+        return breakpoints;
+    }
 }

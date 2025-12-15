@@ -373,6 +373,25 @@ internal static class InputProcessor
         }
     }
 
+    private class CountBreakPoints : BaseExecutor
+    {
+        private int[] a;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter the breakpoints");
+            a = Console.ReadLine().Trim('(', ')')
+                .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = ReversalDistance.CountSignedBreakpoints(a).ToString();
+        }
+    }
+    
     private class MergeTwoSorted : BaseExecutor
     {
         private int[] a;
