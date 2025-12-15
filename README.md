@@ -1,7 +1,6 @@
 # DNAStore
 
-This project is a long, long overdue idea I've had. Effectively, I hope/believe that DNA can be broken down and analzyed
-hierarchically.
+This project is a long, long overdue idea I've had. Effectively, It's my current understanding of analysis methods for biological sequences
 
 I don't really know too much about the space so I'm using this as a repository of my current knowledge/implementations--
 Going through Rosalind.info problems and [BioInformatics Algorithms](https://www.bioinformaticsalgorithms.org/). Let's
