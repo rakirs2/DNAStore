@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Base.Utils;
 using MathNet.Numerics.Distributions;
 
 namespace BioMath;
@@ -12,7 +13,6 @@ public static class Probability
 
     /// <summary>
     ///     Calculated it with modulo 1000000
-    ///     TODO: this should be optimized to not need BigIntegers
     /// </summary>
     /// <param name="i"></param>
     /// <returns></returns>
@@ -165,6 +165,23 @@ public static class Probability
         }
     }
 
+    public static void GenerateSignedPermutations(int[] numbers, int start, HashSet<int[]> results)
+    {
+        if (start == numbers.Length)
+        {
+            results.Add((int[])numbers.Clone());
+            return;
+        }
+
+        for (int i = start; i < numbers.Length; i++)
+        {
+            GenerateSignedPermutations(numbers, start + 1, results);
+            numbers[i] = -numbers[i];
+            GenerateSignedPermutations(numbers, start + 1, results);
+            numbers[i] =  -numbers[i];
+        }
+    }
+    
     public static double ExpectedDominantOffspring(int AAAA, int AAAa, int AAaa, int AaAa, int Aaaa, int aaaa,
         int children)
     {
@@ -178,6 +195,33 @@ public static class Probability
         return total;
     }
 
+    /// <summary>
+    /// TODO: clean this up if you need to call it later.
+    /// </summary>
+    public static IEnumerable<int[]> GenerateSignedPermutations(int highest = 1)
+    {
+        var values = new List<int>();
+        for (int i = 1; i < highest +1; i++)
+        {
+            values.Add(i);
+        }
+
+        var perms = GetPermutations(values, highest);
+        // post process adding positives and negatives
+
+        var output = new HashSet<int[]>(new IntArrayComparer());
+        foreach (var perm in perms)
+        {
+            var tempOutput = new HashSet<int[]> ();
+            GenerateSignedPermutations(perm.ToArray(), 0, tempOutput);
+            foreach (var val in tempOutput)
+            {
+                output.Add((int[])val.Clone());
+            }
+        }
+        
+        return output;
+    }
     public static double SimpleBernoulli(double percentage, int k)
     {
         var b = new Bernoulli(percentage);
