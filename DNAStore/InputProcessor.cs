@@ -327,6 +327,30 @@ internal static class InputProcessor
         }
     }
 
+    private class GetSignedPermutations : BaseExecutor
+    {
+        private int a;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter the number");
+            a = int.Parse(Console.ReadLine());
+        }
+
+        protected override void CalculateResult()
+        {
+            var output = "";
+            var results = Probability.GenerateSignedPermutations(a);
+            output += results.Count().ToString() + "\n";
+            foreach (var result in results)
+            {
+                output += string.Join(" ", result.Select(x => x > 0 ? "+" + x : x.ToString())) + "\n";
+            }
+
+            Output = output;
+        }
+    }
+    
     private class CountBreakPoints : BaseExecutor
     {
         private int[] a;

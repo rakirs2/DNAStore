@@ -1,4 +1,5 @@
-﻿using BioMath;
+﻿using Base.Utils;
+using BioMath;
 
 namespace BioTests.Math;
 
@@ -97,5 +98,18 @@ public class ProbabilityTests
     public void PartialPermutations()
     {
         Assert.AreEqual(51200, Probability.PartialPermutations(21, 7));
+    }
+
+    [TestMethod]
+    public void SignedPermutations()
+    {
+        var results = new HashSet<int[]>(new IntArrayComparer());
+        Probability.GenerateSignedPermutations(new int[] { 1, 2 }, 0, results);
+    }
+    
+    [TestMethod]
+    public void GenerateSignedPermutations()
+    {
+        Assert.AreEqual(8, Probability.GenerateSignedPermutations(2).ToArray().Length);
     }
 }
