@@ -44,6 +44,7 @@ public class ReversalDistanceTest
         var b = new int[] { 6, 3, 1, 5, 2, 4};
         Assert.AreEqual(4, ReversalDistance.Calculate(a,b));
     }
+    
     [TestMethod]
     public void Size7()
     {

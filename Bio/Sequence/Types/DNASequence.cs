@@ -10,6 +10,9 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
+    private static HashSet<char> pyrimidines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'C', 'T' };
+    private static HashSet<char> purines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'A', 'G' };
+
     private static readonly Dictionary<char, int> CharValueMapper = new()
     {
         { 'A', 0 },
@@ -259,4 +262,8 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
                 }
             }
     }
+
+    protected override HashSet<char> Pyrimdines =>pyrimidines;
+    
+    protected override HashSet<char> Purines => purines;
 }

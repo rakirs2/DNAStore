@@ -1,3 +1,5 @@
+using Bio.Sequence.Types;
+
 namespace Bio.Sequence.Interfaces;
 
 public interface INucleotideSequence
@@ -7,4 +9,6 @@ public interface INucleotideSequence
     /// </summary>
     /// <returns></returns>
     int[] CalculateMinPrefixGCSkew();
+    
+    double TransitionToTransversionRatio(NucleotideSequence other);
 }
