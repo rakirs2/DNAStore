@@ -1054,6 +1054,35 @@ internal static class InputProcessor
         }
     }
 
+    private class ApproximateGreedyReversal : BaseExecutor
+    {
+        private int[] a;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter reversals to be analyzed");
+            a = Console.ReadLine().Trim('(', ')')
+                .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            ReversalDistance.ApproximateGreedyReversalSort(a, out var list);
+            var sb = new StringBuilder();
+            for(int i = 0; i < list.Count; i++)
+            {
+                sb.Append(ReversalDistance.ToReversalString(list[i]));
+                if (i != list.Count - 1)
+                {
+                    sb.Append('\n');
+                }
+            }
+            Output = sb.ToString();
+        }
+    }
+    
     private class MotifEnumeration : BaseExecutor
     {
         private readonly List<DnaSequence>? _dnaSequences = new();

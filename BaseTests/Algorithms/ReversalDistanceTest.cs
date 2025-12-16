@@ -61,7 +61,7 @@ public class ReversalDistanceTest
     }
    
     [TestMethod]
-    [Ignore]
+    [Ignore("Currently unable to run this locally due to memory.")]
     public void GivenTests()
     {
         var a = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -90,5 +90,41 @@ public class ReversalDistanceTest
     {
         var values = new int[] { 3, 4, 5, -12, -8, -7, -6, 1, 2, 10, 9, -11, 13, 14 };
         Assert.AreEqual(8, ReversalDistance.CountSignedBreakpoints(values));
+    }
+
+    [TestMethod]
+    public void InPlaceReversal()
+    {
+        var values = new int []{1, 2, 3,4};
+        ReversalDistance.ReverseSubsequence(values, 0, 3);
+        Assert.IsTrue(values.SequenceEqual(new int[]{-4,-3,-2,-1}));
+    }
+    
+    [TestMethod]
+    public void InPlaceReversalOddElement()
+    {
+        var values = new int []{-3, +4, +1, +5, -2};
+        ReversalDistance.ReverseSubsequence(values, 0, 2);
+        Assert.IsTrue(values.SequenceEqual(new int[]{-1,-4,3,5, -2}));
+    }
+    
+    [TestMethod]
+    public void InPlaceReversalOdd()
+    {
+        var values = new int []{1, 2, 3,4};
+        ReversalDistance.ReverseSubsequence(values, 0, 3);
+        Assert.IsTrue(values.SequenceEqual(new int[]{-4,-3,-2,-1}));
+    }
+    
+    [TestMethod]
+    public void InPlaceReversalNull()
+    {
+        Assert.ThrowsExactly<ArgumentNullException>(()=>ReversalDistance.ReverseSubsequence(null, 0, 3));
+    }
+
+    [TestMethod]
+    public void ApproximateGreedyReversalTest()
+    {
+        Assert.AreEqual(7, ReversalDistance.ApproximateGreedyReversalSort(new []{-3,4,1,5,-2}, out var list));
     }
 }

@@ -97,4 +97,61 @@ public class ReversalDistance
 
         return breakpoints;
     }
+
+    /// <summary>
+    /// Basic Greedy Reversal sort. The order is completely optional. It exists because the problem required it
+    /// </summary>
+    /// <remarks>
+    ///     We're assuming 1-indexing, and a clean set of data.
+    /// </remarks>
+    /// <param name="reversals"></param>
+    /// <param name="order"></param>
+    /// <returns></returns>
+    public static int ApproximateGreedyReversalSort(int [] reversals, out List<int[]> order)
+    {
+        var n = reversals.Length;
+        order = new List<int[]>();
+        for (int i = 1; i <= n; i++)
+        {
+            if (reversals[i - 1] != i)
+            {
+                // greedily find the right index 
+                int j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
+                ReverseSubsequence(reversals, i - 1, j);
+                var temp = (int[]) reversals.Clone();
+                order.Add(temp);
+                // Force the value here to be positive, could just call the function on the index but no need
+                if (reversals[i - 1] == -i)
+                {
+                    reversals[i - 1] = i;
+                    
+                    var t2 = (int[]) reversals.Clone();
+                    order.Add(t2);
+                }
+            }
+        }
+        
+        return order.Count;
+    }
+    
+    public static void ReverseSubsequence(int[] s, int start, int end)
+    {
+        if (s == null)
+        {
+            throw new ArgumentNullException(nameof(s));
+        }
+        
+        int left = start, right = end;
+        while (left <= right)
+        {
+            (s[left], s[right]) = (-s[right], -s[left]);
+            left++;
+            right--;
+        }
+    }
+
+    public static string ToReversalString(int[] values)
+    {
+        return "(" + string.Join(" ", values.Select(x => x > 0 ? "+" + x : x.ToString())) + ")";
+    }
 }
