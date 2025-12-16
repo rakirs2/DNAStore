@@ -45,7 +45,7 @@ public static class Probability
         // a bit of a cheat, but n!/(n-r)!
         // n=5, r =2
         // so 5*4*3*2*1 /(3*2*1)
-        // so we just need n-1
+        // so we just need n-i
         for (int i = 0; i < r; i++)
         {
             result *= (n - i);
@@ -54,6 +54,13 @@ public static class Probability
         return result;
     }
 
+    /// <summary>
+    /// This is just permutations but we're special
+    /// </summary>
+    /// <param name="n"></param>
+    /// <param name="r"></param>
+    /// <param name="modulo"></param>
+    /// <returns></returns>
     public static int PartialPermutations(int n, int r, int modulo = 1000000)
     {
         return (int) (NumberOfPermutations(n, r) % new BigInteger(modulo));
