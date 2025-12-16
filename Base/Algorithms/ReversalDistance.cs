@@ -20,6 +20,7 @@ public class ReversalDistance
     /// <summary>
     /// There are n^2 possible reversals at every iteration in this implementation.
     /// TODO: Hannenhali and Pevzner's clearer alg (hopefully?)
+    /// Memory problems galore here.
     /// </summary>
     /// <returns></returns>
     private int Calculate()
@@ -27,7 +28,7 @@ public class ReversalDistance
         Queue<int[]> currentIteration = new Queue<int[]>();
         Queue<int[]> nextIteration = new Queue<int[]>();
 
-        HashSet<int[]> traversed = new HashSet<int[]>( new IntArrayComparer());
+        HashSet<string> traversed = new HashSet<string>();
         currentIteration.Enqueue(_a);
         var currentDepth = 0;
         
@@ -39,7 +40,7 @@ public class ReversalDistance
                 return currentDepth;
             }
             
-            traversed.Add(temp);
+            traversed.Add(ToReversalString(temp));
 
             for (int i = 1; i <= temp.Length; i++)
             {
@@ -49,7 +50,7 @@ public class ReversalDistance
                     var other = (int[])temp.Clone();
                     Array.Reverse(other, j, i);
 
-                    if (!traversed.Contains(other))
+                    if (!traversed.Contains(ToReversalString(other)))
                     {
                         nextIteration.Enqueue(other);
                     }

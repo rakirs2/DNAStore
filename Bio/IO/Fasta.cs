@@ -47,7 +47,7 @@ public class Fasta : IFasta
 
     public ContentType ContentType { get; }
 
-    // TODO: override Hashcode and equals
+    // TODO: override Hashcode and equals. Not actually important for this right now but could be later on.
     public string Name { get; }
 
     public string RawSequence { get; }

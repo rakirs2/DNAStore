@@ -1,3 +1,4 @@
+using Base.Utils;
 using Bio.IO;
 using Bio.Sequence.Interfaces;
 
@@ -16,6 +17,9 @@ public abstract class NucleotideSequence : AnySequence, INucleotideSequence
     protected NucleotideSequence(Fasta fasta) : base(fasta)
     {
     }
+
+    protected abstract HashSet<char> Pyrimdines { get; }
+    protected abstract HashSet<char> Purines { get; }
 
     public int[] CalculateMinPrefixGCSkew()
     {
@@ -41,5 +45,51 @@ public abstract class NucleotideSequence : AnySequence, INucleotideSequence
         }
 
         return output.ToArray();
+    }
+
+
+
+    public double TransitionToTransversionRatio(NucleotideSequence other)
+    {
+        if (other == null)
+        {
+            throw new NullReferenceException();
+        }
+
+        if (other.GetType() != GetType())
+        {
+            throw new ArgumentException("types must match");
+        }
+
+        if (other.Length != Length)
+        {
+            throw new ArgumentException("length must match");
+        }
+
+        int transversions = 0;
+        int transitions = 0;
+
+        for (int i = 0; i < Length; i++)
+        {
+            var a = this[i];
+            var b = other[i];
+            if (!a.Equals(b))
+            {
+                if (Pyrimdines.Contains(a) && Pyrimdines.Contains(b))
+                {
+                    transitions++;
+                } 
+                else if (Purines.Contains(a) && Purines.Contains(b))
+                {
+                    transitions++;
+                }
+                else
+                {
+                    transversions++;
+                }
+            }
+        }
+        
+        return (double)transitions / transversions;
     }
 }

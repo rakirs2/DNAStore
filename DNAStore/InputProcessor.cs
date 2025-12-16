@@ -194,49 +194,22 @@ internal static class InputProcessor
         }
     }
 
-    private class ThreeSum : BaseExecutor
+    private class TransitionTransversionRatio : BaseExecutor
     {
-        private List<List<int>> _lists = new();
-        private DnaSequence _sequence;
+        private DnaSequence _a;
+        private DnaSequence _b;
 
         protected override void GetInputs()
         {
-            List<List<double>> profileValues = new();
-            var input = "";
-            while (true)
-            {
-                input = Console.ReadLine();
-                if (input == "done") break;
-
-                var inputA = input.Split(" ")
-                    .Select(s => int.Parse(s))
-                    .ToList();
-                _lists.Add(inputA);
-            }
+            Console.WriteLine("Enter both sequences");
+            _a = new DnaSequence(Console.ReadLine());
+            _b = new DnaSequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
         {
-            var values = new List<List<List<int>>>();
-            foreach (var list in _lists) values.Add(Search.ThreeSumNoSort(list, 0));
 
-            var sb = new StringBuilder();
-            foreach (var list in values)
-            {
-                if (list.Count == 0)
-                {
-                    sb.Append("-1");
-                }
-                else
-                {
-                    var incrementedList = list[0].Select(x => x + 1).ToList();
-                    sb.Append(string.Join(" ", incrementedList));
-                }
-
-                sb.Append("\n");
-            }
-
-            Output = sb.ToString();
+            Output = _a.TransitionToTransversionRatio(_b).ToString();
         }
     }
 
@@ -268,25 +241,6 @@ internal static class InputProcessor
         protected override void CalculateResult()
         {
             Output = _matrix.HighestLikelihood(_sequence);
-        }
-    }
-
-    private class MergeSort : BaseExecutor
-    {
-        private int[] _list;
-
-        protected override void GetInputs()
-        {
-            Console.WriteLine("Input the list to be sorted as a single list");
-            _list = Console.ReadLine().Split(" ")
-                .Select(s => int.Parse(s))
-                .ToArray();
-        }
-
-        protected override void CalculateResult()
-        {
-            Sorters<int>.InPlaceMergeSort(ref _list);
-            Output = string.Join(" ", _list);
         }
     }
 

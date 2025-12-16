@@ -208,4 +208,20 @@ public class DnaSequenceTests
 
         Assert.IsTrue(output.SetEquals(expected));
     }
+
+    [TestMethod]
+    public void TransitionToTransversion()
+    {
+        var seq1 = new DnaSequence("GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGAAGTACGGGCATCAACCCAGTT");
+        var seq2 = new DnaSequence("TTATCTGACAAAGAAAGCCGTCAACGGCTGGATAATTTCGCGATCGTGCTGGTTACTGGCGGTACGAGTGTTCCTTTGGGT");
+        Assert.AreEqual(1.214 ,         System.Math.Round(seq1.TransitionToTransversionRatio(seq2), 3));
+    }
+    
+    [TestMethod]
+    public void TransitionToTransversionDifferentLength()
+    {
+        var seq1 = new DnaSequence("GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGAAGTACGGGCATCAACCCAGTTA");
+        var seq2 = new DnaSequence("TTATCTGACAAAGAAAGCCGTCAACGGCTGGATAATTTCGCGATCGTGCTGGTTACTGGCGGTACGAGTGTTCCTTTGGGT");
+        Assert.ThrowsExactly<ArgumentException>(()=>seq1.TransitionToTransversionRatio(seq2));
+    }
 }
