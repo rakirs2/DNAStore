@@ -27,6 +27,37 @@ public static class Probability
 
         return returnval % 1000000;
     }
+    
+    /// <summary>
+    /// nPR. Returns a big integer because these get unwieldy.
+    /// </summary>
+    /// <param name="n"></param>
+    /// <param name="r"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public static BigInteger NumberOfPermutations(int n, int r)
+    {
+        if (n < r || r < 0)
+            throw new ArgumentException("Invalid n or r values.");
+        
+        BigInteger result = BigInteger.One;
+        
+        // a bit of a cheat, but n!/(n-r)!
+        // n=5, r =2
+        // so 5*4*3*2*1 /(3*2*1)
+        // so we just need n-1
+        for (int i = 0; i < r; i++)
+        {
+            result *= (n - i);
+        }
+        
+        return result;
+    }
+
+    public static int PartialPermutations(int n, int r, int modulo = 1000000)
+    {
+        return (int) (NumberOfPermutations(n, r) % new BigInteger(modulo));
+    }
 
     /// <summary>
     ///     Given a population of x dominant, y heterozygous and z recessive individuals,
@@ -75,30 +106,6 @@ public static class Probability
             .SelectMany(t => list.Where(e => !t.Contains(e)),
                 (t1, t2) => t1.Concat([t2]));
     }
-
-    /*
-     *nucleotides = ['A', 'T', 'C', 'G']
-
-       def generate_all_sequences(n):
-
-           if n < 1:
-               return []
-
-           if n == 1:
-               return nucleotides
-
-           sub_sequences = generate_all_sequences(n - 1)
-
-           sequences = []
-
-           for sequence in sub_sequences:
-
-               for nucleotide in nucleotides:
-
-                        sequences.append(nucleotide + sequence)
-
-           return sequences
-     */
 
     public static List<string> GenerateAllKmers(string inputString, int kmerLength)
     {

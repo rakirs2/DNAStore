@@ -92,4 +92,10 @@ public class ProbabilityTests
     {
         Assert.AreEqual(0.8, Probability.SimpleBernoulli(.2, 0));
     }
+
+    [TestMethod]
+    public void PartialPermutations()
+    {
+        Assert.AreEqual(51200, Probability.PartialPermutations(21, 7));
+    }
 }
