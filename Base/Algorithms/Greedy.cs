@@ -8,7 +8,7 @@ public class Greedy
         Array.Fill(coinTracker, target + 1);
         coinTracker[0] = 0;
         for (var i = 1; i <= target; i++)
-            foreach (var coin in coinValues)
+            foreach (int coin in coinValues)
                 if (coin <= i)
                     coinTracker[i] = Math.Min(coinTracker[i], coinTracker[i - coin] + 1);
 

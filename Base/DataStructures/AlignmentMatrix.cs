@@ -49,10 +49,10 @@ public class AlignmentMatrix : IAlignmentMatrix
     {
         // The table is built; now to traceback
         // TODO: this only returns one. How do we return all?
-        var i = _a.Length;
-        var j = _b.Length;
+        int i = _a.Length;
+        int j = _b.Length;
         var node = _matrix[i, j];
-        var val = node.Value;
+        int val = node.Value;
         var sb = new StringBuilder();
         while (val > 0)
         {

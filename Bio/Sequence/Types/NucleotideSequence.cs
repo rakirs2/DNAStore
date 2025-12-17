@@ -18,7 +18,7 @@ public abstract class NucleotideSequence : AnySequence, INucleotideSequence
     {
     }
 
-    protected abstract HashSet<char> Pyrimdines { get; }
+    protected abstract HashSet<char> Pyrimidines { get; }
     protected abstract HashSet<char> Purines { get; }
 
     public int[] CalculateMinPrefixGCSkew()
@@ -48,48 +48,32 @@ public abstract class NucleotideSequence : AnySequence, INucleotideSequence
     }
 
 
-
     public double TransitionToTransversionRatio(NucleotideSequence other)
     {
-        if (other == null)
-        {
-            throw new NullReferenceException();
-        }
+        if (other == null) throw new NullReferenceException();
 
-        if (other.GetType() != GetType())
-        {
-            throw new ArgumentException("types must match");
-        }
+        if (other.GetType() != GetType()) throw new ArgumentException("types must match");
 
-        if (other.Length != Length)
-        {
-            throw new ArgumentException("length must match");
-        }
+        if (other.Length != Length) throw new ArgumentException("length must match");
 
-        int transversions = 0;
-        int transitions = 0;
+        var transversions = 0;
+        var transitions = 0;
 
-        for (int i = 0; i < Length; i++)
+        for (var i = 0; i < Length; i++)
         {
-            var a = this[i];
-            var b = other[i];
+            char a = this[i];
+            char b = other[i];
             if (!a.Equals(b))
             {
-                if (Pyrimdines.Contains(a) && Pyrimdines.Contains(b))
-                {
+                if (Pyrimidines.Contains(a) && Pyrimidines.Contains(b))
                     transitions++;
-                } 
                 else if (Purines.Contains(a) && Purines.Contains(b))
-                {
                     transitions++;
-                }
                 else
-                {
                     transversions++;
-                }
             }
         }
-        
+
         return (double)transitions / transversions;
     }
 }

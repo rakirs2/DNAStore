@@ -6,17 +6,15 @@ public class ReversalDistance
 {
     private int[] _a;
     private int[] _b;
+
     private ReversalDistance(int[] a, int[] b)
     {
-        if (a.Length != b.Length)
-        {
-            throw new ArgumentException("Lengths must be equal");
-        } 
-        
+        if (a.Length != b.Length) throw new ArgumentException("Lengths must be equal");
+
         _a = a;
         _b = b;
     }
-    
+
     /// <summary>
     /// There are n^2 possible reversals at every iteration in this implementation.
     /// TODO: Hannenhali and Pevzner's clearer alg (hopefully?)
@@ -24,46 +22,37 @@ public class ReversalDistance
     /// <returns></returns>
     private int Calculate()
     {
-        Queue<int[]> currentIteration = new Queue<int[]>();
-        Queue<int[]> nextIteration = new Queue<int[]>();
+        Queue<int[]> currentIteration = new();
+        Queue<int[]> nextIteration = new();
 
-        HashSet<int[]> traversed = new HashSet<int[]>( new IntArrayComparer());
+        HashSet<int[]> traversed = new(new IntArrayComparer());
         currentIteration.Enqueue(_a);
         var currentDepth = 0;
-        
-        while (currentIteration.Count != 0 || nextIteration.Count != 0 && currentDepth <= _a.Length)
+
+        while (currentIteration.Count != 0 || (nextIteration.Count != 0 && currentDepth <= _a.Length))
         {
-            var temp = currentIteration.Dequeue();
-            if (temp.SequenceEqual(_b))
-            {
-                return currentDepth;
-            }
-            
+            int[] temp = currentIteration.Dequeue();
+            if (temp.SequenceEqual(_b)) return currentDepth;
+
             traversed.Add(temp);
 
-            for (int i = 1; i <= temp.Length; i++)
+            for (var i = 1; i <= temp.Length; i++)
+            for (var j = 0; j + i <= _b.Length; j++)
             {
-                for (int j = 0; j + i <= _b.Length; j++)
-                {
+                var other = (int[])temp.Clone();
+                Array.Reverse(other, j, i);
 
-                    var other = (int[])temp.Clone();
-                    Array.Reverse(other, j, i);
-
-                    if (!traversed.Contains(other))
-                    {
-                        nextIteration.Enqueue(other);
-                    }
-                }
+                if (!traversed.Contains(other)) nextIteration.Enqueue(other);
             }
-            
+
             if (currentIteration.Count == 0)
             {
                 currentIteration = nextIteration;
                 nextIteration = new Queue<int[]>();
-                currentDepth ++;
+                currentDepth++;
             }
         }
-        
+
         // This shouldn't be reached
         return -1;
     }
@@ -72,7 +61,7 @@ public class ReversalDistance
     {
         return new ReversalDistance(a, b).Calculate();
     }
-    
+
     /// <summary>
     /// Really simple definition. if the n+1st term is lt the nth term
     /// </summary>
@@ -80,20 +69,16 @@ public class ReversalDistance
     /// <returns></returns>
     public static int CountSignedBreakpoints(int[] p)
     {
-        List<int> extendedP = new List<int> { 0 };
+        var extendedP = new List<int> { 0 };
         extendedP.AddRange(p);
         // Force add a last element
         extendedP.Add(p.Length + 1);
 
-        int breakpoints = 0;
-        
-        for (int i = 0; i < extendedP.Count - 1; i++)
-        {
+        var breakpoints = 0;
+
+        for (var i = 0; i < extendedP.Count - 1; i++)
             if (extendedP[i + 1] - extendedP[i] != 1)
-            {
                 breakpoints++;
-            }
-        }
 
         return breakpoints;
     }
@@ -107,40 +92,35 @@ public class ReversalDistance
     /// <param name="reversals"></param>
     /// <param name="order"></param>
     /// <returns></returns>
-    public static int ApproximateGreedyReversalSort(int [] reversals, out List<int[]> order)
+    public static int ApproximateGreedyReversalSort(int[] reversals, out List<int[]> order)
     {
-        var n = reversals.Length;
+        int n = reversals.Length;
         order = new List<int[]>();
-        for (int i = 1; i <= n; i++)
-        {
+        for (var i = 1; i <= n; i++)
             if (reversals[i - 1] != i)
             {
                 // greedily find the right index 
                 int j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
                 ReverseSubsequence(reversals, i - 1, j);
-                var temp = (int[]) reversals.Clone();
+                var temp = (int[])reversals.Clone();
                 order.Add(temp);
                 // Force the value here to be positive, could just call the function on the index but no need
                 if (reversals[i - 1] == -i)
                 {
                     reversals[i - 1] = i;
-                    
-                    var t2 = (int[]) reversals.Clone();
+
+                    var t2 = (int[])reversals.Clone();
                     order.Add(t2);
                 }
             }
-        }
-        
+
         return order.Count;
     }
-    
+
     public static void ReverseSubsequence(int[] s, int start, int end)
     {
-        if (s == null)
-        {
-            throw new ArgumentNullException(nameof(s));
-        }
-        
+        if (s == null) throw new ArgumentNullException(nameof(s));
+
         int left = start, right = end;
         while (left <= right)
         {

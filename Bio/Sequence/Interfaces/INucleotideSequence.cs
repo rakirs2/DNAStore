@@ -9,6 +9,6 @@ public interface INucleotideSequence
     /// </summary>
     /// <returns></returns>
     int[] CalculateMinPrefixGCSkew();
-    
+
     double TransitionToTransversionRatio(NucleotideSequence other);
 }

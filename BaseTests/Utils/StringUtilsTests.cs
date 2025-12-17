@@ -39,7 +39,7 @@ public class StringUtilsTests
             "bcd",
             "cde"
         };
-        
+
         Assert.AreEqual("abcde", strings.ForceJoinPerfectOrder());
     }
 
@@ -48,23 +48,25 @@ public class StringUtilsTests
     {
         Assert.AreEqual(0, StringUtils.LevenshteinDistance("test", "test"));
     }
-    
+
     [TestMethod]
     public void LevenshteinDistanceEmptyFirst()
     {
         Assert.AreEqual(4, StringUtils.LevenshteinDistance("", "test"));
     }
-    
+
     [TestMethod]
     public void LevenshteinDistanceEmptySecond()
     {
         Assert.AreEqual(4, StringUtils.LevenshteinDistance("test", ""));
     }
+
     [TestMethod]
     public void LevenshteinDistanceSimpleKnownExample()
     {
         Assert.AreEqual(3, StringUtils.LevenshteinDistance("kitten", "sitting"));
     }
+
     [TestMethod]
     public void GivenMethod()
     {

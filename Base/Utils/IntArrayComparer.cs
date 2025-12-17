@@ -15,15 +15,12 @@ public class IntArrayComparer : IEqualityComparer<int[]>
     public int GetHashCode(int[] obj)
     {
         if (obj is null) return 0;
-        
+
         // some prime number hash
-        unchecked 
+        unchecked
         {
-            int hash = 17;
-            foreach (var item in obj)
-            {
-                hash = hash * 23 + item.GetHashCode(); 
-            }
+            var hash = 17;
+            foreach (int item in obj) hash = hash * 23 + item.GetHashCode();
             return hash;
         }
     }

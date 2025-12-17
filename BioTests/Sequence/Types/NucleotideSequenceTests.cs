@@ -11,7 +11,7 @@ public class NucleotideSequenceTests
         var dnaSequence =
             new DnaSequence(
                 "CCTATCGGTGGATTAGCATGTCCCTGTACGTTTCGCCGCGAACTAGTTCACACGGCTTGATGGCAAATGGTTTTTCCGGCGACCGTAATCGTCCACCGAG");
-        var output = dnaSequence.CalculateMinPrefixGCSkew();
+        int[]? output = dnaSequence.CalculateMinPrefixGCSkew();
         Assert.IsTrue(new List<int> { 53, 97 }.SequenceEqual(output));
     }
 }

@@ -50,4 +50,10 @@ public interface IDna
     ///     Returns the minimum distance of a given kmer against the given DNA strand.
     /// </summary>
     int GetMinimumDistanceForKmer(string kmer);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    double[] OddsOfFinding(double[] gcContents, int n);
 }

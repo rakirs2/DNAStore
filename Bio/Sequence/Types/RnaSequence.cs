@@ -27,10 +27,10 @@ public class RnaSequence : NucleotideSequence, IRna
         {
             var gcFreq = BioMath.Probability.Factorial((uint)Counts.GetFrequency('C'));
             var auFreq = BioMath.Probability.Factorial((uint)Counts.GetFrequency('A'));
-            
+
             return gcFreq * auFreq;
         }
-        
+
         throw new ArgumentException("The AC and GC counts must be equal for this analysis");
     }
 
@@ -38,12 +38,11 @@ public class RnaSequence : NucleotideSequence, IRna
     {
         return SequenceHelpers.IsValidRNA(c);
     }
-    
-    private static HashSet<char> pyrimidines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'C', 'T' };
-    private static HashSet<char> purines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'A', 'G' };
-    
-    protected override HashSet<char> Pyrimdines =>pyrimidines;
-    
-    protected override HashSet<char> Purines => purines;
 
+    private static HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
+    private static HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
+
+    protected override HashSet<char> Pyrimidines => pyrimidines;
+
+    protected override HashSet<char> Purines => purines;
 }

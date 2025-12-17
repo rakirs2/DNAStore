@@ -143,11 +143,8 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
 
     public int EditDistance(AnySequence other)
     {
-        if (other.GetType() != GetType())
-        {
-            throw new ArgumentException("Both must be of the same type");
-        }
-        
+        if (other.GetType() != GetType()) throw new ArgumentException("Both must be of the same type");
+
         return StringUtils.LevenshteinDistance(RawSequence, other.RawSequence);
     }
 
