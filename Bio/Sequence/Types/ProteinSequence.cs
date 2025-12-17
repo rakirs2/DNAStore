@@ -39,8 +39,6 @@ public class ProteinSequence : AnySequence, IProtein
     }
 
     // TODO: implement this. There are a couple of known hashes.
-    // Ideally, tihs would be passed in at construction?
-    // TODO: perf vs spooky hashes?
     public override int GetHashCode()
     {
         throw new NotImplementedException();

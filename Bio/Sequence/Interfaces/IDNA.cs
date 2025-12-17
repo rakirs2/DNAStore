@@ -36,6 +36,7 @@ public interface IDna
     /// <returns></returns>
     HashSet<string> KmerCompositionUniqueString(int n);
 
+    // TODO: move this to NucleotideSequence
     double RandomStringProbability(double gcContent);
 
     /// <summary>

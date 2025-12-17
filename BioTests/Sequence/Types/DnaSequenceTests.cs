@@ -120,7 +120,7 @@ public class DnaSequenceTests
     public void GenerateKmerCompositionBadInput()
     {
         var seq = new DnaSequence("acgt");
-        int[]? _ = seq.KmerComposition(0);
+        var _ = seq.KmerComposition(0);
     }
 
     [TestMethod]
@@ -128,14 +128,14 @@ public class DnaSequenceTests
     public void GenerateKmerCompositionBadInput2()
     {
         var seq = new DnaSequence("acgt");
-        int[]? _ = seq.KmerComposition(-1);
+        var _ = seq.KmerComposition(-1);
     }
 
     [TestMethod]
     public void GenerateKmerComposition()
     {
         var seq = new DnaSequence("AAAAA");
-        int[]? output = seq.KmerComposition(2);
+        var output = seq.KmerComposition(2);
         var expected = new[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         Assert.IsTrue(expected.SequenceEqual(output));
     }
@@ -145,8 +145,8 @@ public class DnaSequenceTests
     {
         var seq = new DnaSequence(
             "CTTCGAAAGTTTGGGCCGAGTCTTACAGTCGGTCTTGAAGCAAAGTAACGAACTCCACGGCCCTGACTACCGAACCAGTTGTGAGTACTCAACTGGGTGAGAGTGCAGTCCCTATTGAGTTTCCGAGACTCACCGGGATTTTCGATCCAGCCTCAGTCCAGTCTTGTGGCCAACTCACCAAATGACGTTGGAATATCCCTGTCTAGCTCACGCAGTACTTAGTAAGAGGTCGCTGCAGCGGGGCAAGGAGATCGGAAAATGTGCTCTATATGCGACTAAAGCTCCTAACTTACACGTAGACTTGCCCGTGTTAAAAACTCGGCTCACATGCTGTCTGCGGCTGGCTGTATACAGTATCTACCTAATACCCTTCAGTTCGCCGCACAAAAGCTGGGAGTTACCGCGGAAATCACAG");
-        int[]? output = seq.KmerComposition(4);
-        int[]? expected = new[]
+        var output = seq.KmerComposition(4);
+        var expected = new[]
         {
             4, 1, 4, 3, 0, 1, 1, 5, 1, 3, 1, 2, 2, 1, 2, 0, 1, 1, 3, 1, 2, 1, 3, 1, 1, 1, 1, 2, 2, 5, 1, 3, 0, 2, 2, 1,
             1, 1, 1, 3, 1, 0, 0, 1, 5, 5, 1, 5, 0, 2, 0, 2, 1, 2, 1, 1, 1, 2, 0, 1, 0, 0, 1, 1, 3, 2, 1, 0, 3, 2, 3, 0,
@@ -174,7 +174,7 @@ public class DnaSequenceTests
             "TCCAA"
         };
 
-        foreach (string? val in expected) output.Remove(val);
+        foreach (var val in expected) output.Remove(val);
 
         Assert.IsTrue(output.Count == 0);
     }
@@ -183,7 +183,7 @@ public class DnaSequenceTests
     public void RandomStringTest()
     {
         var seq = new DnaSequence("ACGATACAA");
-        double output = seq.RandomStringProbability(0.129);
+        var output = seq.RandomStringProbability(0.129);
         Assert.AreEqual(-5.737, double.Round(output, 3));
     }
 
@@ -214,14 +214,22 @@ public class DnaSequenceTests
     {
         var seq1 = new DnaSequence("GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGAAGTACGGGCATCAACCCAGTT");
         var seq2 = new DnaSequence("TTATCTGACAAAGAAAGCCGTCAACGGCTGGATAATTTCGCGATCGTGCTGGTTACTGGCGGTACGAGTGTTCCTTTGGGT");
-        Assert.AreEqual(1.214 ,         System.Math.Round(seq1.TransitionToTransversionRatio(seq2), 3));
+        Assert.AreEqual(1.214, System.Math.Round(seq1.TransitionToTransversionRatio(seq2), 3));
     }
-    
+
     [TestMethod]
     public void TransitionToTransversionDifferentLength()
     {
-        var seq1 = new DnaSequence("GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGAAGTACGGGCATCAACCCAGTTA");
+        var seq1 = new DnaSequence(
+            "GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGAAGTACGGGCATCAACCCAGTTA");
         var seq2 = new DnaSequence("TTATCTGACAAAGAAAGCCGTCAACGGCTGGATAATTTCGCGATCGTGCTGGTTACTGGCGGTACGAGTGTTCCTTTGGGT");
-        Assert.ThrowsExactly<ArgumentException>(()=>seq1.TransitionToTransversionRatio(seq2));
+        Assert.ThrowsExactly<ArgumentException>(() => seq1.TransitionToTransversionRatio(seq2));
+    }
+
+    [TestMethod]
+    public void ProbabilityOfAGivenString()
+    {
+        Assert.AreEqual(.689, System.Math.Round(DnaSequence.GetProbabilityOccuringGivenGCContent("ATAGCCGA", 90000, 0.6
+), 3));
     }
 }
