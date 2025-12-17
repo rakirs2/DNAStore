@@ -9,7 +9,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 {
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
-
+    
     private static HashSet<char> pyrimidines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'C', 'T' };
     private static HashSet<char> purines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'A', 'G' };
 
@@ -29,12 +29,24 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 3, 'T' }
     };
 
-    private static readonly HashSet<char> ValidAlphabet = new()
+    private static readonly HashSet<char> ValidAlphabet = new(new CaseInsensitiveCharComparer())
     {
         'A',
         'C',
         'G',
         'T'
+    };
+    
+    private static readonly HashSet<char> cgDict = new(new CaseInsensitiveCharComparer())
+    {
+        'C',
+        'G',
+    };
+    
+    private static readonly HashSet<char> atDict = new(new CaseInsensitiveCharComparer())
+    {
+        'A',
+        'T',
     };
 
     public List<Tuple<int, int>> RestrictionSites()
@@ -59,7 +71,6 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return output;
     }
 
-    // TODO: longs and ints was a stupid decision
     // ints all the way unless needed otherwise
     public BigInteger ToNumber()
     {
@@ -132,21 +143,16 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex,
         HashSet<string> neighborhood)
     {
-        // Base case: if no more distance allowed, add the current pattern to the neighborhood
         if (remainingDistance == 0)
         {
             neighborhood.Add(new string(currentPatternChars));
             return;
         }
-
-        // Base case: if we've reached the end of the string, and still have remaining distance,
-        // it means we can't make enough changes within the string length, so we stop.
+        
         if (startIndex == currentPatternChars.Length) return;
 
-        // Option 1: Don't change the character at the current position
         GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance, startIndex + 1, neighborhood);
 
-        // Option 2: Change the character at the current position
         char originalChar = currentPatternChars[startIndex];
         foreach (char newChar in ValidAlphabet)
             if (newChar != originalChar)
@@ -154,8 +160,8 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
                 currentPatternChars[startIndex] = newChar;
                 GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance - 1, startIndex + 1, neighborhood);
             }
-
-        // Backtrack: restore the original character for subsequent calls
+        
+        // Restore
         currentPatternChars[startIndex] = originalChar;
     }
 
@@ -180,7 +186,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
             number /= 4;
         }
 
-        // Pad the pattern with 'A's if its length is less than k.
+        // Pad 
         while (pattern.Length < k) pattern.Insert(0, 'A');
 
         return new DnaSequence(pattern.ToString());
@@ -212,7 +218,6 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     /// <returns></returns>
     public List<ProteinSequence> GetCandidateProteinSequences()
     {
-        // TODO: should implement a 3 letter ORF class
         // TODO: this should be using the built in iterator
         // TODO: reverse as well
         var values = new List<ProteinSequence>();
@@ -261,6 +266,22 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
                     k += 3;
                 }
             }
+    }
+
+    public static double GetProbabilityOccuringGivenGCContent(string subsequence, int sequenceLength, double gcContent)
+    {
+        double probability = 1.0;
+        foreach (char c in subsequence)
+        {
+            // Probably faster to do the manual check but i'd rather have this be case insensitive
+            if (cgDict.Contains(c))
+                probability *= (gcContent / 2.0);
+            else if(atDict.Contains(c))
+                probability *= ((1.0 - gcContent) / 2.0);
+            else throw new ArgumentException("character " + sequenceLength);
+        }
+        
+        return  1.0 - Math.Pow(1.0 - probability, sequenceLength);
     }
 
     protected override HashSet<char> Pyrimdines =>pyrimidines;

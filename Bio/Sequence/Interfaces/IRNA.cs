@@ -17,7 +17,7 @@ public interface IRna : ISequence
     public int GetPotentialNumberOfDNAStrings(int mod);
 
     /// <summary>
-    /// Returns the number of perfect matchings in a RNA graph
+    ///     Returns the number of perfect matchings in a RNA graph
     /// </summary>
     /// <remarks>
     ///     A-U and G-C counts need to be the same
