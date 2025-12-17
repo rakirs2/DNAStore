@@ -232,4 +232,18 @@ public class DnaSequenceTests
         Assert.AreEqual(.689, System.Math.Round(DnaSequence.GetProbabilityOccuringGivenGCContent("ATAGCCGA", 90000, 0.6
 ), 3));
     }
+    
+    [TestMethod]
+    public void OddsOfFinding()
+    {
+        var seq = new DnaSequence("AG");
+        var gc = new double[] { 0.25, .5, .75 };
+        var output =seq.OddsOfFinding(gc, 10);
+        for(int i = 0; i< gc.Length; i++)
+        {
+            output[i] = System.Math.Round(output[i], 3);
+        }
+
+        var temp = string.Join(" ", output);
+    }
 }

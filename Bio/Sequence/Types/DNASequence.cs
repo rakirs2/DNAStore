@@ -140,6 +140,8 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return minimum;
     }
 
+
+
     private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex,
         HashSet<string> neighborhood)
     {
@@ -282,6 +284,52 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         }
         
         return  1.0 - Math.Pow(1.0 - probability, sequenceLength);
+    }
+    
+    /// <summary>
+    /// Adding up a bunch of probilities. Not the hardest thing but it's a good problem
+    /// </summary>
+    /// <param name="length"></param>
+    /// <param name="gcContent"></param>
+    /// <returns></returns>
+    public  double[] OddsOfFinding( double[] gcContent, int number)
+    {
+        if (Length > int.MaxValue)
+        {
+            throw new ArgumentException("The length of the DNA string is way too long for this analysis");
+        }
+        
+        int sLen = (int)Length;
+        // Number of possible starting positions for the motif
+        int possiblePositions = number - sLen + 1;
+
+        // Store results
+        double[] expectedValues = new double[gcContent.Length];
+
+        for (int i = 0; i < gcContent.Length; i++)
+        {
+            double gc = gcContent[i];
+            double at = (1 - gc);
+            double output= 1.0;
+
+            // Note: because this runs off the dnasequence, we are guaranteed valid letters a
+            // that is part of the contract at construction
+            foreach (char nucleotide in RawSequence)
+            {
+                if (cgDict.Contains(nucleotide))
+                {
+                    output *= (gc / 2.0);
+                }
+                else 
+                {
+                    output *= (at / 2.0);
+                }
+            }
+
+            expectedValues[i] = possiblePositions * output;
+            
+        }
+        return expectedValues;
     }
 
     protected override HashSet<char> Pyrimdines =>pyrimidines;
