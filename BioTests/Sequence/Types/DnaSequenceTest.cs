@@ -241,6 +241,6 @@ public class DnaSequenceTests
         double[] output = seq.OddsOfFinding(gc, 10);
         for (var i = 0; i < gc.Length; i++) output[i] = System.Math.Round(output[i], 3);
 
-        Assert.AreEqual("" , string.Join(" ", output));
+        Assert.AreEqual("0.422 0.562 0.422" , string.Join(" ", output));
     }
 }
