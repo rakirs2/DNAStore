@@ -9,9 +9,9 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 {
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
-    
-    private static HashSet<char> pyrimidines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'C', 'T' };
-    private static HashSet<char> purines = new HashSet<char>(new CaseInsensitiveCharComparer()) { 'A', 'G' };
+
+    private static HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
+    private static HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
 
     private static readonly Dictionary<char, int> CharValueMapper = new()
     {
@@ -36,18 +36,22 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         'G',
         'T'
     };
-    
+
     private static readonly HashSet<char> cgDict = new(new CaseInsensitiveCharComparer())
     {
         'C',
-        'G',
+        'G'
     };
-    
+
     private static readonly HashSet<char> atDict = new(new CaseInsensitiveCharComparer())
     {
         'A',
-        'T',
+        'T'
     };
+    
+    protected override HashSet<char> Pyrimidines => pyrimidines;
+
+    protected override HashSet<char> Purines => purines;
 
     public List<Tuple<int, int>> RestrictionSites()
     {
@@ -140,8 +144,6 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return minimum;
     }
 
-
-
     private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex,
         HashSet<string> neighborhood)
     {
@@ -150,7 +152,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
             neighborhood.Add(new string(currentPatternChars));
             return;
         }
-        
+
         if (startIndex == currentPatternChars.Length) return;
 
         GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance, startIndex + 1, neighborhood);
@@ -162,7 +164,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
                 currentPatternChars[startIndex] = newChar;
                 GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance - 1, startIndex + 1, neighborhood);
             }
-        
+
         // Restore
         currentPatternChars[startIndex] = originalChar;
     }
@@ -272,67 +274,51 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     public static double GetProbabilityOccuringGivenGCContent(string subsequence, int sequenceLength, double gcContent)
     {
-        double probability = 1.0;
+        var probability = 1.0;
         foreach (char c in subsequence)
-        {
             // Probably faster to do the manual check but i'd rather have this be case insensitive
             if (cgDict.Contains(c))
-                probability *= (gcContent / 2.0);
-            else if(atDict.Contains(c))
-                probability *= ((1.0 - gcContent) / 2.0);
+                probability *= gcContent / 2.0;
+            else if (atDict.Contains(c))
+                probability *= (1.0 - gcContent) / 2.0;
             else throw new ArgumentException("character " + sequenceLength);
-        }
-        
-        return  1.0 - Math.Pow(1.0 - probability, sequenceLength);
+
+        return 1.0 - Math.Pow(1.0 - probability, sequenceLength);
     }
-    
+
     /// <summary>
     /// Adding up a bunch of probilities. Not the hardest thing but it's a good problem
     /// </summary>
     /// <param name="length"></param>
     /// <param name="gcContent"></param>
     /// <returns></returns>
-    public  double[] OddsOfFinding( double[] gcContent, int number)
+    public double[] OddsOfFinding(double[] gcContent, int number)
     {
         if (Length > int.MaxValue)
-        {
             throw new ArgumentException("The length of the DNA string is way too long for this analysis");
-        }
-        
-        int sLen = (int)Length;
-        // Number of possible starting positions for the motif
+
+        var sLen = (int)Length;
         int possiblePositions = number - sLen + 1;
 
-        // Store results
-        double[] expectedValues = new double[gcContent.Length];
+        var expectedValues = new double[gcContent.Length];
 
-        for (int i = 0; i < gcContent.Length; i++)
+        for (var i = 0; i < gcContent.Length; i++)
         {
             double gc = gcContent[i];
-            double at = (1 - gc);
-            double output= 1.0;
+            double at = 1 - gc;
+            var output = 1.0;
 
-            // Note: because this runs off the dnasequence, we are guaranteed valid letters a
+            // Note: because this runs off the DnaSequence, we are guaranteed valid letters a
             // that is part of the contract at construction
             foreach (char nucleotide in RawSequence)
-            {
                 if (cgDict.Contains(nucleotide))
-                {
-                    output *= (gc / 2.0);
-                }
-                else 
-                {
-                    output *= (at / 2.0);
-                }
-            }
+                    output *= gc / 2.0;
+                else
+                    output *= at / 2.0;
 
             expectedValues[i] = possiblePositions * output;
-            
         }
+
         return expectedValues;
     }
-
-    protected override HashSet<char> Pyrimdines =>pyrimidines;
-    
-    protected override HashSet<char> Purines => purines;
 }

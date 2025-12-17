@@ -216,11 +216,11 @@ public class AnySequenceTests
     {
         List<AnySequence> sequences = new()
         {
-            new("TTACCTTAAC"),
-            new("GATATCTGTC"),
-            new("ACGGCGTTCG"),
-            new("CCCTAAAGAG"),
-            new("CGTCAGAGGT")
+            new AnySequence("TTACCTTAAC"),
+            new AnySequence("GATATCTGTC"),
+            new AnySequence("ACGGCGTTCG"),
+            new AnySequence("CCCTAAAGAG"),
+            new AnySequence("CGTCAGAGGT")
         };
         Assert.AreEqual(5, AnySequence.DistancePatternAndString("AAA", sequences));
     }
@@ -228,8 +228,8 @@ public class AnySequenceTests
     [TestMethod]
     public void InvalidEditDistance()
     {
-        DnaSequence seq1 = new DnaSequence("AAA");
-        RnaSequence seq2 = new RnaSequence("UUU");
-        Assert.ThrowsExactly<ArgumentException>(() =>seq1.EditDistance(seq2));
+        var seq1 = new DnaSequence("AAA");
+        var seq2 = new RnaSequence("UUU");
+        Assert.ThrowsExactly<ArgumentException>(() => seq1.EditDistance(seq2));
     }
 }

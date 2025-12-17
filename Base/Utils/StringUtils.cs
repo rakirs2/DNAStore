@@ -19,7 +19,7 @@ public static class StringUtils
             throw new ArgumentException();
 
         // Swaps characters in a string.
-        var array = input.ToCharArray();
+        char[]? array = input.ToCharArray();
         (array[indexA], array[indexB]) = (array[indexB], array[indexA]);
         return new string(array);
     }
@@ -28,7 +28,7 @@ public static class StringUtils
     {
         var sb = new StringBuilder();
         sb.Append(sequences[0][..^1]);
-        foreach (var seq in sequences) sb.Append(seq[^1]);
+        foreach (string? seq in sequences) sb.Append(seq[^1]);
 
         return sb.ToString();
     }
@@ -53,8 +53,8 @@ public static class StringUtils
 
         if (string.IsNullOrEmpty(b)) return a?.Length ?? 0;
 
-        var m = a.Length;
-        var n = b.Length;
+        int m = a.Length;
+        int n = b.Length;
         var d = new int[m + 1, n + 1];
 
         for (var i = 1; i <= m; d[i, 0] = i++) ;
@@ -63,10 +63,10 @@ public static class StringUtils
         for (var i = 1; i <= m; i++)
         for (var j = 1; j <= n; j++)
         {
-            var subCost = a[i - 1] == b[j - 1] ? 0 : 1;
-            var delete = d[i - 1, j] + 1;
-            var insert = d[i, j - 1] + 1;
-            var substitution = d[i - 1, j - 1] + subCost;
+            int subCost = a[i - 1] == b[j - 1] ? 0 : 1;
+            int delete = d[i - 1, j] + 1;
+            int insert = d[i, j - 1] + 1;
+            int substitution = d[i - 1, j - 1] + subCost;
             d[i, j] = MultiComparer.Min(delete, insert, substitution);
         }
 

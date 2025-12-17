@@ -208,7 +208,6 @@ internal static class InputProcessor
 
         protected override void CalculateResult()
         {
-
             Output = _a.TransitionToTransversionRatio(_b).ToString();
         }
     }
@@ -342,15 +341,13 @@ internal static class InputProcessor
             var output = "";
             var results = Probability.GenerateSignedPermutations(a);
             output += results.Count().ToString() + "\n";
-            foreach (var result in results)
-            {
+            foreach (int[] result in results)
                 output += string.Join(" ", result.Select(x => x > 0 ? "+" + x : x.ToString())) + "\n";
-            }
 
             Output = output;
         }
     }
-    
+
     private class CountBreakPoints : BaseExecutor
     {
         private int[] a;
@@ -369,7 +366,7 @@ internal static class InputProcessor
             Output = ReversalDistance.CountSignedBreakpoints(a).ToString();
         }
     }
-    
+
     private class MergeTwoSorted : BaseExecutor
     {
         private int[] a;
@@ -932,16 +929,17 @@ internal static class InputProcessor
 
     private class ForceJoinPerfectOrder : BaseExecutor
     {
-        private List<string> sequences = new List<string>();
+        private List<string> sequences = new();
+
         protected override void GetInputs()
         {
-           Console.WriteLine("Enter all of the sequences IN ORDER. Enter done when complete");
-           while (true)
-           {
-               string? input = Console.ReadLine();
-               if (input.Equals("done")) break;
-               sequences.Add(input);
-           }
+            Console.WriteLine("Enter all of the sequences IN ORDER. Enter done when complete");
+            while (true)
+            {
+                string? input = Console.ReadLine();
+                if (input.Equals("done")) break;
+                sequences.Add(input);
+            }
         }
 
         protected override void CalculateResult()
@@ -949,6 +947,7 @@ internal static class InputProcessor
             Output = sequences.ForceJoinPerfectOrder();
         }
     }
+
     private class LongestCommonSubsequenceAlignment : BaseExecutor
     {
         private string _a;
@@ -1049,18 +1048,16 @@ internal static class InputProcessor
         {
             ReversalDistance.ApproximateGreedyReversalSort(a, out var list);
             var sb = new StringBuilder();
-            for(int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 sb.Append(ReversalDistance.ToReversalString(list[i]));
-                if (i != list.Count - 1)
-                {
-                    sb.Append('\n');
-                }
+                if (i != list.Count - 1) sb.Append('\n');
             }
+
             Output = sb.ToString();
         }
     }
-    
+
     private class MotifEnumeration : BaseExecutor
     {
         private readonly List<DnaSequence>? _dnaSequences = new();

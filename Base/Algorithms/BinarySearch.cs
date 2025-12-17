@@ -8,11 +8,11 @@ public static class BinarySearch
     // TODO rename to "custom" something
     public static bool Contains(List<int> arrayToCheck, int value)
     {
-        var right = arrayToCheck.Count - 1;
+        int right = arrayToCheck.Count - 1;
         var left = 0;
         while (left < right)
         {
-            var middle = left + (right - left) / 2;
+            int middle = left + (right - left) / 2;
             if (arrayToCheck[middle] == value)
                 return true;
             if (arrayToCheck[middle] < value)
@@ -26,11 +26,11 @@ public static class BinarySearch
 
     public static int GetIndexAt(List<int> arrayToCheck, int value)
     {
-        var right = arrayToCheck.Count - 1;
+        int right = arrayToCheck.Count - 1;
         var left = 0;
         while (left <= right)
         {
-            var middle = left + (right - left) / 2;
+            int middle = left + (right - left) / 2;
             if (arrayToCheck[middle] == value)
                 return middle;
             if (arrayToCheck[middle] < value)
@@ -45,9 +45,9 @@ public static class BinarySearch
     public static List<int> GetIndices(List<int> arrayToCheck, List<int> values, bool oneIndex = false)
     {
         var output = new List<int>();
-        foreach (var value in values)
+        foreach (int value in values)
         {
-            var index = GetIndexAt(arrayToCheck, value);
+            int index = GetIndexAt(arrayToCheck, value);
             if (oneIndex)
                 output.Add(index == -1 ? -1 : index + 1);
             else

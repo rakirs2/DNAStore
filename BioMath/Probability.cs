@@ -27,7 +27,7 @@ public static class Probability
 
         return returnval % 1000000;
     }
-    
+
     /// <summary>
     /// nPR. Returns a big integer because these get unwieldy.
     /// </summary>
@@ -39,18 +39,15 @@ public static class Probability
     {
         if (n < r || r < 0)
             throw new ArgumentException("Invalid n or r values.");
-        
-        BigInteger result = BigInteger.One;
-        
+
+        var result = BigInteger.One;
+
         // a bit of a cheat, but n!/(n-r)!
         // n=5, r =2
         // so 5*4*3*2*1 /(3*2*1)
         // so we just need n-i
-        for (int i = 0; i < r; i++)
-        {
-            result *= (n - i);
-        }
-        
+        for (var i = 0; i < r; i++) result *= n - i;
+
         return result;
     }
 
@@ -63,7 +60,7 @@ public static class Probability
     /// <returns></returns>
     public static int PartialPermutations(int n, int r, int modulo = 1000000)
     {
-        return (int) (NumberOfPermutations(n, r) % new BigInteger(modulo));
+        return (int)(NumberOfPermutations(n, r) % new BigInteger(modulo));
     }
 
     /// <summary>
@@ -178,10 +175,10 @@ public static class Probability
             GenerateSignedPermutations(numbers, start + 1, results);
             numbers[i] = -numbers[i];
             GenerateSignedPermutations(numbers, start + 1, results);
-            numbers[i] =  -numbers[i];
+            numbers[i] = -numbers[i];
         }
     }
-    
+
     public static double ExpectedDominantOffspring(int AAAA, int AAAa, int AAaa, int AaAa, int Aaaa, int aaaa,
         int children)
     {
@@ -201,10 +198,7 @@ public static class Probability
     public static IEnumerable<int[]> GenerateSignedPermutations(int highest = 1)
     {
         var values = new List<int>();
-        for (int i = 1; i < highest +1; i++)
-        {
-            values.Add(i);
-        }
+        for (var i = 1; i < highest + 1; i++) values.Add(i);
 
         var perms = GetPermutations(values, highest);
         // post process adding positives and negatives
@@ -212,16 +206,14 @@ public static class Probability
         var output = new HashSet<int[]>(new IntArrayComparer());
         foreach (var perm in perms)
         {
-            var tempOutput = new HashSet<int[]> ();
+            var tempOutput = new HashSet<int[]>();
             GenerateSignedPermutations(perm.ToArray(), 0, tempOutput);
-            foreach (var val in tempOutput)
-            {
-                output.Add((int[])val.Clone());
-            }
+            foreach (int[] val in tempOutput) output.Add((int[])val.Clone());
         }
-        
+
         return output;
     }
+
     public static double SimpleBernoulli(double percentage, int k)
     {
         var b = new Bernoulli(percentage);
