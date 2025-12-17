@@ -1,12 +1,12 @@
-﻿using Base.Utils;
+﻿using System.Numerics;
+using Base.Utils;
 using Bio.Sequence.Interfaces;
 
 namespace Bio.Sequence.Types;
 
-// TODO: rename to RnaSequence
-public class RNASequence : NucleotideSequence, IRNA
+public class RnaSequence : NucleotideSequence, IRna
 {
-    public RNASequence(string rawSequence) : base(rawSequence)
+    public RnaSequence(string rawSequence) : base(rawSequence)
     {
     }
 
@@ -18,6 +18,20 @@ public class RNASequence : NucleotideSequence, IRNA
     public int GetPotentialNumberOfDNAStrings(int mod)
     {
         throw new NotImplementedException();
+    }
+
+    public BigInteger NumberOfPerfectMatchings()
+    {
+        if (Counts.GetFrequency('A') == Counts.GetFrequency('U') &&
+            Counts.GetFrequency('C') == Counts.GetFrequency('C'))
+        {
+            var gcFreq = BioMath.Probability.Factorial((uint)Counts.GetFrequency('C'));
+            var auFreq = BioMath.Probability.Factorial((uint)Counts.GetFrequency('A'));
+            
+            return gcFreq * auFreq;
+        }
+        
+        throw new ArgumentException("The AC and GC counts must be equal for this analysis");
     }
 
     protected override bool IsValid(char c)

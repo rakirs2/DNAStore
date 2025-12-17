@@ -24,11 +24,11 @@ public class MismatchKmerCounter : IMismatchKmerCounter
     public HashSet<string> GetKmers(string matchString, bool checkComplement = false)
     {
         var listPossible = Probability.GenerateAllKmers(matchString, KmerLength);
-        foreach (string? kmer in listPossible) MismatchDictionaryTracker[kmer] = 0;
+        foreach (var kmer in listPossible) MismatchDictionaryTracker[kmer] = 0;
 
         var currentHighest = 0;
         for (var i = 0; i <= _sequence.Length - KmerLength; i++)
-            foreach (string? key in MismatchDictionaryTracker.Keys)
+            foreach (var key in MismatchDictionaryTracker.Keys)
             {
                 currentHighest = AnalyzeKmer(i, key, currentHighest, false);
                 // TODO: maybe a bad pattern, can be iterated
@@ -41,7 +41,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
 
     private int AnalyzeKmer(int i, string key, int currentHighest, bool checkComplement)
     {
-        string? stringToCheck = key;
+        var stringToCheck = key;
         if (checkComplement) stringToCheck = new DnaSequence(key).GetReverseComplement().ToString();
 
         if (AnySequence.HammingDistance(_sequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)

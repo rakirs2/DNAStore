@@ -229,7 +229,7 @@ public class AnySequenceTests
     public void InvalidEditDistance()
     {
         DnaSequence seq1 = new DnaSequence("AAA");
-        RNASequence seq2 = new RNASequence("UUU");
+        RnaSequence seq2 = new RnaSequence("UUU");
         Assert.ThrowsExactly<ArgumentException>(() =>seq1.EditDistance(seq2));
     }
 }

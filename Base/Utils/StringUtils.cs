@@ -19,7 +19,7 @@ public static class StringUtils
             throw new ArgumentException();
 
         // Swaps characters in a string.
-        char[]? array = input.ToCharArray();
+        var array = input.ToCharArray();
         (array[indexA], array[indexB]) = (array[indexB], array[indexA]);
         return new string(array);
     }
@@ -28,18 +28,15 @@ public static class StringUtils
     {
         var sb = new StringBuilder();
         sb.Append(sequences[0][..^1]);
-        foreach(var seq in sequences)
-        {
-            sb.Append(seq[^1]);
-        }
-        
+        foreach (var seq in sequences) sb.Append(seq[^1]);
+
         return sb.ToString();
     }
 
     /// <summary>
-    /// Returns the basic Levenshtein distance. Base DP programming algorithm for a lot of alignment
-    /// It's called edit distance in computational biology. However, for the purposes of this, let's keep this separated
-    /// from all 'bio' project work and call it as necessary.
+    ///     Returns the basic Levenshtein distance. Base DP programming algorithm for a lot of alignment
+    ///     It's called edit distance in computational biology. However, for the purposes of this, let's keep this separated
+    ///     from all 'bio' project work and call it as necessary.
     /// </summary>
     /// <remarks>
     ///     A way to remember this is almost that the columns and rows are compared
@@ -52,35 +49,27 @@ public static class StringUtils
     /// <returns></returns>
     public static int LevenshteinDistance(string a, string b)
     {
-        if (string.IsNullOrEmpty(a))
-        {
-            return b?.Length ?? 0;
-        }
-        
-        if (string.IsNullOrEmpty(b))
-        {
-            return a?.Length ?? 0;
-        }
-        
+        if (string.IsNullOrEmpty(a)) return b?.Length ?? 0;
+
+        if (string.IsNullOrEmpty(b)) return a?.Length ?? 0;
+
         var m = a.Length;
         var n = b.Length;
-        var d = new int[m +1, n+1];
-        
-        for (int i = 1; i <= m; d[i, 0] = i++) ;
-        for (int j = 1; j <= n; d[0, j] = j++) ;
+        var d = new int[m + 1, n + 1];
 
-        for (int i = 1; i <= m; i++)
+        for (var i = 1; i <= m; d[i, 0] = i++) ;
+        for (var j = 1; j <= n; d[0, j] = j++) ;
+
+        for (var i = 1; i <= m; i++)
+        for (var j = 1; j <= n; j++)
         {
-            for (int j = 1; j <= n; j++)
-            {
-                int subCost = a[i-1] == b[j-1] ? 0 : 1;
-                var delete = d[i-1, j] + 1;
-                var insert = d[i, j - 1] + 1;
-                var substitution = d[i - 1, j - 1] + subCost;
-                d[i, j] = MultiComparer.Min(delete, insert , substitution );
-            }
+            var subCost = a[i - 1] == b[j - 1] ? 0 : 1;
+            var delete = d[i - 1, j] + 1;
+            var insert = d[i, j - 1] + 1;
+            var substitution = d[i - 1, j - 1] + subCost;
+            d[i, j] = MultiComparer.Min(delete, insert, substitution);
         }
-        
+
         return d[m, n];
     }
 }

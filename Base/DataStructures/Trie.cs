@@ -17,7 +17,7 @@ public class Trie : ITrie
         MaxStringLength = Math.Max(word.Length, MaxStringLength);
 
         var node = root;
-        foreach (char c in word)
+        foreach (var c in word)
         {
             if (!node.Children.ContainsKey(c))
                 node.Children.Add(c, new TrieNode());
@@ -33,7 +33,7 @@ public class Trie : ITrie
         if (wordToCheck.Length > MaxStringLength) return false;
 
         var temp = root;
-        foreach (char character in wordToCheck)
+        foreach (var character in wordToCheck)
         {
             if (!temp.Children.ContainsKey(character)) return false;
 
