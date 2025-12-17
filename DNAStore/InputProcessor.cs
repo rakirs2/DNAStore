@@ -1556,13 +1556,13 @@ internal static class InputProcessor
 
     private class TranslateRNA : BaseExecutor
     {
-        private RNASequence? _a;
+        private RnaSequence? _a;
         private string? _result;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            _a = new RNASequence(Console.ReadLine());
+            _a = new RnaSequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()

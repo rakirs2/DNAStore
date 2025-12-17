@@ -188,9 +188,9 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     // Should this be static, should this be a class conversion
     // For now, let's just let it be an explicit conversion, pay for the new class
-    public RNASequence TranscribeToRNA()
+    public RnaSequence TranscribeToRNA()
     {
-        return new RNASequence(ToString().Replace('T', 'U'));
+        return new RnaSequence(ToString().Replace('T', 'U'));
     }
 
     /// <summary>
