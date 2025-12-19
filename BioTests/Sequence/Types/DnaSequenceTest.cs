@@ -3,7 +3,7 @@
 namespace BioTests.Sequence.Types;
 
 [TestClass]
-public class DnaSequenceTests
+public class DnaSequenceTest
 {
     [TestMethod]
     public void TranscribeToRNATest()
@@ -242,5 +242,34 @@ public class DnaSequenceTests
         for (var i = 0; i < gc.Length; i++) output[i] = System.Math.Round(output[i], 3);
 
         Assert.AreEqual("0.422 0.562 0.422", string.Join(" ", output));
+    }
+    
+    [TestMethod]
+    public void ComplementTests()
+    {
+        var seq = new DnaSequence("AGCT");
+        Assert.AreEqual("TCGA", seq.GetComplement());
+    }
+    
+    [TestMethod]
+    public void ComplementTestEmpty()
+    {
+        var seq = new DnaSequence("");
+        Assert.AreEqual("", seq.GetComplement());
+    }
+    [TestMethod]
+    public void PerfectComplementStrand()
+    {
+        Assert.IsTrue(DnaSequence.PerfectComplementStrand("ATAT", "TATA"));
+        Assert.IsFalse(DnaSequence.PerfectComplementStrand("ATAC", "TATA"));
+        Assert.ThrowsExactly<ArgumentException>(() => DnaSequence.PerfectComplementStrand("ATAT", "ATT"));
+    }
+
+
+    [TestMethod]
+    public void DnaSequenceComparison()
+    {
+        var sequence = new DnaSequence("ACG");
+        Assert.IsTrue(sequence.Complements("TGC"));
     }
 }

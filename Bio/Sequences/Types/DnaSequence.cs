@@ -7,7 +7,7 @@ namespace Bio.Sequences.Types;
 
 public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), IDna
 {
-    private static readonly Dictionary<char, char> ComplementDict = new()
+    private static readonly Dictionary<char, char> ComplementDict = new(new CaseInsensitiveCharComparer())
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
     private static readonly HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
@@ -250,6 +250,26 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         return new DnaSequence(dnaStrand.ToString());
     }
+    
+    /// <summary>
+    ///     Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
+    /// </summary>
+    /// <returns></returns>
+    public string GetComplement()
+    {
+        var sb = new StringBuilder();
+        foreach (var res in RawSequence)
+        {
+            sb.Append(ComplementDict[res]);
+        }
+
+        return sb.ToString();
+    }
+
+    public bool Complements(string candidateComplement)
+    {
+        return PerfectComplementStrand(RawSequence,candidateComplement);
+    }
 
     /// <summary>
     ///     Simple algorithm using Open Reading frames. We go through each possible starting location.
@@ -261,8 +281,6 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         // TODO: this should be using the built in iterator
         // TODO: reverse as well
         var values = new List<ProteinSequence>();
-        // var complement = ToReverseComplement();
-
         SingleReadToProteinSequences(this, ref values);
         SingleReadToProteinSequences(GetReverseComplement(), ref values);
         // TODO: This is terrible, terrible perf wise and bad form.
@@ -276,8 +294,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
                 output.Add(sequence);
                 filter.Add(sequence.ToString());
             }
-
-
+        
         return output.ToList();
     }
 
@@ -320,5 +337,31 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
             else throw new ArgumentException("character " + sequenceLength);
 
         return 1.0 - Math.Pow(1.0 - probability, sequenceLength);
+    }
+
+    /// <summary>
+    /// A raw string check to see if two strands line up. Assumes orientation has been handled
+    /// 
+    /// </summary>
+    /// <param name="seqA"></param>
+    /// <param name="seqB"></param>
+    /// <returns></returns>
+    public static bool PerfectComplementStrand(string seqA, string seqB)
+    {
+        if (seqA.Length != seqB.Length)
+        {
+            // TODO: consider creating an invalid length comparison expcetion
+            throw new ArgumentException("Invalid Lengths");
+        }
+
+        for (int i = 0; i < seqA.Length; i++)
+        {
+            if (ComplementDict[seqA[i]] != seqB[i])
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }
