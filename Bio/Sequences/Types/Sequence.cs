@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Text;
-using System.Xml;
 using Base.DataStructures;
 using Base.Utils;
 using Bio.Analysis.Types;
 using Bio.IO;
-using Bio.Sequence.Interfaces;
+using Bio.Sequences.Interfaces;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 /// <summary>
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
@@ -15,6 +14,7 @@ namespace Bio.Sequence.Types;
 /// </summary>
 public class Sequence : ISequence, IComparable, IEnumerable<char>
 {
+    private static readonly Lazy<Random> _random = new();
     public BasePairDictionary Counts = new();
 
     public Sequence(string rawSequence, string? name = null)
@@ -60,7 +60,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     /// <returns></returns>
     public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
     {
-        int modifier = isZeroIndex ? 0 : 1;
+        var modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
         for (var i = 0; i < Length - motif.ExpectedLength; i++)
             if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
@@ -102,7 +102,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
             return new List<int>();
 
-        int modifier = isZeroIndex ? 0 : 1;
+        var modifier = isZeroIndex ? 0 : 1;
         var indices = new List<int>();
         var i = 0;
         var j = 0;
@@ -130,7 +130,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     }
 
     /// <summary>
-    /// NOTE: THis currently only works on int length
+    ///     NOTE: THis currently only works on int length
     /// </summary>
     /// <param name="k"></param>
     /// <returns></returns>
@@ -206,7 +206,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     }
 
     /// <summary>
-    /// Finds the sum of the minimum distance of a pattern on each sequence.
+    ///     Finds the sum of the minimum distance of a pattern on each sequence.
     /// </summary>
     /// <param name="pattern"></param>
     /// <param name="sequences"></param>
@@ -217,9 +217,9 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         foreach (var sequence in sequences)
         {
             var tempDist = int.MaxValue;
-            foreach (string kmer in sequence.GetKmerEnumerator(pattern.Length))
+            foreach (var kmer in sequence.GetKmerEnumerator(pattern.Length))
             {
-                int currentDist = HammingDistance(pattern, kmer);
+                var currentDist = HammingDistance(pattern, kmer);
                 if (currentDist < tempDist) tempDist = currentDist;
             }
 
@@ -252,7 +252,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     {
         RawSequence = rawSequence;
 
-        foreach (char basePair in rawSequence)
+        foreach (var basePair in rawSequence)
             // TODO: virtual member call in constructor is an issue? why?
             // Ah it's a design flaw on my part -- what's a better way to do this
             // abstract,
@@ -287,7 +287,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     #region String Accessors
 
     public char this[int index] => RawSequence[index];
-    
+
     public string this[Range range] => RawSequence[range];
 
     public string Substring(int i, int kmerLength)
@@ -296,6 +296,4 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     }
 
     #endregion
-
-    private static Lazy<Random> _random = new();
 }

@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Bio.Sequence.Interfaces;
+namespace Bio.Sequences.Interfaces;
 
 public interface IDna
 {
@@ -52,7 +52,6 @@ public interface IDna
     int GetMinimumDistanceForKmer(string kmer);
 
     /// <summary>
-    /// 
     /// </summary>
     /// <returns></returns>
     double[] OddsOfFinding(double[] gcContents, int n);

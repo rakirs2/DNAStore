@@ -1,7 +1,7 @@
 using System.Text;
 using Base.DataStructures;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 public class DeBrujin
 {

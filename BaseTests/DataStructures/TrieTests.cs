@@ -1,4 +1,6 @@
-﻿namespace Base.DataStructures.Tests;
+﻿using Base.DataStructures;
+
+namespace BaseTests.DataStructures;
 
 [TestClass]
 public class TrieTests

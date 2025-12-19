@@ -1,4 +1,4 @@
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 /// <summary>
 ///     Effectively allows for reverse complements to be searched, counted and handled
@@ -33,8 +33,8 @@ public class ReverseComplementDictionary
     {
         get
         {
-            _reverseComplements.TryGetValue(index, out int value1);
-            _inputs.TryGetValue(index, out int value2);
+            _reverseComplements.TryGetValue(index, out var value1);
+            _inputs.TryGetValue(index, out var value2);
             return value1 + value2;
         }
     }

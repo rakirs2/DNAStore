@@ -1,22 +1,22 @@
 ﻿using Bio.Analysis.Interfaces;
 using Bio.IO;
-using Bio.Sequence.Types;
+using Bio.Sequences.Types;
 
 namespace Bio.Analysis.Types;
 
 public class LongestCommonSubsequence : ILongestCommonSubsequence
 {
-    private readonly Sequence.Types.Sequence _longest;
+    private readonly Sequence _longest;
 
     public LongestCommonSubsequence(List<Fasta> fastas)
     {
         var first = fastas[0];
-        for (long i = first.Length; i > 0; i--)
+        for (var i = first.Length; i > 0; i--)
         {
             if (_longest != null) break;
             for (var start = 0; start < first.Length - i; start++)
             {
-                string? currentString = first.RawSequence.Substring(start, (int)i);
+                var currentString = first.RawSequence.Substring(start, (int)i);
                 var isValid = true;
                 foreach (var fasta in fastas[1..])
                     if (!fasta.RawSequence.Contains(currentString))
@@ -26,13 +26,13 @@ public class LongestCommonSubsequence : ILongestCommonSubsequence
                     }
 
                 if (isValid)
-                    _longest = new Sequence.Types.Sequence(currentString);
+                    _longest = new Sequence(currentString);
             }
         }
         // to generate each possible subsequence
     }
 
-    public Sequence.Types.Sequence GetAnyLongest()
+    public Sequence GetAnyLongest()
     {
         return _longest;
     }

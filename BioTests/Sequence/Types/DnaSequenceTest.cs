@@ -1,4 +1,4 @@
-﻿using Bio.Sequence.Types;
+﻿using Bio.Sequences.Types;
 
 namespace BioTests.Sequence.Types;
 
@@ -120,7 +120,7 @@ public class DnaSequenceTests
     public void GenerateKmerCompositionBadInput()
     {
         var seq = new DnaSequence("acgt");
-        int[] _ = seq.KmerComposition(0);
+        var _ = seq.KmerComposition(0);
     }
 
     [TestMethod]
@@ -128,14 +128,14 @@ public class DnaSequenceTests
     public void GenerateKmerCompositionBadInput2()
     {
         var seq = new DnaSequence("acgt");
-        int[] _ = seq.KmerComposition(-1);
+        var _ = seq.KmerComposition(-1);
     }
 
     [TestMethod]
     public void GenerateKmerComposition()
     {
         var seq = new DnaSequence("AAAAA");
-        int[] output = seq.KmerComposition(2);
+        var output = seq.KmerComposition(2);
         var expected = new[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         Assert.IsTrue(expected.SequenceEqual(output));
     }
@@ -145,8 +145,8 @@ public class DnaSequenceTests
     {
         var seq = new DnaSequence(
             "CTTCGAAAGTTTGGGCCGAGTCTTACAGTCGGTCTTGAAGCAAAGTAACGAACTCCACGGCCCTGACTACCGAACCAGTTGTGAGTACTCAACTGGGTGAGAGTGCAGTCCCTATTGAGTTTCCGAGACTCACCGGGATTTTCGATCCAGCCTCAGTCCAGTCTTGTGGCCAACTCACCAAATGACGTTGGAATATCCCTGTCTAGCTCACGCAGTACTTAGTAAGAGGTCGCTGCAGCGGGGCAAGGAGATCGGAAAATGTGCTCTATATGCGACTAAAGCTCCTAACTTACACGTAGACTTGCCCGTGTTAAAAACTCGGCTCACATGCTGTCTGCGGCTGGCTGTATACAGTATCTACCTAATACCCTTCAGTTCGCCGCACAAAAGCTGGGAGTTACCGCGGAAATCACAG");
-        int[] output = seq.KmerComposition(4);
-        int[] expected = new[]
+        var output = seq.KmerComposition(4);
+        var expected = new[]
         {
             4, 1, 4, 3, 0, 1, 1, 5, 1, 3, 1, 2, 2, 1, 2, 0, 1, 1, 3, 1, 2, 1, 3, 1, 1, 1, 1, 2, 2, 5, 1, 3, 0, 2, 2, 1,
             1, 1, 1, 3, 1, 0, 0, 1, 5, 5, 1, 5, 0, 2, 0, 2, 1, 2, 1, 1, 1, 2, 0, 1, 0, 0, 1, 1, 3, 2, 1, 0, 3, 2, 3, 0,
@@ -174,7 +174,7 @@ public class DnaSequenceTests
             "TCCAA"
         };
 
-        foreach (string val in expected) output.Remove(val);
+        foreach (var val in expected) output.Remove(val);
 
         Assert.IsTrue(output.Count == 0);
     }
@@ -183,7 +183,7 @@ public class DnaSequenceTests
     public void RandomStringTest()
     {
         var seq = new DnaSequence("ACGATACAA");
-        double output = seq.RandomStringProbability(0.129);
+        var output = seq.RandomStringProbability(0.129);
         Assert.AreEqual(-5.737, double.Round(output, 3));
     }
 
@@ -237,10 +237,10 @@ public class DnaSequenceTests
     public void OddsOfFinding()
     {
         var seq = new DnaSequence("AG");
-        var gc = new double[] { 0.25, .5, .75 };
-        double[] output = seq.OddsOfFinding(gc, 10);
+        var gc = new[] { 0.25, .5, .75 };
+        var output = seq.OddsOfFinding(gc, 10);
         for (var i = 0; i < gc.Length; i++) output[i] = System.Math.Round(output[i], 3);
 
-        Assert.AreEqual("0.422 0.562 0.422" , string.Join(" ", output));
+        Assert.AreEqual("0.422 0.562 0.422", string.Join(" ", output));
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Bio.Sequence.Interfaces;
+namespace Bio.Sequences.Interfaces;
 
 public interface IRna : ISequence
 {

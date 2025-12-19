@@ -1,4 +1,4 @@
-﻿using Bio.Sequence.Types;
+﻿using Bio.Sequences.Types;
 
 namespace Bio.Analysis.Interfaces;
 
@@ -23,7 +23,7 @@ public interface IKmerClumpCounter
     /// <summary>
     ///     The seqquence being analyzed
     /// </summary>
-    Sequence.Types.Sequence Sequence { get; }
+    Sequence Sequence { get; }
 
     public HashSet<string> ValidKmers { get; }
 }

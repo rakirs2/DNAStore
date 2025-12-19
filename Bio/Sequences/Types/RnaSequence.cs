@@ -1,14 +1,22 @@
 ﻿using System.Numerics;
 using Base.Utils;
-using Bio.Sequence.Interfaces;
+using Bio.Sequences.Interfaces;
+using BioMath;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 public class RnaSequence : NucleotideSequence, IRna
 {
+    private static readonly HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
+    private static readonly HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
+
     public RnaSequence(string rawSequence) : base(rawSequence)
     {
     }
+
+    protected override HashSet<char> Pyrimidines => pyrimidines;
+
+    protected override HashSet<char> Purines => purines;
 
     public string GetExpectedProteinString()
     {
@@ -25,8 +33,8 @@ public class RnaSequence : NucleotideSequence, IRna
         if (Counts.GetFrequency('A') == Counts.GetFrequency('U') &&
             Counts.GetFrequency('C') == Counts.GetFrequency('C'))
         {
-            var gcFreq = BioMath.Probability.Factorial((uint)Counts.GetFrequency('C'));
-            var auFreq = BioMath.Probability.Factorial((uint)Counts.GetFrequency('A'));
+            var gcFreq = Probability.Factorial((uint)Counts.GetFrequency('C'));
+            var auFreq = Probability.Factorial((uint)Counts.GetFrequency('A'));
 
             return gcFreq * auFreq;
         }
@@ -38,11 +46,4 @@ public class RnaSequence : NucleotideSequence, IRna
     {
         return SequenceHelpers.IsValidRNA(c);
     }
-
-    private static HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
-    private static HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
-
-    protected override HashSet<char> Pyrimidines => pyrimidines;
-
-    protected override HashSet<char> Purines => purines;
 }

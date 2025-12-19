@@ -1,4 +1,4 @@
-﻿using Bio.Sequence.Types;
+﻿using Bio.Sequences.Types;
 
 namespace Bio.Analysis.Interfaces;
 
@@ -9,5 +9,5 @@ public interface ILongestCommonSubsequence
     ///     Returns any longest subsequence in the List
     /// </summary>
     /// <returns></returns>
-    Sequence.Types.Sequence GetAnyLongest();
+    Sequence GetAnyLongest();
 }

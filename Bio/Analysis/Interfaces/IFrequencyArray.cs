@@ -1,4 +1,4 @@
-﻿namespace Base.Interfaces;
+﻿namespace Bio.Analysis.Interfaces;
 
 internal interface IFrequencyArray
 {

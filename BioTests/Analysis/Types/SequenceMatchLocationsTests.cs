@@ -1,5 +1,4 @@
 ﻿using Bio.Analysis.Types;
-using Bio.Sequence.Types;
 
 namespace BioTests.Analysis.Types;
 
@@ -9,7 +8,7 @@ public class SequenceMatchLocationsTests
     [TestMethod]
     public void MatchLocationsTest()
     {
-        var seq = new Bio.Sequence.Types.Sequence(
+        var seq = new Bio.Sequences.Types.Sequence(
             "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC");
 
         var matchLocations = new SequenceMatchLocations(seq, new Motif("CGCCC", 5));
@@ -20,7 +19,7 @@ public class SequenceMatchLocationsTests
     [TestMethod]
     public void HammingMatch()
     {
-        var seq = new Bio.Sequence.Types.Sequence(
+        var seq = new Bio.Sequences.Types.Sequence(
             "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC");
 
         var matchLocations = new SequenceMatchLocations(seq, new HammingMatch("ATTCTGGA", 3));

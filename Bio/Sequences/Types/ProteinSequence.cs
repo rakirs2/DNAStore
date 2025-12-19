@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
-using Bio.Sequence.Interfaces;
+using Bio.Sequences.Interfaces;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 public class ProteinSequence : Sequence, IProtein
 {
@@ -14,7 +14,7 @@ public class ProteinSequence : Sequence, IProtein
         get
         {
             double output = 0;
-            foreach (char character in ToString()) output += Reference.MolecularWeightsDictionary[character];
+            foreach (var character in ToString()) output += Reference.MolecularWeightsDictionary[character];
             return output;
         }
     }
@@ -23,7 +23,7 @@ public class ProteinSequence : Sequence, IProtein
     public int NumberOfPossibleRNA(int modulo = (int)1e6)
     {
         BigInteger result = 1;
-        foreach (char protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
+        foreach (var protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
         // finally, we need to account for the stop
         result *= SequenceHelpers.NumberOfPossibleProteins("Stop");
         var modulo2 = new BigInteger(modulo);

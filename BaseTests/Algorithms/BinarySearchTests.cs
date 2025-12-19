@@ -1,4 +1,6 @@
-﻿namespace Base.Algorithms.Tests;
+﻿using Base.Algorithms;
+
+namespace BaseTests.Algorithms;
 
 [TestClass]
 public class BinarySearchTests

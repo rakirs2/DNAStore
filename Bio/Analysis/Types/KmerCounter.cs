@@ -1,5 +1,5 @@
 ﻿using Bio.Analysis.Interfaces;
-using Bio.Sequence.Types;
+using Bio.Sequences.Types;
 
 namespace Bio.Analysis.Types;
 
@@ -7,13 +7,13 @@ public class KmerCounter : IKmerCounter
 {
     private static readonly Dictionary<string, int> Counts = new();
 
-    public KmerCounter(Sequence.Types.Sequence sequence, int kmerLength)
+    public KmerCounter(Sequence sequence, int kmerLength)
     {
         KmerLength = kmerLength;
         // ok, we need to populate the right values here
         for (var i = 0; i < sequence.Length - KmerLength + 1; i++)
         {
-            string? currentWord = sequence.Substring(i, KmerLength);
+            var currentWord = sequence.Substring(i, KmerLength);
             if (Counts.ContainsKey(sequence.Substring(i, KmerLength)))
             {
                 Counts[currentWord] += 1;

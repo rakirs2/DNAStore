@@ -1,5 +1,4 @@
 ﻿using Bio.Analysis.Types;
-using Bio.Sequence.Types;
 
 namespace BioTests.Analysis.Types;
 
@@ -9,7 +8,7 @@ public class KmerCounterTests
     [TestMethod]
     public void KmerCounterTest()
     {
-        var sequence = new Bio.Sequence.Types.Sequence("aabbccddeeffeeggee");
+        var sequence = new Bio.Sequences.Types.Sequence("aabbccddeeffeeggee");
 
         var kmerCounter = new KmerCounter(sequence, 2);
         Assert.AreEqual(2, kmerCounter.KmerLength);
@@ -20,7 +19,7 @@ public class KmerCounterTests
     [TestMethod]
     public void KmerCounterTestMultipleMostFrequent()
     {
-        var sequence = new Bio.Sequence.Types.Sequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
+        var sequence = new Bio.Sequences.Types.Sequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
         var kmerCounter = new KmerCounter(sequence, 4);
         // Assert.AreEqual(2, kmerCounter.KmerLength);
         // Assert.AreEqual("ee", kmerCounter.HighestFrequencyKmers[0]);

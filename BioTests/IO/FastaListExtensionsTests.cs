@@ -1,4 +1,6 @@
-﻿namespace Bio.IO.Tests;
+﻿using Bio.IO;
+
+namespace BioTests.IO;
 
 [TestClass]
 public class FastaListExtensionsTests

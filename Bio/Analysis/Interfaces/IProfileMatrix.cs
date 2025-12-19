@@ -1,4 +1,4 @@
-﻿using Bio.Sequence.Types;
+﻿using Bio.Sequences.Types;
 
 namespace Bio.Analysis.Interfaces;
 
@@ -19,7 +19,7 @@ public interface IProfileMatrix
     ///     Ties are broken with the last highest number
     /// </summary>
     /// <returns></returns>
-    Sequence.Types.Sequence GetProfileSequence();
+    Sequence GetProfileSequence();
 
 
     /// <summary>

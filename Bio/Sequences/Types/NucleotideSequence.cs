@@ -1,8 +1,7 @@
-using Base.Utils;
 using Bio.IO;
-using Bio.Sequence.Interfaces;
+using Bio.Sequences.Interfaces;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 public abstract class NucleotideSequence : Sequence, INucleotideSequence
 {
@@ -61,8 +60,8 @@ public abstract class NucleotideSequence : Sequence, INucleotideSequence
 
         for (var i = 0; i < Length; i++)
         {
-            char a = this[i];
-            char b = other[i];
+            var a = this[i];
+            var b = other[i];
             if (!a.Equals(b))
             {
                 if (Pyrimidines.Contains(a) && Pyrimidines.Contains(b))

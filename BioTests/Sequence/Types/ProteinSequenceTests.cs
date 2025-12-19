@@ -1,4 +1,4 @@
-﻿using Bio.Sequence.Types;
+﻿using Bio.Sequences.Types;
 using BioMath;
 
 namespace BioTests.Sequence.Types;

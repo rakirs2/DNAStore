@@ -1,7 +1,6 @@
 ﻿using Bio.Analysis.Types;
-using Bio.Sequence.Types;
 
-namespace Bio.Sequence.Interfaces;
+namespace Bio.Sequences.Interfaces;
 
 public interface ISequence
 {
