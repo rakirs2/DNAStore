@@ -1,4 +1,4 @@
-﻿namespace Bio.Sequence;
+﻿namespace Bio.Sequences;
 
 public enum ContentType
 {

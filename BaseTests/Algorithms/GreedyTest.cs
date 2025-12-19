@@ -1,3 +1,5 @@
+using Base.Algorithms;
+
 namespace BaseTests.Algorithms;
 
 [TestClass]

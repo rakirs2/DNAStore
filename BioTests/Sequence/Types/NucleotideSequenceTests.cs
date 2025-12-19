@@ -1,4 +1,4 @@
-using Bio.Sequence.Types;
+using Bio.Sequences.Types;
 
 namespace BioTests.Sequence.Types;
 
@@ -11,7 +11,7 @@ public class NucleotideSequenceTests
         var dnaSequence =
             new DnaSequence(
                 "CCTATCGGTGGATTAGCATGTCCCTGTACGTTTCGCCGCGAACTAGTTCACACGGCTTGATGGCAAATGGTTTTTCCGGCGACCGTAATCGTCCACCGAG");
-        int[]? output = dnaSequence.CalculateMinPrefixGCSkew();
+        var output = dnaSequence.CalculateMinPrefixGCSkew();
         Assert.IsTrue(new List<int> { 53, 97 }.SequenceEqual(output));
     }
 }

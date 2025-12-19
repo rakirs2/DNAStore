@@ -13,11 +13,11 @@ public static class Search
         {
             // Use a secondary HashSet inside the loop to track numbers seen so far for the current 'i'
             var seen = new Dictionary<int, int>();
-            int targetSum = -inputArray[i]; // Target for the remaining two numbers
+            var targetSum = -inputArray[i]; // Target for the remaining two numbers
 
-            for (int j = i + 1; j < inputArray.Count; j++)
+            for (var j = i + 1; j < inputArray.Count; j++)
             {
-                int needed = targetSum - inputArray[j];
+                var needed = targetSum - inputArray[j];
 
                 if (seen.ContainsKey(needed))
                 {

@@ -4,8 +4,8 @@ namespace Base.Algorithms;
 
 public class ReversalDistance
 {
-    private int[] _a;
-    private int[] _b;
+    private readonly int[] _a;
+    private readonly int[] _b;
 
     private ReversalDistance(int[] a, int[] b)
     {
@@ -16,8 +16,8 @@ public class ReversalDistance
     }
 
     /// <summary>
-    /// There are n^2 possible reversals at every iteration in this implementation.
-    /// TODO: Hannenhali and Pevzner's clearer alg (hopefully?)
+    ///     There are n^2 possible reversals at every iteration in this implementation.
+    ///     TODO: Hannenhali and Pevzner's clearer alg (hopefully?)
     /// </summary>
     /// <returns></returns>
     private int Calculate()
@@ -31,7 +31,7 @@ public class ReversalDistance
 
         while (currentIteration.Count != 0 || (nextIteration.Count != 0 && currentDepth <= _a.Length))
         {
-            int[] temp = currentIteration.Dequeue();
+            var temp = currentIteration.Dequeue();
             if (temp.SequenceEqual(_b)) return currentDepth;
 
             traversed.Add(temp);
@@ -63,7 +63,7 @@ public class ReversalDistance
     }
 
     /// <summary>
-    /// Really simple definition. if the n+1st term is lt the nth term
+    ///     Really simple definition. if the n+1st term is lt the nth term
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
@@ -84,7 +84,7 @@ public class ReversalDistance
     }
 
     /// <summary>
-    /// Basic Greedy Reversal sort. The order is completely optional. It exists because the problem required it
+    ///     Basic Greedy Reversal sort. The order is completely optional. It exists because the problem required it
     /// </summary>
     /// <remarks>
     ///     We're assuming 1-indexing, and a clean set of data.
@@ -94,13 +94,13 @@ public class ReversalDistance
     /// <returns></returns>
     public static int ApproximateGreedyReversalSort(int[] reversals, out List<int[]> order)
     {
-        int n = reversals.Length;
+        var n = reversals.Length;
         order = new List<int[]>();
         for (var i = 1; i <= n; i++)
             if (reversals[i - 1] != i)
             {
                 // greedily find the right index 
-                int j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
+                var j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
                 ReverseSubsequence(reversals, i - 1, j);
                 var temp = (int[])reversals.Clone();
                 order.Add(temp);

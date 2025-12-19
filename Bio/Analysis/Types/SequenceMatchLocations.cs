@@ -1,5 +1,5 @@
 ﻿using Bio.Analysis.Interfaces;
-using Bio.Sequence.Types;
+using Bio.Sequences.Types;
 
 namespace Bio.Analysis.Types;
 
@@ -7,9 +7,9 @@ public class SequenceMatchLocations : ISequenceMatchLocator
 {
     private readonly IMatch _matchLogic;
 
-    private readonly AnySequence _sequence;
+    private readonly Sequence _sequence;
 
-    public SequenceMatchLocations(AnySequence sequence, IMatch matchLogic)
+    public SequenceMatchLocations(Sequence sequence, IMatch matchLogic)
     {
         _sequence = sequence;
         _matchLogic = matchLogic;

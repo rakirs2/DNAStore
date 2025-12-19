@@ -1,4 +1,4 @@
-namespace Bio.Sequence.Interfaces;
+namespace Bio.Sequences.Interfaces;
 
 public interface IErrorCorrection<T>
 {

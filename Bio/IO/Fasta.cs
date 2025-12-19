@@ -1,6 +1,6 @@
 using System.Text.Json;
 using Base.DataStructures;
-using Bio.Sequence;
+using Bio.Sequences;
 
 namespace Bio.IO;
 
@@ -14,7 +14,7 @@ public class Fasta : IFasta
         BasePairDictionary = new BasePairDictionary();
 
         var isPossibleRNA = false;
-        foreach (char c in RawSequence)
+        foreach (var c in RawSequence)
         {
             if (ContentType == ContentType.Unknown)
             {
@@ -38,9 +38,9 @@ public class Fasta : IFasta
         get
         {
             // TODO: this is a hack that can get refactored. I need to determine if I can safely assume that everything can be converted to uppercase
-            long totalGC = BasePairDictionary.GetFrequency('G') + BasePairDictionary.GetFrequency('g') +
-                           BasePairDictionary.GetFrequency('C') + BasePairDictionary.GetFrequency('c');
-            long totalBp = BasePairDictionary.Count;
+            var totalGC = BasePairDictionary.GetFrequency('G') + BasePairDictionary.GetFrequency('g') +
+                          BasePairDictionary.GetFrequency('C') + BasePairDictionary.GetFrequency('c');
+            var totalBp = BasePairDictionary.Count;
             return (double)totalGC / totalBp;
         }
     }
@@ -87,7 +87,7 @@ public class Fasta : IFasta
         try
         {
             reader = new StreamReader(filePath);
-            string? fileContents = reader.ReadToEnd();
+            var fileContents = reader.ReadToEnd();
             return JsonSerializer.Deserialize<Fasta>(fileContents);
         }
         finally

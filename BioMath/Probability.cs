@@ -29,7 +29,7 @@ public static class Probability
     }
 
     /// <summary>
-    /// nPR. Returns a big integer because these get unwieldy.
+    ///     nPR. Returns a big integer because these get unwieldy.
     /// </summary>
     /// <param name="n"></param>
     /// <param name="r"></param>
@@ -52,7 +52,7 @@ public static class Probability
     }
 
     /// <summary>
-    /// This is just permutations but we're special
+    ///     This is just permutations but we're special
     /// </summary>
     /// <param name="n"></param>
     /// <param name="r"></param>
@@ -73,7 +73,7 @@ public static class Probability
     /// <returns></returns>
     public static double PercentDominant(uint k, uint m, uint n)
     {
-        uint total = k + m + n;
+        var total = k + m + n;
         var totalCombinations = 4 * Combinations(total, 2);
         var dominant = 4 * Combinations(k, 2) + 4 * k * m + 4 * k * n + 3 * Combinations(m, 2) + 2 * m * n;
 
@@ -124,7 +124,7 @@ public static class Probability
         {
             var initial = new List<string>();
             // initialize
-            foreach (char character in kmers) initial.Add(character.ToString());
+            foreach (var character in kmers) initial.Add(character.ToString());
 
             return initial;
         }
@@ -133,8 +133,8 @@ public static class Probability
 
 
         var newOutput = new List<string>();
-        foreach (char bp in kmers)
-        foreach (string? currentSequence in output)
+        foreach (var bp in kmers)
+        foreach (var currentSequence in output)
             newOutput.Add(bp + currentSequence);
 
         return newOutput;
@@ -154,9 +154,9 @@ public static class Probability
     {
         if (kmerLength == 0) return;
 
-        foreach (char character in inputString)
+        foreach (var character in inputString)
         {
-            string? newCurrent = current + character;
+            var newCurrent = current + character;
             output.Add(newCurrent);
             GenerateAllkmersAndSubKmers(inputString, newCurrent, kmerLength - 1, ref output);
         }
@@ -170,7 +170,7 @@ public static class Probability
             return;
         }
 
-        for (int i = start; i < numbers.Length; i++)
+        for (var i = start; i < numbers.Length; i++)
         {
             GenerateSignedPermutations(numbers, start + 1, results);
             numbers[i] = -numbers[i];
@@ -193,7 +193,7 @@ public static class Probability
     }
 
     /// <summary>
-    /// TODO: clean this up if you need to call it later.
+    ///     TODO: clean this up if you need to call it later.
     /// </summary>
     public static IEnumerable<int[]> GenerateSignedPermutations(int highest = 1)
     {
@@ -208,7 +208,7 @@ public static class Probability
         {
             var tempOutput = new HashSet<int[]>();
             GenerateSignedPermutations(perm.ToArray(), 0, tempOutput);
-            foreach (int[] val in tempOutput) output.Add((int[])val.Clone());
+            foreach (var val in tempOutput) output.Add((int[])val.Clone());
         }
 
         return output;

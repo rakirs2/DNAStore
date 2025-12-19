@@ -50,7 +50,7 @@ public class Motif : IMotif
     private static string MotifToRegexString(string input)
     {
         var output = new StringBuilder();
-        foreach (char c in input)
+        foreach (var c in input)
             if (c == '{')
                 output.Append("[^");
             else if (c == '}')

@@ -8,7 +8,7 @@ public class StringUtilsTests
     [TestMethod]
     public void SwapIndexTest()
     {
-        string? output = StringUtils.SwapIndex("test", 0, 1);
+        var output = StringUtils.SwapIndex("test", 0, 1);
         Assert.IsTrue(output.Equals("etst"));
     }
 
@@ -33,7 +33,7 @@ public class StringUtilsTests
     [TestMethod]
     public void ForceJoinPerfectOrderOffByOne()
     {
-        var strings = new List<string>()
+        var strings = new List<string>
         {
             "abc",
             "bcd",

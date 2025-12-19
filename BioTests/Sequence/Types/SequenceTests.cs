@@ -1,15 +1,15 @@
 ﻿using Bio.Analysis.Types;
-using Bio.Sequence.Types;
+using Bio.Sequences.Types;
 
 namespace BioTests.Sequence.Types;
 
 [TestClass]
-public class AnySequenceTests
+public class SequenceTests
 {
     [TestMethod]
     public void BasicConstruction()
     {
-        var anySequence = new AnySequence("Somaf321434");
+        var anySequence = new Bio.Sequences.Types.Sequence("Somaf321434");
         Assert.IsNotNull(anySequence, "Object should construct");
         Assert.AreEqual(11, anySequence.Length);
     }
@@ -17,35 +17,35 @@ public class AnySequenceTests
     [TestMethod]
     public void HammingMismatchedLengths()
     {
-        var a = new AnySequence("a");
-        var b = new AnySequence("ab");
-        Assert.ThrowsExactly<InvalidDataException>(() => AnySequence.HammingDistance(a, b));
+        var a = new Bio.Sequences.Types.Sequence("a");
+        var b = new Bio.Sequences.Types.Sequence("ab");
+        Assert.ThrowsExactly<InvalidDataException>(() => Bio.Sequences.Types.Sequence.HammingDistance(a, b));
     }
 
     [TestMethod]
     public void HammingDistanceCaseSensitive()
     {
-        var a = new AnySequence("ac");
-        var b = new AnySequence("ab");
-        int result = AnySequence.HammingDistance(a, b);
+        var a = new Bio.Sequences.Types.Sequence("ac");
+        var b = new Bio.Sequences.Types.Sequence("ab");
+        var result = Bio.Sequences.Types.Sequence.HammingDistance(a, b);
         Assert.AreEqual(1, result);
     }
 
     [TestMethod]
     public void HammingDistanceRealistic()
     {
-        var a = new AnySequence("GAGCCTACTAACGGGAT");
-        var b = new AnySequence("CATCGTAATGACGGCCT");
-        int result = AnySequence.HammingDistance(a, b);
+        var a = new Bio.Sequences.Types.Sequence("GAGCCTACTAACGGGAT");
+        var b = new Bio.Sequences.Types.Sequence("CATCGTAATGACGGCCT");
+        var result = Bio.Sequences.Types.Sequence.HammingDistance(a, b);
         Assert.AreEqual(7, result);
     }
 
     [TestMethod]
     public void OneIndexSimpleTest()
     {
-        var a = new AnySequence("GAGCCTACTAACGGGAT");
+        var a = new Bio.Sequences.Types.Sequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        long[] result = a.MotifLocations(b);
+        var result = a.MotifLocations(b);
         var expected = new long[] { 1 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -53,9 +53,9 @@ public class AnySequenceTests
     [TestMethod]
     public void ZeroIndexSimpleTest()
     {
-        var a = new AnySequence("GAGCCTACTAACGGGAT");
+        var a = new Bio.Sequences.Types.Sequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        long[] result = a.MotifLocations(b, true);
+        var result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -63,9 +63,9 @@ public class AnySequenceTests
     [TestMethod]
     public void OneIndexExample()
     {
-        var a = new AnySequence("GATATATGCATATACTT");
+        var a = new Bio.Sequences.Types.Sequence("GATATATGCATATACTT");
         var b = new Motif("ATAT", 4);
-        long[] result = a.MotifLocations(b);
+        var result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -73,40 +73,40 @@ public class AnySequenceTests
     [TestMethod]
     public void AreSequenceEqualTest()
     {
-        var seq1 = new AnySequence("abcde");
-        var seq2 = new AnySequence("abcde");
-        Assert.IsTrue(AnySequence.AreSequenceEqual(seq1, seq2));
+        var seq1 = new Bio.Sequences.Types.Sequence("abcde");
+        var seq2 = new Bio.Sequences.Types.Sequence("abcde");
+        Assert.IsTrue(Bio.Sequences.Types.Sequence.AreSequenceEqual(seq1, seq2));
     }
 
     [TestMethod]
     public void AreSequenceEqualTestDifferentSequence()
     {
-        var seq1 = new AnySequence("abcde");
-        var seq2 = new AnySequence("abcdf");
-        Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
+        var seq1 = new Bio.Sequences.Types.Sequence("abcde");
+        var seq2 = new Bio.Sequences.Types.Sequence("abcdf");
+        Assert.IsFalse(Bio.Sequences.Types.Sequence.AreSequenceEqual(seq1, seq2));
     }
 
     [TestMethod]
     public void AreSequenceEqualTestDifferentLength()
     {
-        var seq1 = new AnySequence("abcde");
-        var seq2 = new AnySequence("abcdeg");
-        Assert.IsFalse(AnySequence.AreSequenceEqual(seq1, seq2));
+        var seq1 = new Bio.Sequences.Types.Sequence("abcde");
+        var seq2 = new Bio.Sequences.Types.Sequence("abcdeg");
+        Assert.IsFalse(Bio.Sequences.Types.Sequence.AreSequenceEqual(seq1, seq2));
     }
 
     [TestMethod]
     public void RemoveIntronsTestBeginning()
     {
-        var seq1 = new AnySequence("abcde");
-        var output = seq1.RemoveIntrons(new List<AnySequence> { new("a") });
+        var seq1 = new Bio.Sequences.Types.Sequence("abcde");
+        var output = seq1.RemoveIntrons(new List<Bio.Sequences.Types.Sequence> { new("a") });
         Assert.AreEqual("bcde", output.ToString());
     }
 
     [TestMethod]
     public void RemoveIntronsTestEnd()
     {
-        var seq1 = new AnySequence("abcde");
-        var output = seq1.RemoveIntrons(new List<AnySequence> { new("e") });
+        var seq1 = new Bio.Sequences.Types.Sequence("abcde");
+        var output = seq1.RemoveIntrons(new List<Bio.Sequences.Types.Sequence> { new("e") });
         Assert.AreEqual("abcd", output.ToString());
     }
 
@@ -114,7 +114,7 @@ public class AnySequenceTests
     [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveIntronsTestNull()
     {
-        var seq1 = new AnySequence("abcde");
+        var seq1 = new Bio.Sequences.Types.Sequence("abcde");
         var output = seq1.RemoveIntrons(null);
         Assert.AreEqual("abcde", output.ToString());
     }
@@ -122,8 +122,8 @@ public class AnySequenceTests
     [TestMethod]
     public void FindFirstPossibleSubSequenceTest()
     {
-        var seq1 = new AnySequence("ACGTACGTGACG");
-        var subseq = new AnySequence("GTA");
+        var seq1 = new Bio.Sequences.Types.Sequence("ACGTACGTGACG");
+        var subseq = new Bio.Sequences.Types.Sequence("GTA");
 
         var result = seq1.FindFirstPossibleSubSequence(subseq);
         var expected = new List<int> { 3, 4, 5 };
@@ -133,26 +133,26 @@ public class AnySequenceTests
     [TestMethod]
     public void OverlapTest()
     {
-        var seq1 = new AnySequence("ACGTACGTGACG");
-        var seq2 = new AnySequence("GTGACGCATTTG");
-        Assert.AreEqual(6, AnySequence.CalculateOverlap(seq1, seq2));
-        Assert.AreEqual(0, AnySequence.CalculateOverlap(seq2, seq1));
+        var seq1 = new Bio.Sequences.Types.Sequence("ACGTACGTGACG");
+        var seq2 = new Bio.Sequences.Types.Sequence("GTGACGCATTTG");
+        Assert.AreEqual(6, Bio.Sequences.Types.Sequence.CalculateOverlap(seq1, seq2));
+        Assert.AreEqual(0, Bio.Sequences.Types.Sequence.CalculateOverlap(seq2, seq1));
     }
 
     [TestMethod]
     public void InvalidTypeThrows()
     {
-        var seq1 = new AnySequence("ACGTACGTGACG");
+        var seq1 = new Bio.Sequences.Types.Sequence("ACGTACGTGACG");
         Assert.ThrowsExactly<ArgumentException>(() => seq1.CompareTo("something"));
     }
 
     [TestMethod]
     public void CompareToEqual()
     {
-        var seq1 = new AnySequence("ABCD");
-        var seq2 = new AnySequence("ABCD");
-        var seq3 = new AnySequence("ABC");
-        var seq4 = new AnySequence("ABCE");
+        var seq1 = new Bio.Sequences.Types.Sequence("ABCD");
+        var seq2 = new Bio.Sequences.Types.Sequence("ABCD");
+        var seq3 = new Bio.Sequences.Types.Sequence("ABC");
+        var seq4 = new Bio.Sequences.Types.Sequence("ABCE");
         Assert.AreEqual(0, seq1.CompareTo(seq2));
         Assert.AreEqual(1, seq1.CompareTo(seq3));
         Assert.AreEqual(-1, seq1.CompareTo(seq4));
@@ -161,7 +161,7 @@ public class AnySequenceTests
     [TestMethod]
     public void EnumerableChar()
     {
-        var seq1 = new AnySequence("ABCD");
+        var seq1 = new Bio.Sequences.Types.Sequence("ABCD");
         var expected = "ABCD";
         using (var enumerator = seq1.GetEnumerator())
         {
@@ -178,16 +178,16 @@ public class AnySequenceTests
     [TestMethod]
     public void ContainsStringWithHammingDistance()
     {
-        var seq1 = new AnySequence("AAAAAAAAT");
+        var seq1 = new Bio.Sequences.Types.Sequence("AAAAAAAAT");
         Assert.IsTrue(seq1.ContainsString("TT", 1));
     }
 
     [TestMethod]
     public void KmerEnumerator()
     {
-        var seq1 = new AnySequence("AAAAAAAA");
+        var seq1 = new Bio.Sequences.Types.Sequence("AAAAAAAA");
         var counter = 0;
-        foreach (string something in seq1.GetKmerEnumerator(2)) counter++;
+        foreach (var something in seq1.GetKmerEnumerator(2)) counter++;
 
         Assert.AreEqual(7, counter);
     }
@@ -195,10 +195,10 @@ public class AnySequenceTests
     [TestMethod]
     public void RandomKmerGenerator()
     {
-        var seq1 = new AnySequence("FEZLWBDYZGJQFSMZAJTADAYAXTNXODMV");
-        string s1 = seq1.GetRandomKmer(5);
-        string s2 = seq1.GetRandomKmer(5);
-        string s3 = seq1.GetRandomKmer(5);
+        var seq1 = new Bio.Sequences.Types.Sequence("FEZLWBDYZGJQFSMZAJTADAYAXTNXODMV");
+        var s1 = seq1.GetRandomKmer(5);
+        var s2 = seq1.GetRandomKmer(5);
+        var s3 = seq1.GetRandomKmer(5);
 
         // assert 2/3 work. This should be sufficient for a random setup.
         var counter = 0;
@@ -214,15 +214,15 @@ public class AnySequenceTests
     [TestMethod]
     public void DistanceBetweenPattern()
     {
-        List<AnySequence> sequences = new()
+        List<Bio.Sequences.Types.Sequence> sequences = new()
         {
-            new AnySequence("TTACCTTAAC"),
-            new AnySequence("GATATCTGTC"),
-            new AnySequence("ACGGCGTTCG"),
-            new AnySequence("CCCTAAAGAG"),
-            new AnySequence("CGTCAGAGGT")
+            new Bio.Sequences.Types.Sequence("TTACCTTAAC"),
+            new Bio.Sequences.Types.Sequence("GATATCTGTC"),
+            new Bio.Sequences.Types.Sequence("ACGGCGTTCG"),
+            new Bio.Sequences.Types.Sequence("CCCTAAAGAG"),
+            new Bio.Sequences.Types.Sequence("CGTCAGAGGT")
         };
-        Assert.AreEqual(5, AnySequence.DistancePatternAndString("AAA", sequences));
+        Assert.AreEqual(5, Bio.Sequences.Types.Sequence.DistancePatternAndString("AAA", sequences));
     }
 
     [TestMethod]

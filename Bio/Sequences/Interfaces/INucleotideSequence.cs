@@ -1,6 +1,6 @@
-using Bio.Sequence.Types;
+using Bio.Sequences.Types;
 
-namespace Bio.Sequence.Interfaces;
+namespace Bio.Sequences.Interfaces;
 
 public interface INucleotideSequence
 {

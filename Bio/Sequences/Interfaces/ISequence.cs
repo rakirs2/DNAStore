@@ -1,7 +1,6 @@
 ﻿using Bio.Analysis.Types;
-using Bio.Sequence.Types;
 
-namespace Bio.Sequence.Interfaces;
+namespace Bio.Sequences.Interfaces;
 
 public interface ISequence
 {
@@ -25,7 +24,7 @@ public interface ISequence
     /// </summary>
     /// <param name="introns"></param>
     /// <returns></returns>
-    public AnySequence RemoveIntrons(List<AnySequence> introns);
+    public Types.Sequence RemoveIntrons(List<Types.Sequence> introns);
 
     /// <summary>
     ///     Returns the indices of the first possible subsequence within the sequence
@@ -33,7 +32,7 @@ public interface ISequence
     /// <param name="subsequence"></param>
     /// <param name="isZeroIndex"></param>
     /// <returns></returns>
-    public List<int> FindFirstPossibleSubSequence(AnySequence subsequence, bool isZeroIndex = false);
+    public List<int> FindFirstPossibleSubSequence(Types.Sequence subsequence, bool isZeroIndex = false);
 
     /// <summary>
     ///     Returns if the DNAString
@@ -45,5 +44,5 @@ public interface ISequence
 
     public string GetRandomKmer(int k);
 
-    public int EditDistance(AnySequence other);
+    public int EditDistance(Types.Sequence other);
 }

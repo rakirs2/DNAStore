@@ -1,6 +1,6 @@
-﻿using Bio.Sequence.Interfaces;
+﻿using Bio.Sequences.Interfaces;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 public class Codon : ICodon
 {

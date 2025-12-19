@@ -1,6 +1,6 @@
 using Base.Utils;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 public class ProbabilityProfile
 {
@@ -21,8 +21,8 @@ public class ProbabilityProfile
     public string HighestLikelihood(DnaSequence sequence)
     {
         var current = 0.0;
-        string? ret = sequence.Substring(0, size);
-        foreach (string? kmer in sequence.KmerCompositionUniqueString(size))
+        var ret = sequence.Substring(0, size);
+        foreach (var kmer in sequence.KmerCompositionUniqueString(size))
         {
             var temp = 1.0;
             for (var i = 0; i < kmer.Length; i++) temp *= _probabilities[kmer[i]][i];

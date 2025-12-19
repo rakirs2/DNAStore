@@ -1,17 +1,17 @@
 ﻿using System.Numerics;
 using System.Text;
 using Base.Utils;
-using Bio.Sequence.Interfaces;
+using Bio.Sequences.Interfaces;
 
-namespace Bio.Sequence.Types;
+namespace Bio.Sequences.Types;
 
 public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), IDna
 {
     private static readonly Dictionary<char, char> ComplementDict = new()
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
-    private static HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
-    private static HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
+    private static readonly HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
+    private static readonly HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
 
     private static readonly Dictionary<char, int> CharValueMapper = new()
     {
@@ -48,7 +48,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         'A',
         'T'
     };
-    
+
     protected override HashSet<char> Pyrimidines => pyrimidines;
 
     protected override HashSet<char> Purines => purines;
@@ -121,7 +121,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         };
 
         var percentage = 0.0;
-        foreach (char bp in RawSequence) percentage += Math.Log10(bpToPercentage[bp]);
+        foreach (var bp in RawSequence) percentage += Math.Log10(bpToPercentage[bp]);
 
         return percentage;
     }
@@ -144,6 +144,42 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return minimum;
     }
 
+    /// <summary>
+    ///     Adding up a bunch of probilities. Not the hardest thing but it's a good problem
+    /// </summary>
+    /// <param name="length"></param>
+    /// <param name="gcContent"></param>
+    /// <returns></returns>
+    public double[] OddsOfFinding(double[] gcContent, int number)
+    {
+        if (Length > int.MaxValue)
+            throw new ArgumentException("The length of the DNA string is way too long for this analysis");
+
+        var sLen = (int)Length;
+        var possiblePositions = number - sLen + 1;
+
+        var expectedValues = new double[gcContent.Length];
+
+        for (var i = 0; i < gcContent.Length; i++)
+        {
+            var gc = gcContent[i];
+            var at = 1 - gc;
+            var output = 1.0;
+
+            // Note: because this runs off the DnaSequence, we are guaranteed valid letters a
+            // that is part of the contract at construction
+            foreach (var nucleotide in RawSequence)
+                if (cgDict.Contains(nucleotide))
+                    output *= gc / 2.0;
+                else
+                    output *= at / 2.0;
+
+            expectedValues[i] = possiblePositions * output;
+        }
+
+        return expectedValues;
+    }
+
     private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex,
         HashSet<string> neighborhood)
     {
@@ -157,8 +193,8 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         GenerateNeighborhoodRecursive(currentPatternChars, remainingDistance, startIndex + 1, neighborhood);
 
-        char originalChar = currentPatternChars[startIndex];
-        foreach (char newChar in ValidAlphabet)
+        var originalChar = currentPatternChars[startIndex];
+        foreach (var newChar in ValidAlphabet)
             if (newChar != originalChar)
             {
                 currentPatternChars[startIndex] = newChar;
@@ -185,7 +221,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
         while (number > 0)
         {
-            int remainder = number % 4;
+            var remainder = number % 4;
             pattern.Insert(0, ValueCharMapper[remainder]);
             number /= 4;
         }
@@ -210,7 +246,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     public DnaSequence GetReverseComplement()
     {
         var dnaStrand = new StringBuilder();
-        for (long i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
+        for (var i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
 
         return new DnaSequence(dnaStrand.ToString());
     }
@@ -255,11 +291,11 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         for (var i = 0; i <= dnaSequence.Length - 3; i++)
             if (SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(i, 3)].Equals("M"))
             {
-                int k = i + 3;
+                var k = i + 3;
                 var seqToAdd = "M";
                 while (k <= dnaSequence.Length - 3)
                 {
-                    string current = SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(k, 3)];
+                    var current = SequenceHelpers.DNAToProteinCode[dnaSequence.Substring(k, 3)];
                     if (current.Equals("Stop"))
                     {
                         output.Add(new ProteinSequence(seqToAdd));
@@ -275,7 +311,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     public static double GetProbabilityOccuringGivenGCContent(string subsequence, int sequenceLength, double gcContent)
     {
         var probability = 1.0;
-        foreach (char c in subsequence)
+        foreach (var c in subsequence)
             // Probably faster to do the manual check but i'd rather have this be case insensitive
             if (cgDict.Contains(c))
                 probability *= gcContent / 2.0;
@@ -284,41 +320,5 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
             else throw new ArgumentException("character " + sequenceLength);
 
         return 1.0 - Math.Pow(1.0 - probability, sequenceLength);
-    }
-
-    /// <summary>
-    /// Adding up a bunch of probilities. Not the hardest thing but it's a good problem
-    /// </summary>
-    /// <param name="length"></param>
-    /// <param name="gcContent"></param>
-    /// <returns></returns>
-    public double[] OddsOfFinding(double[] gcContent, int number)
-    {
-        if (Length > int.MaxValue)
-            throw new ArgumentException("The length of the DNA string is way too long for this analysis");
-
-        var sLen = (int)Length;
-        int possiblePositions = number - sLen + 1;
-
-        var expectedValues = new double[gcContent.Length];
-
-        for (var i = 0; i < gcContent.Length; i++)
-        {
-            double gc = gcContent[i];
-            double at = 1 - gc;
-            var output = 1.0;
-
-            // Note: because this runs off the DnaSequence, we are guaranteed valid letters a
-            // that is part of the contract at construction
-            foreach (char nucleotide in RawSequence)
-                if (cgDict.Contains(nucleotide))
-                    output *= gc / 2.0;
-                else
-                    output *= at / 2.0;
-
-            expectedValues[i] = possiblePositions * output;
-        }
-
-        return expectedValues;
     }
 }

@@ -2,7 +2,7 @@
 using Base.DataStructures;
 using Bio.Analysis.Interfaces;
 using Bio.IO;
-using Bio.Sequence.Types;
+using Bio.Sequences.Types;
 
 namespace Bio.Analysis.Types;
 
@@ -39,14 +39,14 @@ public class SimpleProfileMatrix : IProfileMatrix
 
     public long QuantityAnalyzed { get; }
 
-    public AnySequence GetProfileSequence()
+    public Sequence GetProfileSequence()
     {
         // TODO: if this ever gets called repeatedly, cache it
         var stringBuilder = new StringBuilder();
         foreach (var basePairDictionary in listOfFrequencies)
             stringBuilder.Append(basePairDictionary.HighestFrequencyBasePair);
 
-        return new AnySequence(stringBuilder.ToString());
+        return new Sequence(stringBuilder.ToString());
     }
 
     public string GetCleanOutput()
@@ -62,9 +62,9 @@ public class SimpleProfileMatrix : IProfileMatrix
     public string FrequencyMatrix()
     {
         var stringBuilder = new StringBuilder();
-        char[]? characters = listOfChars.ToArray();
+        var characters = listOfChars.ToArray();
         Array.Sort(characters);
-        foreach (char bp in characters)
+        foreach (var bp in characters)
         {
             stringBuilder.Append(bp + ":");
             for (var i = 0; i < LengthOfSequences; i++)
