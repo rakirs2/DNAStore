@@ -16,4 +16,24 @@ public class DirectedGraph<T> : UndirectedGraph<T>
 
         NumEdges++;
     }
+    // TODO: tests
+    public override void Remove(T item)
+    {
+        if (EdgeList.TryGetValue(item, out var edge))
+        {
+            var nodesRemoved = 0;
+            foreach (var kvp in EdgeList)
+            {
+                if (kvp.Value.Contains(item))
+                {
+                    kvp.Value.Remove(item);
+                    nodesRemoved++;
+                }
+            }
+
+            EdgeList.Remove(item);
+            NumEdges-= nodesRemoved;
+            NumNodes--;
+        }
+    }
 }

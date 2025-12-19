@@ -6,9 +6,10 @@
 /// <typeparam name="T"></typeparam>
 public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> where T : notnull
 {
+    public int NumNodes { get; protected set; }
     protected readonly SortedDictionary<T, HashSet<T>> EdgeList;
     protected int NumEdges;
-
+    
     public UndirectedGraph(int numNodes, IComparer<T>? comparer = null)
     {
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
@@ -26,9 +27,7 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
     {
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
-
-    public int NumNodes { get; }
-
+    
     public object Clone()
     {
         return MemberwiseClone();
@@ -55,9 +54,22 @@ public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> whe
         NumEdges++;
     }
 
-    public void Remove(T item)
+    public virtual void Remove(T item)
     {
-        throw new NotImplementedException();
+        if (EdgeList.TryGetValue(item, out var edge))
+        {
+            foreach (var key in edge)
+            {
+                if (EdgeList[key].Contains(item))
+                {
+                    EdgeList[key].Remove(item);
+                }
+            }
+
+            NumEdges -= edge.Count;
+            EdgeList.Remove(item);
+            NumNodes--;
+        }
     }
 
     /// <summary>

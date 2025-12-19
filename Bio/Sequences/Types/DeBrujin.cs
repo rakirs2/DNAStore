@@ -3,7 +3,8 @@ using Base.DataStructures;
 
 namespace Bio.Sequences.Types;
 
-public class DeBrujin
+// TODO: add an interface here
+public class DeBrujin 
 {
     private readonly UndirectedGraph<DnaSequence> _underlying;
 
@@ -44,5 +45,38 @@ public class DeBrujin
         AddSequence(new DnaSequence(tempSeq[..^offset]), new DnaSequence(tempSeq[offset..]));
         var rc = tempSeq.GetReverseComplement();
         AddSequence(new DnaSequence(rc[..^offset]), new DnaSequence(rc[offset..]));
+    }
+
+    /// <summary>
+    /// Assumes 
+    /// </summary>
+    /// <param name="reads"></param>
+    /// <param name="offset"></param>
+    public void GenerateFromList(List<string> reads, int offset = 1, bool checkRc = false)
+    {
+        foreach (var read in reads)
+        {
+            var tempSeq = new DnaSequence(read);
+            AddSequence(new DnaSequence(read[..^offset]), new DnaSequence(read[offset..]));
+            if (checkRc)
+            {
+                var rc = tempSeq.GetReverseComplement();
+                AddSequence(new DnaSequence(rc[..^offset]), new DnaSequence(rc[offset..]));
+            }
+        }
+    }
+
+    public string AssembleEulerianCycle()
+    {
+        //start somewhere
+        var startingpoint = _underlying.GetEdgeList().Keys.First();
+        var sb = new StringBuilder();
+        while (_underlying.NumNodes > 0)
+        {
+            
+        }
+        
+        
+        return sb.ToString();
     }
 }

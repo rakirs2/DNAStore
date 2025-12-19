@@ -283,7 +283,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     {
         return new Sequence(AlignmentMatrix.LongestCommonSubSequence(s1.RawSequence, s2.RawSequence));
     }
-
+    
     #region String Accessors
 
     public char this[int index] => RawSequence[index];
