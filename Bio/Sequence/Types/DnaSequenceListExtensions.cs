@@ -58,7 +58,7 @@ public static class DnaSequenceListExtensions
             {
                 if (i == j) continue;
 
-                int currentOverlap = AnySequence.CalculateOverlap(copyOfList[i], copyOfList[j]);
+                int currentOverlap = Sequence.CalculateOverlap(copyOfList[i], copyOfList[j]);
                 if (currentOverlap > maxOverlap)
                 {
                     maxOverlap = currentOverlap;
@@ -123,13 +123,13 @@ public static class DnaSequenceListExtensions
                     var rc = knownRead.GetReverseComplement();
                     if (rc.Equals(item)) continue;
 
-                    if (AnySequence.HammingDistance(knownRead, item) == distance && dict[knownRead] >= 2)
+                    if (Sequence.HammingDistance(knownRead, item) == distance && dict[knownRead] >= 2)
                     {
                         output.Add(new ErrorCorrection(item, knownRead));
                         break;
                     }
 
-                    if (AnySequence.HammingDistance(knownRead.GetReverseComplement(), item) == distance &&
+                    if (Sequence.HammingDistance(knownRead.GetReverseComplement(), item) == distance &&
                         dict[knownRead.GetReverseComplement()] >= 2)
                     {
                         output.Add(new ErrorCorrection(item, knownRead.GetReverseComplement()));

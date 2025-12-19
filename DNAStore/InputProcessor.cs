@@ -119,7 +119,7 @@ internal static class InputProcessor
     private class PatternAndDistance : BaseExecutor
     {
         private string _pattern;
-        private List<AnySequence> _sequences;
+        private List<Sequence> _sequences;
 
         protected override void GetInputs()
         {
@@ -129,13 +129,13 @@ internal static class InputProcessor
             Console.WriteLine("Please enter the strings");
 
             _sequences = Console.ReadLine().Split(" ")
-                .Select(s => new AnySequence(s))
+                .Select(s => new Sequence(s))
                 .ToList();
         }
 
         protected override void CalculateResult()
         {
-            Output = AnySequence.DistancePatternAndString(_pattern, _sequences).ToString();
+            Output = Sequence.DistancePatternAndString(_pattern, _sequences).ToString();
         }
     }
 
@@ -154,7 +154,7 @@ internal static class InputProcessor
             var matchLogic = new HammingMatch(inputString, tolerance);
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new SequenceMatchLocations(sequence, matchLogic);
         }
@@ -183,7 +183,7 @@ internal static class InputProcessor
             int tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
         }
@@ -263,17 +263,17 @@ internal static class InputProcessor
 
     private class GetFirstSubsequenceIndices : BaseExecutor
     {
-        private AnySequence? mainSequence;
+        private Sequence? mainSequence;
         private List<int>? output;
-        private AnySequence? subSequence;
+        private Sequence? subSequence;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter main sequence");
-            mainSequence = new AnySequence(Console.ReadLine());
+            mainSequence = new Sequence(Console.ReadLine());
 
             Console.WriteLine("Please enter the subsequence to be analyzed");
-            subSequence = new AnySequence(Console.ReadLine());
+            subSequence = new Sequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
@@ -433,7 +433,7 @@ internal static class InputProcessor
 
     private class DNeighborhood : BaseExecutor
     {
-        private readonly List<AnySequence>? _introns = new();
+        private readonly List<Sequence>? _introns = new();
         private int _d;
 
         private DnaSequence? _input;
@@ -455,7 +455,7 @@ internal static class InputProcessor
 
     private class SplicedDNAToProtein : BaseExecutor
     {
-        private readonly List<AnySequence>? _introns = new();
+        private readonly List<Sequence>? _introns = new();
 
         private DnaSequence? _input;
 
@@ -500,7 +500,7 @@ internal static class InputProcessor
             int tolerance = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Please enter the sequence to be analyzed");
-            var sequence = new AnySequence(Console.ReadLine());
+            var sequence = new Sequence(Console.ReadLine());
 
             _matcher = new MismatchKmerCounter(kmerLength, sequence, tolerance);
         }
@@ -514,7 +514,7 @@ internal static class InputProcessor
 
     private class SequenceAnalysis : BaseExecutor
     {
-        private AnySequence? _anySequence;
+        private Sequence? _anySequence;
         private string? _inputString;
 
         protected override void GetInputs()
@@ -525,7 +525,7 @@ internal static class InputProcessor
 
         protected override void CalculateResult()
         {
-            _anySequence = new AnySequence(_inputString ?? string.Empty);
+            _anySequence = new Sequence(_inputString ?? string.Empty);
             Output = _anySequence?.Counts.ToString();
         }
     }
@@ -797,7 +797,7 @@ internal static class InputProcessor
 
     private class ClumpFinder : BaseExecutor
     {
-        private AnySequence? _a;
+        private Sequence? _a;
 
         private int _kmerLength;
         private int _minCount;
@@ -806,7 +806,7 @@ internal static class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the sequence");
-            _a = new AnySequence(Console.ReadLine());
+            _a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the expected Length");
             _kmerLength = int.Parse(Console.ReadLine());
 
@@ -1131,20 +1131,20 @@ internal static class InputProcessor
 
     private class HammingDistance : BaseExecutor
     {
-        private AnySequence? a;
-        private AnySequence? b;
+        private Sequence? a;
+        private Sequence? b;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the second sequence");
-            b = new AnySequence(Console.ReadLine());
+            b = new Sequence(Console.ReadLine());
         }
 
         protected override void CalculateResult()
         {
-            Output = AnySequence.HammingDistance(a, b).ToString();
+            Output = Sequence.HammingDistance(a, b).ToString();
         }
     }
 
@@ -1210,14 +1210,14 @@ internal static class InputProcessor
     private class MotifFinder : BaseExecutor
     {
         private bool _isZeroIndex;
-        private AnySequence? a;
+        private Sequence? a;
         private Motif? b;
         private long[]? result;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the motif");
             string? motifString = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
@@ -1286,13 +1286,13 @@ internal static class InputProcessor
         private FrequencyArray? _frequencyArray;
         private int _length;
         private string? _values;
-        private AnySequence? a;
+        private Sequence? a;
         private List<int>? result;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the first sequence");
-            a = new AnySequence(Console.ReadLine());
+            a = new Sequence(Console.ReadLine());
             Console.WriteLine("Please enter the valid values");
             _values = Console.ReadLine();
             Console.WriteLine("Please enter the expected Length");
@@ -1424,12 +1424,12 @@ internal static class InputProcessor
         private readonly List<string> inputNames = new();
 
         private readonly List<long[]> output = new();
-        private List<AnySequence> sequencesToCompare = new();
+        private List<Sequence> sequencesToCompare = new();
 
         protected override void GetInputs()
         {
             // TODO: at some point get a better pattern
-            sequencesToCompare = new List<AnySequence>();
+            sequencesToCompare = new List<Sequence>();
             while (true)
             {
                 Console.WriteLine("Type the UniProt Protein for motif. type 'complete' when ready to start analysis");
@@ -1441,7 +1441,7 @@ internal static class InputProcessor
                 var seq = UniprotClient.GetAsync(input).Result;
 
                 inputNames.Add(input);
-                sequencesToCompare.Add(new AnySequence(seq));
+                sequencesToCompare.Add(new Sequence(seq));
             }
         }
 

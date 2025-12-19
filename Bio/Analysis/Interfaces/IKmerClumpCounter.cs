@@ -23,7 +23,7 @@ public interface IKmerClumpCounter
     /// <summary>
     ///     The seqquence being analyzed
     /// </summary>
-    AnySequence Sequence { get; }
+    Sequence.Types.Sequence Sequence { get; }
 
     public HashSet<string> ValidKmers { get; }
 }

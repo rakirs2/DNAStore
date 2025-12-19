@@ -7,9 +7,9 @@ public class SequenceMatchLocations : ISequenceMatchLocator
 {
     private readonly IMatch _matchLogic;
 
-    private readonly AnySequence _sequence;
+    private readonly Sequence.Types.Sequence _sequence;
 
-    public SequenceMatchLocations(AnySequence sequence, IMatch matchLogic)
+    public SequenceMatchLocations(Sequence.Types.Sequence sequence, IMatch matchLogic)
     {
         _sequence = sequence;
         _matchLogic = matchLogic;

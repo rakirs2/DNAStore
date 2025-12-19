@@ -12,7 +12,7 @@ public static class FastaListExtensions
             output.Add(new List<double>());
             for (var j = 0; j < list.Count; j++)
                 output[i].Add(Math.Round(
-                    (double)AnySequence.HammingDistance(list[i].RawSequence, list[j].RawSequence) /
+                    (double)Sequence.Types.Sequence.HammingDistance(list[i].RawSequence, list[j].RawSequence) /
                     list[i].RawSequence.Length, 4));
         }
 

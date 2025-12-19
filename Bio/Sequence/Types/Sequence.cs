@@ -13,17 +13,17 @@ namespace Bio.Sequence.Types;
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
 ///     know what type of string we are analyzing.
 /// </summary>
-public class AnySequence : ISequence, IComparable, IEnumerable<char>
+public class Sequence : ISequence, IComparable, IEnumerable<char>
 {
     public BasePairDictionary Counts = new();
 
-    public AnySequence(string rawSequence, string? name = null)
+    public Sequence(string rawSequence, string? name = null)
     {
         Name = name;
         ConstructionLogic(rawSequence);
     }
 
-    public AnySequence(Fasta fasta)
+    public Sequence(Fasta fasta)
     {
         Name = fasta.Name;
         ConstructionLogic(fasta.RawSequence);
@@ -33,7 +33,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
 
     public int CompareTo(object? obj)
     {
-        if (obj is AnySequence other)
+        if (obj is Sequence other)
             return RawSequence.CompareTo(other.RawSequence);
 
         throw new ArgumentException("Object is not a sequence");
@@ -69,7 +69,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return output.ToArray();
     }
 
-    public AnySequence RemoveIntrons(List<AnySequence> introns)
+    public Sequence RemoveIntrons(List<Sequence> introns)
     {
         if (introns == null) throw new ArgumentNullException();
         var trie = new Trie();
@@ -94,10 +94,10 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
             if (isValid) outputString.Append(RawSequence[i]);
         }
 
-        return new AnySequence(outputString.ToString());
+        return new Sequence(outputString.ToString());
     }
 
-    public List<int> FindFirstPossibleSubSequence(AnySequence subsequence, bool isZeroIndex = false)
+    public List<int> FindFirstPossibleSubSequence(Sequence subsequence, bool isZeroIndex = false)
     {
         if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
             return new List<int>();
@@ -141,7 +141,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return Substring(_random.Value.Next((int)Length - k), k);
     }
 
-    public int EditDistance(AnySequence other)
+    public int EditDistance(Sequence other)
     {
         if (other.GetType() != GetType()) throw new ArgumentException("Both must be of the same type");
 
@@ -156,14 +156,14 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     // Overloading the addition operator (+)
     // TODO; this should be type agnostic. Consider how you really want this to be going forwards.
     // TODO; It should also throw if we try adding two types of non equal types
-    public static AnySequence operator +(AnySequence p1, AnySequence p2)
+    public static Sequence operator +(Sequence p1, Sequence p2)
     {
-        return new AnySequence(p1.RawSequence + p2.RawSequence);
+        return new Sequence(p1.RawSequence + p2.RawSequence);
     }
 
     public override bool Equals(object obj)
     {
-        if (obj is AnySequence other) return RawSequence.Equals(other.RawSequence);
+        if (obj is Sequence other) return RawSequence.Equals(other.RawSequence);
 
         return false;
     }
@@ -181,7 +181,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     ///     This has some potential for scaling. What if both sequences are 20 gb long -- we can't exactly store that in memory
     ///     Also, hamming distance to hash difference seems intriguing if nothing else
     /// </remarks>
-    public static int HammingDistance(AnySequence a, AnySequence b)
+    public static int HammingDistance(Sequence a, Sequence b)
     {
         if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
 
@@ -211,7 +211,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
     /// <param name="pattern"></param>
     /// <param name="sequences"></param>
     /// <returns></returns>
-    public static int DistancePatternAndString(string pattern, List<AnySequence> sequences)
+    public static int DistancePatternAndString(string pattern, List<Sequence> sequences)
     {
         var distance = 0;
         foreach (var sequence in sequences)
@@ -229,7 +229,7 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return distance;
     }
 
-    public static bool AreSequenceEqual(AnySequence a, AnySequence b)
+    public static bool AreSequenceEqual(Sequence a, Sequence b)
     {
         return a.RawSequence.Equals(b.RawSequence);
     }
@@ -269,26 +269,25 @@ public class AnySequence : ISequence, IComparable, IEnumerable<char>
         return RawSequence.GetHashCode();
     }
 
-    public static int CalculateOverlap(AnySequence s1, AnySequence s2)
+    public static int CalculateOverlap(Sequence s1, Sequence s2)
     {
         var maxOverlap = 0;
         for (var i = 1; i <= Math.Min(s1.Length, s2.Length); i++)
-            if (s1.Sequence.EndsWith(s2.Substring(0, i)))
+            if (s1.RawSequence.EndsWith(s2.Substring(0, i)))
                 maxOverlap = i;
 
         return maxOverlap;
     }
 
-    public static AnySequence LongestCommonSubsequence(AnySequence s1, AnySequence s2)
+    public static Sequence LongestCommonSubsequence(Sequence s1, Sequence s2)
     {
-        return new AnySequence(AlignmentMatrix.LongestCommonSubSequence(s1.RawSequence, s2.RawSequence));
+        return new Sequence(AlignmentMatrix.LongestCommonSubSequence(s1.RawSequence, s2.RawSequence));
     }
 
     #region String Accessors
 
     public char this[int index] => RawSequence[index];
-
-    public string Sequence => RawSequence;
+    
     public string this[Range range] => RawSequence[range];
 
     public string Substring(int i, int kmerLength)

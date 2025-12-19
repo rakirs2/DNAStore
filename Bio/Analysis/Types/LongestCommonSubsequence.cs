@@ -6,7 +6,7 @@ namespace Bio.Analysis.Types;
 
 public class LongestCommonSubsequence : ILongestCommonSubsequence
 {
-    private readonly AnySequence _longest;
+    private readonly Sequence.Types.Sequence _longest;
 
     public LongestCommonSubsequence(List<Fasta> fastas)
     {
@@ -26,13 +26,13 @@ public class LongestCommonSubsequence : ILongestCommonSubsequence
                     }
 
                 if (isValid)
-                    _longest = new AnySequence(currentString);
+                    _longest = new Sequence.Types.Sequence(currentString);
             }
         }
         // to generate each possible subsequence
     }
 
-    public AnySequence GetAnyLongest()
+    public Sequence.Types.Sequence GetAnyLongest()
     {
         return _longest;
     }

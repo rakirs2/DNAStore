@@ -9,7 +9,7 @@ public class SequenceMatchLocationsTests
     [TestMethod]
     public void MatchLocationsTest()
     {
-        var seq = new AnySequence(
+        var seq = new Bio.Sequence.Types.Sequence(
             "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC");
 
         var matchLocations = new SequenceMatchLocations(seq, new Motif("CGCCC", 5));
@@ -20,7 +20,7 @@ public class SequenceMatchLocationsTests
     [TestMethod]
     public void HammingMatch()
     {
-        var seq = new AnySequence(
+        var seq = new Bio.Sequence.Types.Sequence(
             "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC");
 
         var matchLocations = new SequenceMatchLocations(seq, new HammingMatch("ATTCTGGA", 3));

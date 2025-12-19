@@ -39,14 +39,14 @@ public class SimpleProfileMatrix : IProfileMatrix
 
     public long QuantityAnalyzed { get; }
 
-    public AnySequence GetProfileSequence()
+    public Sequence.Types.Sequence GetProfileSequence()
     {
         // TODO: if this ever gets called repeatedly, cache it
         var stringBuilder = new StringBuilder();
         foreach (var basePairDictionary in listOfFrequencies)
             stringBuilder.Append(basePairDictionary.HighestFrequencyBasePair);
 
-        return new AnySequence(stringBuilder.ToString());
+        return new Sequence.Types.Sequence(stringBuilder.ToString());
     }
 
     public string GetCleanOutput()
