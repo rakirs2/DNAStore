@@ -180,13 +180,6 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return expectedValues;
     }
 
-    
-
-    public bool MatchesReverseComplement()
-    {
-        throw new NotImplementedException();
-    }
-
     private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex,
         HashSet<string> neighborhood)
     {
