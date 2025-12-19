@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Bio.Sequences.Types;
 
 namespace Bio.Sequences.Interfaces;
 
@@ -55,4 +56,19 @@ public interface IDna
     /// </summary>
     /// <returns></returns>
     double[] OddsOfFinding(double[] gcContents, int n);
+    
+    /// <summary>
+    /// </summary>
+    /// <returns></returns>
+    string GetComplement();
+
+    /// <summary>
+    /// Returns if thd suggested string actually complements the given strand.
+    /// Assumes orientation is correct coming in.
+    /// </summary>
+    /// <param name="candidateComplement"></param>
+    /// <returns></returns>
+    bool Complements(string candidateComplement);
+
+    public DnaSequence GetReverseComplement();
 }

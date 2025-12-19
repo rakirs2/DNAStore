@@ -325,6 +325,37 @@ internal static class InputProcessor
         }
     }
 
+    private class MatchesReverseComplement : BaseExecutor
+    {
+        List<DnaSequence> _sequences = new List<DnaSequence>();
+
+        protected override void GetInputs()
+        {
+            var input = "";
+            while (true)
+            {
+                input= Console.ReadLine();
+                if (input.Equals("done"))
+                    break;
+                _sequences.Add(new DnaSequence(input));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var count = 0;
+            foreach (var sequence in _sequences)
+            {
+                if (sequence.RawSequence ==sequence.GetReverseComplement().ToString())
+                {
+                    count++;
+                }
+            }
+            
+            Output = count.ToString();
+        }
+    }
+    
     private class GetSignedPermutations : BaseExecutor
     {
         private int a;
