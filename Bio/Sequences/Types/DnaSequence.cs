@@ -279,12 +279,11 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     public List<ProteinSequence> GetCandidateProteinSequences()
     {
         // TODO: this should be using the built in iterator
-        // TODO: reverse as well
         var values = new List<ProteinSequence>();
         SingleReadToProteinSequences(this, ref values);
         SingleReadToProteinSequences(GetReverseComplement(), ref values);
         // TODO: This is terrible, terrible perf wise and bad form.
-        // But, it might be the right answer for now
+        // TODO: proteinhashes and dna hashes should make the following redundant
 
         HashSet<string> filter = new();
         List<ProteinSequence> output = new();
