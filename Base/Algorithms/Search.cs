@@ -32,4 +32,14 @@ public static class Search
 
         return result.ToList();
     }
+
+    public static int KnuthMorrisPratt(this string toSearch, string target)
+    {
+        return -1;
+    }
+    
+    public static List<List<int>> AhoCorasick(this List<string> strings, List<string> target)
+    {
+        return null;
+    }
 }
