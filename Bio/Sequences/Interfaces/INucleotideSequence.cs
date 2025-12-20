@@ -13,7 +13,7 @@ public interface INucleotideSequence
     double TransitionToTransversionRatio(NucleotideSequence other);
 
     /// <summary>
-    /// Returns the ratio of the GC content in 
+    ///     Returns the ratio of the GC content in
     /// </summary>
     /// <returns></returns>
     double GCRatio();

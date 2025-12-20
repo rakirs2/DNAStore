@@ -31,7 +31,7 @@ public class MajorityElement<T>
 
         return default;
     }
-    
+
     public static T? SimpleDictionary(List<T> values)
     {
         var tracker = new Dictionary<T, int>();

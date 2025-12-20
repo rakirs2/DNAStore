@@ -5,7 +5,6 @@ namespace BaseTests.Utils;
 [TestClass]
 public class CaseInsensitiveCharComparerTests
 {
-
     [TestMethod]
     public void BaseEqualityTests()
     {
@@ -18,6 +17,7 @@ public class CaseInsensitiveCharComparerTests
     {
         var lowerCase = 'a';
         var upperCase = 'A';
-        Assert.AreEqual(CaseInsensitiveCharComparer.Shared.GetHashCode(lowerCase), CaseInsensitiveCharComparer.Shared.GetHashCode(upperCase));
+        Assert.AreEqual(CaseInsensitiveCharComparer.Shared.GetHashCode(lowerCase),
+            CaseInsensitiveCharComparer.Shared.GetHashCode(upperCase));
     }
 }

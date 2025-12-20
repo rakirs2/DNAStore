@@ -242,20 +242,21 @@ public class DnaSequenceTest
 
         Assert.AreEqual("0.422 0.562 0.422", string.Join(" ", output));
     }
-    
+
     [TestMethod]
     public void ComplementTests()
     {
         var seq = new DnaSequence("AGCT");
         Assert.AreEqual("TCGA", seq.GetComplement());
     }
-    
+
     [TestMethod]
     public void ComplementTestEmpty()
     {
         var seq = new DnaSequence("");
         Assert.AreEqual("", seq.GetComplement());
     }
+
     [TestMethod]
     public void PerfectComplementStrand()
     {
