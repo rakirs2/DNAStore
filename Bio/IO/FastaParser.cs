@@ -1,44 +1,53 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Bio.IO;
 
 public static class FastaParser
 {
+    /// <summary>
+    /// This defaults to assuming that there are multiple fastas in a file. Works for single.
+    /// Not really something that's worth optimizing.
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
     public static List<Fasta> Read(string filePath)
     {
         var name = "";
-        var currentSequence = "";
+        var currentSequence = new StringBuilder();
         List<Fasta> output = [];
-        // Not sure about best practice here -- but I think we can be relatively optimistic about the incoming format
-        // Realistically, we do not want to deal with bad formatting 
         foreach (var line in File.ReadLines(filePath))
             if (line.StartsWith('>'))
             {
-                // Let's handle possible existing classes.
-                // There might be some formatting things that can be optimized later on down the line.
-                if (name != "" || currentSequence != "")
+                if (name != "" || currentSequence.ToString() != "" || currentSequence.Length > 0)
                 {
-                    output.Add(new Fasta(name, currentSequence));
-                    currentSequence = "";
+                    output.Add(new Fasta(name, currentSequence.ToString()));
+                    currentSequence = new StringBuilder();
                 }
 
                 name = line[1..];
             }
             else
             {
-                // This is terrible form. I doubt I'll run into perf bottlenecks locally.
-                // But there is a likely a point at large genomics where this can be optimized to a string builder.
-                // Maybe we can infer from the size of the file if we should use string.concat/builder etc.
-                currentSequence += line;
+                currentSequence.Append(line);
             }
 
-        if (name != "" || currentSequence != "") output.Add(new Fasta(name, currentSequence));
+        if (name != "" || currentSequence.ToString().Length != 0) output.Add(new Fasta(name, currentSequence.ToString()));
 
         return output;
     }
 
+    public static void SplitMultiFasta(string filePath, string outputFilePath)
+    {
+        var fastas = Read(filePath);
+        foreach (var fasta in fastas)
+        {
+            
+        }
+    }
+
     /// <summary>
-    ///     This is a helper method to simply deserialze input from where the Fasta file can't actually be read
+    ///     This is a helper method to simply deserialize input from where the Fasta file can't actually be read
     ///     Completely. For now, this assumes only 1 Fasta per request.
     /// </summary>
     /// <param name="input"></param>
