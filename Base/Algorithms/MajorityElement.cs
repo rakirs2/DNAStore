@@ -6,7 +6,6 @@ public class MajorityElement<T>
     ///     Returns the majority element of an array if it exists.
     ///     Otherwise returns null. It is upon the caller to post process the default value
     ///     Kind of a failed experiment with value types.
-    ///     // TODO: as an exercise consider how to do this with reference types.
     /// </summary>
     /// <param name="values"></param>
     /// <returns></returns>
@@ -32,15 +31,7 @@ public class MajorityElement<T>
 
         return default;
     }
-
-    /// <summary>
-    ///     Returns the majority element of an array if it exists.
-    ///     Otherwise returns null. It is upon the caller to post process the default value
-    ///     Kind of a failed experiment with value types.
-    ///     // TODO: as an exercise consider how to do this with reference types.
-    /// </summary>
-    /// <param name="values"></param>
-    /// <returns></returns>
+    
     public static T? SimpleDictionary(List<T> values)
     {
         var tracker = new Dictionary<T, int>();

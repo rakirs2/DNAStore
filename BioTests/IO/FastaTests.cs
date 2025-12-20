@@ -1,5 +1,6 @@
 ﻿using Bio.IO;
 using Bio.Sequences;
+using Bio.Sequences.Types;
 using BioMath;
 
 namespace BioTests.IO;
@@ -77,7 +78,7 @@ public class FastaTests
     public void FastaGCContent()
     {
         var someFasta = new Fasta(SomeName, SomeIllegitimateDNASequence);
-        Assert.IsTrue(Helpers.DoublesEqualWithinRange(someFasta.GCContent, 0.4285));
+        Assert.IsTrue(Helpers.DoublesEqualWithinRange(new DnaSequence(someFasta.RawSequence).GCRatio(), 0.4285));
     }
 
     [TestMethod]
@@ -85,6 +86,6 @@ public class FastaTests
     {
         var fastas = FastaParser.Read(_multipleFastaPath);
         var highest = Fasta.GetMaxGCContent(fastas);
-        Assert.IsTrue(Helpers.DoublesEqualWithinRange(60.919540, highest.GCContent * 100));
+        Assert.IsTrue(Helpers.DoublesEqualWithinRange(60.919540, new DnaSequence(highest.RawSequence).GCRatio() * 100));
     }
 }

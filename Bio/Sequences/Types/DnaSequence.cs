@@ -62,7 +62,6 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         for (var i = 0; i < Length; i++)
         {
             var j = 4;
-            // TODO: verify these
             while (i + j <= Length && j <= 12)
             {
                 var subStringDNA = new DnaSequence(Substring(i, j));

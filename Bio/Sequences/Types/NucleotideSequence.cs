@@ -75,4 +75,13 @@ public abstract class NucleotideSequence : Sequence, INucleotideSequence
 
         return (double)transitions / transversions;
     }
+
+    public double GCRatio()
+    {
+        var totalGC = Counts.GetFrequency('G') + Counts.GetFrequency('g') +
+                      Counts.GetFrequency('C') + Counts.GetFrequency('c');
+        var totalBp = Counts.Count;
+        return (double)totalGC / totalBp;
+    }
+
 }

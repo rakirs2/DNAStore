@@ -11,4 +11,10 @@ public interface INucleotideSequence
     int[] CalculateMinPrefixGCSkew();
 
     double TransitionToTransversionRatio(NucleotideSequence other);
+
+    /// <summary>
+    /// Returns the ratio of the GC content in 
+    /// </summary>
+    /// <returns></returns>
+    double GCRatio();
 }

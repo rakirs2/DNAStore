@@ -97,7 +97,6 @@ public class AlignmentMatrix : IAlignmentMatrix
         return new AlignmentMatrix(a, b).LongestCommonSubSequence();
     }
 
-    // TODO: I think this should be held as an external object as things get more abstracted.
     private class Node
     {
         public Node()
