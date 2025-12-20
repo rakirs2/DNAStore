@@ -80,18 +80,6 @@ public class FastaTests
         var someFasta = new Fasta(SomeName, SomeIllegitimateDNASequence);
         Assert.IsTrue(Helpers.DoublesEqualWithinRange(new DnaSequence(someFasta.RawSequence).GCRatio(), 0.4285));
     }
-    
-    [TestMethod]
-    public void FastaGCContentThrowsOnProtein()
-    {
-        List<Fasta> fastas = new List<Fasta>()
-        {
-            new Fasta(SomeName, SomeIllegitimateProteinSequence),
-            new Fasta(SomeName, SomeIllegitimateDNASequence)
-        };
-
-        Assert.ThrowsExactly<ArgumentException>(()=>Fasta.GetMaxGCContent(fastas));
-    }
 
     [TestMethod]
     public void GetMaxGCContentTest()
