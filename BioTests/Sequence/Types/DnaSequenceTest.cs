@@ -69,7 +69,6 @@ public class DnaSequenceTest
             new("MLLGSFRLIPKETLIQVAGSSPCNLS")
         };
 
-        // TODO: this is not the right way to test this
         Assert.IsTrue(expected.SequenceEqual(result));
     }
 

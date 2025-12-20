@@ -99,14 +99,8 @@ public class AlignmentMatrix : IAlignmentMatrix
 
     private class Node
     {
-        public Node()
-        {
-            Direction = Direction.None;
-            Value = 0;
-        }
-
-        public Direction Direction { get; set; }
-        public int Value { get; set; }
+        public Direction Direction { get; set; } = Direction.None;
+        public int Value { get; set; } = 0;
 
         public override string ToString()
         {
