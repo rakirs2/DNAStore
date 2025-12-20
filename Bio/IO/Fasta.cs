@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Base.DataStructures;
 using Bio.Sequences;
+using Bio.Sequences.Types;
 
 namespace Bio.IO;
 
@@ -32,18 +33,7 @@ public class Fasta : IFasta
         ContentType = isPossibleRNA ? ContentType.RNA : ContentType.DNA;
     }
 
-    // TODO: consider moving this to a nucleotide class. Or maybe a generic 
-    public double GCContent
-    {
-        get
-        {
-            // TODO: this is a hack that can get refactored. I need to determine if I can safely assume that everything can be converted to uppercase
-            var totalGC = BasePairDictionary.GetFrequency('G') + BasePairDictionary.GetFrequency('g') +
-                          BasePairDictionary.GetFrequency('C') + BasePairDictionary.GetFrequency('c');
-            var totalBp = BasePairDictionary.Count;
-            return (double)totalGC / totalBp;
-        }
-    }
+   
 
     public ContentType ContentType { get; }
 
@@ -97,7 +87,6 @@ public class Fasta : IFasta
         }
     }
 
-    // TODO: this is rife for errors down the line
     public override bool Equals(object? obj)
     {
         try
@@ -115,7 +104,7 @@ public class Fasta : IFasta
 
     public static Fasta GetMaxGCContent(IList<Fasta> fastas)
     {
-        return fastas.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
+        return fastas.Aggregate((i1, i2) => new DnaSequence(i1.RawSequence).GCRatio() > new DnaSequence(i2.RawSequence).GCRatio() ? i1 : i2);
     }
 
     public override int GetHashCode()

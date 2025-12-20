@@ -888,26 +888,7 @@ internal static class InputProcessor
         {
         }
     }
-
-    private class GCContent : BaseExecutor
-    {
-        private IList<Fasta>? fastas;
-        private Fasta? largestGCContent;
-
-        protected override void GetInputs()
-        {
-            Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
-            if (location != null) fastas = FastaParser.Read(location);
-        }
-
-        protected override void CalculateResult()
-        {
-            largestGCContent = fastas?.Aggregate((i1, i2) => i1.GCContent > i2.GCContent ? i1 : i2);
-            Output = string.Format($"{largestGCContent?.Name}\n{largestGCContent?.GCContent * 100}");
-        }
-    }
-
+    
     private class RandomStringProbability : BaseExecutor
     {
         private List<double> gcPercentages;

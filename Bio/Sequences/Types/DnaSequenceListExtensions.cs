@@ -26,7 +26,6 @@ namespace Bio.Sequences.Types;
 ///     In basically 3 hours, 'solved' a lot of problems. I'm not sure I understand it much better compared to when
 ///     I started. I have gists, not deep knowledge.
 /// </remarks>
-/// .
 public static class DnaSequenceListExtensions
 {
     private static readonly Dictionary<char, int> NucleotideToIndex = new()
