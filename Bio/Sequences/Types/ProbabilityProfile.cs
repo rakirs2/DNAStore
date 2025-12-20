@@ -4,7 +4,7 @@ namespace Bio.Sequences.Types;
 
 public class ProbabilityProfile
 {
-    private readonly Dictionary<char, List<double>> _probabilities = new(new CaseInsensitiveCharComparer());
+    private readonly Dictionary<char, List<double>> _probabilities = new(CaseInsensitiveCharComparer.Shared);
     private readonly int size;
 
     public ProbabilityProfile(List<List<double>> probabilities, string values)

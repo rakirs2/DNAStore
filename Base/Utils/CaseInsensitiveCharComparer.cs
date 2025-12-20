@@ -3,6 +3,12 @@
 public class CaseInsensitiveCharComparer : IEqualityComparer<char>
 
 {
+    private CaseInsensitiveCharComparer()
+    {
+        
+    }
+
+    public static CaseInsensitiveCharComparer Shared => new ();
     public bool Equals(char x, char y)
     {
         return char.ToUpperInvariant(x) == char.ToUpperInvariant(y);

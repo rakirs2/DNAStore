@@ -32,10 +32,9 @@ public class SequenceHelpers
             N ASN asparagine                      -     gap of indeterminate length
     // Note, U Can be shared. So we need to check, "contains U"
      */
-    // TODO: PotentialBottleneck perf bottleneck.
-    private static readonly HashSet<char> DistinctRNAMarkers = ['U'];
-    private static readonly HashSet<char> AllRNAMarkers = ['U', 'A', 'C', 'G', 'N'];
-    private static readonly HashSet<char> AllDNAMarkers = ['T', 'A', 'C', 'G', 'N'];
+    private static readonly HashSet<char> DistinctRNAMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'U'};
+    private static readonly HashSet<char> AllRNAMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'U', 'A', 'C', 'G', 'N'};
+    private static readonly HashSet<char> AllDNAMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'T', 'A', 'C', 'G', 'N'};
 
     private static readonly Dictionary<string, string> RNAToProteinCode = new()
     {
@@ -156,27 +155,27 @@ public class SequenceHelpers
     };
 
     private static readonly HashSet<char>
-        DistinctProteinMarkers = ['E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*'];
+        DistinctProteinMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*'};
 
     // TODO: might be worth using a different string comparator if perf ever becomes an issue.
     public static bool IsKnownRNADifferentiator(char c)
     {
-        return DistinctRNAMarkers.Contains(char.ToUpperInvariant(c));
+        return DistinctRNAMarkers.Contains(c);
     }
 
     public static bool IsKnownProteinDifferentiator(char c)
     {
-        return DistinctProteinMarkers.Contains(char.ToUpperInvariant(c));
+        return DistinctProteinMarkers.Contains(c);
     }
 
     public static bool IsValidRNA(char c)
     {
-        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
+        return AllRNAMarkers.Contains(c);
     }
 
     public static bool IsValidDNA(char c)
     {
-        return AllRNAMarkers.Contains(char.ToUpperInvariant(c));
+        return AllRNAMarkers.Contains(c);
     }
 
 

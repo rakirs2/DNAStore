@@ -7,8 +7,8 @@ namespace Bio.Sequences.Types;
 
 public class RnaSequence : NucleotideSequence, IRna
 {
-    private static readonly HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
-    private static readonly HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
+    private static readonly HashSet<char> pyrimidines = new(CaseInsensitiveCharComparer.Shared) { 'C', 'T' };
+    private static readonly HashSet<char> purines = new(CaseInsensitiveCharComparer.Shared) { 'A', 'G' };
 
     public RnaSequence(string rawSequence) : base(rawSequence)
     {

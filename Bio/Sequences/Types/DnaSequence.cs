@@ -7,11 +7,11 @@ namespace Bio.Sequences.Types;
 
 public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), IDna
 {
-    private static readonly Dictionary<char, char> ComplementDict = new(new CaseInsensitiveCharComparer())
+    private static readonly Dictionary<char, char> ComplementDict = new(CaseInsensitiveCharComparer.Shared)
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 
-    private static readonly HashSet<char> pyrimidines = new(new CaseInsensitiveCharComparer()) { 'C', 'T' };
-    private static readonly HashSet<char> purines = new(new CaseInsensitiveCharComparer()) { 'A', 'G' };
+    private static readonly HashSet<char> pyrimidines = new(CaseInsensitiveCharComparer.Shared) { 'C', 'T' };
+    private static readonly HashSet<char> purines = new(CaseInsensitiveCharComparer.Shared) { 'A', 'G' };
 
     private static readonly Dictionary<char, int> CharValueMapper = new()
     {
@@ -29,7 +29,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         { 3, 'T' }
     };
 
-    private static readonly HashSet<char> ValidAlphabet = new(new CaseInsensitiveCharComparer())
+    private static readonly HashSet<char> ValidAlphabet = new(CaseInsensitiveCharComparer.Shared)
     {
         'A',
         'C',
@@ -37,13 +37,13 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         'T'
     };
 
-    private static readonly HashSet<char> cgDict = new(new CaseInsensitiveCharComparer())
+    private static readonly HashSet<char> cgDict = new(CaseInsensitiveCharComparer.Shared)
     {
         'C',
         'G'
     };
 
-    private static readonly HashSet<char> atDict = new(new CaseInsensitiveCharComparer())
+    private static readonly HashSet<char> atDict = new(CaseInsensitiveCharComparer.Shared)
     {
         'A',
         'T'
@@ -111,7 +111,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
 
     public double RandomStringProbability(double gcContent)
     {
-        var bpToPercentage = new Dictionary<char, double>(new CaseInsensitiveCharComparer())
+        var bpToPercentage = new Dictionary<char, double>(CaseInsensitiveCharComparer.Shared)
         {
             { 'g', gcContent / 2 },
             { 'c', gcContent / 2 },

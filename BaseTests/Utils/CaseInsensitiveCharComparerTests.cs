@@ -5,13 +5,12 @@ namespace BaseTests.Utils;
 [TestClass]
 public class CaseInsensitiveCharComparerTests
 {
-    private readonly CaseInsensitiveCharComparer _comparer = new();
 
     [TestMethod]
     public void BaseEqualityTests()
     {
-        Assert.IsTrue(_comparer.Equals('a', 'A'), "Cases should be equivalent");
-        Assert.IsTrue(_comparer.Equals('a', 'a'), "Cases should be equivalent");
+        Assert.IsTrue(CaseInsensitiveCharComparer.Shared.Equals('a', 'A'), "Cases should be equivalent");
+        Assert.IsTrue(CaseInsensitiveCharComparer.Shared.Equals('a', 'a'), "Cases should be equivalent");
     }
 
     [TestMethod]
@@ -19,6 +18,6 @@ public class CaseInsensitiveCharComparerTests
     {
         var lowerCase = 'a';
         var upperCase = 'A';
-        Assert.AreEqual(_comparer.GetHashCode(lowerCase), _comparer.GetHashCode(upperCase));
+        Assert.AreEqual(CaseInsensitiveCharComparer.Shared.GetHashCode(lowerCase), CaseInsensitiveCharComparer.Shared.GetHashCode(upperCase));
     }
 }

@@ -15,11 +15,10 @@ public class HammingMatchTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(NotImplementedException))]
     public void IsMatchTest()
     {
         var hm = new HammingMatch("abcde", 1);
-        hm.IsMatch("abcde");
+        Assert.ThrowsExactly<NotImplementedException>(()=>hm.IsMatch("abcde"));
     }
 
     [TestMethod]
