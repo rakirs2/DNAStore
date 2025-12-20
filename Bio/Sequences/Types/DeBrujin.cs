@@ -3,8 +3,11 @@ using Base.DataStructures;
 
 namespace Bio.Sequences.Types;
 
+// TODO: this should be in the base class
 public class DeBrujin
-{
+{   
+    // TODO: this should be for a string, not a DNA Sequence
+    // TODO: this belongs in the Base class
     private readonly UndirectedGraph<DnaSequence> _underlying;
 
     public DeBrujin()
