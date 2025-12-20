@@ -1,4 +1,6 @@
-﻿namespace Base.Utils;
+﻿using System.Net.Sockets;
+
+namespace Base.Utils;
 
 public class CaseInsensitiveCharComparer : IEqualityComparer<char>
 
