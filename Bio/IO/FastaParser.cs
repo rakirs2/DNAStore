@@ -6,8 +6,8 @@ namespace Bio.IO;
 public static class FastaParser
 {
     /// <summary>
-    /// This defaults to assuming that there are multiple fastas in a file. Works for single.
-    /// Not really something that's worth optimizing.
+    ///     This defaults to assuming that there are multiple fastas in a file. Works for single.
+    ///     Not really something that's worth optimizing.
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns></returns>
@@ -32,7 +32,8 @@ public static class FastaParser
                 currentSequence.Append(line);
             }
 
-        if (name != "" || currentSequence.ToString().Length != 0) output.Add(new Fasta(name, currentSequence.ToString()));
+        if (name != "" || currentSequence.ToString().Length != 0)
+            output.Add(new Fasta(name, currentSequence.ToString()));
 
         return output;
     }
@@ -42,7 +43,6 @@ public static class FastaParser
         var fastas = Read(filePath);
         foreach (var fasta in fastas)
         {
-            
         }
     }
 

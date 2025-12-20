@@ -100,7 +100,7 @@ public class AlignmentMatrix : IAlignmentMatrix
     private class Node
     {
         public Direction Direction { get; set; } = Direction.None;
-        public int Value { get; set; } = 0;
+        public int Value { get; set; }
 
         public override string ToString()
         {

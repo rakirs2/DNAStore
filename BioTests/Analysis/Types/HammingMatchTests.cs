@@ -18,7 +18,7 @@ public class HammingMatchTests
     public void IsMatchTest()
     {
         var hm = new HammingMatch("abcde", 1);
-        Assert.ThrowsExactly<NotImplementedException>(()=>hm.IsMatch("abcde"));
+        Assert.ThrowsExactly<NotImplementedException>(() => hm.IsMatch("abcde"));
     }
 
     [TestMethod]

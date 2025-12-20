@@ -179,6 +179,35 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
         return expectedValues;
     }
 
+    /// <summary>
+    ///     Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
+    /// </summary>
+    /// <returns></returns>
+    public DnaSequence GetReverseComplement()
+    {
+        var dnaStrand = new StringBuilder();
+        for (var i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
+
+        return new DnaSequence(dnaStrand.ToString());
+    }
+
+    /// <summary>
+    ///     Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
+    /// </summary>
+    /// <returns></returns>
+    public string GetComplement()
+    {
+        var sb = new StringBuilder();
+        foreach (var res in RawSequence) sb.Append(ComplementDict[res]);
+
+        return sb.ToString();
+    }
+
+    public bool Complements(string candidateComplement)
+    {
+        return PerfectComplementStrand(RawSequence, candidateComplement);
+    }
+
     private static void GenerateNeighborhoodRecursive(char[] currentPatternChars, int remainingDistance, int startIndex,
         HashSet<string> neighborhood)
     {
@@ -239,38 +268,6 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     }
 
     /// <summary>
-    ///     Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
-    /// </summary>
-    /// <returns></returns>
-    public DnaSequence GetReverseComplement()
-    {
-        var dnaStrand = new StringBuilder();
-        for (var i = Length - 1; i >= 0; i--) dnaStrand.Append(ComplementDict[this[(int)i]]);
-
-        return new DnaSequence(dnaStrand.ToString());
-    }
-    
-    /// <summary>
-    ///     Generates a new DNA sequence by reading in the reverse of the string and generating the opposite strand
-    /// </summary>
-    /// <returns></returns>
-    public string GetComplement()
-    {
-        var sb = new StringBuilder();
-        foreach (var res in RawSequence)
-        {
-            sb.Append(ComplementDict[res]);
-        }
-
-        return sb.ToString();
-    }
-
-    public bool Complements(string candidateComplement)
-    {
-        return PerfectComplementStrand(RawSequence,candidateComplement);
-    }
-
-    /// <summary>
     ///     Simple algorithm using Open Reading frames. We go through each possible starting location.
     ///     An Open Reading Frame, by definition, must contain a start or Methionine and a stop codon.
     /// </summary>
@@ -292,7 +289,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
                 output.Add(sequence);
                 filter.Add(sequence.ToString());
             }
-        
+
         return output.ToList();
     }
 
@@ -338,8 +335,7 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     }
 
     /// <summary>
-    /// A raw string check to see if two strands line up. Assumes orientation has been handled
-    /// 
+    ///     A raw string check to see if two strands line up. Assumes orientation has been handled
     /// </summary>
     /// <param name="seqA"></param>
     /// <param name="seqB"></param>
@@ -347,19 +343,13 @@ public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), 
     public static bool PerfectComplementStrand(string seqA, string seqB)
     {
         if (seqA.Length != seqB.Length)
-        {
             // TODO: consider creating an invalid length comparison expcetion
             throw new ArgumentException("Invalid Lengths");
-        }
 
-        for (int i = 0; i < seqA.Length; i++)
-        {
+        for (var i = 0; i < seqA.Length; i++)
             if (ComplementDict[seqA[i]] != seqB[i])
-            {
                 return false;
-            }
-        }
-        
+
         return true;
     }
 }

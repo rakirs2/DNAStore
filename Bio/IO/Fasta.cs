@@ -33,7 +33,6 @@ public class Fasta : IFasta
         ContentType = isPossibleRNA ? ContentType.RNA : ContentType.DNA;
     }
 
-   
 
     public ContentType ContentType { get; }
 
@@ -59,7 +58,7 @@ public class Fasta : IFasta
     {
         return Name;
     }
-    
+
     // TODO: surely this is not it
     public void Save(string filePath)
     {
@@ -101,20 +100,17 @@ public class Fasta : IFasta
             return false;
         }
     }
-    
+
     // TODO: should this be an extension method?
     public static Fasta GetMaxGCContent(IList<Fasta> fastas)
     {
         // We coudl throw this into the final iteration but this is not breakinbg in any way
         foreach (var fasta in fastas)
-        {
             if (fasta.ContentType == ContentType.Protein)
-            {
                 throw new ArgumentException("GC Content is not relevant for proteins");
-            }
-        }
-        
-        return fastas.Aggregate((i1, i2) => new DnaSequence(i1.RawSequence).GCRatio() > new DnaSequence(i2.RawSequence).GCRatio() ? i1 : i2);
+
+        return fastas.Aggregate((i1, i2) =>
+            new DnaSequence(i1.RawSequence).GCRatio() > new DnaSequence(i2.RawSequence).GCRatio() ? i1 : i2);
     }
 
     public override int GetHashCode()

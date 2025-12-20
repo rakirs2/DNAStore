@@ -11,7 +11,7 @@ public static class Search
         for (var i = 0; i < inputArray.Count - 2; i++)
         {
             var seen = new Dictionary<int, int>();
-            var targetSum = -inputArray[i]; 
+            var targetSum = -inputArray[i];
             for (var j = i + 1; j < inputArray.Count; j++)
             {
                 var needed = targetSum - inputArray[j];
@@ -23,7 +23,7 @@ public static class Search
                     triplet.Sort(); // Sort the triplet to handle duplicates in the result set
                     result.Add(triplet);
                 }
-                
+
                 // TODO: this is restrictive. It should work for duplicates
                 if (!seen.ContainsKey(inputArray[j]))
                     seen.Add(inputArray[j], j);
@@ -37,7 +37,7 @@ public static class Search
     {
         return -1;
     }
-    
+
     public static List<List<int>> AhoCorasick(this List<string> strings, List<string> target)
     {
         return null;

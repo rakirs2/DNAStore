@@ -32,9 +32,13 @@ public class SequenceHelpers
             N ASN asparagine                      -     gap of indeterminate length
     // Note, U Can be shared. So we need to check, "contains U"
      */
-    private static readonly HashSet<char> DistinctRNAMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'U'};
-    private static readonly HashSet<char> AllRNAMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'U', 'A', 'C', 'G', 'N'};
-    private static readonly HashSet<char> AllDNAMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'T', 'A', 'C', 'G', 'N'};
+    private static readonly HashSet<char> DistinctRNAMarkers = new(CaseInsensitiveCharComparer.Shared) { 'U' };
+
+    private static readonly HashSet<char> AllRNAMarkers = new(CaseInsensitiveCharComparer.Shared)
+        { 'U', 'A', 'C', 'G', 'N' };
+
+    private static readonly HashSet<char> AllDNAMarkers = new(CaseInsensitiveCharComparer.Shared)
+        { 'T', 'A', 'C', 'G', 'N' };
 
     private static readonly Dictionary<string, string> RNAToProteinCode = new()
     {
@@ -155,7 +159,8 @@ public class SequenceHelpers
     };
 
     private static readonly HashSet<char>
-        DistinctProteinMarkers = new HashSet<char>(CaseInsensitiveCharComparer.Shared){'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*'};
+        DistinctProteinMarkers = new(CaseInsensitiveCharComparer.Shared)
+            { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 
     // TODO: might be worth using a different string comparator if perf ever becomes an issue.
     public static bool IsKnownRNADifferentiator(char c)

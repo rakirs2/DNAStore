@@ -327,14 +327,14 @@ internal static class InputProcessor
 
     private class MatchesReverseComplement : BaseExecutor
     {
-        List<DnaSequence> _sequences = new List<DnaSequence>();
+        private readonly List<DnaSequence> _sequences = new();
 
         protected override void GetInputs()
         {
             var input = "";
             while (true)
             {
-                input= Console.ReadLine();
+                input = Console.ReadLine();
                 if (input.Equals("done"))
                     break;
                 _sequences.Add(new DnaSequence(input));
@@ -345,17 +345,13 @@ internal static class InputProcessor
         {
             var count = 0;
             foreach (var sequence in _sequences)
-            {
-                if (sequence.RawSequence ==sequence.GetReverseComplement().ToString())
-                {
+                if (sequence.RawSequence == sequence.GetReverseComplement().ToString())
                     count++;
-                }
-            }
-            
+
             Output = count.ToString();
         }
     }
-    
+
     private class GetSignedPermutations : BaseExecutor
     {
         private int a;
@@ -888,7 +884,7 @@ internal static class InputProcessor
         {
         }
     }
-    
+
     private class RandomStringProbability : BaseExecutor
     {
         private List<double> gcPercentages;

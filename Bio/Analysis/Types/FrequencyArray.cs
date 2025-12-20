@@ -1,5 +1,4 @@
-﻿using Base.Interfaces;
-using Bio.Analysis.Interfaces;
+﻿using Bio.Analysis.Interfaces;
 using Bio.Sequences.Types;
 using BioMath;
 
