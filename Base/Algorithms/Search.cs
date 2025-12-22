@@ -8,7 +8,7 @@ public static class Search
     /// Returns -1 if not found. Returns the 0 index starting point of all matches
     /// </summary>
     /// <remarks>
-    ///     Base Algortihm basically from from CLRS
+    ///     Base Algorithm basically from CLRS
     /// </remarks>
     /// <param name="text"></param>
     /// <param name="pattern"></param>
