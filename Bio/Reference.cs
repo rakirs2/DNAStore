@@ -4,7 +4,7 @@ namespace Bio;
 
 public static class Reference
 {
-    public static Dictionary<char, double> MolecularWeightsDictionary = new(CaseInsensitiveCharComparer.Shared)
+    public static Dictionary<char, double> AminoAcidMolecularWeightsMinusWater = new(CaseInsensitiveCharComparer.Shared)
     {
         {'A', 71.03711},
         {'C', 103.00919},
