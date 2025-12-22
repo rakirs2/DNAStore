@@ -43,4 +43,26 @@ public class ProteinSequence : Sequence, IProtein
     {
         throw new NotImplementedException();
     }
+
+    public static ProteinSequence CalculateFromPrefixWeights(double[] spectrum)
+    {
+        if (spectrum.Length <= 1)
+        {
+            throw new ArgumentException("A single protein sequence realistically should never be used with this");
+        }
+        string protein = "";
+        for (int i = 0; i < spectrum.Length - 1; i++)
+        {
+            double diff = spectrum[i + 1] - spectrum[i];
+            
+            // Search for best fit by mass
+            char match = Reference.MolecularWeightsDictionary
+                .OrderBy(kvp => Math.Abs(kvp.Value - diff))
+                .First().Key;
+            
+            protein += match;
+        }
+
+        return new ProteinSequence(protein);
+    }
 }
