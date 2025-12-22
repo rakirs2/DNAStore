@@ -1,4 +1,5 @@
 using Base.Algorithms;
+using Microsoft.Extensions.DependencyModel.Resolution;
 
 namespace BaseTests.Algorithms;
 
@@ -6,18 +7,27 @@ namespace BaseTests.Algorithms;
 public class SearchTest
 {
     [TestMethod]
-    public void ThreeSumKnownTests()
+    public void KMPFailureArrayCLRSExample()
     {
-        var arr1 = new List<int> { 2, -3, 4, 10, 5 };
-        var arr2 = new List<int> { 8, -6, 4, -2, -8 };
-        var arr3 = new List<int> { -5, 2, 3, 2, -4 };
-        var arr4 = new List<int> { 2, 4, -5, 6, 8 };
+        int[] expected = new[] { 0,0,1,2,3,0,1};
+        string sequence = "ababaca";
+        Assert.IsTrue(sequence.KMPFailureArray().SequenceEqual(expected));
+    }
+    
+    [TestMethod]
+    public void KMPFailureArrayDnaVersion()
+    {
+        int[] expected = new[] { 0,0,0,1,2,0,0,0,0,0,0,1,2,1,2,3,4,5,3,0,0};
+        string sequence = "CAGCATGGTATCACAGCAGAG";
+        Assert.IsTrue(sequence.KMPFailureArray().SequenceEqual(expected));
+    }
 
-        Assert.AreEqual(0, Search.ThreeSumNoSort(arr1, 0).Count);
-        Assert.IsTrue(Search.ThreeSumNoSort(arr2, 0)
-            .Any(innerList => innerList.SequenceEqual(new List<int> { 0, 1, 3 })));
-        Assert.IsTrue(Search.ThreeSumNoSort(arr3, 0)
-            .Any(innerList => innerList.SequenceEqual(new List<int> { 0, 1, 2 })));
-        Assert.AreEqual(0, Search.ThreeSumNoSort(arr4, 0).Count);
+    [TestMethod]
+    public void SimpleSearch()
+    {
+        int[] expected = new[] { 0, 13,16};
+        string sequence = "CAGCATGGTATCACAGCAGAG";
+        string pattern = "CAG";
+        Assert.IsTrue(sequence.KnuthMorrisPratt(pattern).SequenceEqual(expected));
     }
 }
