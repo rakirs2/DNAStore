@@ -16,7 +16,7 @@ public class ProteinSequence : Sequence, IProtein
         get
         {
             double output = 0;
-            foreach (var character in ToString()) output += Reference.AminoAcidMolecularWeightsMinusWater[character];
+            foreach (var character in ToString()) output += Reference.MonoisotopicMassTable[character];
             return output;
         }
     }
@@ -58,7 +58,7 @@ public class ProteinSequence : Sequence, IProtein
             double diff = spectrum[i + 1] - spectrum[i];
             
             // Search for best fit by mass
-            char match = Reference.AminoAcidMolecularWeightsMinusWater
+            char match = Reference.MonoisotopicMassTable
                 .OrderBy(kvp => Math.Abs(kvp.Value - diff))
                 .First().Key;
             
@@ -102,7 +102,7 @@ public class ProteinSequence : Sequence, IProtein
         
         for (int i = 0; i < n; i++)
         {
-            foreach (var aminoAcid in Reference.AminoAcidMolecularWeightsMinusWater)
+            foreach (var aminoAcid in Reference.MonoisotopicMassTable)
             {
                 double targetMass = currentMass + aminoAcid.Value;
                 var nextIon = ions.FirstOrDefault(m => Math.Abs(m - targetMass) < tolerance);
