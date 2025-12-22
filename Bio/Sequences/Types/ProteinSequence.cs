@@ -75,19 +75,21 @@ public class ProteinSequence : Sequence, IProtein
     /// I like this problem. Introduces a few concepts I remember very lightly from mass spec.
     /// Fun times those. But the beauty of this problem is that, like much of spectroscopy, we're forced to be deductive
     /// So what can we do?
-    ///
+    /// 
     /// Obviously, we start with the largest weight or the total weight.
     /// Then, sort the remaining spectrum and now we have n^2 possible comparisons.
     /// However, most of these will be invalid as we can only compare 1 AA at a time.
-    ///
+    /// 
     /// If the difference between 2 is within the tolerance, we can go ahead and add it.
-    ///
+    /// 
     /// We have to be greedy. At least with my current understanding of the problem. So we build a sequence starting with
     /// the lowest weight (which is effectively a black box) and add on the next proteins iteratively.
-    ///
+    /// 
     /// For the love of everything, use the right units.
     /// </remarks>
+    /// <param name="totalWeight"></param>
     /// <param name="spectrum"></param>
+    /// <param name="tolerance"></param>
     /// <returns></returns>
     public static string InferFromPrefixWeights(double totalWeight, double[] spectrum, double tolerance = .001)
     {
@@ -106,14 +108,13 @@ public class ProteinSequence : Sequence, IProtein
             {
                 double targetMass = currentMass + aminoAcid.Value;
                 var nextIon = ions.FirstOrDefault(m => Math.Abs(m - targetMass) < tolerance);
-                
-                if (nextIon != 0)
-                {
-                    result.Append( aminoAcid.Key);
-                    // We want the cleanest data possible. It would be possible to 
-                    currentMass = nextIon;
-                    break;
-                }
+
+                if (nextIon == 0) continue;
+                result.Append( aminoAcid.Key);
+                // We want the cleanest data possible. It would be possible to use the runnning total.
+                // But it's better to use the given data.
+                currentMass = nextIon;
+                break;
             }
         }
 
