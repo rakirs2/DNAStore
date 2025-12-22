@@ -22,7 +22,8 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         Name = name;
         ConstructionLogic(rawSequence);
     }
-
+    
+    // TODO: remove this constructor. I can have Fasta handle this manually.
     public Sequence(Fasta fasta)
     {
         Name = fasta.Name;
@@ -34,6 +35,8 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     public int CompareTo(object? obj)
     {
         if (obj is Sequence other)
+            // TODO: think about this. What do I want to happen in here with casing
+            // TODO: verify stronger type checking with tests. We really don't have to deal with it yet but it's something to have as a todo.
             return RawSequence.CompareTo(other.RawSequence);
 
         throw new ArgumentException("Object is not a sequence");

@@ -1,7 +1,8 @@
-﻿using Bio.Sequences.Types;
+﻿using Bio.Exceptions;
+using Bio.Sequences.Types;
 using BioMath;
 
-namespace BioTests.Sequence.Types;
+namespace BioTests.Sequences.Types;
 
 [TestClass]
 public class ProteinSequenceTest
@@ -44,5 +45,50 @@ public class ProteinSequenceTest
         };
         
         Assert.ThrowsExactly<ArgumentException>(()=>ProteinSequence.CalculateFromPrefixWeights(weights).RawSequence);
+    }
+    
+    [TestMethod]
+    public void InferredProteinWeight()
+    {
+        var weights = new double[]
+        {
+            610.391039105,
+            738.485999105,
+            766.492149105,
+            863.544909105,
+            867.528589105,
+            992.587499105,
+            995.623549105,
+            1120.6824591,
+            1124.6661391,
+            1221.7188991,
+            1249.7250491,
+            1377.8200091
+        };
+        
+        Assert.AreEqual("KEKEP", ProteinSequence.InferFromPrefixWeights(1988.21104821,weights));
+    }
+
+    [TestMethod]
+    public void InvalidMassSpecWeight()
+    {
+        var weights = new double[]
+        {
+            610.391039105,
+            738.485999105,
+            766.492149105,
+            863.544909105,
+            867.528589105,
+            992.587499105,
+            995.623549105,
+            1120.6824591,
+            1124.6661391,
+            1221.7188991,
+            1249.7250491,
+            1377.8200091
+        };
+
+        Assert.ThrowsExactly<MassSpecExceptions.InvalidMassException>(() =>
+            ProteinSequence.InferFromPrefixWeights(0.00, weights));
     }
 }

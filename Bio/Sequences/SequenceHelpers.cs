@@ -204,12 +204,6 @@ public class SequenceHelpers
                 else
                     inputString = StringUtils.SwapIndex(inputString, 0, currentLength - 1);
             }
-        //for i in range(n):
-        //generate(n - 1)
-        //if n % 2 == 0:
-        //nums[i], nums[n - 1] = nums[n - 1], nums[i]
-        //else:
-        //nums[0], nums[n - 1] = nums[n - 1], nums[0]
     }
 
     // Maybe this belongs on the codon class

@@ -16,7 +16,6 @@ public class AlignmentMatrix : IAlignmentMatrix
         _b = b;
         _matrix = new Node[a.Length + 1, b.Length + 1];
 
-        // Instantiate all matrix points with a node of value none.
         for (var i = 0; i < (a.Length + 1) * (b.Length + 1); i++)
             _matrix[i % (a.Length + 1), i / (a.Length + 1)] = new Node();
 
@@ -47,8 +46,6 @@ public class AlignmentMatrix : IAlignmentMatrix
 
     public string LongestCommonSubSequence()
     {
-        // The table is built; now to traceback
-        // TODO: this only returns one. How do we return all?
         var i = _a.Length;
         var j = _b.Length;
         var node = _matrix[i, j];
@@ -108,6 +105,7 @@ public class AlignmentMatrix : IAlignmentMatrix
         }
     }
 
+    // TODO: looking back this is unintuitive
     private enum Direction
     {
         None = 0,

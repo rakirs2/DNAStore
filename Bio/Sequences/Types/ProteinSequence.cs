@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using System.Text;
+using Bio.Exceptions;
 using Bio.Sequences.Interfaces;
 
 namespace Bio.Sequences.Types;
@@ -14,7 +16,7 @@ public class ProteinSequence : Sequence, IProtein
         get
         {
             double output = 0;
-            foreach (var character in ToString()) output += Reference.MolecularWeightsDictionary[character];
+            foreach (var character in ToString()) output += Reference.MonoisotopicMassTable[character];
             return output;
         }
     }
@@ -56,7 +58,7 @@ public class ProteinSequence : Sequence, IProtein
             double diff = spectrum[i + 1] - spectrum[i];
             
             // Search for best fit by mass
-            char match = Reference.MolecularWeightsDictionary
+            char match = Reference.MonoisotopicMassTable
                 .OrderBy(kvp => Math.Abs(kvp.Value - diff))
                 .First().Key;
             
@@ -64,5 +66,58 @@ public class ProteinSequence : Sequence, IProtein
         }
 
         return new ProteinSequence(protein);
+    }
+
+    /// <summary>
+    /// Returns the best fitting protein string within a given list of ion weights
+    /// </summary
+    /// <remarks>
+    /// I like this problem. Introduces a few concepts I remember very lightly from mass spec.
+    /// Fun times those. But the beauty of this problem is that, like much of spectroscopy, we're forced to be deductive
+    /// So what can we do?
+    /// 
+    /// Obviously, we start with the largest weight or the total weight.
+    /// Then, sort the remaining spectrum and now we have n^2 possible comparisons.
+    /// However, most of these will be invalid as we can only compare 1 AA at a time.
+    /// 
+    /// If the difference between 2 is within the tolerance, we can go ahead and add it.
+    /// 
+    /// We have to be greedy. At least with my current understanding of the problem. So we build a sequence starting with
+    /// the lowest weight (which is effectively a black box) and add on the next proteins iteratively.
+    /// 
+    /// For the love of everything, use the right units.
+    /// </remarks>
+    /// <param name="totalWeight"></param>
+    /// <param name="spectrum"></param>
+    /// <param name="tolerance"></param>
+    /// <returns></returns>
+    public static string InferFromPrefixWeights(double totalWeight, double[] spectrum, double tolerance = .001)
+    {
+        double[] ions = spectrum.OrderBy(x => x).ToArray();
+        int n = (ions.Length - 2) / 2;
+        StringBuilder result = new StringBuilder();
+        double currentMass = ions[0];
+        if (ions.Any(ion => ion > totalWeight))
+        {
+            throw new MassSpecExceptions.InvalidMassException("Molecular weight of total must be strictly greater than any smaller sum");
+        }
+        
+        for (int i = 0; i < n; i++)
+        {
+            foreach (var aminoAcid in Reference.MonoisotopicMassTable)
+            {
+                double targetMass = currentMass + aminoAcid.Value;
+                var nextIon = ions.FirstOrDefault(m => Math.Abs(m - targetMass) < tolerance);
+
+                if (nextIon == 0) continue;
+                result.Append( aminoAcid.Key);
+                // We want the cleanest data possible. It would be possible to use the runnning total.
+                // But it's better to use the given data.
+                currentMass = nextIon;
+                break;
+            }
+        }
+
+        return result.ToString();
     }
 }
