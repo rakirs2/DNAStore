@@ -4,38 +4,71 @@ namespace Base.Algorithms;
 
 public static class Search
 {
-    public static List<List<int>> ThreeSumNoSort(List<int> inputArray, int target)
+    /// <summary>
+    /// Returns -1 if not found. Returns the 0 index starting point of all matches
+    /// </summary>
+    /// <remarks>
+    ///     Base Algortihm basically from from CLRS
+    /// </remarks>
+    /// <param name="text"></param>
+    /// <param name="pattern"></param>
+    /// <returns></returns>
+    public static int[] KnuthMorrisPratt(this string text, string pattern)
     {
-        var result = new HashSet<List<int>>(ListEqualityComparer<int>.Default);
-
-        for (var i = 0; i < inputArray.Count - 2; i++)
+        var failureArray = pattern.KMPFailureArray();
+        var output = new List<int>();
+        var q = 0;
+        for (int i = 0; i < text.Length; i++)
         {
-            var seen = new Dictionary<int, int>();
-            var targetSum = -inputArray[i];
-            for (var j = i + 1; j < inputArray.Count; j++)
+            while (q > 0 && pattern[q] != text[i])
             {
-                var needed = targetSum - inputArray[j];
+                q = failureArray[q];
+            }
 
-                if (seen.ContainsKey(needed))
-                {
-                    // Found a triplet: nums[i], nums[j], needed
-                    var triplet = new List<int> { i, j, seen[needed] };
-                    triplet.Sort(); // Sort the triplet to handle duplicates in the result set
-                    result.Add(triplet);
-                }
+            if (pattern[q] == text[i])
+            {
+                q++;
+            }
 
-                // TODO: this is restrictive. It should work for duplicates
-                if (!seen.ContainsKey(inputArray[j]))
-                    seen.Add(inputArray[j], j);
+            if (q == pattern.Length)
+            {
+                output.Add(i-pattern.Length+1);
+                q = failureArray[q-1];
             }
         }
 
-        return result.ToList();
+        return output.ToArray();
     }
-
-    public static int KnuthMorrisPratt(this string toSearch, string target)
+    
+    /// <summary>
+    /// This is based off of the Compute-Prefix-Function from CLRS
+    /// </summary>
+    /// <remarks>
+    /// A couple of small modifications to make this 0-indexed
+    /// </remarks>
+    /// <param name="pattern"></param>
+    /// <returns></returns>
+    
+    public static int[] KMPFailureArray(this string pattern)
     {
-        return -1;
+        int[] pi = new int[pattern.Length];
+        int k = 0;
+
+        for (int q = 1; q < pattern.Length; q++)
+        {
+            while (k > 0 && pattern[k] != pattern[q])
+            {
+                k = pi[k - 1];
+            }
+            
+            if (pattern[k] == pattern[q])
+            {
+                k++;
+            }
+            pi[q] = k;
+        }
+
+        return pi;
     }
 
     public static List<List<int>> AhoCorasick(this List<string> strings, List<string> target)
