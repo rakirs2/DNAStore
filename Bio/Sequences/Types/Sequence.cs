@@ -3,7 +3,6 @@ using System.Text;
 using Base.DataStructures;
 using Base.Utils;
 using Bio.Analysis.Types;
-using Bio.IO;
 using Bio.Sequences.Interfaces;
 
 namespace Bio.Sequences.Types;
@@ -21,13 +20,6 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     {
         Name = name;
         ConstructionLogic(rawSequence);
-    }
-    
-    // TODO: remove this constructor. I can have Fasta handle this manually.
-    public Sequence(Fasta fasta)
-    {
-        Name = fasta.Name;
-        ConstructionLogic(fasta.RawSequence);
     }
 
     public string RawSequence { get; set; }

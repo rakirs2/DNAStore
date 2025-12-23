@@ -5,8 +5,12 @@ using Bio.Sequences.Interfaces;
 
 namespace Bio.Sequences.Types;
 
-public class DnaSequence(string rawSequence) : NucleotideSequence(rawSequence), IDna
+public class DnaSequence : NucleotideSequence, IDna
 {
+    public DnaSequence(string rawSequence, string name = "") :base(rawSequence, name)
+    {
+    }
+    
     private static readonly Dictionary<char, char> ComplementDict = new(CaseInsensitiveCharComparer.Shared)
         { { 'A', 'T' }, { 'T', 'A' }, { 'G', 'C' }, { 'C', 'G' } };
 

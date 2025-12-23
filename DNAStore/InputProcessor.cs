@@ -1445,10 +1445,10 @@ internal static class InputProcessor
                 if (input.Equals("done", StringComparison.InvariantCultureIgnoreCase)) break;
 
                 // TODO: async all the way
-                var seq = UniprotClient.GetAsync(input).Result;
+                var fasta = UniprotClient.GetAsync(input).Result;
 
                 inputNames.Add(input);
-                sequencesToCompare.Add(new Sequence(seq));
+                sequencesToCompare.Add(fasta.GenerateSequence());
             }
         }
 

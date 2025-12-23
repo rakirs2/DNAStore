@@ -1,21 +1,19 @@
 namespace BioMath;
 
-// TODO: this works, but I need better understanding
 public static class ListExtensions
 {
+    // TODO: I don't like the way this class looks/functions. It's a similiar lesson in AI slop
     public static List<int> LongestIncreasingSubsequence(this List<int> list)
     {
         var ret = new List<int>();
-        var dp = new List<(int, int)>(); // Stores (-value, index) pairs
-        var prv = new Dictionary<int, int>(); // Stores previous index for each element
+        var dp = new List<(int, int)>(); 
+        var prv = new Dictionary<int, int>(); 
         var count = list.Count;
 
-        // Process array in reverse order
         for (var index = count - 1; index >= 0; --index)
         {
             var end = -list[index];
 
-            // Binary search to find insertion point of the next highest
             int l = 0, r = dp.Count;
             while (l < r)
             {
@@ -28,7 +26,6 @@ public static class ListExtensions
 
             var i = l;
 
-            // Default previous index
             var tmp = -1;
 
             if (i == dp.Count)
@@ -45,7 +42,6 @@ public static class ListExtensions
             prv[index] = tmp;
         }
 
-        // Reconstruct the LIS
         var cur = dp[^1].Item2;
         while (cur >= 0)
         {
@@ -58,24 +54,21 @@ public static class ListExtensions
 
     public static List<int> LongestDecreasingSubsequence(this List<int> list)
     {
-        if (list == null || list.Count == 0) return new List<int>();
+        if ( list.Count == 0) return new List<int>();
 
         var ldsLists = new List<List<int>>(list.Count);
 
-        // Initialize each ldsList[i] with a list containing only arr[i]
         for (var i = 0; i < list.Count; i++) ldsLists.Add(new List<int> { list[i] });
 
-        // Build the longest decreasing subsequences
         for (var i = 1; i < list.Count; i++)
         for (var j = 0; j < i; j++)
-            if (list[i] < list[j]) // If arr[i] can extend the subsequence ending at arr[j]
+            if (list[i] < list[j]) 
                 if (ldsLists[i].Count < ldsLists[j].Count + 1)
                 {
-                    ldsLists[i] = new List<int>(ldsLists[j]); // Copy the existing subsequence
-                    ldsLists[i].Add(list[i]); // Append the current element
+                    ldsLists[i] = new List<int>(ldsLists[j]);
+                    ldsLists[i].Add(list[i]); 
                 }
 
-        // Find the overall longest decreasing subsequence
         var longestLDS = new List<int>();
         foreach (var subList in ldsLists)
             if (subList.Count > longestLDS.Count)
