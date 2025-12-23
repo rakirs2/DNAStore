@@ -8,9 +8,7 @@
         <Authors>Srikar Mylavarapu</Authors>
         <Description>A bioinformatics Libarary in C#</Description>
         <RepositoryUrl>github.com/rakirs2/DNAStore</RepositoryUrl>
-        <Company>DNAStore</Company>
-        <AssemblyVersion>1.00</AssemblyVersion>
-        <RootNamespace>DnaStore</RootNamespace>
+        <RootNamespace>DNAStore.Sequence</RootNamespace>
         <LangVersion>12</LangVersion>
     </PropertyGroup>
 
