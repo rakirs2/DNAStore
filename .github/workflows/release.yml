@@ -27,4 +27,10 @@ jobs:
       - name: Create the package
         run: dotnet pack --configuration Release
       - name: Publish the package to GPR
-        run: dotnet nuget push bin/Release/*.nupkg
+        run: dotnet nuget push Base/bin/Release/*.nupkg
+      - name: Publish the package to GPR
+        run: dotnet nuget push BioMath/bin/Release/*.nupkg
+      - name: Publish the package to GPR
+        run: dotnet nuget push Clients/bin/Release/*.nupkg
+      - name: Publish the package to GPR
+        run: dotnet nuget push Sequence/bin/Release/*.nupkg
