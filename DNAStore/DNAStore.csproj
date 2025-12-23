@@ -5,11 +5,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>DNAStore</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Sequence\Sequence.csproj" />
-        <ProjectReference Include="..\Clients\Clients.csproj"/>
+        <ProjectReference Include="..\DNAStore.Sequence\DNAStore.Sequence.csproj" />
+        <ProjectReference Include="..\DNAStore.Clients\DNAStore.Clients.csproj" />
     </ItemGroup>
 
 </Project>

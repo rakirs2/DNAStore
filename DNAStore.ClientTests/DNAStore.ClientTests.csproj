@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net9.0</TargetFrameworks>
-
-        <IsPackable>false</IsPackable>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ClientsTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +16,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BioMath\BioMath.csproj"/>
+        <ProjectReference Include="..\DNAStore.Clients\DNAStore.Clients.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
     </ItemGroup>
 
 </Project>

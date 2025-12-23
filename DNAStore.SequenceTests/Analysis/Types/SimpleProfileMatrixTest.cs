@@ -10,7 +10,7 @@ public class SimpleProfileMatrixTests
         "A: 5 1 0 0 5 5 0 0\nC: 0 0 1 4 2 0 6 1\nG: 1 1 6 3 0 1 0 0\nT: 1 5 0 0 0 1 1 6\n";
 
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../SequenceTests/TestData/ProfileMatrixData.fasta");
+        "../../../../DNAStore.SequenceTests/TestData/ProfileMatrixData.fasta");
 
     [TestMethod]
     public void ProfileMatrixTest()
