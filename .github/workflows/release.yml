@@ -4,10 +4,10 @@ permissions:
   contents: read
   packages: write 
 steps:
-  - uses: actions/checkout@v3
-  - uses: actions/setup-dotnet@v3
+  - uses: actions/checkout@v4
+  - uses: actions/setup-dotnet@v4
     with:
-      dotnet-version: '3.1.x' # No change it
+      dotnet-version: '9.0.x'
       source-url: https://nuget.pkg.github.com/<owner|organization>/index.json
     env:
       NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
