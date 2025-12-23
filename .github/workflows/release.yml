@@ -15,22 +15,22 @@ jobs:
       contents: read
       packages: write 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
-          source-url: https://nuget.pkg.github.com/<owner|organization>/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
+          dotnet-version: '9.x' # Specify your project's .NET version
+
+      - name: Restore dependencies
+        run: dotnet restore
+
       - name: Build project
-        run: dotnet build --configuration Release
-      - name: Create the package
-        run: dotnet pack --configuration Release
-      - name: Publish the Base to GPR
-        run: dotnet nuget push Base/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/<owner|organization>/index.json
-      - name: Publish the BioMath to GPR
-        run: dotnet nuget push BioMath/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/<owner|organization>/index.json"
-      - name: Publish the Clients to GPR
-        run: dotnet nuget push Clients/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish the Sequence to GPR
-        run: dotnet nuget push Sequence/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack the NuGet package
+        run: dotnet pack --configuration Release -o ./output
+
+      - name: Publish to NuGet.org
+        run: dotnet nuget push "./output/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source api.nuget.org
