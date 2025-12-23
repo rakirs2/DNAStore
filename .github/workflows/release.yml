@@ -27,9 +27,9 @@ jobs:
       - name: Create the package
         run: dotnet pack --configuration Release
       - name: Publish the Base to GPR
-        run: dotnet nuget push Base/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push Base/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/<owner|organization>/index.json
       - name: Publish the BioMath to GPR
-        run: dotnet nuget push BioMath/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push BioMath/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/<owner|organization>/index.json"
       - name: Publish the Clients to GPR
         run: dotnet nuget push Clients/bin/Release/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }}
       - name: Publish the Sequence to GPR
