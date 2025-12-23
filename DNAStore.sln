@@ -5,9 +5,9 @@ VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore", "DNAStore\DNAStore.csproj", "{99D188DA-F129-449E-93D1-033D13BA1301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bio", "Bio\Bio.csproj", "{0A3AD033-10BC-454E-90CC-07292D823FD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sequence", "Sequence\Sequence.csproj", "{0A3AD033-10BC-454E-90CC-07292D823FD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioTests", "BioTests\BioTests.csproj", "{C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceTests", "SequenceTests\SequenceTests.csproj", "{C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4B38DA6-0594-4BAE-80CD-863DEBF3ADD7}"
 	ProjectSection(SolutionItems) = preProject

@@ -6,7 +6,7 @@ namespace BioTests.IO;
 public class FastaListExtensionsTests
 {
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../BioTests/TestData/DistanceMatrix.fasta");
+        "../../../../SequenceTests/TestData/DistanceMatrix.fasta");
 
     [TestMethod]
     public void DistanceMatrixTest()
