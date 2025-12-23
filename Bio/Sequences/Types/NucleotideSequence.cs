@@ -9,13 +9,10 @@ public abstract class NucleotideSequence : Sequence, INucleotideSequence
     {
     }
 
-    protected NucleotideSequence(string name, string rawSequence) : base(rawSequence, name)
+    protected NucleotideSequence(string rawSequence, string name) : base(rawSequence, name)
     {
     }
-
-    protected NucleotideSequence(Fasta fasta) : base(fasta)
-    {
-    }
+    
 
     protected abstract HashSet<char> Pyrimidines { get; }
     protected abstract HashSet<char> Purines { get; }

@@ -123,7 +123,6 @@ public static class Probability
         if (currentLength == 1)
         {
             var initial = new List<string>();
-            // initialize
             foreach (var character in kmers) initial.Add(character.ToString());
 
             return initial;

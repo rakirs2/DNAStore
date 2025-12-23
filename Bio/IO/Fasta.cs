@@ -14,13 +14,13 @@ public class Fasta : IFasta
         ContentType = ContentType.Unknown;
         BasePairDictionary = new BasePairDictionary();
 
-        var isPossibleRNA = false;
+        var isPossibleRna = false;
         foreach (var c in RawSequence)
         {
             if (ContentType == ContentType.Unknown)
             {
-                if (!isPossibleRNA)
-                    isPossibleRNA = SequenceHelpers.IsKnownRNADifferentiator(c);
+                if (!isPossibleRna)
+                    isPossibleRna = SequenceHelpers.IsKnownRNADifferentiator(c);
 
                 if (SequenceHelpers.IsKnownProteinDifferentiator(c))
                     ContentType = ContentType.Protein;
@@ -30,7 +30,7 @@ public class Fasta : IFasta
         }
 
         if (ContentType != ContentType.Unknown) return;
-        ContentType = isPossibleRNA ? ContentType.RNA : ContentType.DNA;
+        ContentType = isPossibleRna ? ContentType.RNA : ContentType.DNA;
     }
 
 
@@ -53,13 +53,48 @@ public class Fasta : IFasta
     {
         throw new NotImplementedException();
     }
+    
+    public Sequence GenerateSequence()
+    {
+        return new Sequence( RawSequence, Name);
+    }
+
+    public Sequence GenerateInferred()
+    {
+        switch (ContentType)
+        {
+            case ContentType.Protein:
+                return GenerateProteinSequence();
+            case ContentType.RNA:
+                return GenerateRNASequence();
+            case ContentType.DNA:
+                return GenerateDNASequence();
+            default:
+                return GenerateSequence();
+        }
+    }
+    
+    public RnaSequence GenerateRNASequence()
+    {
+        return new RnaSequence(RawSequence, Name);
+    }
+
+    public DnaSequence GenerateDNASequence()
+    {
+        return new DnaSequence(RawSequence, Name);
+    }
+
+    public ProteinSequence GenerateProteinSequence()
+    {
+        throw new NotImplementedException();
+    }
 
     public override string ToString()
     {
         return Name;
     }
 
-    // TODO: surely this is not it
+    // TODO: surely this is not it. 
     public void Save(string filePath)
     {
         File.WriteAllText(filePath, ToJson());
@@ -101,7 +136,6 @@ public class Fasta : IFasta
         }
     }
 
-    // TODO: should this be an extension method?
     public static Fasta GetMaxGCContent(IList<Fasta> fastas)
     {
         // We coudl throw this into the final iteration but this is not breakinbg in any way
