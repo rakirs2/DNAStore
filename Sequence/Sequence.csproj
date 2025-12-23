@@ -10,7 +10,8 @@
         <RepositoryUrl>github.com/rakirs2/DNAStore</RepositoryUrl>
         <Company>DNAStore</Company>
         <AssemblyVersion>1.00</AssemblyVersion>
-        <RootNamespace>Bio</RootNamespace>
+        <RootNamespace>DnaStore</RootNamespace>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

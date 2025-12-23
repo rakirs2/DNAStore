@@ -5,6 +5,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
+        <RootNamespace>DnaStore</RootNamespace>
+        <Company>DnaStore</Company>
     </PropertyGroup>
 
 </Project>
