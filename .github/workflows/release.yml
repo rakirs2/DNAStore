@@ -1,19 +1,25 @@
 name: Publish Dna Store Package
-runs-on: ubuntu-latest
-permissions:
-  contents: read
-  packages: write 
-steps:
-  - uses: actions/checkout@v4
-  - uses: actions/setup-dotnet@v4
-    with:
-      dotnet-version: '9.0.x'
-      source-url: https://nuget.pkg.github.com/<owner|organization>/index.json
-    env:
-      NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
-  - name: Build project
-    run: dotnet build --configuration Release
-  - name: Create the package
-    run: dotnet pack --configuration Release
-  - name: Publish the package to GPR
-    run: dotnet nuget push bin/Release/*.nupkg
+on:
+  release:
+    types: [published]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write 
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+          source-url: https://nuget.pkg.github.com/<owner|organization>/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
+      - name: Build project
+        run: dotnet build --configuration Release
+      - name: Create the package
+        run: dotnet pack --configuration Release
+      - name: Publish the package to GPR
+        run: dotnet nuget push bin/Release/*.nupkg
