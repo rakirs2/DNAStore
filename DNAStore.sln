@@ -5,9 +5,9 @@ VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore", "DNAStore\DNAStore.csproj", "{99D188DA-F129-449E-93D1-033D13BA1301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sequence", "Sequence\Sequence.csproj", "{0A3AD033-10BC-454E-90CC-07292D823FD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.Sequence", "DNAStore.Sequence\DNAStore.Sequence.csproj", "{0A3AD033-10BC-454E-90CC-07292D823FD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceTests", "SequenceTests\SequenceTests.csproj", "{C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.SequenceTests", "DNAStore.SequenceTests\DNAStore.SequenceTests.csproj", "{C17CDAE9-7CB8-4CC9-A0B4-D30461BCA242}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4B38DA6-0594-4BAE-80CD-863DEBF3ADD7}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,17 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", "{36B463CC-F993-4E42-AFB8-DAE09313115F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.Base", "DNAStore.Base\DNAStore.Base.csproj", "{36B463CC-F993-4E42-AFB8-DAE09313115F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseTests", "BaseTests\BaseTests.csproj", "{7FDE2120-AAA8-475F-8F55-EEBD27427DAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.BaseTests", "DNAStore.BaseTests\DNAStore.BaseTests.csproj", "{7FDE2120-AAA8-475F-8F55-EEBD27427DAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients", "Clients\Clients.csproj", "{3E285EEA-2CA7-4F09-9C09-CF78CBF9E261}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.Clients", "DNAStore.Clients\DNAStore.Clients.csproj", "{3E285EEA-2CA7-4F09-9C09-CF78CBF9E261}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientsTests", "ClientsTests\ClientsTests.csproj", "{14D6233C-9AFA-4BEF-B489-3E2C99711A8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.ClientTests", "DNAStore.ClientTests\DNAStore.ClientTests.csproj", "{14D6233C-9AFA-4BEF-B489-3E2C99711A8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioMath", "BioMath\BioMath.csproj", "{E22857AD-5AD2-4575-9AB2-A688ECEA03CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.BioMath", "DNAStore.BioMath\DNAStore.BioMath.csproj", "{E22857AD-5AD2-4575-9AB2-A688ECEA03CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioMathTests", "BioMathTests\BioMathTests.csproj", "{4BD758B6-2911-473E-969D-DB2579D1D710}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore.BioMathTests", "DNAStore.BioMathTests\DNAStore.BioMathTests.csproj", "{4BD758B6-2911-473E-969D-DB2579D1D710}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

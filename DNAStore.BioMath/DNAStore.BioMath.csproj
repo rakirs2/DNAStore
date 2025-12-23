@@ -4,12 +4,17 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>DNAStore.Clients</RootNamespace>
+        <RootNamespace>DnaStore.BioMath</RootNamespace>
         <LangVersion>12</LangVersion>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Sequence\Sequence.csproj" />
+        <PackageReference Include="MathNet.Numerics" Version="6.0.0-beta2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\DNAStore.Base\DNAStore.Base.csproj" />
     </ItemGroup>
 
 </Project>
