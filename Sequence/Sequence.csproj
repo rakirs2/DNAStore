@@ -4,6 +4,13 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Srikar Mylavarapu</Authors>
+        <Description>A bioinformatics Libarary in C#</Description>
+        <RepositoryUrl>github.com/rakirs2/DNAStore</RepositoryUrl>
+        <Company>DNAStore</Company>
+        <AssemblyVersion>1.00</AssemblyVersion>
+        <RootNamespace>Bio</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
