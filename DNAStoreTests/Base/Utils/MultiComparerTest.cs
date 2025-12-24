@@ -8,17 +8,15 @@ namespace BaseTests.Utils;
 public class MultiComparerTest
 {
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void Base()
     {
-        Assert.AreEqual(0, MultiComparer.Min(null));
+        Assert.ThrowsExactly<ArgumentNullException>(()=>MultiComparer.Min(null));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void ZeroLength()
     {
-        Assert.AreEqual(0, MultiComparer.Min());
+        Assert.ThrowsExactly<ArgumentException>(()=>MultiComparer.Min());
     }
 
     [TestMethod]
