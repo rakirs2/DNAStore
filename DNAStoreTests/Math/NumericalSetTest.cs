@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
 using BioMath;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BioMathTests;
 

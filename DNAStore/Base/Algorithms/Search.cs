@@ -1,5 +1,3 @@
-using Base.Utils;
-
 namespace Base.Algorithms;
 
 public static class Search
