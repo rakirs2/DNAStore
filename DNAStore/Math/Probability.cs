@@ -73,7 +73,7 @@ public static class Probability
     /// <returns></returns>
     public static double PercentDominant(uint k, uint m, uint n)
     {
-        var total = k + m + n;
+        uint total = k + m + n;
         var totalCombinations = 4 * Combinations(total, 2);
         var dominant = 4 * Combinations(k, 2) + 4 * k * m + 4 * k * n + 3 * Combinations(m, 2) + 2 * m * n;
 
@@ -123,7 +123,7 @@ public static class Probability
         if (currentLength == 1)
         {
             var initial = new List<string>();
-            foreach (var character in kmers) initial.Add(character.ToString());
+            foreach (char character in kmers) initial.Add(character.ToString());
 
             return initial;
         }
@@ -132,8 +132,8 @@ public static class Probability
 
 
         var newOutput = new List<string>();
-        foreach (var bp in kmers)
-        foreach (var currentSequence in output)
+        foreach (char bp in kmers)
+        foreach (string currentSequence in output)
             newOutput.Add(bp + currentSequence);
 
         return newOutput;
@@ -153,9 +153,9 @@ public static class Probability
     {
         if (kmerLength == 0) return;
 
-        foreach (var character in inputString)
+        foreach (char character in inputString)
         {
-            var newCurrent = current + character;
+            string newCurrent = current + character;
             output.Add(newCurrent);
             GenerateAllkmersAndSubKmers(inputString, newCurrent, kmerLength - 1, ref output);
         }
@@ -169,7 +169,7 @@ public static class Probability
             return;
         }
 
-        for (var i = start; i < numbers.Length; i++)
+        for (int i = start; i < numbers.Length; i++)
         {
             GenerateSignedPermutations(numbers, start + 1, results);
             numbers[i] = -numbers[i];
@@ -207,7 +207,7 @@ public static class Probability
         {
             var tempOutput = new HashSet<int[]>();
             GenerateSignedPermutations(perm.ToArray(), 0, tempOutput);
-            foreach (var val in tempOutput) output.Add((int[])val.Clone());
+            foreach (int[] val in tempOutput) output.Add((int[])val.Clone());
         }
 
         return output;

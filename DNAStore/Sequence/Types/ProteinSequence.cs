@@ -16,7 +16,7 @@ public class ProteinSequence : Sequence, IProtein
         get
         {
             double output = 0;
-            foreach (var character in ToString()) output += Reference.MonoisotopicMassTable[character];
+            foreach (char character in ToString()) output += Reference.MonoisotopicMassTable[character];
             return output;
         }
     }
@@ -25,7 +25,7 @@ public class ProteinSequence : Sequence, IProtein
     public int NumberOfPossibleRNA(int modulo = (int)1e6)
     {
         BigInteger result = 1;
-        foreach (var protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
+        foreach (char protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
         // finally, we need to account for the stop
         result *= SequenceHelpers.NumberOfPossibleProteins("Stop");
         var modulo2 = new BigInteger(modulo);
@@ -49,19 +49,17 @@ public class ProteinSequence : Sequence, IProtein
     public static ProteinSequence CalculateFromPrefixWeights(double[] spectrum)
     {
         if (spectrum.Length <= 1)
-        {
             throw new ArgumentException("A single protein sequence realistically should never be used with this");
-        }
-        string protein = "";
-        for (int i = 0; i < spectrum.Length - 1; i++)
+        var protein = "";
+        for (var i = 0; i < spectrum.Length - 1; i++)
         {
             double diff = spectrum[i + 1] - spectrum[i];
-            
+
             // Search for best fit by mass
             char match = Reference.MonoisotopicMassTable
                 .OrderBy(kvp => Math.Abs(kvp.Value - diff))
                 .First().Key;
-            
+
             protein += match;
         }
 
@@ -95,28 +93,25 @@ public class ProteinSequence : Sequence, IProtein
     {
         double[] ions = spectrum.OrderBy(x => x).ToArray();
         int n = (ions.Length - 2) / 2;
-        StringBuilder result = new StringBuilder();
+        var result = new StringBuilder();
         double currentMass = ions[0];
         if (ions.Any(ion => ion > totalWeight))
-        {
-            throw new MassSpecExceptions.InvalidMassException("Molecular weight of total must be strictly greater than any smaller sum");
-        }
-        
-        for (int i = 0; i < n; i++)
-        {
+            throw new MassSpecExceptions.InvalidMassException(
+                "Molecular weight of total must be strictly greater than any smaller sum");
+
+        for (var i = 0; i < n; i++)
             foreach (var aminoAcid in Reference.MonoisotopicMassTable)
             {
                 double targetMass = currentMass + aminoAcid.Value;
-                var nextIon = ions.FirstOrDefault(m => Math.Abs(m - targetMass) < tolerance);
+                double nextIon = ions.FirstOrDefault(m => Math.Abs(m - targetMass) < tolerance);
 
                 if (nextIon == 0) continue;
-                result.Append( aminoAcid.Key);
+                result.Append(aminoAcid.Key);
                 // We want the cleanest data possible. It would be possible to use the runnning total.
                 // But it's better to use the given data.
                 currentMass = nextIon;
                 break;
             }
-        }
 
         return result.ToString();
     }

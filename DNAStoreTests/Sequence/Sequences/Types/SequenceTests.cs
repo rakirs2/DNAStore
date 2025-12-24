@@ -27,7 +27,7 @@ public class SequenceTests
     {
         var a = new Bio.Sequences.Types.Sequence("ac");
         var b = new Bio.Sequences.Types.Sequence("ab");
-        var result = Bio.Sequences.Types.Sequence.HammingDistance(a, b);
+        int result = Bio.Sequences.Types.Sequence.HammingDistance(a, b);
         Assert.AreEqual(1, result);
     }
 
@@ -36,7 +36,7 @@ public class SequenceTests
     {
         var a = new Bio.Sequences.Types.Sequence("GAGCCTACTAACGGGAT");
         var b = new Bio.Sequences.Types.Sequence("CATCGTAATGACGGCCT");
-        var result = Bio.Sequences.Types.Sequence.HammingDistance(a, b);
+        int result = Bio.Sequences.Types.Sequence.HammingDistance(a, b);
         Assert.AreEqual(7, result);
     }
 
@@ -45,7 +45,7 @@ public class SequenceTests
     {
         var a = new Bio.Sequences.Types.Sequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        var result = a.MotifLocations(b);
+        long[] result = a.MotifLocations(b);
         var expected = new long[] { 1 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -55,7 +55,7 @@ public class SequenceTests
     {
         var a = new Bio.Sequences.Types.Sequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
-        var result = a.MotifLocations(b, true);
+        long[] result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -65,7 +65,7 @@ public class SequenceTests
     {
         var a = new Bio.Sequences.Types.Sequence("GATATATGCATATACTT");
         var b = new Motif("ATAT", 4);
-        var result = a.MotifLocations(b);
+        long[] result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
         Assert.IsTrue(expected.SequenceEqual(result));
     }
@@ -114,7 +114,7 @@ public class SequenceTests
     public void RemoveIntronsTestNull()
     {
         var seq1 = new Bio.Sequences.Types.Sequence("abcde");
-        Assert.ThrowsExactly<ArgumentNullException>(()=>seq1.RemoveIntrons(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => seq1.RemoveIntrons(null));
     }
 
     [TestMethod]
@@ -185,7 +185,7 @@ public class SequenceTests
     {
         var seq1 = new Bio.Sequences.Types.Sequence("AAAAAAAA");
         var counter = 0;
-        foreach (var something in seq1.GetKmerEnumerator(2)) counter++;
+        foreach (string something in seq1.GetKmerEnumerator(2)) counter++;
 
         Assert.AreEqual(7, counter);
     }
@@ -194,9 +194,9 @@ public class SequenceTests
     public void RandomKmerGenerator()
     {
         var seq1 = new Bio.Sequences.Types.Sequence("FEZLWBDYZGJQFSMZAJTADAYAXTNXODMV");
-        var s1 = seq1.GetRandomKmer(5);
-        var s2 = seq1.GetRandomKmer(5);
-        var s3 = seq1.GetRandomKmer(5);
+        string s1 = seq1.GetRandomKmer(5);
+        string s2 = seq1.GetRandomKmer(5);
+        string s3 = seq1.GetRandomKmer(5);
 
         // assert 2/3 work. This should be sufficient for a random setup.
         var counter = 0;

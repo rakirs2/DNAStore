@@ -216,7 +216,7 @@ public class SequenceHelpers
         var hitStop = false;
         while (i < input.Length && !hitStop)
         {
-            var temp = RNAToProteinConverter(input.Substring(i, 3));
+            string? temp = RNAToProteinConverter(input.Substring(i, 3));
             if (temp.Length == 1)
             {
                 convertedRNA.Append(temp);
@@ -233,7 +233,7 @@ public class SequenceHelpers
 
     public static string RNAToProteinConverter(string codon)
     {
-        if (RNAToProteinCode.TryGetValue(codon, out var value))
+        if (RNAToProteinCode.TryGetValue(codon, out string? value))
             return value;
 
         throw new InvalidDataException("Value does not exist");

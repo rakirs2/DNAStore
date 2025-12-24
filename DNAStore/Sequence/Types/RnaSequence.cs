@@ -13,6 +13,7 @@ public class RnaSequence : NucleotideSequence, IRna
     public RnaSequence(string rawSequence) : base(rawSequence)
     {
     }
+
     public RnaSequence(string rawSequence, string name) : base(rawSequence, name)
     {
     }

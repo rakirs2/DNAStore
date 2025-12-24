@@ -46,10 +46,10 @@ public class AlignmentMatrix : IAlignmentMatrix
 
     public string LongestCommonSubSequence()
     {
-        var i = _a.Length;
-        var j = _b.Length;
+        int i = _a.Length;
+        int j = _b.Length;
         var node = _matrix[i, j];
-        var val = node.Value;
+        int val = node.Value;
         var sb = new StringBuilder();
         while (val > 0)
         {

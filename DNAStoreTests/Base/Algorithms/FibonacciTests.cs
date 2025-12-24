@@ -15,7 +15,7 @@ public class FibonacciTests
     [TestMethod]
     public void GetNthTestOutOfRange()
     {
-        Assert.ThrowsExactly<InvalidDataException>(()=>Fibonacci.GetNth(-1));
+        Assert.ThrowsExactly<InvalidDataException>(() => Fibonacci.GetNth(-1));
     }
 
     [TestMethod]

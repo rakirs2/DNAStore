@@ -11,7 +11,7 @@ public interface IFasta
     long Length { get; }
     public string ToJson();
     public void Compress();
-    
+
     public Sequence GenerateSequence();
     public RnaSequence GenerateRNASequence();
     public DnaSequence GenerateDNASequence();

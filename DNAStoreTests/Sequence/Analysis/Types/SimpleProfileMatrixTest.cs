@@ -24,12 +24,12 @@ public class SimpleProfileMatrixTests
     [TestMethod]
     public void SimpleProfileMatrixNullInput()
     {
-        Assert.ThrowsExactly<ArgumentNullException>(()=>new SimpleProfileMatrix(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => new SimpleProfileMatrix(null));
     }
 
     [TestMethod]
     public void SimpleProfileMatrixNoInput()
     {
-        Assert.ThrowsExactly<ArgumentException>(()=>new SimpleProfileMatrix(new List<Fasta>()));
+        Assert.ThrowsExactly<ArgumentException>(() => new SimpleProfileMatrix(new List<Fasta>()));
     }
 }

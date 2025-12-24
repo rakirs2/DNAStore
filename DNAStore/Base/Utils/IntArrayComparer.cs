@@ -20,7 +20,7 @@ public class IntArrayComparer : IEqualityComparer<int[]>
         unchecked
         {
             var hash = 17;
-            foreach (var item in obj) hash = hash * 23 + item.GetHashCode();
+            foreach (int item in obj) hash = hash * 23 + item.GetHashCode();
             return hash;
         }
     }

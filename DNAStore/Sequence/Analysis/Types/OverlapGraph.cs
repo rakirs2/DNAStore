@@ -14,7 +14,7 @@ public class OverlapGraph : IOverlapGraph
 
         // can't match with itself
         for (var i = 0; i < Number - 1; i++)
-        for (var j = i + 1; j < Number; j++)
+        for (int j = i + 1; j < Number; j++)
         {
             // there are two possible matches
             if (fastas[i].RawSequence[..MatchLength].Equals(fastas[j].RawSequence[^MatchLength..]))
