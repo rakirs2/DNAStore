@@ -47,24 +47,21 @@ public class SequenceHelpersTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidDataException))]
     public void InvalidCodonLength()
     {
-        SequenceHelpers.RNAToProteinConverter("A");
+        Assert.ThrowsExactly<InvalidDataException>(()=>SequenceHelpers.RNAToProteinConverter("A"));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidDataException))]
     public void BadCodonLowercase()
     {
-        SequenceHelpers.RNAToProteinConverter("aaa");
+        Assert.ThrowsExactly<InvalidDataException>(()=>SequenceHelpers.RNAToProteinConverter("aaa"));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidDataException))]
     public void BadCodonEmptyString()
     {
-        SequenceHelpers.RNAToProteinConverter("");
+        Assert.ThrowsExactly<InvalidDataException>(()=>SequenceHelpers.RNAToProteinConverter(""));
     }
 
     [TestMethod]

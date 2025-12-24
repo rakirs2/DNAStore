@@ -115,19 +115,17 @@ public class DnaSequenceTest
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void GenerateKmerCompositionBadInput()
     {
         var seq = new DnaSequence("acgt");
-        var _ = seq.KmerComposition(0);
+        Assert.Throws<ArgumentException>(()=>seq.KmerComposition(0));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void GenerateKmerCompositionBadInput2()
     {
         var seq = new DnaSequence("acgt");
-        var _ = seq.KmerComposition(-1);
+        Assert.ThrowsExactly<ArgumentException>(()=>seq.KmerComposition(-1));
     }
 
     [TestMethod]

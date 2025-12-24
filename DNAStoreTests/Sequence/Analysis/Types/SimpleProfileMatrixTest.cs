@@ -22,16 +22,14 @@ public class SimpleProfileMatrixTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void SimpleProfileMatrixNullInput()
     {
-        var result = new SimpleProfileMatrix(null);
+        Assert.ThrowsExactly<ArgumentNullException>(()=>new SimpleProfileMatrix(null));
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
     public void SimpleProfileMatrixNoInput()
     {
-        var result = new SimpleProfileMatrix(new List<Fasta>());
+        Assert.ThrowsExactly<ArgumentException>(()=>new SimpleProfileMatrix(new List<Fasta>()));
     }
 }

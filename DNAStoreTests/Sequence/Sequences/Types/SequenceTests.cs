@@ -111,12 +111,10 @@ public class SequenceTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(ArgumentNullException))]
     public void RemoveIntronsTestNull()
     {
         var seq1 = new Bio.Sequences.Types.Sequence("abcde");
-        var output = seq1.RemoveIntrons(null);
-        Assert.AreEqual("abcde", output.ToString());
+        Assert.ThrowsExactly<ArgumentNullException>(()=>seq1.RemoveIntrons(null));
     }
 
     [TestMethod]

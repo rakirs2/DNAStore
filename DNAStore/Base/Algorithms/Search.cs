@@ -71,7 +71,7 @@ public static class Search
         return pi;
     }
 
-    public static List<List<int>> AhoCorasick(this List<string> strings, List<string> target)
+    public static List<List<int>> AhoCorasick(this string text, List<string> target)
     {
         return null;
     }
