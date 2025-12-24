@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DNAStore.Base\DNAStore.Base.csproj" />
+        <ProjectReference Include="..\DNAStore\DNAStore.csproj" />
     </ItemGroup>
 
 </Project>

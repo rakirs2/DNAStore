@@ -17,11 +17,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DNAStore.Base\DNAStore.Base.csproj" />
+        <ProjectReference Include="..\DNAStore\DNAStore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Base\" />
+      <Folder Include="Sequence\" />
     </ItemGroup>
 
 </Project>

@@ -13,8 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DNAStore.Base\DNAStore.Base.csproj" />
-        <ProjectReference Include="..\DNAStore.BioMath\DNAStore.BioMath.csproj" />
+        <ProjectReference Include="..\DNAStore\DNAStore.csproj" />
     </ItemGroup>
 
 </Project>
