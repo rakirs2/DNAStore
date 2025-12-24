@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.VisualBasic;
 
 namespace Base.Utils;
 
@@ -35,7 +36,7 @@ public static class StringUtils
 
     /// <summary>
     ///     Returns the basic Levenshtein distance. Base DP programming algorithm for a lot of alignment
-    ///     It's called edit distance in computational biology. However, for the purposes of this, let's keep this separated
+    ///     It's called edit distance. However, for the purposes of this, let's keep this separated
     ///     from all 'bio' project work and call it as necessary.
     /// </summary>
     /// <remarks>
@@ -47,15 +48,17 @@ public static class StringUtils
     /// <param name="a"></param>
     /// <param name="b"></param>
     /// <returns></returns>
-    public static int LevenshteinDistance(string a, string b)
+    public static int LevenshteinDistanceInternal(string a, string b, out int[,] d)
     {
+        
+        int m = a.Length;
+        int n = b.Length;
+        d = new int[m + 1, n + 1];
+        
         if (string.IsNullOrEmpty(a)) return b?.Length ?? 0;
 
         if (string.IsNullOrEmpty(b)) return a?.Length ?? 0;
 
-        int m = a.Length;
-        int n = b.Length;
-        var d = new int[m + 1, n + 1];
 
         for (var i = 1; i <= m; d[i, 0] = i++) ;
         for (var j = 1; j <= n; d[0, j] = j++) ;
@@ -71,5 +74,73 @@ public static class StringUtils
         }
 
         return d[m, n];
+    }
+    
+    public static int LevenshteinDistance(string a, string b)
+    {
+        return LevenshteinDistanceInternal(a, b, out int[,] _);
+    }
+
+    /// <summary>
+    /// Same as Levenshtein with a traceback to get the gapped strings
+    /// Guaranteed to return a set of the lowest score. This is not necessarily unique.
+    /// </summary>
+    /// <remarks>
+    ///     It's worth remembering the first 'bad' idea for this. I wanted to greedily add - at every mismatch.
+    ///     Why would that fail?
+    ///     Trivial case, it actually works:
+    ///         ABCDE    --> ABCDE---
+    ///         ABCDEFGH --> ABCDEFGH
+    ///
+    ///     What if we mix these up?
+    ///         ABCDEF
+    ///         GABCDE
+    ///         Distance 6
+    ///
+    ///         _ABCDEF
+    ///         GABCDE_
+    ///         Distance 2
+    ///
+    ///  TODO: for tomorrow. I messed this up somewhere
+    /// <remarks>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="a_gapped"></param>
+    /// <param name="b_gapped"></param>
+    /// <returns></returns>
+    public static int NeedlemanWunsch(string a, string b, out string a_gapped, out string b_gapped)
+    {
+        var retVal = LevenshteinDistanceInternal(a, b, out int[,] d);
+        StringBuilder a_sb = new StringBuilder();
+        StringBuilder b_sb = new StringBuilder();
+        int i = a.Length, j = b.Length;
+
+        while (i > 0 && j > 0)
+        {
+            // if both are positive, we are open to all 3 possibilities
+            // but most importantly, we need to see if there was a perfect match accounting for the sub penalty
+            if (i > 0 && j > 0 && d[i, j] == d[i - 1, j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1))
+            {
+                a_sb.Insert(0, a[i - 1]);
+                b_sb.Insert(0, b[j - 1]);
+                i--; j--;
+            }
+            else if (i > 0 && d[i, j] == d[i - 1, j] + 1)
+            {
+                a_sb.Insert(0, a[i - 1]);
+                b_sb.Insert(0, "-");
+                i--;
+            }
+            else
+            {
+                a_sb.Insert(0, "-");
+                b_sb.Insert(0, b[j - 1]);
+                j--;
+            }
+        }
+
+        a_gapped = a_sb.ToString();
+        b_gapped = b_sb.ToString();
+        return retVal;
     }
 }

@@ -72,4 +72,19 @@ public class StringUtilsTests
     {
         Assert.AreEqual(5, StringUtils.LevenshteinDistance("PLEASANTLY", "MEANLY"));
     }
+    
+    [TestMethod]
+    public void WhyGreedyDoesNotWork()
+    {
+        Assert.AreEqual(2, StringUtils.LevenshteinDistance("ABCDEF", "GABCDE"));
+    }
+
+    [TestMethod]
+    public void EditDistanceGappedStrings()
+    {
+        var editdistance = StringUtils.NeedlemanWunsch("PRETTY", "PRTTEIN", out var a_gapped, out var b_gapped);
+        Assert.AreEqual(4, editdistance);
+        Assert.AreEqual("PRET-TY", a_gapped);
+        Assert.AreEqual("PRTTEIN", b_gapped);
+    }
 }
