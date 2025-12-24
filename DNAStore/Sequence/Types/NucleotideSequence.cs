@@ -12,7 +12,7 @@ public abstract class NucleotideSequence : Sequence, INucleotideSequence
     protected NucleotideSequence(string rawSequence, string name) : base(rawSequence, name)
     {
     }
-    
+
 
     protected abstract HashSet<char> Pyrimidines { get; }
     protected abstract HashSet<char> Purines { get; }
@@ -57,8 +57,8 @@ public abstract class NucleotideSequence : Sequence, INucleotideSequence
 
         for (var i = 0; i < Length; i++)
         {
-            var a = this[i];
-            var b = other[i];
+            char a = this[i];
+            char b = other[i];
             if (!a.Equals(b))
             {
                 if (Pyrimidines.Contains(a) && Pyrimidines.Contains(b))
@@ -75,9 +75,9 @@ public abstract class NucleotideSequence : Sequence, INucleotideSequence
 
     public double GCRatio()
     {
-        var totalGC = Counts.GetFrequency('G') + Counts.GetFrequency('g') +
-                      Counts.GetFrequency('C') + Counts.GetFrequency('c');
-        var totalBp = Counts.Count;
+        long totalGC = Counts.GetFrequency('G') + Counts.GetFrequency('g') +
+                       Counts.GetFrequency('C') + Counts.GetFrequency('c');
+        long totalBp = Counts.Count;
         return (double)totalGC / totalBp;
     }
 }

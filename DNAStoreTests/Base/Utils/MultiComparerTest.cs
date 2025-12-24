@@ -10,13 +10,13 @@ public class MultiComparerTest
     [TestMethod]
     public void Base()
     {
-        Assert.ThrowsExactly<ArgumentNullException>(()=>MultiComparer.Min(null));
+        Assert.ThrowsExactly<ArgumentNullException>(() => MultiComparer.Min(null));
     }
 
     [TestMethod]
     public void ZeroLength()
     {
-        Assert.ThrowsExactly<ArgumentException>(()=>MultiComparer.Min());
+        Assert.ThrowsExactly<ArgumentException>(() => MultiComparer.Min());
     }
 
     [TestMethod]

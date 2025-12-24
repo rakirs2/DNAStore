@@ -8,7 +8,7 @@ public class StringUtilsTests
     [TestMethod]
     public void SwapIndexTest()
     {
-        var output = StringUtils.SwapIndex("test", 0, 1);
+        string? output = StringUtils.SwapIndex("test", 0, 1);
         Assert.IsTrue(output.Equals("etst"));
     }
 

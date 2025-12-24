@@ -31,7 +31,7 @@ public class ReversalDistance
 
         while (currentIteration.Count != 0 || (nextIteration.Count != 0 && currentDepth <= _a.Length))
         {
-            var temp = currentIteration.Dequeue();
+            int[]? temp = currentIteration.Dequeue();
             if (temp.SequenceEqual(_b)) return currentDepth;
 
             traversed.Add(temp);
@@ -94,13 +94,13 @@ public class ReversalDistance
     /// <returns></returns>
     public static int ApproximateGreedyReversalSort(int[] reversals, out List<int[]> order)
     {
-        var n = reversals.Length;
+        int n = reversals.Length;
         order = new List<int[]>();
         for (var i = 1; i <= n; i++)
             if (reversals[i - 1] != i)
             {
                 // greedily find the right index 
-                var j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
+                int j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
                 ReverseSubsequence(reversals, i - 1, j);
                 var temp = (int[])reversals.Clone();
                 order.Add(temp);

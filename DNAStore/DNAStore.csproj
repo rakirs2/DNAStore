@@ -9,11 +9,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Base\" />
+        <Folder Include="Base\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MathNet.Numerics" Version="6.0.0-beta2" />
+        <PackageReference Include="MathNet.Numerics" Version="6.0.0-beta2"/>
     </ItemGroup>
 
 </Project>

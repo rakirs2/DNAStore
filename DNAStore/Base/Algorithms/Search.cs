@@ -15,31 +15,25 @@ public static class Search
     /// <returns></returns>
     public static int[] KnuthMorrisPratt(this string text, string pattern)
     {
-        var failureArray = pattern.KMPFailureArray();
+        int[] failureArray = pattern.KMPFailureArray();
         var output = new List<int>();
         var q = 0;
-        for (int i = 0; i < text.Length; i++)
+        for (var i = 0; i < text.Length; i++)
         {
-            while (q > 0 && pattern[q] != text[i])
-            {
-                q = failureArray[q];
-            }
+            while (q > 0 && pattern[q] != text[i]) q = failureArray[q];
 
-            if (pattern[q] == text[i])
-            {
-                q++;
-            }
+            if (pattern[q] == text[i]) q++;
 
             if (q == pattern.Length)
             {
-                output.Add(i-pattern.Length+1);
-                q = failureArray[q-1];
+                output.Add(i - pattern.Length + 1);
+                q = failureArray[q - 1];
             }
         }
 
         return output.ToArray();
     }
-    
+
     /// <summary>
     /// This is based off of the Compute-Prefix-Function from CLRS
     /// </summary>
@@ -48,23 +42,16 @@ public static class Search
     /// </remarks>
     /// <param name="pattern"></param>
     /// <returns></returns>
-    
     public static int[] KMPFailureArray(this string pattern)
     {
-        int[] pi = new int[pattern.Length];
-        int k = 0;
+        var pi = new int[pattern.Length];
+        var k = 0;
 
-        for (int q = 1; q < pattern.Length; q++)
+        for (var q = 1; q < pattern.Length; q++)
         {
-            while (k > 0 && pattern[k] != pattern[q])
-            {
-                k = pi[k - 1];
-            }
-            
-            if (pattern[k] == pattern[q])
-            {
-                k++;
-            }
+            while (k > 0 && pattern[k] != pattern[q]) k = pi[k - 1];
+
+            if (pattern[k] == pattern[q]) k++;
             pi[q] = k;
         }
 

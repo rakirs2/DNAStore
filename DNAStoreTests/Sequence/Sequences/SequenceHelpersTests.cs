@@ -29,14 +29,14 @@ public class SequenceHelpersTests
     [TestMethod]
     public void IsProteinSequenceDifferentiator()
     {
-        foreach (var c in KnownProteinSequenceDifferentiators)
+        foreach (char c in KnownProteinSequenceDifferentiators)
             Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(c));
     }
 
     [TestMethod]
     public void IsProteinSequenceDifferentiatorCaseSensitive()
     {
-        foreach (var c in KnownProteinSequenceDifferentiators)
+        foreach (char c in KnownProteinSequenceDifferentiators)
             Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(char.ToLowerInvariant(c)));
     }
 
@@ -49,19 +49,19 @@ public class SequenceHelpersTests
     [TestMethod]
     public void InvalidCodonLength()
     {
-        Assert.ThrowsExactly<InvalidDataException>(()=>SequenceHelpers.RNAToProteinConverter("A"));
+        Assert.ThrowsExactly<InvalidDataException>(() => SequenceHelpers.RNAToProteinConverter("A"));
     }
 
     [TestMethod]
     public void BadCodonLowercase()
     {
-        Assert.ThrowsExactly<InvalidDataException>(()=>SequenceHelpers.RNAToProteinConverter("aaa"));
+        Assert.ThrowsExactly<InvalidDataException>(() => SequenceHelpers.RNAToProteinConverter("aaa"));
     }
 
     [TestMethod]
     public void BadCodonEmptyString()
     {
-        Assert.ThrowsExactly<InvalidDataException>(()=>SequenceHelpers.RNAToProteinConverter(""));
+        Assert.ThrowsExactly<InvalidDataException>(() => SequenceHelpers.RNAToProteinConverter(""));
     }
 
     [TestMethod]

@@ -6,27 +6,27 @@ public static class ListExtensions
     public static List<int> LongestIncreasingSubsequence(this List<int> list)
     {
         var ret = new List<int>();
-        var dp = new List<(int, int)>(); 
-        var prv = new Dictionary<int, int>(); 
-        var count = list.Count;
+        var dp = new List<(int, int)>();
+        var prv = new Dictionary<int, int>();
+        int count = list.Count;
 
-        for (var index = count - 1; index >= 0; --index)
+        for (int index = count - 1; index >= 0; --index)
         {
-            var end = -list[index];
+            int end = -list[index];
 
             int l = 0, r = dp.Count;
             while (l < r)
             {
-                var m = l + (r - l) / 2;
+                int m = l + (r - l) / 2;
                 if (dp[m].Item1 < end)
                     l = m + 1;
                 else
                     r = m;
             }
 
-            var i = l;
+            int i = l;
 
-            var tmp = -1;
+            int tmp = -1;
 
             if (i == dp.Count)
             {
@@ -42,11 +42,11 @@ public static class ListExtensions
             prv[index] = tmp;
         }
 
-        var cur = dp[^1].Item2;
+        int cur = dp[^1].Item2;
         while (cur >= 0)
         {
             ret.Add(list[cur]);
-            cur = prv.TryGetValue(cur, out var value) ? value : -1;
+            cur = prv.TryGetValue(cur, out int value) ? value : -1;
         }
 
         return ret;
@@ -54,7 +54,7 @@ public static class ListExtensions
 
     public static List<int> LongestDecreasingSubsequence(this List<int> list)
     {
-        if ( list.Count == 0) return new List<int>();
+        if (list.Count == 0) return new List<int>();
 
         var ldsLists = new List<List<int>>(list.Count);
 
@@ -62,11 +62,11 @@ public static class ListExtensions
 
         for (var i = 1; i < list.Count; i++)
         for (var j = 0; j < i; j++)
-            if (list[i] < list[j]) 
+            if (list[i] < list[j])
                 if (ldsLists[i].Count < ldsLists[j].Count + 1)
                 {
                     ldsLists[i] = new List<int>(ldsLists[j]);
-                    ldsLists[i].Add(list[i]); 
+                    ldsLists[i].Add(list[i]);
                 }
 
         var longestLDS = new List<int>();

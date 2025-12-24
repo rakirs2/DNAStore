@@ -32,10 +32,10 @@ public class ProteinSequenceTest
             3970.0326,
             4057.0646
         };
-        
-        Assert.AreEqual("WMQS",ProteinSequence.CalculateFromPrefixWeights(weights).RawSequence);
+
+        Assert.AreEqual("WMQS", ProteinSequence.CalculateFromPrefixWeights(weights).RawSequence);
     }
-    
+
     [TestMethod]
     public void GivenShortSeq()
     {
@@ -43,10 +43,10 @@ public class ProteinSequenceTest
         {
             3524.8542
         };
-        
-        Assert.ThrowsExactly<ArgumentException>(()=>ProteinSequence.CalculateFromPrefixWeights(weights).RawSequence);
+
+        Assert.ThrowsExactly<ArgumentException>(() => ProteinSequence.CalculateFromPrefixWeights(weights).RawSequence);
     }
-    
+
     [TestMethod]
     public void InferredProteinWeight()
     {
@@ -65,8 +65,8 @@ public class ProteinSequenceTest
             1249.7250491,
             1377.8200091
         };
-        
-        Assert.AreEqual("KEKEP", ProteinSequence.InferFromPrefixWeights(1988.21104821,weights));
+
+        Assert.AreEqual("KEKEP", ProteinSequence.InferFromPrefixWeights(1988.21104821, weights));
     }
 
     [TestMethod]

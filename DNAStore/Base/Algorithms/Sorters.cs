@@ -10,18 +10,18 @@ public static class Sorters<T> where T : IComparable<T>
     private static long MergeSort(ref T[] array, int left, int right)
     {
         if (left >= right) return 0;
-        var mid = (left + right) / 2;
+        int mid = (left + right) / 2;
 
-        var leftInv = MergeSort(ref array, left, mid);
-        var rightInv = MergeSort(ref array, mid + 1, right);
+        long leftInv = MergeSort(ref array, left, mid);
+        long rightInv = MergeSort(ref array, mid + 1, right);
 
         return leftInv + rightInv + Merge(array, left, mid, right);
     }
 
     private static long Merge(T[] arr, int left, int mid, int right)
     {
-        var n1 = mid - left + 1;
-        var n2 = right - mid;
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
 
         var tempLeftArray = new T[n1];
         var tempRightArray = new T[n2];
@@ -34,7 +34,7 @@ public static class Sorters<T> where T : IComparable<T>
         var i = 0;
         var j = 0;
         long inversions = 0;
-        var k = left;
+        int k = left;
 
         while (i < n1 && j < n2)
         {
