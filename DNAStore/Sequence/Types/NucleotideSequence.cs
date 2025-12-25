@@ -1,4 +1,3 @@
-using Bio.IO;
 using Bio.Sequences.Interfaces;
 
 namespace Bio.Sequences.Types;
