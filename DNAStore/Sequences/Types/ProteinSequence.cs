@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Text;
 using Bio;
+using DNAStore.Base.Utils;
 using DNAStore.Sequences.Exceptions;
 using DNAStore.Sequences.Types.Interfaces;
 
