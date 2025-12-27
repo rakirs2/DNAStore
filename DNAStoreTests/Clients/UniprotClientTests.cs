@@ -1,6 +1,6 @@
 ﻿using DNAStore.Clients;
 
-namespace BaseTests.Clients;
+namespace DNAStoreTests.Clients;
 
 [TestClass]
 public class UniprotClientTests

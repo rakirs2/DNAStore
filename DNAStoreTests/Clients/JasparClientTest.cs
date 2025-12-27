@@ -1,6 +1,6 @@
 using DNAStore.Clients.Jaspar;
 
-namespace BaseTests.Clients;
+namespace DNAStoreTests.Clients;
 
 [TestClass]
 public class JasparClientTest

@@ -2,7 +2,7 @@
 using DNAStore.Sequences.IO;
 using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequences.IO;
+namespace DNAStoreTests.Sequences.IO;
 
 [TestClass]
 public class FastaTests
