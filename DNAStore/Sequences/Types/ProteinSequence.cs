@@ -26,9 +26,9 @@ public class ProteinSequence : Sequence, IProtein
     public int NumberOfPossibleRNA(int modulo = (int)1e6)
     {
         BigInteger result = 1;
-        foreach (var protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein.ToString());
+        foreach (var protein in ToString()) result *= SequenceHelpers.NumberOfPossibleProteins(protein);
         // finally, we need to account for the stop
-        result *= SequenceHelpers.NumberOfPossibleProteins("Stop");
+        result *= SequenceHelpers.NumberOfPossibleProteins('*');
         var modulo2 = new BigInteger(modulo);
         var output = result % modulo2;
         return (int)output;

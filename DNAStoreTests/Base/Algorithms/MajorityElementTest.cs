@@ -1,6 +1,6 @@
 using DNAStore.Base.Algorithms;
 
-namespace BaseTests.Base.Algorithms;
+namespace DNAStoreTests.Base.Algorithms;
 
 [TestClass]
 public class MajorityElementTest

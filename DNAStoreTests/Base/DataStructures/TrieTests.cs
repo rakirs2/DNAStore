@@ -1,6 +1,6 @@
 ﻿using DNAStore.Base.DataStructures;
 
-namespace BaseTests.Base.DataStructures;
+namespace DNAStoreTests.Base.DataStructures;
 
 [TestClass]
 public class TrieTests
