@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Base.Utils;
+using DnaStore.Base.Utils;
 
 namespace Bio.Sequences;
 
@@ -216,7 +217,7 @@ public class SequenceHelpers
         var hitStop = false;
         while (i < input.Length && !hitStop)
         {
-            string? temp = RNAToProteinConverter(input.Substring(i, 3));
+            var temp = RNAToProteinConverter(input.Substring(i, 3));
             if (temp.Length == 1)
             {
                 convertedRNA.Append(temp);
@@ -233,7 +234,7 @@ public class SequenceHelpers
 
     public static string RNAToProteinConverter(string codon)
     {
-        if (RNAToProteinCode.TryGetValue(codon, out string? value))
+        if (RNAToProteinCode.TryGetValue(codon, out var value))
             return value;
 
         throw new InvalidDataException("Value does not exist");

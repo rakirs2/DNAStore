@@ -10,7 +10,7 @@ public class InsertionSorter<T> where T : IComparable
         var temp = values.ToList();
         for (var i = 1; i < values.Count; i++)
         {
-            int k = i;
+            var k = i;
             while (k > 0 && temp[k].CompareTo(temp[k - 1]) < 0)
             {
                 (temp[k], temp[k - 1]) = (temp[k - 1], temp[k]);

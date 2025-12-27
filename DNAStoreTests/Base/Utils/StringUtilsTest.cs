@@ -1,14 +1,14 @@
-﻿using Base.Utils;
+﻿using DnaStore.Base.Utils;
 
-namespace BaseTests.Utils;
+namespace BaseTests.Base.Utils;
 
 [TestClass]
-public class StringUtilsTests
+public class StringUtilsTest
 {
     [TestMethod]
     public void SwapIndexTest()
     {
-        string? output = StringUtils.SwapIndex("test", 0, 1);
+        var output = StringUtils.SwapIndex("test", 0, 1);
         Assert.IsTrue(output.Equals("etst"));
     }
 
@@ -72,7 +72,7 @@ public class StringUtilsTests
     {
         Assert.AreEqual(5, StringUtils.LevenshteinDistance("PLEASANTLY", "MEANLY"));
     }
-    
+
     [TestMethod]
     public void WhyGreedyDoesNotWork()
     {
@@ -86,5 +86,13 @@ public class StringUtilsTests
         Assert.AreEqual(4, editdistance);
         Assert.AreEqual("PRET-TY", a_gapped);
         Assert.AreEqual("PRTTEIN", b_gapped);
+    }
+
+    [TestMethod]
+    public void AhoCorasickBasicTest()
+    {
+        var text = "ABCDEFGHIABCDEFGHI";
+        var result = text.AhoCorasickStringSearch(new List<string> { "ABCDEF", "GHI" });
+        Assert.AreEqual(4, result.Count);
     }
 }

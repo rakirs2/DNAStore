@@ -3,7 +3,7 @@ namespace Base.Algorithms;
 public static class Search
 {
     /// <summary>
-    /// Returns -1 if not found. Returns the 0 index starting point of all matches
+    ///     Returns -1 if not found. Returns the 0 index starting point of all matches
     /// </summary>
     /// <remarks>
     ///     Base Algorithm basically from CLRS
@@ -13,7 +13,7 @@ public static class Search
     /// <returns></returns>
     public static int[] KnuthMorrisPratt(this string text, string pattern)
     {
-        int[] failureArray = pattern.KMPFailureArray();
+        var failureArray = pattern.KMPFailureArray();
         var output = new List<int>();
         var q = 0;
         for (var i = 0; i < text.Length; i++)
@@ -33,10 +33,10 @@ public static class Search
     }
 
     /// <summary>
-    /// This is based off of the Compute-Prefix-Function from CLRS
+    ///     This is based off of the Compute-Prefix-Function from CLRS
     /// </summary>
     /// <remarks>
-    /// A couple of small modifications to make this 0-indexed
+    ///     A couple of small modifications to make this 0-indexed
     /// </remarks>
     /// <param name="pattern"></param>
     /// <returns></returns>

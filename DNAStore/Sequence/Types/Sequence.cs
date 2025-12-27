@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Text;
 using Base.DataStructures;
-using Base.Utils;
 using Bio.Analysis.Types;
 using Bio.Sequences.Interfaces;
+using DnaStore.Base.Utils;
 
 namespace Bio.Sequences.Types;
 
@@ -55,7 +55,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     /// <returns></returns>
     public long[] MotifLocations(Motif motif, bool isZeroIndex = false)
     {
-        int modifier = isZeroIndex ? 0 : 1;
+        var modifier = isZeroIndex ? 0 : 1;
         var output = new List<long>();
         for (var i = 0; i < Length - motif.ExpectedLength; i++)
             if (motif.IsMatchStrict(RawSequence.Substring(i, motif.ExpectedLength)))
@@ -97,7 +97,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
             return new List<int>();
 
-        int modifier = isZeroIndex ? 0 : 1;
+        var modifier = isZeroIndex ? 0 : 1;
         var indices = new List<int>();
         var i = 0;
         var j = 0;
@@ -212,9 +212,9 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         foreach (var sequence in sequences)
         {
             var tempDist = int.MaxValue;
-            foreach (string kmer in sequence.GetKmerEnumerator(pattern.Length))
+            foreach (var kmer in sequence.GetKmerEnumerator(pattern.Length))
             {
-                int currentDist = HammingDistance(pattern, kmer);
+                var currentDist = HammingDistance(pattern, kmer);
                 if (currentDist < tempDist) tempDist = currentDist;
             }
 
@@ -247,7 +247,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     {
         RawSequence = rawSequence;
 
-        foreach (char basePair in rawSequence)
+        foreach (var basePair in rawSequence)
             // TODO: virtual member call in constructor is an issue? why?
             // Ah it's a design flaw on my part -- what's a better way to do this
             // abstract,

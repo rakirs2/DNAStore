@@ -15,7 +15,7 @@ public class Fasta : IFasta
         BasePairDictionary = new BasePairDictionary();
 
         var isPossibleRna = false;
-        foreach (char c in RawSequence)
+        foreach (var c in RawSequence)
         {
             if (ContentType == ContentType.Unknown)
             {
@@ -59,21 +59,6 @@ public class Fasta : IFasta
         return new Sequence(RawSequence, Name);
     }
 
-    public Sequence GenerateInferred()
-    {
-        switch (ContentType)
-        {
-            case ContentType.Protein:
-                return GenerateProteinSequence();
-            case ContentType.RNA:
-                return GenerateRNASequence();
-            case ContentType.DNA:
-                return GenerateDNASequence();
-            default:
-                return GenerateSequence();
-        }
-    }
-
     public RnaSequence GenerateRNASequence()
     {
         return new RnaSequence(RawSequence, Name);
@@ -87,6 +72,21 @@ public class Fasta : IFasta
     public ProteinSequence GenerateProteinSequence()
     {
         throw new NotImplementedException();
+    }
+
+    public Sequence GenerateInferred()
+    {
+        switch (ContentType)
+        {
+            case ContentType.Protein:
+                return GenerateProteinSequence();
+            case ContentType.RNA:
+                return GenerateRNASequence();
+            case ContentType.DNA:
+                return GenerateDNASequence();
+            default:
+                return GenerateSequence();
+        }
     }
 
     public override string ToString()
@@ -111,7 +111,7 @@ public class Fasta : IFasta
         try
         {
             reader = new StreamReader(filePath);
-            string? fileContents = reader.ReadToEnd();
+            var fileContents = reader.ReadToEnd();
             return JsonSerializer.Deserialize<Fasta>(fileContents);
         }
         finally
