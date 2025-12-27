@@ -7,7 +7,7 @@ namespace BaseTests.Sequence.Analysis.Types;
 public class LongestCommonSubsequenceTests
 {
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../DNAStoreTests/Sequence/TestData/LongestSubsequence.fasta");
+        "../../../../DNAStoreTests/Sequences/TestData/LongestSubsequence.fasta");
 
     [TestMethod]
     public void LongestCommonSubsequenceTest()

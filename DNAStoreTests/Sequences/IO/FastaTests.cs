@@ -21,10 +21,10 @@ public class FastaTests
 
     // TODO: we should update this to be a guid
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../DNAStoreTests/Sequence/Sequences/TestData/crab1.fasta");
+        "../../../../DNAStoreTests/Sequences/Sequences/TestData/crab1.fasta");
 
     private readonly string _multipleFastaPath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../DNAStoreTests/Sequence/Sequences/TestData/MultipleFasta.fasta");
+        "../../../../DNAStoreTests/Sequences/Sequences/TestData/MultipleFasta.fasta");
 
     [TestMethod]
     public void FastaConstructor()

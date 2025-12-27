@@ -7,7 +7,7 @@ namespace BaseTests.Sequence.Analysis.Types;
 public class OverlapGraphTests
 {
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../DNAStoreTests/Sequence/TestData/OverlapFastas.fasta");
+        "../../../../DNAStoreTests/Sequences/TestData/OverlapFastas.fasta");
 
     [TestMethod]
     public void OverlapGraphTest()

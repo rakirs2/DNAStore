@@ -17,8 +17,9 @@ public class FastaParserTests
     private readonly string _expectedSequence3 =
         "CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT";
 
+    // TODO: not a long term solution/should only go one level deep
     private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../DNAStoreTests/Sequence/Sequences/TestData/MultipleFasta.fasta");
+        "../../../../DNAStoreTests/Sequences/Sequences/TestData/MultipleFasta.fasta");
 
     private readonly string _mixedStringName =
         "sp|A2Z669|CSPLT_ORYSI CASP-like protein 5A2 OS=Oryza sativa subsp. indica OX=39946 GN=OsI_33147 PE=3 SV=1";
