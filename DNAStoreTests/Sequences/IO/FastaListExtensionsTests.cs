@@ -1,6 +1,6 @@
 ﻿using DNAStore.Sequences.IO;
 
-namespace DNAStoreTests.Sequences.IO;
+namespace BaseTests.Sequences.IO;
 
 [TestClass]
 public class FastaListExtensionsTests

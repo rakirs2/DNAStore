@@ -1,6 +1,6 @@
 using DNAStore.Base.Algorithms;
 
-namespace DNAStoreTests.Base.Algorithms;
+namespace BaseTests.Base.Algorithms;
 
 [TestClass]
 public class GreedyTest

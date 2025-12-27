@@ -1,6 +1,6 @@
 using DNAStore.Base.Utils;
 
-namespace DNAStoreTests.Base.Utils;
+namespace BaseTests.Base.Utils;
 
 [TestClass]
 public class IntComparerTest

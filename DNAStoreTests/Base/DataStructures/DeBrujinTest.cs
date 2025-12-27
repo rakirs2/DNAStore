@@ -1,6 +1,6 @@
 using DNAStore.Base.DataStructures;
 
-namespace DNAStoreTests.Base.DataStructures;
+namespace BaseTests.Base.DataStructures;
 
 [TestClass]
 public class DeBrujinTest

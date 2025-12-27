@@ -1,6 +1,6 @@
 using DNAStore.Sequences.Types;
 
-namespace DNAStoreTests.Sequences.Sequences.Types;
+namespace BaseTests.Sequences.Sequences.Types;
 
 [TestClass]
 public class ReverseComplementDictionaryTest
