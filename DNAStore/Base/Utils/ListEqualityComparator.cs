@@ -1,4 +1,4 @@
-namespace Base.Utils;
+namespace DNAStore.Base.Utils;
 
 public class ListEqualityComparer<T> : IEqualityComparer<IList<T>>
 {

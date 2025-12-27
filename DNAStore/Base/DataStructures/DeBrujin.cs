@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Base.DataStructures;
+namespace DNAStore.Base.DataStructures;
 
 public class DeBrujin
 {

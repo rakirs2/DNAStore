@@ -1,6 +1,6 @@
-﻿using Base.DataStructures;
+﻿using DNAStore.Base.DataStructures;
 
-namespace BaseTests.DataStructures;
+namespace BaseTests.Base.DataStructures;
 
 [TestClass]
 public class UndirectedGraphTests

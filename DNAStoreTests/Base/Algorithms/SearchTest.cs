@@ -1,6 +1,6 @@
-using Base.Algorithms;
+using DNAStore.Base.Algorithms;
 
-namespace BaseTests.Algorithms;
+namespace BaseTests.Base.Algorithms;
 
 [TestClass]
 public class SearchTest

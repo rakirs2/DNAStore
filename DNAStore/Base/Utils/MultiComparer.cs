@@ -1,4 +1,4 @@
-namespace Base.Utils;
+namespace DNAStore.Base.Utils;
 
 /// <summary>
 ///     Potentially stupid idea but let's see. Eventually expand and generalize this if I like the pattern.

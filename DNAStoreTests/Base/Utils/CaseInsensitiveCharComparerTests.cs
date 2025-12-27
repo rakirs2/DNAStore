@@ -1,6 +1,6 @@
-﻿using Base.Utils;
+﻿using DNAStore.Base.Utils;
 
-namespace BaseTests.Utils;
+namespace BaseTests.Base.Utils;
 
 [TestClass]
 public class CaseInsensitiveCharComparerTests

@@ -1,4 +1,4 @@
-namespace Base.Interfaces;
+namespace DNAStore.Base.Interfaces;
 
 public interface IAlignmentMatrix
 {

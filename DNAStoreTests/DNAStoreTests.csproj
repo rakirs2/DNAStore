@@ -26,7 +26,7 @@
 
     <ItemGroup>
         <Folder Include="Base\"/>
-        <Folder Include="Sequence\"/>
+        <Folder Include="Sequences\" />
     </ItemGroup>
 
 </Project>

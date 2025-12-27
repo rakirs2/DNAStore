@@ -1,4 +1,4 @@
-namespace Base.Algorithms;
+namespace DNAStore.Base.Algorithms;
 
 public class InsertionSorter<T> where T : IComparable
 {

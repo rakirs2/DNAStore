@@ -1,6 +1,6 @@
-using Base.Utils;
+using DNAStore.Base.Utils;
 
-namespace Base.Algorithms;
+namespace DNAStore.Base.Algorithms;
 
 public class ReversalDistance
 {

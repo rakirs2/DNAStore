@@ -1,8 +1,7 @@
 ﻿using System.Text;
-using Base.Utils;
 using Ganss.Text;
 
-namespace DnaStore.Base.Utils;
+namespace DNAStore.Base.Utils;
 
 public static class StringUtils
 {
