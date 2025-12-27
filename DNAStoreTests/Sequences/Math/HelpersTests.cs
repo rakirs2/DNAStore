@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using DNAStore.BioMath;
 
-namespace BaseTests.Sequences.Math;
+namespace DNAStoreTests.Sequences.Math;
 
 [TestClass]
 public class HelpersTests

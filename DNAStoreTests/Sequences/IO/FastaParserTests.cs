@@ -1,6 +1,6 @@
 ﻿using DNAStore.Sequences.IO;
 
-namespace BaseTests.Sequences.IO;
+namespace DNAStoreTests.Sequences.IO;
 
 [TestClass]
 public class FastaParserTests

@@ -1,7 +1,7 @@
 ﻿using DNAStore.Base.Utils;
 using DNAStore.BioMath;
 
-namespace BaseTests.Sequences.Math;
+namespace DNAStoreTests.Sequences.Math;
 
 [TestClass]
 public class ProbabilityTests

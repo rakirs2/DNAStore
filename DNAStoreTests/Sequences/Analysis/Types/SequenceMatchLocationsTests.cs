@@ -1,7 +1,7 @@
 ﻿using DNAStore.Sequences.Analysis.Types;
 using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequences.Analysis.Types;
+namespace DNAStoreTests.Sequences.Analysis.Types;
 
 [TestClass]
 public class SequenceMatchLocationsTests
