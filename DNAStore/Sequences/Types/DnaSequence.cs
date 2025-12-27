@@ -356,4 +356,14 @@ public class DnaSequence : NucleotideSequence, IDna
 
         return true;
     }
+    
+    public static DnaSequence GenerateRandom(int length)
+    {
+        return new DnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllDNAMarkers.ToList() ));
+    }
+
+    public static DnaSequence GenerateRandomGapped(int length)
+    {
+        return new DnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllDNAMarkersGapped.ToList() ));
+    }
 }

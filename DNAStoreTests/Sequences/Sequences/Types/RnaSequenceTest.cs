@@ -9,7 +9,7 @@ public class RnaSequenceTest
     public void GetExpectedProteinStringTest()
     {
         var rnaSequence = new RnaSequence("AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA");
-        Assert.AreEqual("MAMAPRTEINSTRING", rnaSequence.GetExpectedProteinString());
+        Assert.AreEqual("MAMAPRTEINSTRING*", rnaSequence.GetExpectedProteinString());
     }
 
     [TestMethod]

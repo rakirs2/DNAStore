@@ -21,6 +21,17 @@ public class RnaSequence : NucleotideSequence, IRna
     protected override HashSet<char> Pyrimidines => pyrimidines;
 
     protected override HashSet<char> Purines => purines;
+    
+    // TODO: need one that only has one stop
+    public static RnaSequence GenerateRandom(int length)
+    {
+        return new RnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkers.ToList() ));
+    }
+
+    public static RnaSequence GenerateRandomGapped(int length)
+    {
+        return new RnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkersGapped.ToList() ));
+    }
 
     public string GetExpectedProteinString()
     {

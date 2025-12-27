@@ -154,4 +154,16 @@ public static class StringUtils
         var ahoCorasick = new AhoCorasick(keywords);
         return ahoCorasick.Search(sequence).ToList();
     }
+    
+    // TODO: not a  big deal but rethink the signature here.
+    public static string GenerateRandomString(int length, List<char> valid)
+    {
+        var result = new StringBuilder(length);
+        for (int i = 0; i < length; i++)
+        {
+            result.Append(valid[_random.Value.Next(valid.Count)]);
+        }
+        return result.ToString();
+    }
+    private static readonly Lazy<Random> _random = new();
 }

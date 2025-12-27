@@ -107,11 +107,11 @@ public class SequenceHelpersTests
         Assert.AreEqual("H", SequenceHelpers.RNAToProteinConverter("CAC"));
         Assert.AreEqual("N", SequenceHelpers.RNAToProteinConverter("AAC"));
         Assert.AreEqual("D", SequenceHelpers.RNAToProteinConverter("GAC"));
-        Assert.AreEqual("Stop", SequenceHelpers.RNAToProteinConverter("UAA"));
+        Assert.AreEqual("*", SequenceHelpers.RNAToProteinConverter("UAA"));
         Assert.AreEqual("Q", SequenceHelpers.RNAToProteinConverter("CAA"));
         Assert.AreEqual("K", SequenceHelpers.RNAToProteinConverter("AAA"));
         Assert.AreEqual("E", SequenceHelpers.RNAToProteinConverter("GAA"));
-        Assert.AreEqual("Stop", SequenceHelpers.RNAToProteinConverter("UAG"));
+        Assert.AreEqual("*", SequenceHelpers.RNAToProteinConverter("UAG"));
         Assert.AreEqual("Q", SequenceHelpers.RNAToProteinConverter("CAG"));
         Assert.AreEqual("K", SequenceHelpers.RNAToProteinConverter("AAG"));
         Assert.AreEqual("E", SequenceHelpers.RNAToProteinConverter("GAG"));
@@ -123,7 +123,7 @@ public class SequenceHelpersTests
         Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("CGC"));
         Assert.AreEqual("S", SequenceHelpers.RNAToProteinConverter("AGC"));
         Assert.AreEqual("G", SequenceHelpers.RNAToProteinConverter("GGC"));
-        Assert.AreEqual("Stop", SequenceHelpers.RNAToProteinConverter("UGA"));
+        Assert.AreEqual("*", SequenceHelpers.RNAToProteinConverter("UGA"));
         Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("CGA"));
         Assert.AreEqual("R", SequenceHelpers.RNAToProteinConverter("AGA"));
         Assert.AreEqual("G", SequenceHelpers.RNAToProteinConverter("GGA"));
@@ -137,27 +137,26 @@ public class SequenceHelpersTests
     [TestMethod]
     public void NumberOfProteins()
     {
-        Assert.AreEqual(3, SequenceHelpers.NumberOfPossibleProteins("Stop"));
-        Assert.AreEqual(1, SequenceHelpers.NumberOfPossibleProteins("W"));
-        Assert.AreEqual(1, SequenceHelpers.NumberOfPossibleProteins("M"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("F"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("Y"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("H"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("N"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("D"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("Q"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("K"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("E"));
-        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins("C"));
-        Assert.AreEqual(3, SequenceHelpers.NumberOfPossibleProteins("I"));
-        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("V"));
-        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("P"));
-        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("T"));
-        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("A"));
-        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins("G"));
-        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins("R"));
-        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins("S"));
-        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins("L"));
+        Assert.AreEqual(1, SequenceHelpers.NumberOfPossibleProteins('W'));
+        Assert.AreEqual(1, SequenceHelpers.NumberOfPossibleProteins('M'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('F'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('Y'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('H'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('N'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('D'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('Q'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('K'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('E'));
+        Assert.AreEqual(2, SequenceHelpers.NumberOfPossibleProteins('C'));
+        Assert.AreEqual(3, SequenceHelpers.NumberOfPossibleProteins('I'));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins('V'));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins('P'));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins('T'));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins('A'));
+        Assert.AreEqual(4, SequenceHelpers.NumberOfPossibleProteins('G'));
+        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins('R'));
+        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins('S'));
+        Assert.AreEqual(6, SequenceHelpers.NumberOfPossibleProteins('L'));
     }
 
     [TestMethod]

@@ -1,6 +1,6 @@
 ﻿using DNAStore.Base.Utils;
 
-namespace BaseTests.Base.Utils;
+namespace DNAStoreTests.Base.Utils;
 
 [TestClass]
 public class StringUtilsTest
@@ -94,5 +94,15 @@ public class StringUtilsTest
         var text = "ABCDEFGHIABCDEFGHI";
         var result = text.AhoCorasickStringSearch(new List<string> { "ABCDEF", "GHI" });
         Assert.AreEqual(4, result.Count);
+    }
+
+    [TestMethod]
+    public void GenerateRandomString()
+    {
+        var valid = new List<char>() { 'a', 'b' };
+        var count = 5;
+        var output = StringUtils.GenerateRandomString(count, valid);
+        Assert.IsFalse(output.Contains('c'));
+        Assert.AreEqual(count, output.Length);
     }
 }

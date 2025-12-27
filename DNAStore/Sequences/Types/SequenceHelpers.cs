@@ -32,13 +32,25 @@ public class SequenceHelpers
             N ASN asparagine                      -     gap of indeterminate length
     // Note, U Can be shared. So we need to check, "contains U"
      */
-    private static readonly HashSet<char> DistinctRNAMarkers = new(CaseInsensitiveCharComparer.Shared) { 'U' };
+    public static readonly HashSet<char> DistinctRNAMarkers = new(CaseInsensitiveCharComparer.Shared) { 'U' };
 
-    private static readonly HashSet<char> AllRNAMarkers = new(CaseInsensitiveCharComparer.Shared)
+    public static readonly HashSet<char> AllRNAMarkers = new(CaseInsensitiveCharComparer.Shared)
         { 'U', 'A', 'C', 'G', 'N' };
 
-    private static readonly HashSet<char> AllDNAMarkers = new(CaseInsensitiveCharComparer.Shared)
+
+    public static readonly HashSet<char> AllAlphabetical = new HashSet<char>(
+        Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (char)i));
+    public static readonly HashSet<char> AllAlphabeticalGapped = AllAlphabetical.ToList().Append('-').ToHashSet();
+
+
+    public static readonly HashSet<char> AllRNAMarkersGapped = new(CaseInsensitiveCharComparer.Shared)
+        { 'U', 'A', 'C', 'G', 'N', '-' };
+
+    public static readonly HashSet<char> AllDNAMarkers = new(CaseInsensitiveCharComparer.Shared)
         { 'T', 'A', 'C', 'G', 'N' };
+    
+    public static readonly HashSet<char> AllDNAMarkersGapped = new(CaseInsensitiveCharComparer.Shared)
+        { 'T', 'A', 'C', 'G', 'N', '-' };
 
     private static readonly Dictionary<string, string> RNAToProteinCode = new()
     {
@@ -82,11 +94,11 @@ public class SequenceHelpers
         { "CAC", "H" },
         { "AAC", "N" },
         { "GAC", "D" },
-        { "UAA", "Stop" },
+        { "UAA", "*" },
         { "CAA", "Q" },
         { "AAA", "K" },
         { "GAA", "E" },
-        { "UAG", "Stop" },
+        { "UAG", "*" },
         { "CAG", "Q" },
         { "AAG", "K" },
         { "GAG", "E" },
@@ -98,7 +110,7 @@ public class SequenceHelpers
         { "CGC", "R" },
         { "AGC", "S" },
         { "GGC", "G" },
-        { "UGA", "Stop" },
+        { "UGA", "*" },
         { "CGA", "R" },
         { "AGA", "R" },
         { "GGA", "G" },
@@ -108,37 +120,39 @@ public class SequenceHelpers
         { "GGG", "G" }
     };
 
-    public static readonly Dictionary<string, List<string>> ProteinCodesToRNA = new()
+    public static readonly Dictionary<char, List<string>> ProteinCodesToRNA = new()
     {
-        { "W", ["UGG"] },
-        { "M", ["AUG"] },
-        { "F", ["UUU", "UUC"] },
-        { "Y", ["UAU", "UAC"] },
-        { "H", ["CAU", "CAC"] },
-        { "N", ["AAU", "AAC"] },
-        { "D", ["GAU", "GAC"] },
-        { "Q", ["CAA", "CAG"] },
-        { "K", ["AAA", "AAG"] },
-        { "E", ["GAA", "GAG"] },
-        { "C", ["UGU", "UGC"] },
-        { "I", ["AUU", "AUC", "AUA"] },
-        { "V", ["GUU", "GUC", "GUA", "GUG"] },
-        { "P", ["CCU", "CCC", "CCA", "CCG"] },
-        { "T", ["ACU", "ACC", "ACA", "ACG"] },
-        { "A", ["GCU", "GCC", "GCA", "GCG"] },
-        { "G", ["GGU", "GGC", "GGA", "GGG"] },
-        { "R", ["CGU", "CGC", "CGA", "AGA", "CGG", "AGG"] },
-        { "S", ["UCU", "UCC", "UCA", "UCG", "AGU", "AGC"] },
-        { "L", ["CUU", "CUC", "UUA", "CUA", "UUG", "CUG"] },
-        { "Stop", ["UAA", "UAG", "UGA"] }
+        { 'W', ["UGG"] },
+        { 'M', ["AUG"] },
+        { 'F', ["UUU", "UUC"] },
+        { 'Y', ["UAU", "UAC"] },
+        { 'H', ["CAU", "CAC"] },
+        { 'N', ["AAU", "AAC"] },
+        { 'D', ["GAU", "GAC"] },
+        { 'Q', ["CAA", "CAG"] },
+        { 'K', ["AAA", "AAG"] },
+        { 'E', ["GAA", "GAG"] },
+        { 'C', ["UGU", "UGC"] },
+        { 'I', ["AUU", "AUC", "AUA"] },
+        { 'V', ["GUU", "GUC", "GUA", "GUG"] },
+        { 'P', ["CCU", "CCC", "CCA", "CCG"] },
+        { 'T', ["ACU", "ACC", "ACA", "ACG"] },
+        { 'A', ["GCU", "GCC", "GCA", "GCG"] },
+        { 'G', ["GGU", "GGC", "GGA", "GGG"] },
+        { 'R', ["CGU", "CGC", "CGA", "AGA", "CGG", "AGG"] },
+        { 'S', ["UCU", "UCC", "UCA", "UCG", "AGU", "AGC"] },
+        { 'L', ["CUU", "CUC", "UUA", "CUA", "UUG", "CUG"] },
+        { '*', ["UAA", "UAG", "UGA"] }
     };
 
+    public static readonly HashSet<char> PossibleProteins = ProteinCodesToRNA.Keys.ToHashSet();
+    public static readonly HashSet<char> PossibleProteinsGapped = ProteinCodesToRNA.Keys.Append('-').ToHashSet();
     public static Dictionary<string, string> DNAToProteinCode = new()
     {
         { "TTT", "F" }, { "TTC", "F" },
         { "TTA", "L" }, { "TTG", "L" }, { "CTT", "L" }, { "CTC", "L" }, { "CTA", "L" }, { "CTG", "L" },
         { "ATT", "I" }, { "ATC", "I" }, { "ATA", "I" },
-        { "ATG", "M" }, // Start codon
+        { "ATG", "M" },
         { "GTT", "V" }, { "GTC", "V" }, { "GTA", "V" }, { "GTG", "V" },
         { "TCT", "S" }, { "TCC", "S" }, { "TCA", "S" }, { "TCG", "S" }, { "AGT", "S" }, { "AGC", "S" },
         { "CCT", "P" }, { "CCC", "P" }, { "CCA", "P" }, { "CCG", "P" },
@@ -162,7 +176,6 @@ public class SequenceHelpers
         DistinctProteinMarkers = new(CaseInsensitiveCharComparer.Shared)
             { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 
-    // TODO: might be worth using a different string comparator if perf ever becomes an issue.
     public static bool IsKnownRNADifferentiator(char c)
     {
         return DistinctRNAMarkers.Contains(c);
@@ -239,7 +252,7 @@ public class SequenceHelpers
         throw new InvalidDataException("Value does not exist");
     }
 
-    public static int NumberOfPossibleProteins(string protein)
+    public static int NumberOfPossibleProteins(char protein)
     {
         return ProteinCodesToRNA[protein].Count;
     }

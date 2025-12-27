@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using System.Text;
 using DNAStore.Base.DataStructures;
 using DNAStore.Base.Utils;
@@ -94,7 +95,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
 
     public List<int> FindFirstPossibleSubSequence(Sequence subsequence, bool isZeroIndex = false)
     {
-        if (subsequence == null || subsequence.Length == 0 || Length < subsequence.Length)
+        if (subsequence.Length == 0 || Length < subsequence.Length)
             return new List<int>();
 
         var modifier = isZeroIndex ? 0 : 1;
@@ -143,6 +144,19 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         return StringUtils.LevenshteinDistance(RawSequence, other.RawSequence);
     }
 
+    public static ISequence GenerateRandom(int length)
+    {
+        return new Sequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllAlphabetical.ToList() ));
+    }
+
+    public static ISequence GenerateRandomGapped(int length)
+    {
+        return new Sequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllAlphabetical.ToList() ));
+
+    }
+    
+   
+
     public IEnumerable<string> GetKmerEnumerator(int k)
     {
         for (var i = 0; i < Length - k + 1; i++) yield return RawSequence.Substring(i, k);
@@ -188,6 +202,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         return result;
     }
 
+    // TODO: consider moving this to biomath or base
     public static int HammingDistance(string a, string b)
     {
         if (a.Length != b.Length) throw new InvalidDataException("Lengths must match");
