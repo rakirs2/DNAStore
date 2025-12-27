@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
-        <RootNamespace>DnaStore.Base</RootNamespace>
+        <RootNamespace>DnaStore</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AhoCorasick" Version="2.0.279" />
         <PackageReference Include="MathNet.Numerics" Version="6.0.0-beta2"/>
     </ItemGroup>
 

@@ -4,6 +4,7 @@ using Base.DataStructures;
 using Base.Utils;
 using Bio.Analysis.Types;
 using Bio.Sequences.Interfaces;
+using DnaStore.Base.Utils;
 
 namespace Bio.Sequences.Types;
 

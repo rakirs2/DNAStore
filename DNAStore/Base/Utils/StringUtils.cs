@@ -1,7 +1,8 @@
 ﻿using System.Text;
-using Microsoft.VisualBasic;
+using Base.Utils;
+using Ganss.Text;
 
-namespace Base.Utils;
+namespace DnaStore.Base.Utils;
 
 public static class StringUtils
 {
@@ -143,4 +144,21 @@ public static class StringUtils
         b_gapped = b_sb.ToString();
         return retVal;
     }
+    
+    /// <summary>
+    /// Runs basic Aho Corasick test for a string search. Utilizes existing library
+    /// </summary>
+    /// <remarks>
+    ///     TODO: a good exercise eventually to replace it with my own implementation.
+    ///     TODO: might be worth flipping this so we maintain the automaton.
+    /// </remarks>
+    /// <param name="sequence"></param>
+    /// <param name="stringsToSearch"></param>
+    /// <returns></returns>
+    public static List<WordMatch> AhoCorasickStringSearch(this string sequence, List<string> keywords)
+    {
+        var ahoCorasick =  new AhoCorasick(keywords);
+        return ahoCorasick.Search(sequence).ToList();
+    }
+
 }
