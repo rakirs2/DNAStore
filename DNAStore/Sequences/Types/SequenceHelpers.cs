@@ -32,9 +32,9 @@ public class SequenceHelpers
             N ASN asparagine                      -     gap of indeterminate length
     // Note, U Can be shared. So we need to check, "contains U"
      */
-    private static readonly HashSet<char> DistinctRNAMarkers = new(CaseInsensitiveCharComparer.Shared) { 'U' };
+    public static readonly HashSet<char> DistinctRNAMarkers = new(CaseInsensitiveCharComparer.Shared) { 'U' };
 
-    private static readonly HashSet<char> AllRNAMarkers = new(CaseInsensitiveCharComparer.Shared)
+    public static readonly HashSet<char> AllRNAMarkers = new(CaseInsensitiveCharComparer.Shared)
         { 'U', 'A', 'C', 'G', 'N' };
 
 
@@ -46,7 +46,7 @@ public class SequenceHelpers
     public static readonly HashSet<char> AllRNAMarkersGapped = new(CaseInsensitiveCharComparer.Shared)
         { 'U', 'A', 'C', 'G', 'N', '-' };
 
-    private static readonly HashSet<char> AllDNAMarkers = new(CaseInsensitiveCharComparer.Shared)
+    public static readonly HashSet<char> AllDNAMarkers = new(CaseInsensitiveCharComparer.Shared)
         { 'T', 'A', 'C', 'G', 'N' };
     
     public static readonly HashSet<char> AllDNAMarkersGapped = new(CaseInsensitiveCharComparer.Shared)
@@ -152,7 +152,7 @@ public class SequenceHelpers
         { "TTT", "F" }, { "TTC", "F" },
         { "TTA", "L" }, { "TTG", "L" }, { "CTT", "L" }, { "CTC", "L" }, { "CTA", "L" }, { "CTG", "L" },
         { "ATT", "I" }, { "ATC", "I" }, { "ATA", "I" },
-        { "ATG", "M" }, // Start codon
+        { "ATG", "M" },
         { "GTT", "V" }, { "GTC", "V" }, { "GTA", "V" }, { "GTG", "V" },
         { "TCT", "S" }, { "TCC", "S" }, { "TCA", "S" }, { "TCG", "S" }, { "AGT", "S" }, { "AGC", "S" },
         { "CCT", "P" }, { "CCC", "P" }, { "CCA", "P" }, { "CCG", "P" },
@@ -176,7 +176,6 @@ public class SequenceHelpers
         DistinctProteinMarkers = new(CaseInsensitiveCharComparer.Shared)
             { 'E', 'F', 'I', 'L', 'P', 'Q', 'Z', 'X', '*' };
 
-    // TODO: might be worth using a different string comparator if perf ever becomes an issue.
     public static bool IsKnownRNADifferentiator(char c)
     {
         return DistinctRNAMarkers.Contains(c);

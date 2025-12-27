@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Text;
 using Bio;
+using DNAStore.Base.Utils;
 using DNAStore.Sequences.Exceptions;
 using DNAStore.Sequences.Types.Interfaces;
 
@@ -111,5 +112,15 @@ public class ProteinSequence : Sequence, IProtein
             }
 
         return result.ToString();
+    }
+    
+    public static ProteinSequence GenerateRandom(int length)
+    {
+        return new ProteinSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkers.ToList() ));
+    }
+
+    public static ProteinSequence GenerateRandomGapped(int length)
+    {
+        return new ProteinSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkersGapped.ToList() ));
     }
 }
