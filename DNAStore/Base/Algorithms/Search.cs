@@ -1,4 +1,4 @@
-namespace DnaStore.Base.Algorithms;
+namespace DNAStore.Base.Algorithms;
 
 public static class Search
 {

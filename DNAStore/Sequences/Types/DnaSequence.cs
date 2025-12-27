@@ -1,9 +1,9 @@
 ﻿using System.Numerics;
 using System.Text;
-using DnaStore.Base.Utils;
-using DnaStore.Sequence.Types.Interfaces;
+using DNAStore.Base.Utils;
+using DNAStore.Sequences.Types.Interfaces;
 
-namespace DnaStore.Sequence.Types;
+namespace DNAStore.Sequences.Types;
 
 public class DnaSequence : NucleotideSequence, IDna
 {

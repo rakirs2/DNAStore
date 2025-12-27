@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace DnaStore.Clients.Jaspar;
+namespace DNAStore.Clients.Jaspar;
 
 public class JasparClient
 {

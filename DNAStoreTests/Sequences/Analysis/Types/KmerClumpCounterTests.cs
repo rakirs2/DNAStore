@@ -1,6 +1,7 @@
-﻿using DnaStore.Sequence.Analysis.Types;
+﻿using DNAStore.Sequences.Analysis.Types;
+using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequence.Analysis.Types;
+namespace BaseTests.Sequences.Analysis.Types;
 
 [TestClass]
 public class KmerClumpCounterTests
@@ -8,7 +9,7 @@ public class KmerClumpCounterTests
     [TestMethod]
     public void KmerClumpCounterTest()
     {
-        var seq = new DnaStore.Sequence.Types.Sequence(
+        var seq = new Sequence(
             "CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC");
         var counter = new KmerClumpCounter(seq, 20, 5, 3);
         Assert.AreEqual(20, counter.ScanLength);
@@ -19,7 +20,7 @@ public class KmerClumpCounterTests
     [TestMethod]
     public void GenericCase()
     {
-        var seq = new DnaStore.Sequence.Types.Sequence(
+        var seq = new Sequence(
             "CGGACTCGACAGATGTGAAGAAATGTGAAGACTGAGTGAAGAGAAGAGGAAACACGACACGACATTGCGACATAATGTACGAATGTAATGTGCCTATGGC");
         var counter = new KmerClumpCounter(seq, 75, 5, 4);
         var expected = new HashSet<string> { "CGACA", "GAAGA", "AATGT" };
@@ -30,7 +31,7 @@ public class KmerClumpCounterTests
     // From book test cases
     public void OffBy1()
     {
-        var seq = new DnaStore.Sequence.Types.Sequence(
+        var seq = new Sequence(
             "ACGTACGT");
         var counter = new KmerClumpCounter(seq, 5, 1, 2);
         var expected = new HashSet<string> { "T", "C", "G", "A" };

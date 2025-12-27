@@ -1,9 +1,9 @@
 ﻿using System.Numerics;
-using DnaStore.Base.Utils;
-using DnaStore.Math;
-using DnaStore.Sequence.Types.Interfaces;
+using DNAStore.Base.Utils;
+using DNAStore.BioMath;
+using DNAStore.Sequences.Types.Interfaces;
 
-namespace DnaStore.Sequence.Types;
+namespace DNAStore.Sequences.Types;
 
 public class RnaSequence : NucleotideSequence, IRna
 {

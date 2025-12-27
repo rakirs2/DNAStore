@@ -1,7 +1,7 @@
-using DnaStore.Base.DataStructures;
-using DnaStore.Sequence.Types;
+using DNAStore.Base.DataStructures;
+using DNAStore.Sequences.Types;
 
-namespace DnaStore.Sequence.IO;
+namespace DNAStore.Sequences.IO;
 
 public interface IFasta
 {

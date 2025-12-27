@@ -1,4 +1,4 @@
-﻿using DnaStore.Base.DataStructures;
+﻿using DNAStore.Base.DataStructures;
 
 namespace BaseTests.Base.DataStructures;
 

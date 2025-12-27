@@ -1,4 +1,4 @@
-namespace DnaStore.Sequence.Exceptions;
+namespace DNAStore.Sequences.Exceptions;
 
 public static class MassSpecExceptions
 {

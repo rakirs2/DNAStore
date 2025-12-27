@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace DnaStore.Sequence.Types.Interfaces;
+namespace DNAStore.Sequences.Types.Interfaces;
 
 public interface IDna
 {

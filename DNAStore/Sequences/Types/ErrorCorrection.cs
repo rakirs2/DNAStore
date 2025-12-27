@@ -1,6 +1,6 @@
-using DnaStore.Sequence.Types.Interfaces;
+using DNAStore.Sequences.Types.Interfaces;
 
-namespace DnaStore.Sequence.Types;
+namespace DNAStore.Sequences.Types;
 
 /// <summary>
 ///     Returns suggested error correction for a given class

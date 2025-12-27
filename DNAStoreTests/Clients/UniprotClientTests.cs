@@ -1,4 +1,4 @@
-﻿using DnaStore.Clients;
+﻿using DNAStore.Clients;
 
 namespace BaseTests.Clients;
 

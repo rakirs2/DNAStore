@@ -1,8 +1,8 @@
 using System.Text;
-using DnaStore.Base.Interfaces;
-using DnaStore.Base.Utils;
+using DNAStore.Base.Interfaces;
+using DNAStore.Base.Utils;
 
-namespace DnaStore.Base.DataStructures;
+namespace DNAStore.Base.DataStructures;
 
 public class AlignmentMatrix : IAlignmentMatrix
 {

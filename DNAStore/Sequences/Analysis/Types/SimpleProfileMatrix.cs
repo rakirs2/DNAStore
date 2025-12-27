@@ -1,9 +1,10 @@
 ﻿using System.Text;
-using DnaStore.Base.DataStructures;
-using DnaStore.Sequence.Analysis.Interfaces;
-using DnaStore.Sequence.IO;
+using DNAStore.Base.DataStructures;
+using DNAStore.Sequences.Analysis.Interfaces;
+using DNAStore.Sequences.IO;
+using DNAStore.Sequences.Types;
 
-namespace DnaStore.Sequence.Analysis.Types;
+namespace DNAStore.Sequences.Analysis.Types;
 
 // For now, it's fine if it's accessible, but if the only use case is for a fasta read, it should probably be subclassed and interfaced
 public class SimpleProfileMatrix : IProfileMatrix
@@ -38,14 +39,14 @@ public class SimpleProfileMatrix : IProfileMatrix
 
     public long QuantityAnalyzed { get; }
 
-    public Sequence.Types.Sequence GetProfileSequence()
+    public Sequence GetProfileSequence()
     {
         // TODO: if this ever gets called repeatedly, cache it
         var stringBuilder = new StringBuilder();
         foreach (var basePairDictionary in listOfFrequencies)
             stringBuilder.Append(basePairDictionary.HighestFrequencyBasePair);
 
-        return new Sequence.Types.Sequence(stringBuilder.ToString());
+        return new Sequence(stringBuilder.ToString());
     }
 
     public string GetCleanOutput()

@@ -1,4 +1,6 @@
-﻿namespace DnaStore.Sequence.Analysis.Interfaces;
+﻿using DNAStore.Sequences.Types;
+
+namespace DNAStore.Sequences.Analysis.Interfaces;
 
 // TODO: Consider base classing this. For now it's probably ok
 public interface IKmerClumpCounter
@@ -21,7 +23,7 @@ public interface IKmerClumpCounter
     /// <summary>
     ///     The seqquence being analyzed
     /// </summary>
-    Sequence.Types.Sequence Sequence { get; }
+    Sequence Sequence { get; }
 
     public HashSet<string> ValidKmers { get; }
 }

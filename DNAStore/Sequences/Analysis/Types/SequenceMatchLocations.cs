@@ -1,8 +1,9 @@
-﻿using DnaStore.Sequence.Analysis.Interfaces;
+﻿using DNAStore.Sequences.Analysis.Interfaces;
+using DNAStore.Sequences.Types;
 
-namespace DnaStore.Sequence.Analysis.Types;
+namespace DNAStore.Sequences.Analysis.Types;
 
-public class SequenceMatchLocations(Sequence.Types.Sequence sequence, IMatch matchLogic) : ISequenceMatchLocator
+public class SequenceMatchLocations(Sequence sequence, IMatch matchLogic) : ISequenceMatchLocator
 {
     public List<int> GetLocations()
     {

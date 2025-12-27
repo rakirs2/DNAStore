@@ -1,7 +1,7 @@
-﻿using DnaStore.Sequence.Analysis.Types;
-using DnaStore.Sequence.Types;
+﻿using DNAStore.Sequences.Analysis.Types;
+using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequence.Sequences.Types;
+namespace BaseTests.Sequences.Sequences.Types;
 
 [TestClass]
 public class SequenceTests
@@ -9,7 +9,7 @@ public class SequenceTests
     [TestMethod]
     public void BasicConstruction()
     {
-        var anySequence = new DnaStore.Sequence.Types.Sequence("Somaf321434");
+        var anySequence = new Sequence("Somaf321434");
         Assert.IsNotNull(anySequence, "Object should construct");
         Assert.AreEqual(11, anySequence.Length);
     }
@@ -17,33 +17,33 @@ public class SequenceTests
     [TestMethod]
     public void HammingMismatchedLengths()
     {
-        var a = new DnaStore.Sequence.Types.Sequence("a");
-        var b = new DnaStore.Sequence.Types.Sequence("ab");
-        Assert.ThrowsExactly<InvalidDataException>(() => DnaStore.Sequence.Types.Sequence.HammingDistance(a, b));
+        var a = new Sequence("a");
+        var b = new Sequence("ab");
+        Assert.ThrowsExactly<InvalidDataException>(() => Sequence.HammingDistance(a, b));
     }
 
     [TestMethod]
     public void HammingDistanceCaseSensitive()
     {
-        var a = new DnaStore.Sequence.Types.Sequence("ac");
-        var b = new DnaStore.Sequence.Types.Sequence("ab");
-        var result = DnaStore.Sequence.Types.Sequence.HammingDistance(a, b);
+        var a = new Sequence("ac");
+        var b = new Sequence("ab");
+        var result = Sequence.HammingDistance(a, b);
         Assert.AreEqual(1, result);
     }
 
     [TestMethod]
     public void HammingDistanceRealistic()
     {
-        var a = new DnaStore.Sequence.Types.Sequence("GAGCCTACTAACGGGAT");
-        var b = new DnaStore.Sequence.Types.Sequence("CATCGTAATGACGGCCT");
-        var result = DnaStore.Sequence.Types.Sequence.HammingDistance(a, b);
+        var a = new Sequence("GAGCCTACTAACGGGAT");
+        var b = new Sequence("CATCGTAATGACGGCCT");
+        var result = Sequence.HammingDistance(a, b);
         Assert.AreEqual(7, result);
     }
 
     [TestMethod]
     public void OneIndexSimpleTest()
     {
-        var a = new DnaStore.Sequence.Types.Sequence("GAGCCTACTAACGGGAT");
+        var a = new Sequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
         var result = a.MotifLocations(b);
         var expected = new long[] { 1 };
@@ -53,7 +53,7 @@ public class SequenceTests
     [TestMethod]
     public void ZeroIndexSimpleTest()
     {
-        var a = new DnaStore.Sequence.Types.Sequence("GAGCCTACTAACGGGAT");
+        var a = new Sequence("GAGCCTACTAACGGGAT");
         var b = new Motif("GAG", 3);
         var result = a.MotifLocations(b, true);
         var expected = new long[] { 0 };
@@ -63,7 +63,7 @@ public class SequenceTests
     [TestMethod]
     public void OneIndexExample()
     {
-        var a = new DnaStore.Sequence.Types.Sequence("GATATATGCATATACTT");
+        var a = new Sequence("GATATATGCATATACTT");
         var b = new Motif("ATAT", 4);
         var result = a.MotifLocations(b);
         var expected = new long[] { 2, 4, 10 };
@@ -73,55 +73,55 @@ public class SequenceTests
     [TestMethod]
     public void AreSequenceEqualTest()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("abcde");
-        var seq2 = new DnaStore.Sequence.Types.Sequence("abcde");
-        Assert.IsTrue(DnaStore.Sequence.Types.Sequence.AreSequenceEqual(seq1, seq2));
+        var seq1 = new Sequence("abcde");
+        var seq2 = new Sequence("abcde");
+        Assert.IsTrue(Sequence.AreSequenceEqual(seq1, seq2));
     }
 
     [TestMethod]
     public void AreSequenceEqualTestDifferentSequence()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("abcde");
-        var seq2 = new DnaStore.Sequence.Types.Sequence("abcdf");
-        Assert.IsFalse(DnaStore.Sequence.Types.Sequence.AreSequenceEqual(seq1, seq2));
+        var seq1 = new Sequence("abcde");
+        var seq2 = new Sequence("abcdf");
+        Assert.IsFalse(Sequence.AreSequenceEqual(seq1, seq2));
     }
 
     [TestMethod]
     public void AreSequenceEqualTestDifferentLength()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("abcde");
-        var seq2 = new DnaStore.Sequence.Types.Sequence("abcdeg");
-        Assert.IsFalse(DnaStore.Sequence.Types.Sequence.AreSequenceEqual(seq1, seq2));
+        var seq1 = new Sequence("abcde");
+        var seq2 = new Sequence("abcdeg");
+        Assert.IsFalse(Sequence.AreSequenceEqual(seq1, seq2));
     }
 
     [TestMethod]
     public void RemoveIntronsTestBeginning()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("abcde");
-        var output = seq1.RemoveIntrons(new List<DnaStore.Sequence.Types.Sequence> { new("a") });
+        var seq1 = new Sequence("abcde");
+        var output = seq1.RemoveIntrons(new List<Sequence> { new("a") });
         Assert.AreEqual("bcde", output.ToString());
     }
 
     [TestMethod]
     public void RemoveIntronsTestEnd()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("abcde");
-        var output = seq1.RemoveIntrons(new List<DnaStore.Sequence.Types.Sequence> { new("e") });
+        var seq1 = new Sequence("abcde");
+        var output = seq1.RemoveIntrons(new List<Sequence> { new("e") });
         Assert.AreEqual("abcd", output.ToString());
     }
 
     [TestMethod]
     public void RemoveIntronsTestNull()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("abcde");
+        var seq1 = new Sequence("abcde");
         Assert.ThrowsExactly<ArgumentNullException>(() => seq1.RemoveIntrons(null));
     }
 
     [TestMethod]
     public void FindFirstPossibleSubSequenceTest()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("ACGTACGTGACG");
-        var subseq = new DnaStore.Sequence.Types.Sequence("GTA");
+        var seq1 = new Sequence("ACGTACGTGACG");
+        var subseq = new Sequence("GTA");
 
         var result = seq1.FindFirstPossibleSubSequence(subseq);
         var expected = new List<int> { 3, 4, 5 };
@@ -131,26 +131,26 @@ public class SequenceTests
     [TestMethod]
     public void OverlapTest()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("ACGTACGTGACG");
-        var seq2 = new DnaStore.Sequence.Types.Sequence("GTGACGCATTTG");
-        Assert.AreEqual(6, DnaStore.Sequence.Types.Sequence.CalculateOverlap(seq1, seq2));
-        Assert.AreEqual(0, DnaStore.Sequence.Types.Sequence.CalculateOverlap(seq2, seq1));
+        var seq1 = new Sequence("ACGTACGTGACG");
+        var seq2 = new Sequence("GTGACGCATTTG");
+        Assert.AreEqual(6, Sequence.CalculateOverlap(seq1, seq2));
+        Assert.AreEqual(0, Sequence.CalculateOverlap(seq2, seq1));
     }
 
     [TestMethod]
     public void InvalidTypeThrows()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("ACGTACGTGACG");
+        var seq1 = new Sequence("ACGTACGTGACG");
         Assert.ThrowsExactly<ArgumentException>(() => seq1.CompareTo("something"));
     }
 
     [TestMethod]
     public void CompareToEqual()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("ABCD");
-        var seq2 = new DnaStore.Sequence.Types.Sequence("ABCD");
-        var seq3 = new DnaStore.Sequence.Types.Sequence("ABC");
-        var seq4 = new DnaStore.Sequence.Types.Sequence("ABCE");
+        var seq1 = new Sequence("ABCD");
+        var seq2 = new Sequence("ABCD");
+        var seq3 = new Sequence("ABC");
+        var seq4 = new Sequence("ABCE");
         Assert.AreEqual(0, seq1.CompareTo(seq2));
         Assert.AreEqual(1, seq1.CompareTo(seq3));
         Assert.AreEqual(-1, seq1.CompareTo(seq4));
@@ -159,7 +159,7 @@ public class SequenceTests
     [TestMethod]
     public void EnumerableChar()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("ABCD");
+        var seq1 = new Sequence("ABCD");
         var expected = "ABCD";
         using (var enumerator = seq1.GetEnumerator())
         {
@@ -176,14 +176,14 @@ public class SequenceTests
     [TestMethod]
     public void ContainsStringWithHammingDistance()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("AAAAAAAAT");
+        var seq1 = new Sequence("AAAAAAAAT");
         Assert.IsTrue(seq1.ContainsString("TT", 1));
     }
 
     [TestMethod]
     public void KmerEnumerator()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("AAAAAAAA");
+        var seq1 = new Sequence("AAAAAAAA");
         var counter = 0;
         foreach (var something in seq1.GetKmerEnumerator(2)) counter++;
 
@@ -193,7 +193,7 @@ public class SequenceTests
     [TestMethod]
     public void RandomKmerGenerator()
     {
-        var seq1 = new DnaStore.Sequence.Types.Sequence("FEZLWBDYZGJQFSMZAJTADAYAXTNXODMV");
+        var seq1 = new Sequence("FEZLWBDYZGJQFSMZAJTADAYAXTNXODMV");
         var s1 = seq1.GetRandomKmer(5);
         var s2 = seq1.GetRandomKmer(5);
         var s3 = seq1.GetRandomKmer(5);
@@ -212,15 +212,15 @@ public class SequenceTests
     [TestMethod]
     public void DistanceBetweenPattern()
     {
-        List<DnaStore.Sequence.Types.Sequence> sequences = new()
+        List<Sequence> sequences = new()
         {
-            new DnaStore.Sequence.Types.Sequence("TTACCTTAAC"),
-            new DnaStore.Sequence.Types.Sequence("GATATCTGTC"),
-            new DnaStore.Sequence.Types.Sequence("ACGGCGTTCG"),
-            new DnaStore.Sequence.Types.Sequence("CCCTAAAGAG"),
-            new DnaStore.Sequence.Types.Sequence("CGTCAGAGGT")
+            new Sequence("TTACCTTAAC"),
+            new Sequence("GATATCTGTC"),
+            new Sequence("ACGGCGTTCG"),
+            new Sequence("CCCTAAAGAG"),
+            new Sequence("CGTCAGAGGT")
         };
-        Assert.AreEqual(5, DnaStore.Sequence.Types.Sequence.DistancePatternAndString("AAA", sequences));
+        Assert.AreEqual(5, Sequence.DistancePatternAndString("AAA", sequences));
     }
 
     [TestMethod]

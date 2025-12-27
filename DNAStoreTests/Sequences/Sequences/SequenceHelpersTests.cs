@@ -1,6 +1,6 @@
-﻿using DnaStore.Sequence.Types;
+﻿using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequence.Sequences;
+namespace BaseTests.Sequences.Sequences;
 
 [TestClass]
 public class SequenceHelpersTests

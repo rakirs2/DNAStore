@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Text;
-using DnaStore.Base.DataStructures;
-using DnaStore.Base.Utils;
-using DnaStore.Sequence.Analysis.Types;
-using DnaStore.Sequence.Types.Interfaces;
+using DNAStore.Base.DataStructures;
+using DNAStore.Base.Utils;
+using DNAStore.Sequences.Analysis.Types;
+using DNAStore.Sequences.Types.Interfaces;
 
-namespace DnaStore.Sequence.Types;
+namespace DNAStore.Sequences.Types;
 
 /// <summary>
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not

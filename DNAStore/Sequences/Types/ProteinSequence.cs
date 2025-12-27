@@ -1,10 +1,10 @@
 ﻿using System.Numerics;
 using System.Text;
 using Bio;
-using DnaStore.Sequence.Exceptions;
-using DnaStore.Sequence.Types.Interfaces;
+using DNAStore.Sequences.Exceptions;
+using DNAStore.Sequences.Types.Interfaces;
 
-namespace DnaStore.Sequence.Types;
+namespace DNAStore.Sequences.Types;
 
 public class ProteinSequence : Sequence, IProtein
 {

@@ -1,4 +1,4 @@
-using DnaStore.Base.Algorithms;
+using DNAStore.Base.Algorithms;
 
 namespace BaseTests.Base.Algorithms;
 

@@ -1,6 +1,7 @@
-﻿using DnaStore.Sequence.Analysis.Types;
+﻿using DNAStore.Sequences.Analysis.Types;
+using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequence.Analysis.Types;
+namespace BaseTests.Sequences.Analysis.Types;
 
 [TestClass]
 public class KmerCounterTests
@@ -8,7 +9,7 @@ public class KmerCounterTests
     [TestMethod]
     public void KmerCounterTest()
     {
-        var sequence = new DnaStore.Sequence.Types.Sequence("aabbccddeeffeeggee");
+        var sequence = new Sequence("aabbccddeeffeeggee");
 
         var kmerCounter = new KmerCounter(sequence, 2);
         Assert.AreEqual(2, kmerCounter.KmerLength);
@@ -19,7 +20,7 @@ public class KmerCounterTests
     [TestMethod]
     public void KmerCounterTestMultipleMostFrequent()
     {
-        var sequence = new DnaStore.Sequence.Types.Sequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
+        var sequence = new Sequence("ACGTTGCATGTCGCATGATGCATGAGAGCT");
         var kmerCounter = new KmerCounter(sequence, 4);
         // Assert.AreEqual(2, kmerCounter.KmerLength);
         // Assert.AreEqual("ee", kmerCounter.HighestFrequencyKmers[0]);

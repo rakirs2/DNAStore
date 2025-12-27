@@ -1,7 +1,7 @@
-﻿using DnaStore.Sequence.Analysis.Types;
-using DnaStore.Sequence.IO;
+﻿using DNAStore.Sequences.Analysis.Types;
+using DNAStore.Sequences.IO;
 
-namespace BaseTests.Sequence.Analysis.Types;
+namespace BaseTests.Sequences.Analysis.Types;
 
 [TestClass]
 public class SimpleProfileMatrixTests

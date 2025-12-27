@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using DnaStore.Base.Interfaces;
+using DNAStore.Base.Interfaces;
 
-namespace DnaStore.Base.DataStructures;
+namespace DNAStore.Base.DataStructures;
 
 /// <summary>
 ///     A basic counter for the total number of base pairs on a given sequence.

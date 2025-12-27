@@ -1,8 +1,8 @@
-﻿using DnaStore.Math;
-using DnaStore.Sequence.IO;
-using DnaStore.Sequence.Types;
+﻿using DNAStore.BioMath;
+using DNAStore.Sequences.IO;
+using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequence.IO;
+namespace BaseTests.Sequences.IO;
 
 [TestClass]
 public class FastaTests

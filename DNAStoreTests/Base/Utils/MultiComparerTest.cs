@@ -1,4 +1,4 @@
-using DnaStore.Base.Utils;
+using DNAStore.Base.Utils;
 using JetBrains.Annotations;
 
 namespace BaseTests.Base.Utils;

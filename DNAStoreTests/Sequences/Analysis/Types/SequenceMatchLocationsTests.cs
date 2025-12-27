@@ -1,6 +1,7 @@
-﻿using DnaStore.Sequence.Analysis.Types;
+﻿using DNAStore.Sequences.Analysis.Types;
+using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequence.Analysis.Types;
+namespace BaseTests.Sequences.Analysis.Types;
 
 [TestClass]
 public class SequenceMatchLocationsTests
@@ -8,7 +9,7 @@ public class SequenceMatchLocationsTests
     [TestMethod]
     public void MatchLocationsTest()
     {
-        var seq = new DnaStore.Sequence.Types.Sequence(
+        var seq = new Sequence(
             "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC");
 
         var matchLocations = new SequenceMatchLocations(seq, new Motif("CGCCC", 5));
@@ -19,7 +20,7 @@ public class SequenceMatchLocationsTests
     [TestMethod]
     public void HammingMatch()
     {
-        var seq = new DnaStore.Sequence.Types.Sequence(
+        var seq = new Sequence(
             "CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC");
 
         var matchLocations = new SequenceMatchLocations(seq, new HammingMatch("ATTCTGGA", 3));

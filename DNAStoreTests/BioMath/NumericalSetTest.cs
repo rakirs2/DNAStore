@@ -1,6 +1,6 @@
-using DnaStore.Math;
+using DNAStore.BioMath;
 
-namespace BaseTests.Math;
+namespace BaseTests.BioMath;
 
 [TestClass]
 public class NumericalSetTest

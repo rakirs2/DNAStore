@@ -1,13 +1,14 @@
-﻿using DnaStore.Math;
-using DnaStore.Sequence.Analysis.Interfaces;
+﻿using DNAStore.BioMath;
+using DNAStore.Sequences.Analysis.Interfaces;
+using DNAStore.Sequences.Types;
 
-namespace DnaStore.Sequence.Analysis.Types;
+namespace DNAStore.Sequences.Analysis.Types;
 
 public class FrequencyArray : IFrequencyArray
 {
-    private readonly Sequence.Types.Sequence _sequence;
+    private readonly Sequence _sequence;
 
-    public FrequencyArray(Sequence.Types.Sequence sequence)
+    public FrequencyArray(Sequence sequence)
     {
         _sequence = sequence;
     }

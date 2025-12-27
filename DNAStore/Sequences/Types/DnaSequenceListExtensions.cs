@@ -1,6 +1,6 @@
-using DnaStore.Math;
+using DNAStore.BioMath;
 
-namespace DnaStore.Sequence.Types;
+namespace DNAStore.Sequences.Types;
 
 /// <summary>
 ///     TODO: refactor this to be more 'object oriented' and improve understanding

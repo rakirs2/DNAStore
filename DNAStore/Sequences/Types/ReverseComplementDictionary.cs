@@ -1,4 +1,4 @@
-namespace DnaStore.Sequence.Types;
+namespace DNAStore.Sequences.Types;
 
 /// <summary>
 ///     Effectively allows for reverse complements to be searched, counted and handled

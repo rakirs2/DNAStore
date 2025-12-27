@@ -1,4 +1,4 @@
-using DnaStore.Clients.Jaspar;
+using DNAStore.Clients.Jaspar;
 
 namespace BaseTests.Clients;
 

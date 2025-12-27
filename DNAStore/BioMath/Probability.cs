@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
-using DnaStore.Base.Utils;
+using DNAStore.Base.Utils;
 using MathNet.Numerics.Distributions;
 
-namespace DnaStore.Math;
+namespace DNAStore.BioMath;
 
 public static class Probability
 {

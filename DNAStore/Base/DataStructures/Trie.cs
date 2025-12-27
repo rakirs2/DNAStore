@@ -1,6 +1,6 @@
-﻿using DnaStore.Base.Interfaces;
+﻿using DNAStore.Base.Interfaces;
 
-namespace DnaStore.Base.DataStructures;
+namespace DNAStore.Base.DataStructures;
 
 public class Trie : ITrie
 {

@@ -1,6 +1,6 @@
-using DnaStore.Sequence.Types;
+using DNAStore.Sequences.Types;
 
-namespace BaseTests.Sequence.Sequences.Types;
+namespace BaseTests.Sequences.Sequences.Types;
 
 [TestClass]
 public class NucleotideSequenceTests

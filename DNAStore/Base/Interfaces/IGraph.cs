@@ -1,4 +1,4 @@
-﻿namespace DnaStore.Base.Interfaces;
+﻿namespace DNAStore.Base.Interfaces;
 
 internal interface IGraph<T>
 {

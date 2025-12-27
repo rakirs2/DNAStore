@@ -1,7 +1,7 @@
-﻿using DnaStore.Sequence.Analysis.Interfaces;
-using DnaStore.Sequence.IO;
+﻿using DNAStore.Sequences.Analysis.Interfaces;
+using DNAStore.Sequences.IO;
 
-namespace DnaStore.Sequence.Analysis.Types;
+namespace DNAStore.Sequences.Analysis.Types;
 
 public class OverlapGraph : IOverlapGraph
 {

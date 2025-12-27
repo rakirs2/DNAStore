@@ -1,4 +1,4 @@
-﻿namespace DnaStore.Base.Utils;
+﻿namespace DNAStore.Base.Utils;
 
 public class IntComparer : IComparer<int>
 {

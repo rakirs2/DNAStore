@@ -1,4 +1,6 @@
-﻿namespace DnaStore.Sequence.Analysis.Interfaces;
+﻿using DNAStore.Sequences.Types;
+
+namespace DNAStore.Sequences.Analysis.Interfaces;
 
 public interface IProfileMatrix
 {
@@ -17,7 +19,7 @@ public interface IProfileMatrix
     ///     Ties are broken with the last highest number
     /// </summary>
     /// <returns></returns>
-    Sequence.Types.Sequence GetProfileSequence();
+    Sequence GetProfileSequence();
 
 
     /// <summary>

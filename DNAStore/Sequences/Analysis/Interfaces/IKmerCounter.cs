@@ -1,4 +1,4 @@
-﻿namespace DnaStore.Sequence.Analysis.Interfaces;
+﻿namespace DNAStore.Sequences.Analysis.Interfaces;
 
 public interface IKmerCounter
 {

@@ -1,4 +1,4 @@
-namespace DnaStore.Math;
+namespace DNAStore.BioMath;
 
 public class NumericalSet : ISet<int>
 {

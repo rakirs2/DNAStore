@@ -1,6 +1,6 @@
-﻿using DnaStore.Sequence.Analysis.Types;
+﻿using DNAStore.Sequences.Analysis.Types;
 
-namespace BaseTests.Sequence.Analysis.Types;
+namespace BaseTests.Sequences.Analysis.Types;
 
 [TestClass]
 public class HammingMatchTests

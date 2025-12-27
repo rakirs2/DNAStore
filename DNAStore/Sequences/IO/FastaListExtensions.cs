@@ -1,6 +1,6 @@
-﻿using DnaStore.Sequence.Types;
+﻿using DNAStore.Sequences.Types;
 
-namespace DnaStore.Sequence.IO;
+namespace DNAStore.Sequences.IO;
 
 public static class FastaListExtensions
 {

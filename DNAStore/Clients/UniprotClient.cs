@@ -1,6 +1,6 @@
-﻿using DnaStore.Sequence.IO;
+﻿using DNAStore.Sequences.IO;
 
-namespace DnaStore.Clients;
+namespace DNAStore.Clients;
 
 public class UniprotClient
 {
