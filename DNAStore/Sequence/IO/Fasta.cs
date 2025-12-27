@@ -1,9 +1,8 @@
 using System.Text.Json;
-using Base.DataStructures;
-using Bio.Sequences;
-using Bio.Sequences.Types;
+using DnaStore.Base.DataStructures;
+using DnaStore.Sequence.Types;
 
-namespace Bio.IO;
+namespace DnaStore.Sequence.IO;
 
 public class Fasta : IFasta
 {
@@ -54,9 +53,9 @@ public class Fasta : IFasta
         throw new NotImplementedException();
     }
 
-    public Sequence GenerateSequence()
+    public Types.Sequence GenerateSequence()
     {
-        return new Sequence(RawSequence, Name);
+        return new Types.Sequence(RawSequence, Name);
     }
 
     public RnaSequence GenerateRNASequence()
@@ -74,7 +73,7 @@ public class Fasta : IFasta
         throw new NotImplementedException();
     }
 
-    public Sequence GenerateInferred()
+    public Types.Sequence GenerateInferred()
     {
         switch (ContentType)
         {

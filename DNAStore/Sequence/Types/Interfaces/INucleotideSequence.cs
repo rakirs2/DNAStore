@@ -1,6 +1,4 @@
-using Bio.Sequences.Types;
-
-namespace Bio.Sequences.Interfaces;
+namespace DnaStore.Sequence.Types.Interfaces;
 
 public interface INucleotideSequence
 {

@@ -1,6 +1,6 @@
-﻿using Base.Interfaces;
+﻿using DnaStore.Base.Interfaces;
 
-namespace Base.DataStructures;
+namespace DnaStore.Base.DataStructures;
 
 public class Trie : ITrie
 {
@@ -14,7 +14,7 @@ public class Trie : ITrie
     public void AddWord(string word)
     {
         // Go ahead and verify the maximum length here
-        MaxStringLength = Math.Max(word.Length, MaxStringLength);
+        MaxStringLength = System.Math.Max(word.Length, MaxStringLength);
 
         var node = root;
         foreach (var c in word)

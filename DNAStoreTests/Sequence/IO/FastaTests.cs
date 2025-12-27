@@ -1,9 +1,8 @@
-﻿using Bio.IO;
-using Bio.Sequences;
-using Bio.Sequences.Types;
-using BioMath;
+﻿using DnaStore.Math;
+using DnaStore.Sequence.IO;
+using DnaStore.Sequence.Types;
 
-namespace BioTests.IO;
+namespace BaseTests.Sequence.IO;
 
 [TestClass]
 public class FastaTests

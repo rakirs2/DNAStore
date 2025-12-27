@@ -1,7 +1,7 @@
-using Base.DataStructures;
-using Bio.Sequences.Types;
+using DnaStore.Base.DataStructures;
+using DnaStore.Sequence.Types;
 
-namespace Bio.IO;
+namespace DnaStore.Sequence.IO;
 
 public interface IFasta
 {
@@ -12,7 +12,7 @@ public interface IFasta
     public string ToJson();
     public void Compress();
 
-    public Sequence GenerateSequence();
+    public Types.Sequence GenerateSequence();
     public RnaSequence GenerateRNASequence();
     public DnaSequence GenerateDNASequence();
     public ProteinSequence GenerateProteinSequence();

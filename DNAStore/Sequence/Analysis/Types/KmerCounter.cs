@@ -1,13 +1,12 @@
-﻿using Bio.Analysis.Interfaces;
-using Bio.Sequences.Types;
+﻿using DnaStore.Sequence.Analysis.Interfaces;
 
-namespace Bio.Analysis.Types;
+namespace DnaStore.Sequence.Analysis.Types;
 
 public class KmerCounter : IKmerCounter
 {
     private static readonly Dictionary<string, int> Counts = new();
 
-    public KmerCounter(Sequence sequence, int kmerLength)
+    public KmerCounter(Sequence.Types.Sequence sequence, int kmerLength)
     {
         KmerLength = kmerLength;
         // ok, we need to populate the right values here

@@ -1,4 +1,4 @@
-﻿namespace Base.Algorithms;
+﻿namespace DnaStore.Base.Algorithms;
 
 public static class Fibonacci
 {

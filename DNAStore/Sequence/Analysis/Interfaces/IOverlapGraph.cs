@@ -1,6 +1,6 @@
-﻿using Bio.IO;
+﻿using DnaStore.Sequence.IO;
 
-namespace Bio.Analysis.Interfaces;
+namespace DnaStore.Sequence.Analysis.Interfaces;
 
 internal interface IOverlapGraph
 {

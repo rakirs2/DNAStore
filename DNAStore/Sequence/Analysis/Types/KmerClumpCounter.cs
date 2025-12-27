@@ -1,7 +1,6 @@
-﻿using Bio.Analysis.Interfaces;
-using Bio.Sequences.Types;
+﻿using DnaStore.Sequence.Analysis.Interfaces;
 
-namespace Bio.Analysis.Types;
+namespace DnaStore.Sequence.Analysis.Types;
 
 public class KmerClumpCounter : IKmerClumpCounter
 {
@@ -13,7 +12,7 @@ public class KmerClumpCounter : IKmerClumpCounter
     // TODO: there's probably some work to generalize this later
     // TODO: Design phil -- do I really care if there's calculations going on construction?
     // TODO: Get a separate calculate step for all of these data structures
-    public KmerClumpCounter(Sequence sequence, int scanLength, int kmerLength, int minCount)
+    public KmerClumpCounter(Sequence.Types.Sequence sequence, int scanLength, int kmerLength, int minCount)
     {
         Sequence = sequence;
         ScanLength = scanLength;
@@ -39,7 +38,7 @@ public class KmerClumpCounter : IKmerClumpCounter
 
     public int ScanLength { get; }
     public int KmerLength { get; }
-    public Sequence Sequence { get; }
+    public Sequence.Types.Sequence Sequence { get; }
     public int MinCount { get; }
 
     public HashSet<string> ValidKmers { get; } = new();

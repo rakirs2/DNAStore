@@ -1,7 +1,7 @@
-﻿using Bio.Analysis.Types;
-using Bio.IO;
+﻿using DnaStore.Sequence.Analysis.Types;
+using DnaStore.Sequence.IO;
 
-namespace BioTests.Analysis.Types;
+namespace BaseTests.Sequence.Analysis.Types;
 
 [TestClass]
 public class OverlapGraphTests

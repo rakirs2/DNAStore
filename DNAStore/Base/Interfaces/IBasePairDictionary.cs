@@ -1,4 +1,4 @@
-﻿namespace Base.Interfaces;
+﻿namespace DnaStore.Base.Interfaces;
 
 // Should be input only for now
 public interface IBasePairDictionary

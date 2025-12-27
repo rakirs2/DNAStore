@@ -1,9 +1,10 @@
 ﻿using System.Numerics;
 using System.Text;
-using Bio.Exceptions;
-using Bio.Sequences.Interfaces;
+using Bio;
+using DnaStore.Sequence.Exceptions;
+using DnaStore.Sequence.Types.Interfaces;
 
-namespace Bio.Sequences.Types;
+namespace DnaStore.Sequence.Types;
 
 public class ProteinSequence : Sequence, IProtein
 {
@@ -57,7 +58,7 @@ public class ProteinSequence : Sequence, IProtein
 
             // Search for best fit by mass
             var match = Reference.MonoisotopicMassTable
-                .OrderBy(kvp => Math.Abs(kvp.Value - diff))
+                .OrderBy(kvp => System.Math.Abs(kvp.Value - diff))
                 .First().Key;
 
             protein += match;
@@ -99,7 +100,7 @@ public class ProteinSequence : Sequence, IProtein
             foreach (var aminoAcid in Reference.MonoisotopicMassTable)
             {
                 var targetMass = currentMass + aminoAcid.Value;
-                var nextIon = ions.FirstOrDefault(m => Math.Abs(m - targetMass) < tolerance);
+                var nextIon = ions.FirstOrDefault(m => System.Math.Abs(m - targetMass) < tolerance);
 
                 if (nextIon == 0) continue;
                 result.Append(aminoAcid.Key);

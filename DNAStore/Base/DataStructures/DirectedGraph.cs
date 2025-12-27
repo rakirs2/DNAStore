@@ -1,4 +1,4 @@
-namespace Base.DataStructures;
+namespace DnaStore.Base.DataStructures;
 
 /// <summary>
 ///     Simple Directed graph implementation

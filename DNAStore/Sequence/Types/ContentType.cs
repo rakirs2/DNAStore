@@ -1,4 +1,4 @@
-﻿namespace Bio.Sequences;
+﻿namespace DnaStore.Sequence.Types;
 
 public enum ContentType
 {

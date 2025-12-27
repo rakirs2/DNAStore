@@ -1,4 +1,4 @@
-namespace Base.Utils;
+namespace DnaStore.Base.Utils;
 
 public class MatrixUtils
 {

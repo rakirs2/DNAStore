@@ -1,6 +1,6 @@
-﻿using Bio.Analysis.Types;
+﻿using DnaStore.Sequence.Analysis.Types;
 
-namespace BioTests.Analysis.Types;
+namespace BaseTests.Sequence.Analysis.Types;
 
 public class KnownMotifsTests
 {

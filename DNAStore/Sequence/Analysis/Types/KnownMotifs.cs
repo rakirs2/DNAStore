@@ -1,4 +1,4 @@
-﻿namespace Bio.Analysis.Types;
+﻿namespace DnaStore.Sequence.Analysis.Types;
 
 /// <summary>
 ///     A simple list of known motifs. These aren't separated by DNA, RNA and Protein (yet)

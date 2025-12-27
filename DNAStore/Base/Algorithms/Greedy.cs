@@ -1,4 +1,4 @@
-namespace Base.Algorithms;
+namespace DnaStore.Base.Algorithms;
 
 public class Greedy
 {
@@ -10,7 +10,7 @@ public class Greedy
         for (var i = 1; i <= target; i++)
             foreach (var coin in coinValues)
                 if (coin <= i)
-                    coinTracker[i] = Math.Min(coinTracker[i], coinTracker[i - coin] + 1);
+                    coinTracker[i] = System.Math.Min(coinTracker[i], coinTracker[i - coin] + 1);
 
         return coinTracker[target] > target ? -1 : coinTracker[target];
     }

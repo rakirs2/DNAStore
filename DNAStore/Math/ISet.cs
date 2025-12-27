@@ -1,4 +1,4 @@
-namespace BioMath;
+namespace DnaStore.Math;
 
 public interface ISet<T>
 {

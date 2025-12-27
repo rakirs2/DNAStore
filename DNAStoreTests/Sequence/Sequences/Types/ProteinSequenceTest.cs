@@ -1,8 +1,8 @@
-﻿using Bio.Exceptions;
-using Bio.Sequences.Types;
-using BioMath;
+﻿using DnaStore.Math;
+using DnaStore.Sequence.Exceptions;
+using DnaStore.Sequence.Types;
 
-namespace BioTests.Sequences.Types;
+namespace BaseTests.Sequence.Sequences.Types;
 
 [TestClass]
 public class ProteinSequenceTest

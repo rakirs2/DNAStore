@@ -1,8 +1,7 @@
 ﻿using System.Text;
-using Base.Utils;
 using DnaStore.Base.Utils;
 
-namespace Bio.Sequences;
+namespace DnaStore.Sequence.Types;
 
 public class SequenceHelpers
 {

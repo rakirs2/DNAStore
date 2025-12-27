@@ -1,4 +1,4 @@
-﻿namespace Bio.Analysis.Interfaces;
+﻿namespace DnaStore.Sequence.Analysis.Interfaces;
 
 public interface IHammingMatch : IMatch
 {

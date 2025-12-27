@@ -1,12 +1,11 @@
-﻿using Bio.Analysis.Interfaces;
-using Bio.IO;
-using Bio.Sequences.Types;
+﻿using DnaStore.Sequence.Analysis.Interfaces;
+using DnaStore.Sequence.IO;
 
-namespace Bio.Analysis.Types;
+namespace DnaStore.Sequence.Analysis.Types;
 
 public class LongestCommonSubsequence : ILongestCommonSubsequence
 {
-    private readonly Sequence _longest;
+    private readonly Sequence.Types.Sequence _longest;
 
     public LongestCommonSubsequence(List<Fasta> fastas)
     {
@@ -26,13 +25,13 @@ public class LongestCommonSubsequence : ILongestCommonSubsequence
                     }
 
                 if (isValid)
-                    _longest = new Sequence(currentString);
+                    _longest = new Sequence.Types.Sequence(currentString);
             }
         }
         // to generate each possible subsequence
     }
 
-    public Sequence GetAnyLongest()
+    public Sequence.Types.Sequence GetAnyLongest()
     {
         return _longest;
     }

@@ -1,6 +1,6 @@
-using Base.Utils;
+using DnaStore.Base.Utils;
 
-namespace Base.Algorithms;
+namespace DnaStore.Base.Algorithms;
 
 public class ReversalDistance
 {
@@ -100,7 +100,7 @@ public class ReversalDistance
             if (reversals[i - 1] != i)
             {
                 // greedily find the right index 
-                var j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
+                var j = Array.FindIndex(reversals, x => System.Math.Abs(x) == i);
                 ReverseSubsequence(reversals, i - 1, j);
                 var temp = (int[])reversals.Clone();
                 order.Add(temp);

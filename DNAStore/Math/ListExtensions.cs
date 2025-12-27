@@ -1,4 +1,4 @@
-namespace BioMath;
+namespace DnaStore.Math;
 
 public static class ListExtensions
 {

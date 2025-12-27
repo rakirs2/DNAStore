@@ -1,7 +1,6 @@
-﻿using Bio.Analysis.Types;
-using Bio.Sequences.Types;
+﻿using DnaStore.Sequence.Analysis.Types;
 
-namespace Bio.Sequences.Interfaces;
+namespace DnaStore.Sequence.Types.Interfaces;
 
 public interface ISequence
 {

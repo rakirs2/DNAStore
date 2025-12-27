@@ -1,6 +1,6 @@
-using Base.Utils;
+using DnaStore.Base.Utils;
 
-namespace Bio.Sequences.Types;
+namespace DnaStore.Sequence.Types;
 
 public class ProbabilityProfile
 {

@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Bio.IO;
+namespace DnaStore.Sequence.IO;
 
 public static class FastaParser
 {

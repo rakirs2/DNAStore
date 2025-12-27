@@ -1,6 +1,6 @@
-﻿using Bio.IO;
+﻿using DnaStore.Sequence.IO;
 
-namespace BioTests.IO;
+namespace BaseTests.Sequence.IO;
 
 [TestClass]
 public class FastaParserTests

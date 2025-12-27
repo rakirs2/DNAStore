@@ -1,6 +1,6 @@
-using BioMath;
+using DnaStore.Math;
 
-namespace Bio.Sequences.Types;
+namespace DnaStore.Sequence.Types;
 
 /// <summary>
 ///     TODO: refactor this to be more 'object oriented' and improve understanding
@@ -190,7 +190,7 @@ public static class DnaSequenceListExtensions
         {
             var currentMin = int.MinValue;
             foreach (var sequence in sequences)
-                currentMin = Math.Max(currentMin, sequence.GetMinimumDistanceForKmer(kmer));
+                currentMin = System.Math.Max(currentMin, sequence.GetMinimumDistanceForKmer(kmer));
 
             if (results.ContainsKey(currentMin))
                 results[currentMin].Add(kmer);

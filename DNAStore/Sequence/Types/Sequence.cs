@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Text;
-using Base.DataStructures;
-using Bio.Analysis.Types;
-using Bio.Sequences.Interfaces;
+using DnaStore.Base.DataStructures;
 using DnaStore.Base.Utils;
+using DnaStore.Sequence.Analysis.Types;
+using DnaStore.Sequence.Types.Interfaces;
 
-namespace Bio.Sequences.Types;
+namespace DnaStore.Sequence.Types;
 
 /// <summary>
 ///     Base class for any sequence. This is the main driver for all types of analysis where the program does not
@@ -267,7 +267,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     public static int CalculateOverlap(Sequence s1, Sequence s2)
     {
         var maxOverlap = 0;
-        for (var i = 1; i <= Math.Min(s1.Length, s2.Length); i++)
+        for (var i = 1; i <= System.Math.Min(s1.Length, s2.Length); i++)
             if (s1.RawSequence.EndsWith(s2.Substring(0, i)))
                 maxOverlap = i;
 

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Bio.Analysis.Interfaces;
+namespace DnaStore.Sequence.Analysis.Interfaces;
 
 public interface IMotif : IMatch
 {

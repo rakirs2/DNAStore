@@ -1,8 +1,8 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using Bio.Analysis.Interfaces;
+using DnaStore.Sequence.Analysis.Interfaces;
 
-namespace Bio.Analysis.Types;
+namespace DnaStore.Sequence.Analysis.Types;
 
 // TODO: this needs some refactoring
 

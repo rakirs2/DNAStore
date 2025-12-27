@@ -1,6 +1,6 @@
-﻿using Bio.Sequences.Types;
+﻿using DnaStore.Sequence.Types;
 
-namespace Bio.IO;
+namespace DnaStore.Sequence.IO;
 
 public static class FastaListExtensions
 {
@@ -11,8 +11,8 @@ public static class FastaListExtensions
         {
             output.Add(new List<double>());
             for (var j = 0; j < list.Count; j++)
-                output[i].Add(Math.Round(
-                    (double)Sequence.HammingDistance(list[i].RawSequence, list[j].RawSequence) /
+                output[i].Add(System.Math.Round(
+                    (double)Types.Sequence.HammingDistance(list[i].RawSequence, list[j].RawSequence) /
                     list[i].RawSequence.Length, 4));
         }
 

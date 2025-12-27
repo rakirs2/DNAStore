@@ -1,16 +1,16 @@
-﻿using Bio.Analysis.Interfaces;
-using Bio.Sequences.Types;
-using BioMath;
+﻿using DnaStore.Math;
+using DnaStore.Sequence.Analysis.Interfaces;
+using DnaStore.Sequence.Types;
 
-namespace Bio.Analysis.Types;
+namespace DnaStore.Sequence.Analysis.Types;
 
 public class MismatchKmerCounter : IMismatchKmerCounter
 {
-    private readonly Sequence _sequence;
+    private readonly Sequence.Types.Sequence _sequence;
 
     private readonly Dictionary<string, int> MismatchDictionaryTracker = new();
 
-    public MismatchKmerCounter(int kmerLength, Sequence sequence, int tolerance)
+    public MismatchKmerCounter(int kmerLength, Sequence.Types.Sequence sequence, int tolerance)
     {
         KmerLength = kmerLength;
         Tolerance = tolerance;
@@ -44,7 +44,7 @@ public class MismatchKmerCounter : IMismatchKmerCounter
         var stringToCheck = key;
         if (checkComplement) stringToCheck = new DnaSequence(key).GetReverseComplement().ToString();
 
-        if (Sequence.HammingDistance(_sequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
+        if (Sequence.Types.Sequence.HammingDistance(_sequence.Substring(i, KmerLength), stringToCheck) <= Tolerance)
         {
             // TODO: this really can get refactored
             MismatchDictionaryTracker[key] += 1;

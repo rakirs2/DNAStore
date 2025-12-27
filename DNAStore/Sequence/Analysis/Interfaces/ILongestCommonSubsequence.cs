@@ -1,6 +1,4 @@
-﻿using Bio.Sequences.Types;
-
-namespace Bio.Analysis.Interfaces;
+﻿namespace DnaStore.Sequence.Analysis.Interfaces;
 
 // Only cares about 1, not all
 public interface ILongestCommonSubsequence
@@ -9,5 +7,5 @@ public interface ILongestCommonSubsequence
     ///     Returns any longest subsequence in the List
     /// </summary>
     /// <returns></returns>
-    Sequence GetAnyLongest();
+    Sequence.Types.Sequence GetAnyLongest();
 }

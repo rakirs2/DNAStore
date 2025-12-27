@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using Bio.Analysis.Types;
+using DnaStore.Sequence.Analysis.Types;
 
-namespace BioTests.Analysis.Types;
+namespace BaseTests.Sequence.Analysis.Types;
 
 [TestClass]
 public class MotifTests

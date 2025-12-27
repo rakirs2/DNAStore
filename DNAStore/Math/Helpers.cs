@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace BioMath;
+namespace DnaStore.Math;
 
 /// <summary>
 ///     Most of these sequence Analysis are some combination of dynamic programming and string searches
@@ -50,6 +50,6 @@ public static class Helpers
 
     public static bool DoublesEqualWithinRange(double a, double b, double epsilon = 0.001)
     {
-        return Math.Abs(a - b) <= epsilon;
+        return System.Math.Abs(a - b) <= epsilon;
     }
 }
