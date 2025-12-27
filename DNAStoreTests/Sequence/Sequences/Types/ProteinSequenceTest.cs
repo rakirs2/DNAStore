@@ -24,7 +24,7 @@ public class ProteinSequenceTest
     [TestMethod]
     public void GivenPrefixWeights()
     {
-        var weights = new double[]
+        var weights = new[]
         {
             3524.8542,
             3710.9335,
@@ -39,7 +39,7 @@ public class ProteinSequenceTest
     [TestMethod]
     public void GivenShortSeq()
     {
-        var weights = new double[]
+        var weights = new[]
         {
             3524.8542
         };
@@ -50,7 +50,7 @@ public class ProteinSequenceTest
     [TestMethod]
     public void InferredProteinWeight()
     {
-        var weights = new double[]
+        var weights = new[]
         {
             610.391039105,
             738.485999105,
@@ -72,7 +72,7 @@ public class ProteinSequenceTest
     [TestMethod]
     public void InvalidMassSpecWeight()
     {
-        var weights = new double[]
+        var weights = new[]
         {
             610.391039105,
             738.485999105,

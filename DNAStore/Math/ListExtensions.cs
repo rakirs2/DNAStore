@@ -8,25 +8,25 @@ public static class ListExtensions
         var ret = new List<int>();
         var dp = new List<(int, int)>();
         var prv = new Dictionary<int, int>();
-        int count = list.Count;
+        var count = list.Count;
 
-        for (int index = count - 1; index >= 0; --index)
+        for (var index = count - 1; index >= 0; --index)
         {
-            int end = -list[index];
+            var end = -list[index];
 
             int l = 0, r = dp.Count;
             while (l < r)
             {
-                int m = l + (r - l) / 2;
+                var m = l + (r - l) / 2;
                 if (dp[m].Item1 < end)
                     l = m + 1;
                 else
                     r = m;
             }
 
-            int i = l;
+            var i = l;
 
-            int tmp = -1;
+            var tmp = -1;
 
             if (i == dp.Count)
             {
@@ -42,11 +42,11 @@ public static class ListExtensions
             prv[index] = tmp;
         }
 
-        int cur = dp[^1].Item2;
+        var cur = dp[^1].Item2;
         while (cur >= 0)
         {
             ret.Add(list[cur]);
-            cur = prv.TryGetValue(cur, out int value) ? value : -1;
+            cur = prv.TryGetValue(cur, out var value) ? value : -1;
         }
 
         return ret;

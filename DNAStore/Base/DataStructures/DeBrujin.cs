@@ -21,7 +21,7 @@ public class DeBrujin
         var temp = _underlying.GetEdgeList();
         var output = new List<string>();
         foreach (var kvp in temp)
-        foreach (string? value in kvp.Value)
+        foreach (var value in kvp.Value)
         {
             var sb = new StringBuilder();
             sb.Append("(");

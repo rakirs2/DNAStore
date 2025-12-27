@@ -89,7 +89,7 @@ public class ReversalDistanceTest
     [TestMethod]
     public void CountingBreakpoints()
     {
-        int[]? values = new[] { 3, 4, 5, -12, -8, -7, -6, 1, 2, 10, 9, -11, 13, 14 };
+        var values = new[] { 3, 4, 5, -12, -8, -7, -6, 1, 2, 10, 9, -11, 13, 14 };
         Assert.AreEqual(8, ReversalDistance.CountSignedBreakpoints(values));
     }
 
@@ -104,7 +104,7 @@ public class ReversalDistanceTest
     [TestMethod]
     public void InPlaceReversalOddElement()
     {
-        int[]? values = new[] { -3, +4, +1, +5, -2 };
+        var values = new[] { -3, +4, +1, +5, -2 };
         ReversalDistance.ReverseSubsequence(values, 0, 2);
         Assert.IsTrue(values.SequenceEqual(new[] { -1, -4, 3, 5, -2 }));
     }

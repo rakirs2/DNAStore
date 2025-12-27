@@ -29,14 +29,14 @@ public class SequenceHelpersTests
     [TestMethod]
     public void IsProteinSequenceDifferentiator()
     {
-        foreach (char c in KnownProteinSequenceDifferentiators)
+        foreach (var c in KnownProteinSequenceDifferentiators)
             Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(c));
     }
 
     [TestMethod]
     public void IsProteinSequenceDifferentiatorCaseSensitive()
     {
-        foreach (char c in KnownProteinSequenceDifferentiators)
+        foreach (var c in KnownProteinSequenceDifferentiators)
             Assert.IsTrue(SequenceHelpers.IsKnownProteinDifferentiator(char.ToLowerInvariant(c)));
     }
 

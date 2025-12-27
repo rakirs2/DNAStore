@@ -8,7 +8,7 @@ public class StringUtilsTest
     [TestMethod]
     public void SwapIndexTest()
     {
-        string? output = StringUtils.SwapIndex("test", 0, 1);
+        var output = StringUtils.SwapIndex("test", 0, 1);
         Assert.IsTrue(output.Equals("etst"));
     }
 
@@ -72,7 +72,7 @@ public class StringUtilsTest
     {
         Assert.AreEqual(5, StringUtils.LevenshteinDistance("PLEASANTLY", "MEANLY"));
     }
-    
+
     [TestMethod]
     public void WhyGreedyDoesNotWork()
     {
@@ -92,7 +92,7 @@ public class StringUtilsTest
     public void AhoCorasickBasicTest()
     {
         var text = "ABCDEFGHIABCDEFGHI";
-        var result =text.AhoCorasickStringSearch(new List<string> {"ABCDEF", "GHI"});
+        var result = text.AhoCorasickStringSearch(new List<string> { "ABCDEF", "GHI" });
         Assert.AreEqual(4, result.Count);
     }
 }

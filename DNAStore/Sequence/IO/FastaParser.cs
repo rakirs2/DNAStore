@@ -16,7 +16,7 @@ public static class FastaParser
         var name = "";
         var currentSequence = new StringBuilder();
         List<Fasta> output = [];
-        foreach (string? line in File.ReadLines(filePath))
+        foreach (var line in File.ReadLines(filePath))
             if (line.StartsWith('>'))
             {
                 if (name != "" || currentSequence.ToString() != "" || currentSequence.Length > 0)
@@ -54,7 +54,7 @@ public static class FastaParser
     /// <returns></returns>
     public static Fasta DeserializeRawString(string input)
     {
-        string[]? listofStrings = Regex.Split(input, @"\r?\n");
+        var listofStrings = Regex.Split(input, @"\r?\n");
         return new Fasta(listofStrings[0].Substring(1), string.Concat(listofStrings[1..]));
     }
 }

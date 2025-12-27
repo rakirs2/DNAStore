@@ -18,12 +18,12 @@ public class FrequencyArray : IFrequencyArray
         // TODO: eventually making this sorted might have some value
         var allKmers = Probability.GenerateAllKmers(kmerValues, kmerLength);
         Dictionary<string, int> counter = new();
-        foreach (string? kmer in allKmers) counter.Add(kmer, 0);
+        foreach (var kmer in allKmers) counter.Add(kmer, 0);
         for (var i = 0; i < _sequence.Length - kmerLength + 1; i++)
             counter[_sequence.Substring(i, kmerLength)] += 1;
 
         var output = new List<int>();
-        foreach (string? kmer in allKmers) output.Add(counter[kmer]);
+        foreach (var kmer in allKmers) output.Add(counter[kmer]);
 
         return output;
     }
