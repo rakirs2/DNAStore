@@ -12,7 +12,7 @@ public interface IFasta
     public string ToJson();
     public void Compress();
 
-    public Types.Sequence GenerateSequence();
+    public Sequence GenerateSequence();
     public RnaSequence GenerateRNASequence();
     public DnaSequence GenerateDNASequence();
     public ProteinSequence GenerateProteinSequence();

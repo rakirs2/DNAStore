@@ -53,9 +53,9 @@ public class Fasta : IFasta
         throw new NotImplementedException();
     }
 
-    public Types.Sequence GenerateSequence()
+    public Sequence GenerateSequence()
     {
-        return new Types.Sequence(RawSequence, Name);
+        return new Sequence(RawSequence, Name);
     }
 
     public RnaSequence GenerateRNASequence()
@@ -73,7 +73,7 @@ public class Fasta : IFasta
         throw new NotImplementedException();
     }
 
-    public Types.Sequence GenerateInferred()
+    public Sequence GenerateInferred()
     {
         switch (ContentType)
         {

@@ -91,7 +91,7 @@ public class DnaSequence : NucleotideSequence, IDna
     {
         if (n <= 0)
             throw new ArgumentException("n must be positive");
-        var output = new int[(int)System.Math.Pow(4, n)];
+        var output = new int[(int)Math.Pow(4, n)];
         for (var i = 0; i < Length - n + 1; i++)
             // this is effectively the same thing as "ToNumber()"
             // however, we don't need all the overhead of the DNA class.
@@ -124,7 +124,7 @@ public class DnaSequence : NucleotideSequence, IDna
         };
 
         var percentage = 0.0;
-        foreach (var bp in RawSequence) percentage += System.Math.Log10(bpToPercentage[bp]);
+        foreach (var bp in RawSequence) percentage += Math.Log10(bpToPercentage[bp]);
 
         return percentage;
     }
@@ -142,7 +142,7 @@ public class DnaSequence : NucleotideSequence, IDna
 
         var minimum = int.MaxValue;
         for (var i = 0; i < RawSequence.Length - kmer.Length + 1; i++)
-            minimum = System.Math.Min(minimum, HammingDistance(Substring(i, kmer.Length), kmer));
+            minimum = Math.Min(minimum, HammingDistance(Substring(i, kmer.Length), kmer));
 
         return minimum;
     }
@@ -241,7 +241,7 @@ public class DnaSequence : NucleotideSequence, IDna
     {
         var output = 0;
         for (var i = 0; i < input.Length; i++)
-            output += CharValueMapper[input[i]] * (int)System.Math.Pow(4, input.Length - i - 1);
+            output += CharValueMapper[input[i]] * (int)Math.Pow(4, input.Length - i - 1);
 
         return output;
     }
@@ -335,7 +335,7 @@ public class DnaSequence : NucleotideSequence, IDna
                 probability *= (1.0 - gcContent) / 2.0;
             else throw new ArgumentException("character " + sequenceLength);
 
-        return 1.0 - System.Math.Pow(1.0 - probability, sequenceLength);
+        return 1.0 - Math.Pow(1.0 - probability, sequenceLength);
     }
 
     /// <summary>

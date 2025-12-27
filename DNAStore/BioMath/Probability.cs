@@ -8,7 +8,7 @@ public static class Probability
 {
     public static int NumberOfSets(int i)
     {
-        return (int)System.Math.Pow(2, i);
+        return (int)Math.Pow(2, i);
     }
 
     /// <summary>

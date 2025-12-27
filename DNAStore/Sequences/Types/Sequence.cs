@@ -267,7 +267,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     public static int CalculateOverlap(Sequence s1, Sequence s2)
     {
         var maxOverlap = 0;
-        for (var i = 1; i <= System.Math.Min(s1.Length, s2.Length); i++)
+        for (var i = 1; i <= Math.Min(s1.Length, s2.Length); i++)
             if (s1.RawSequence.EndsWith(s2.Substring(0, i)))
                 maxOverlap = i;
 

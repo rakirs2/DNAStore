@@ -14,7 +14,7 @@ public class Trie : ITrie
     public void AddWord(string word)
     {
         // Go ahead and verify the maximum length here
-        MaxStringLength = System.Math.Max(word.Length, MaxStringLength);
+        MaxStringLength = Math.Max(word.Length, MaxStringLength);
 
         var node = root;
         foreach (var c in word)
