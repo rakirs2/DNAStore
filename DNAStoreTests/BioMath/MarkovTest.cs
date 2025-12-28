@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 namespace DNAStoreTests.BioMath;
 
 [TestClass]
-[TestSubject(typeof(Markov))]
 public class MarkovTest
 {
 
