@@ -1,10 +1,8 @@
 using DNAStore.BioMath;
-using JetBrains.Annotations;
 
 namespace DNAStoreTests.BioMath;
 
 [TestClass]
-[TestSubject(typeof(ListExtensions))]
 public class ListExtensionsTest
 {
     [TestMethod]

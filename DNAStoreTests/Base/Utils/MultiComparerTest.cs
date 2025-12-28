@@ -1,10 +1,8 @@
 using DNAStore.Base.Utils;
-using JetBrains.Annotations;
 
 namespace DNAStoreTests.Base.Utils;
 
 [TestClass]
-[TestSubject(typeof(MultiComparer))]
 public class MultiComparerTest
 {
     [TestMethod]
