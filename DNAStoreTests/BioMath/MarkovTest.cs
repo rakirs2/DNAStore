@@ -11,8 +11,32 @@ public class MarkovTest
     [TestMethod]
     public void CalculateHiddenPathProbability()
     {
-        var output = Markov.HiddenPathProbability("FFFBBBBBBFFF", new char[] { 'F', 'B' },
-            new double[2, 2] { { .9, .1 }, { .1, .9 } });
+        var pi = "FFFBBBBBBFFF";
+        var states = new char[] { 'F', 'B' };
+        var transition =new double[2, 2] { { .9, .1 }, { .1, .9 } };
+        var output = Markov.HiddenPathProbability(pi, states,
+            transition);
+        Assert.AreEqual(0.001937102445, output, 1e-4);
+    }
+    
+    [TestMethod]
+    public void CalculateHiddenPathInvalidStates()
+    {
+        var pi = "FFFBBBBBBFFF";
+        var states = new char[] { 'F', 'F' };
+        var transition =new double[2, 2] { { .9, .1 }, { .1, .9 } };
+        Assert.ThrowsExactly<InvalidDataException>(()=>Markov.HiddenPathProbability(pi, states,
+            transition));
+    }
+    
+    [TestMethod]
+    public void CalculateHiddenPathInvalidTransitionMatrixSize()
+    {
+        var pi = "FFFBBBBBBFFF";
+        var states = new char[] { 'F', 'F' };
+        var transition =new double[1,1] { { .9} };
+        Assert.ThrowsExactly<InvalidDataException>(()=>Markov.HiddenPathProbability(pi, states,
+            transition));
     }
     
     [TestMethod]
