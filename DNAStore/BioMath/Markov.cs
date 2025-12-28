@@ -36,4 +36,40 @@ public class Markov
 
         return output;
     }
+    
+    public static double PathOutcomeProbability(string outcome,char[] sigma, string pi, char[] states, double[,] emission)
+    {
+        var output = 1.0;
+        if(sigma.Distinct().Count() != sigma.Length)
+            throw new InvalidDataException("alphabet must be unique");
+        
+        if(states.Distinct().Count() != states.Length)
+            throw new InvalidDataException("All states must be unique");
+
+        if (emission.GetLength(0) != states.Length || emission.GetLength(1)!= sigma.Length)
+            throw new InvalidDataException("Emission array must have the correct dimensions");
+            
+        Dictionary<char, int> alphabetIndex = new Dictionary<char, int>();
+        var idx = 0;
+        foreach (var s in sigma)
+        {
+            alphabetIndex[s] = idx;
+            idx++;
+        }
+        
+        Dictionary<char, int> statesIndex = new Dictionary<char, int>();
+        idx = 0;
+        foreach (var state in states)
+        {
+            statesIndex[state] = idx;
+            idx++;
+        }
+        
+        for (var i = 0; i < outcome.Length; i++)
+        {
+            output *=  emission[statesIndex[pi[i]], alphabetIndex[outcome[i]]];
+        }
+
+        return output;
+    }
 }

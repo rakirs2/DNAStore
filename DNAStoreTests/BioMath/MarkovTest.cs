@@ -44,6 +44,18 @@ public class MarkovTest
         var states = new char[] { 'A', 'B' };
         var transition = new double[2, 2] { { .194, .806 }, { .273, .727 } };
         var output = Markov.HiddenPathProbability(pi, states, transition);
-        Assert.AreEqual(5.01732865318E-19, output, 10E-20);
+        Assert.AreEqual(5.01732865318E-19, output, 1E-20);
+    }
+
+    [TestMethod]
+    public void CalculateOutcomeProbabilityGivenHiddenPath()
+    {
+        var outcome = "xxyzyxzzxzxyxyyzxxzzxxyyxxyxyzzxxyzyzxzxxyxyyzxxzx";
+        var sigma = new char[] { 'x', 'y', 'z' };
+        var hiddenPath = "BBBAAABABABBBBBBAAAAAABAAAABABABBBBBABAABABABABBBB";
+        var states = new char[] { 'A', 'B' };
+        var emission = new double[2, 3] { { .612, .314, .074 }, { .346, .317, .336 } };
+        var output = Markov.PathOutcomeProbability(outcome, sigma, hiddenPath, states, emission);
+        Assert.AreEqual(1.93157070893e-28, output, 1E-31);
     }
 }
