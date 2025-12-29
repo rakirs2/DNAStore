@@ -28,4 +28,17 @@ public interface IRna : ISequence
     /// </remarks>
     /// <returns></returns>
     public BigInteger NumberOfPerfectMatchings();
+    
+    /// <summary>
+    /// Implementation of above that's dynamically programmed rather than a basic math calculation
+    /// </summary>
+    /// <param name="modulo"></param>
+    /// <returns></returns>
+    public int NumberOfPerfectMatchingsDynamic(int modulo);
+
+    /// <summary>
+    ///  Is the nucleotide balance between both sets (AU and GC) equal.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsBalanced();
 }

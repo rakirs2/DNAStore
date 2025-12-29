@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using DNAStore.Base.Interfaces;
+using DNAStore.Base.Utils;
 
 namespace DNAStore.Base.DataStructures;
 
@@ -10,7 +11,7 @@ namespace DNAStore.Base.DataStructures;
 /// </summary>
 public class BasePairDictionary : IBasePairDictionary
 {
-    private readonly Dictionary<char, long> _dictionary = new();
+    private readonly Dictionary<char, long> _dictionary = new(CaseInsensitiveCharComparer.Shared);
     public long Count { get; private set; }
 
     public char HighestFrequencyBasePair { get; private set; }
@@ -29,10 +30,13 @@ public class BasePairDictionary : IBasePairDictionary
         Count++;
     }
 
+    // TODO: just use indexer everywhere
     public long GetFrequency(char c)
     {
         return _dictionary.GetValueOrDefault(c, 0);
     }
+
+    public long this[char key] => GetFrequency(key);
 
     public override string ToString()
     {
