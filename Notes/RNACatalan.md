@@ -42,3 +42,5 @@ A      G
 U      C
   G  A
 ```
+
+So what is it that takes going from ACUG --> ACUGCAGU from 0-->1 matching?
