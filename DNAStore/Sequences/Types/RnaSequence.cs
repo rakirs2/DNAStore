@@ -66,26 +66,22 @@ public class RnaSequence : NucleotideSequence, IRna
     {
         if (string.IsNullOrEmpty(RawSequence)) return 1;
         if (!IsBalanced()) return 0;
-        // check the cache
-        // TODO: verify cache hits
         if (dp.TryGetValue(RawSequence, out var cached)) return cached;
 
         long total = 0;
-        char first = RawSequence[0];
+        var first = RawSequence[0];
         
         // We assume that there's some pivot point where we split the graph. This marks the "crossing" line.
         // experimentally, this must be made from an odd index to an even index. 
-        for (int k = 1; k < RawSequence.Length; k += 2)
+        for (var k = 1; k < RawSequence.Length; k += 2)
         {
-            if (IsValidPair(first, RawSequence[k]))
-            {
-                var left = new RnaSequence(RawSequence.Substring(1, k -1));
-                var right = new RnaSequence(RawSequence.Substring(k+1));
+            if (!IsValidPair(first, RawSequence[k])) continue;
+            var left = new RnaSequence(RawSequence.Substring(1, k -1));
+            var right = new RnaSequence(RawSequence.Substring(k+1));
 
-                if (left.IsBalanced()) // right why definition is balanced
-                {
-                    total += left.NumberOfPerfectMatchingsDynamicInternal(dp) * right.NumberOfPerfectMatchingsDynamicInternal(dp) %  modulus;
-                }
+            if (left.IsBalanced())
+            {
+                total += left.NumberOfPerfectMatchingsDynamicInternal(dp) * right.NumberOfPerfectMatchingsDynamicInternal(dp) %  modulus;
             }
         }
 

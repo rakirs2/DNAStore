@@ -21,7 +21,7 @@ public class Markov
         if (transition.GetLength(0) != states.Length || transition.GetLength(1)!= states.Length)
             throw new InvalidDataException("Transition array must have the correct dimensions");
             
-        Dictionary<char, int> statesIndex = new Dictionary<char, int>();
+        var statesIndex = new Dictionary<char, int>();
         var idx = 0;
         foreach (var state in states)
         {
@@ -29,7 +29,7 @@ public class Markov
             idx++;
         }
         
-        for (int i = 1; i < pi.Length; i++)
+        for (var i = 1; i < pi.Length; i++)
         {
             output *= transition[statesIndex[pi[i-1]], statesIndex[pi[i]]];
         }
@@ -49,7 +49,7 @@ public class Markov
         if (emission.GetLength(0) != states.Length || emission.GetLength(1)!= sigma.Length)
             throw new InvalidDataException("Emission array must have the correct dimensions");
             
-        Dictionary<char, int> alphabetIndex = new Dictionary<char, int>();
+        var alphabetIndex = new Dictionary<char, int>();
         var idx = 0;
         foreach (var s in sigma)
         {
@@ -57,7 +57,7 @@ public class Markov
             idx++;
         }
         
-        Dictionary<char, int> statesIndex = new Dictionary<char, int>();
+        var statesIndex = new Dictionary<char, int>();
         idx = 0;
         foreach (var state in states)
         {

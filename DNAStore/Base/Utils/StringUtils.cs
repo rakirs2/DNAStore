@@ -159,7 +159,7 @@ public static class StringUtils
     public static string GenerateRandomString(int length, List<char> valid)
     {
         var result = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
+        for (var i = 0; i < length; i++)
         {
             result.Append(valid[_random.Value.Next(valid.Count)]);
         }

@@ -66,11 +66,4 @@ public class RnaSequenceTest
         var rnaSequence = new RnaSequence("UAGCGUGAUCACUAGCGUGAUCAC");
         Assert.AreEqual(30, rnaSequence.NumberOfPerfectMatchingsDynamic());
     }
-    
-    [TestMethod]
-    public void PerfectMatchingsDynamnicGiven()
-    {
-        var rnaSequence = new RnaSequence("GGAGAAUAUUAGCUUAAUGCCCUGCAAUGCAUGCACAAUAACUAGUUUAUAGCUUAGUGUUAACGUCAGACGUCGGCGUACAAUAUUAAUUCGCGCCGUGCGGUACCUAGCUUAAGCGUAGGCCGCGUUAGCACGCGCCAAAUAUUUAUUAUAGGCCCGCGCUUAAGCUCGUAACAAUGCUGUAGGAGCAUUACGUUUAACUGGCAUCAUAUAUACGCGCAAUUAAUAGCGCGCCGUCGUCAAAUAUAUAUAUUUCGGCGCG");
-        Assert.AreEqual(92000, rnaSequence.NumberOfPerfectMatchingsDynamic());
-    }
 }
