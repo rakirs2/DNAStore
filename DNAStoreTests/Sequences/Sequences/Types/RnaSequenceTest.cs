@@ -32,4 +32,38 @@ public class RnaSequenceTest
         var rnaSequence = new RnaSequence("AGCUAGUAC");
         Assert.ThrowsExactly<ArgumentException>(() => rnaSequence.NumberOfPerfectMatchings());
     }
+    
+    [TestMethod]
+    public void PerfectMatchingsModular()
+    {
+        var rnaSequence = new RnaSequence("AUAU");
+        Assert.AreEqual(2, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
+    
+    [TestMethod]
+    public void PerfectMatchingsEmpty()
+    {
+        var rnaSequence = new RnaSequence("");
+        Assert.AreEqual(1, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
+    
+    [TestMethod]
+    public void PerfectMatchingsLong()
+    {
+        var rnaSequence = new RnaSequence("ACGUACGU");
+        Assert.AreEqual(3, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
+    
+    [TestMethod]
+    public void PerfectMatchingsDynamnic()
+    {
+        var rnaSequence = new RnaSequence("UAGCGUGAUCAC");
+        Assert.AreEqual(2, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
+    [TestMethod]
+    public void PerfectMatchingsDynamnicDouble()
+    {
+        var rnaSequence = new RnaSequence("UAGCGUGAUCACUAGCGUGAUCAC");
+        Assert.AreEqual(30, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
 }

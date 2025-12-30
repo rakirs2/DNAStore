@@ -116,6 +116,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         return indices;
     }
 
+    
     public bool ContainsString(string stringToMatch, int distance)
     {
         for (var i = 0; i < Length - stringToMatch.Length + 1; i++)
@@ -155,7 +156,6 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
 
     }
     
-   
 
     public IEnumerable<string> GetKmerEnumerator(int k)
     {

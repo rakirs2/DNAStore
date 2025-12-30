@@ -11,7 +11,7 @@ public class ProteinSequenceTest
     public void ProteinSequenceBasicTest()
     {
         var protein = new ProteinSequence("SKADYEK");
-        Assert.IsTrue(Helpers.DoublesEqualWithinRange(821.392, protein.MolecularWeight));
+        Assert.AreEqual(821.39, protein.MolecularWeight, 1e-1);
     }
 
     [TestMethod]
