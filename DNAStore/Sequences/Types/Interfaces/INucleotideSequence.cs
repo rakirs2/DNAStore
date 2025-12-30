@@ -15,4 +15,10 @@ public interface INucleotideSequence
     /// </summary>
     /// <returns></returns>
     double GCRatio();
+    
+    /// <summary>
+    ///  Is the nucleotide balance between both sets (AU and GC) equal.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsBalanced();
 }

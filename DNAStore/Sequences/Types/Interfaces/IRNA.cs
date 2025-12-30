@@ -35,10 +35,4 @@ public interface IRna : ISequence
     /// <param name="modulo"></param>
     /// <returns></returns>
     public int NumberOfPerfectMatchingsDynamic(int modulo);
-
-    /// <summary>
-    ///  Is the nucleotide balance between both sets (AU and GC) equal.
-    /// </summary>
-    /// <returns></returns>
-    public bool IsBalanced();
 }

@@ -46,64 +46,62 @@ public class RnaSequence : NucleotideSequence, IRna
 
     public BigInteger NumberOfPerfectMatchings()
     {
-        if (IsBalanced())
-        {
-            var gcFreq = Probability.Factorial((uint)Counts.GetFrequency('C'));
-            var auFreq = Probability.Factorial((uint)Counts.GetFrequency('A'));
+        if (!IsBalanced()) throw new ArgumentException("The AC and GC counts must be equal for this analysis");
+        var gcFreq = Probability.Factorial((uint)Counts.GetFrequency('C'));
+        var auFreq = Probability.Factorial((uint)Counts.GetFrequency('A'));
 
-            return gcFreq * auFreq;
-        }
+        return gcFreq * auFreq;
 
-        throw new ArgumentException("The AC and GC counts must be equal for this analysis");
     }
 
     public int NumberOfPerfectMatchingsDynamic(int modulo = 1000000)
     {
-        var dp = new Dictionary<string, int>();
-        NumberOfPerfectMatchingsDynamicInternal(dp, modulo);
+        var dp = new Dictionary<string, long>();
+        
         if (string.IsNullOrEmpty(RawSequence)) return 1;
-        return dp.Values.Max() % modulo;
+        return (int) NumberOfPerfectMatchingsDynamicInternal(dp, modulo);
     }
 
-    private int NumberOfPerfectMatchingsDynamicInternal(Dictionary<string, int> dp, int modulo = 1000000)
+    private long NumberOfPerfectMatchingsDynamicInternal(Dictionary<string, long> dp, int modulus = 1000000)
     {
         if (string.IsNullOrEmpty(RawSequence)) return 1;
         if (!IsBalanced()) return 0;
         // check the cache
+        // TODO: verify cache hits
         if (dp.TryGetValue(RawSequence, out var cached)) return cached;
 
-        int total = 0;
+        long total = 0;
         char first = RawSequence[0];
         
-        // We assume that there's some magical pivot point where we split the graph. The left and right sides now become their own sub problems.
+        // We assume that there's some pivot point where we split the graph. This marks the "crossing" line.
+        // experimentally, this must be made from an odd index to an even index. 
         for (int k = 1; k < RawSequence.Length; k += 2)
         {
-            char target = RawSequence[k];
-            
-            if (IsValidPair(first, target))
+            if (IsValidPair(first, RawSequence[k]))
             {
-                var left = new RnaSequence(RawSequence.Substring(1, k - 1));
-                var right = new RnaSequence(RawSequence.Substring(k + 1));
+                var left = new RnaSequence(RawSequence.Substring(1, k -1));
+                var right = new RnaSequence(RawSequence.Substring(k+1));
 
-                if (left.IsBalanced())
+                if (left.IsBalanced()) // right why definition is balanced
                 {
-                    total = (total + left.NumberOfPerfectMatchingsDynamicInternal(dp) * right.NumberOfPerfectMatchingsDynamicInternal(dp)) ;
+                    total += left.NumberOfPerfectMatchingsDynamicInternal(dp) * right.NumberOfPerfectMatchingsDynamicInternal(dp) %  modulus;
                 }
             }
         }
 
         dp[RawSequence] = total;
-        return total % modulo;
+        return total % modulus;
     }
 
     // TODO: refactor this for the function
-    static bool IsValidPair(char a, char b)
+    // TODO: case sensitivity
+    public static bool IsValidPair(char a, char b)
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
                (a == 'C' && b == 'G') || (a == 'G' && b == 'C');
     }
 
-    public bool IsBalanced()
+    public override bool IsBalanced()
     {
         return Counts['A'] == Counts['U'] &&
                Counts['C'] == Counts['G'];

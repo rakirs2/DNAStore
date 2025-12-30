@@ -156,7 +156,6 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
 
     }
     
-   
 
     public IEnumerable<string> GetKmerEnumerator(int k)
     {

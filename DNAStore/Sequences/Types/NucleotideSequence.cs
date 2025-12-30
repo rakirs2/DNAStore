@@ -79,4 +79,6 @@ public abstract class NucleotideSequence : Sequence, INucleotideSequence
         var totalBp = Counts.Count;
         return (double)totalGC / totalBp;
     }
+
+    public abstract bool IsBalanced();
 }

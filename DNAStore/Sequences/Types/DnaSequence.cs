@@ -366,4 +366,11 @@ public class DnaSequence : NucleotideSequence, IDna
     {
         return new DnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllDNAMarkersGapped.ToList() ));
     }
+    
+    public override bool IsBalanced()
+    {
+        return Counts['A'] == Counts['T'] &&
+               Counts['C'] == Counts['G'];
+    }
+
 }

@@ -50,7 +50,27 @@ public class RnaSequenceTest
     [TestMethod]
     public void PerfectMatchingsLong()
     {
-        var rnaSequence = new RnaSequence("GGUGGCCACGCAGUGGCCCGUAGGCGCGCCGCCGGCAUGCAAAUUGCUGCGCUCCGCGGCGUAAUCGAAGGGCGCCGAUCAUCGCAGCUCUACGUCGAUAGCACGAGCUAUUUACGUGGCGCCUAAAUAUAUAUGCUUUAUAAUAGGAGCUCACGUUACGCGUGGCGCCCUAGGCCGAACGAUCCGGCGUAUCUAUAUUAAUAAUAGCUCGUGGACGUCCGCACGUGCGGCCACGGCCUAUAGCUCGUAAUA");
-        Assert.AreEqual(1, rnaSequence.NumberOfPerfectMatchingsDynamic());
+        var rnaSequence = new RnaSequence("ACGUACGU");
+        Assert.AreEqual(3, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
+    
+    [TestMethod]
+    public void PerfectMatchingsDynamnic()
+    {
+        var rnaSequence = new RnaSequence("UAGCGUGAUCAC");
+        Assert.AreEqual(2, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
+    [TestMethod]
+    public void PerfectMatchingsDynamnicDouble()
+    {
+        var rnaSequence = new RnaSequence("UAGCGUGAUCACUAGCGUGAUCAC");
+        Assert.AreEqual(30, rnaSequence.NumberOfPerfectMatchingsDynamic());
+    }
+    
+    [TestMethod]
+    public void PerfectMatchingsDynamnicGiven()
+    {
+        var rnaSequence = new RnaSequence("GGAGAAUAUUAGCUUAAUGCCCUGCAAUGCAUGCACAAUAACUAGUUUAUAGCUUAGUGUUAACGUCAGACGUCGGCGUACAAUAUUAAUUCGCGCCGUGCGGUACCUAGCUUAAGCGUAGGCCGCGUUAGCACGCGCCAAAUAUUUAUUAUAGGCCCGCGCUUAAGCUCGUAACAAUGCUGUAGGAGCAUUACGUUUAACUGGCAUCAUAUAUACGCGCAAUUAAUAGCGCGCCGUCGUCAAAUAUAUAUAUUUCGGCGCG");
+        Assert.AreEqual(92000, rnaSequence.NumberOfPerfectMatchingsDynamic());
     }
 }
