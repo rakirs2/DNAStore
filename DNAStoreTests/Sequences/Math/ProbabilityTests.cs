@@ -9,7 +9,7 @@ public class ProbabilityTests
     [TestMethod]
     public void PercentDominantTest()
     {
-        Assert.IsTrue(Helpers.DoublesEqualWithinRange(0.783333, Probability.PercentDominant(2, 2, 2)));
+        Assert.AreEqual(.783333, Probability.PercentDominant(2, 2, 2), 1e-5);
     }
 
     [TestMethod]

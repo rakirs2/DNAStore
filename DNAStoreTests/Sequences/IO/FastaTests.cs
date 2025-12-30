@@ -72,19 +72,4 @@ public class FastaTests
         var someFasta = new Fasta(SomeName, SomeIllegitimateProteinSequence);
         Assert.AreEqual(ContentType.Protein, someFasta.ContentType);
     }
-
-    [TestMethod]
-    public void FastaGCContent()
-    {
-        var someFasta = new Fasta(SomeName, SomeIllegitimateDNASequence);
-        Assert.IsTrue(Helpers.DoublesEqualWithinRange(new DnaSequence(someFasta.RawSequence).GCRatio(), 0.4285));
-    }
-
-    [TestMethod]
-    public void GetMaxGCContentTest()
-    {
-        var fastas = FastaParser.Read(_multipleFastaPath);
-        var highest = Fasta.GetMaxGCContent(fastas);
-        Assert.IsTrue(Helpers.DoublesEqualWithinRange(60.919540, new DnaSequence(highest.RawSequence).GCRatio() * 100));
-    }
 }

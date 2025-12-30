@@ -47,9 +47,4 @@ public static class Helpers
 
         return total - dead;
     }
-
-    public static bool DoublesEqualWithinRange(double a, double b, double epsilon = 0.001)
-    {
-        return Math.Abs(a - b) <= epsilon;
-    }
 }
