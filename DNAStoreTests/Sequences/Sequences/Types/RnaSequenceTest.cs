@@ -66,4 +66,17 @@ public class RnaSequenceTest
         var rnaSequence = new RnaSequence("UAGCGUGAUCACUAGCGUGAUCAC");
         Assert.AreEqual(30, rnaSequence.NumberOfPerfectMatchingsDynamic());
     }
+    [TestMethod]
+    public void MaximalMatchings()
+    {
+        var rnaSequence = new RnaSequence("AUGCUUC");
+        Assert.AreEqual(6, rnaSequence.MaximumNumberOfMatchings());
+    }
+     
+    [TestMethod]
+    public void MaximalMatchings2()
+    {
+        var rnaSequence = new RnaSequence("AAUUUGAAAGCGAAGAUACCGCAGGCAACAAGUCCGUAAGUAACUGAUGCUACUGUUGACAAGUGGCUCUGGCUAAACCAU");
+        Assert.AreEqual(6, rnaSequence.MaximumNumberOfMatchings());
+    }
 }
