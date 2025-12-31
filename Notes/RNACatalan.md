@@ -1,6 +1,5 @@
 # Catalan Numbers and RNA Secondary Structures
-
-This is a problem I've been struggling with for quite a bit on Rosalind.
+NB: for later -- is there a good graphing software for this. This is clumsy as heck.
 
 The hint is to do this dynamically. 
 
@@ -14,7 +13,7 @@ Let's start off with a basic graph:
 ACUG
 ```
 
-This has 0 matchings
+This has 0 perfect matchings
 
 We can add a few possible sequeences-- an 'ACUG' again, 'GUCA'
 
@@ -44,3 +43,10 @@ U      C
 ```
 
 So what is it that takes going from ACUG --> ACUGCAGU from 0-->1 matching?
+
+
+A better formulation would be that there exists some dividing edge for two valid base pairs. A perfect matching for that subgraph may or may not exist. The requirements for a potential perfect mapping of the subgraph are the same as the requirements for the potential perfect. 
+
+An empty string has a perfect matching of 1. 
+
+As this is an RNA sequence, all possible matchings (to cover every possible divider, starts at the first nucleotide (index 0) and maps to, potenitally, every other nucleotide at the 'odd indices.'
