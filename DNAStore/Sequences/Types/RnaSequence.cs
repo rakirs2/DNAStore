@@ -69,6 +69,9 @@ public class RnaSequence : NucleotideSequence, IRna
         var auMax = Math.Max(Counts.GetFrequency('A'), Counts.GetFrequency('U')) ;
         var gcMax = Math.Max(Counts.GetFrequency('G'), Counts.GetFrequency('C'));
         
+        // one last fix. This is unrealistic, but we should account for this for completeness.
+        // what if either 
+        
         // how many edges can we have-- the minimum of the values
         // how many permutations-- the maximum of the values
         return  (Probability.Permutations((uint)gcMax, (uint)gcMin) * Probability.Permutations((uint)auMax, (uint)auMin));

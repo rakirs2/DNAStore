@@ -218,16 +218,4 @@ public static class Probability
         var b = new Bernoulli(percentage);
         return b.Probability(k);
     }
-
-    // TODO: consider how to clean this up
-    public static int EnsurePseudoCount(this int value)
-    {
-        return  value == 0 ?  1 : value;
-    }
-    
-    public static long EnsurePseudoCount(this long value)
-    {
-        return  value == 0 ?  1 : value;
-    }
-        
 }
