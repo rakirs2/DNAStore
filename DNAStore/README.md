@@ -18,4 +18,5 @@ As a point of reality, this was created mostly for fun/academic purposes.
 Most of this analysis exists in other forms in other places. And no one, for the most part, uses C# in academia. It's
 all R or Python.
 
-Additionally, academia is almost solely a linux/mac first environment.
+Additionally, academia is almost solely a linux/mac first environment. So this repo has dubious usefulness outside of being a fun passion project.
+Eventually, However, I'll be using this to start creating some light web based tooling to start answering questions.
