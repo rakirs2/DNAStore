@@ -35,4 +35,11 @@ public interface IRna : ISequence
     /// <param name="modulo"></param>
     /// <returns></returns>
     public int NumberOfPerfectMatchingsDynamic(int modulo);
+    
+    /// <summary>
+    /// Maxiumum number of matchings
+    /// </summary>
+    /// <param name="modulo"></param>
+    /// <returns></returns>
+    public BigInteger MaximumNumberOfMatchings();
 }

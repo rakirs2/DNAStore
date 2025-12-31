@@ -62,6 +62,21 @@ public class RnaSequence : NucleotideSequence, IRna
         return (int) NumberOfPerfectMatchingsDynamicInternal(dp, modulo);
     }
 
+    public BigInteger MaximumNumberOfMatchings()
+    {
+        var auMin = Math.Min(Counts.GetFrequency('A'), Counts.GetFrequency('U')) ;
+        var gcMin = Math.Min(Counts.GetFrequency('G'), Counts.GetFrequency('C'));
+        var auMax = Math.Max(Counts.GetFrequency('A'), Counts.GetFrequency('U')) ;
+        var gcMax = Math.Max(Counts.GetFrequency('G'), Counts.GetFrequency('C'));
+        
+        // one last fix. This is unrealistic, but we should account for this for completeness.
+        // what if either 
+        
+        // how many edges can we have-- the minimum of the values
+        // how many permutations-- the maximum of the values
+        return  (Probability.Permutations((uint)gcMax, (uint)gcMin) * Probability.Permutations((uint)auMax, (uint)auMin));
+    }
+
     private long NumberOfPerfectMatchingsDynamicInternal(Dictionary<string, long> dp, int modulus = 1000000)
     {
         if (string.IsNullOrEmpty(RawSequence)) return 1;
