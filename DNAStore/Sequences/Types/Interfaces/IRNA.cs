@@ -34,7 +34,7 @@ public interface IRna : ISequence
     /// </summary>
     /// <param name="modulo"></param>
     /// <returns></returns>
-    public int NumberOfPerfectMatchingsDynamic(int modulo);
+    public int NumberOfPerfectMatchingsCached(int modulo);
     
     /// <summary>
     /// Maxiumum number of matchings
@@ -42,4 +42,11 @@ public interface IRna : ISequence
     /// <param name="modulo"></param>
     /// <returns></returns>
     public BigInteger MaximumNumberOfMatchings();
+    
+    /// <summary>
+    /// Total number of perfect matchings for a given string modulus
+    /// </summary>
+    /// <param name="modulus"></param>
+    /// <returns></returns>
+    public int MotzkinNumber(int modulus);
 }
