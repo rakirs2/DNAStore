@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.InteropServices.JavaScript;
 using DNAStore.Base.Utils;
 using DNAStore.BioMath;
 using DNAStore.Sequences.Types.Interfaces;
@@ -54,12 +55,13 @@ public class RnaSequence : NucleotideSequence, IRna
 
     }
 
-    public int NumberOfPerfectMatchingsDynamic(int modulo = 1000000)
+    // TODO: there's apparently a way with a 2d table. Think it through
+    public int NumberOfPerfectMatchingsCached(int modulo = 1000000)
     {
-        var dp = new Dictionary<string, long>();
+        var cache = new Dictionary<string, long>();
         
         if (string.IsNullOrEmpty(RawSequence)) return 1;
-        return (int) NumberOfPerfectMatchingsDynamicInternal(dp, modulo);
+        return (int) NumberOfPerfectMatchingsDynamicInternal(cache, modulo);
     }
 
     public BigInteger MaximumNumberOfMatchings()
@@ -69,12 +71,41 @@ public class RnaSequence : NucleotideSequence, IRna
         var auMax = Math.Max(Counts.GetFrequency('A'), Counts.GetFrequency('U')) ;
         var gcMax = Math.Max(Counts.GetFrequency('G'), Counts.GetFrequency('C'));
         
-        // one last fix. This is unrealistic, but we should account for this for completeness.
-        // what if either 
-        
         // how many edges can we have-- the minimum of the values
         // how many permutations-- the maximum of the values
         return  (Probability.Permutations((uint)gcMax, (uint)gcMin) * Probability.Permutations((uint)auMax, (uint)auMin));
+    }
+
+    // TODO: there's apparently a way with a 2d table. Think it through
+    public int MotzkinNumber(int modulus = 1000000)
+    {
+        var cache = new Dictionary<string, long>();
+        var valueWithoutTypeCasting = MotzkinNumberInternal(cache);
+        return  (int)(valueWithoutTypeCasting% modulus);
+    }
+    
+    private long MotzkinNumberInternal(Dictionary<string, long> cache, int modulus = 1000000)
+    {
+        // That was sneaky. The first bp can be an unmatched one. 
+        if(RawSequence.Length <=1) return 1;
+        if(cache.TryGetValue(RawSequence, out var cached)) return cached;
+        
+        // Ok, so now from that new starting place, get the known amounts
+        var count = new RnaSequence(RawSequence[1..]).MotzkinNumberInternal(cache);
+        for (var i = 1; i < Length; i++)
+        {
+            if (!IsComplement(RawSequence[0], RawSequence[i])) continue;
+            // Note: I initially wanted to reuse the original perfect matching code
+            // However, that increments by 2 and doesn't has additional considerations.
+            // TODO: this pattern doesn't work. There's a couple of alternatives.
+            var leftSide =  new RnaSequence(RawSequence[..(i - 1)]).MotzkinNumberInternal(cache, modulus);
+            var rightSide = new RnaSequence(RawSequence[(i+1)..]).MotzkinNumberInternal(cache, modulus);
+            count += leftSide * rightSide;
+        }
+        
+        count %= modulus;
+        cache[RawSequence] = count;
+        return cache[RawSequence];
     }
 
     private long NumberOfPerfectMatchingsDynamicInternal(Dictionary<string, long> dp, int modulus = 1000000)
@@ -87,10 +118,10 @@ public class RnaSequence : NucleotideSequence, IRna
         var first = RawSequence[0];
         
         // We assume that there's some pivot point where we split the graph. This marks the "crossing" line.
-        // experimentally, this must be made from an odd index to an even index. 
+        // this must be made from an odd index to an even index. 
         for (var k = 1; k < RawSequence.Length; k += 2)
         {
-            if (!IsValidPair(first, RawSequence[k])) continue;
+            if (!IsComplement(first, RawSequence[k])) continue;
             var left = new RnaSequence(RawSequence.Substring(1, k -1));
             var right = new RnaSequence(RawSequence.Substring(k+1));
 
@@ -106,7 +137,7 @@ public class RnaSequence : NucleotideSequence, IRna
 
     // TODO: refactor this for the function
     // TODO: case sensitivity
-    public static bool IsValidPair(char a, char b)
+    public static bool IsComplement(char a, char b)
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
                (a == 'C' && b == 'G') || (a == 'G' && b == 'C');
