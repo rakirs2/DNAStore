@@ -112,4 +112,22 @@ public class ProbabilityTests
     {
         Assert.AreEqual(8, Probability.GenerateSignedPermutations(2).ToArray().Length);
     }
+
+    [TestMethod]
+    public void CombinationsOfSubsets()
+    {
+        Assert.AreEqual(42, Probability.CombinationsUpTo(6, 3));
+    }
+    
+    [TestMethod]
+    public void CombinationsOfSubsetsOtherDirections()
+    {
+        Assert.AreEqual(42, Probability.CombinationsLargerThan(6, 3));
+    }
+    
+    [TestMethod]
+    public void CombinationsOfSubsetsLargerThan()
+    {
+        Assert.AreEqual(42, Probability.CombinationsLargerThan(6, 3));
+    }
 }
