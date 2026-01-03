@@ -315,7 +315,7 @@ public static class DnaSequenceListExtensions
         var n = (int)text.Length;
         var probabilities = new List<double>();
 
-        // 1. Calculate probability for every possible k-mer in the text
+        // 1. CalculateUnoptimized probability for every possible k-mer in the text
         for (var i = 0; i <= n - k; i++)
         {
             var kmer = text.Substring(i, k);

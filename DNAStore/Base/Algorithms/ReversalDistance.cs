@@ -17,7 +17,7 @@ public class ReversalDistance
 
     /// <summary>
     ///     There are n^2 possible reversals at every iteration in this implementation.
-    ///     TODO: Hannenhali and Pevzner's clearer alg (hopefully?)
+    ///     It has clear memory issues
     /// </summary>
     /// <returns></returns>
     private int Calculate()
@@ -57,10 +57,17 @@ public class ReversalDistance
         return -1;
     }
 
-    public static int Calculate(int[] a, int[] b)
+    public static int CalculateUnoptimized(int[] a, int[] b)
     {
         return new ReversalDistance(a, b).Calculate();
     }
+    
+    public static int HannenhaliPevzner(int[] a, int[] b)
+    {
+        return new ReversalDistance(a, b).HannenhaliPevzner();
+    }
+    
+    
 
     /// <summary>
     ///     Really simple definition. if the n+1st term is lt the nth term
@@ -117,6 +124,39 @@ public class ReversalDistance
         return order.Count;
     }
 
+    /// <summary>
+    /// This is directly off of Anne Bergeron's article on Hannenhali-Pevzner Theory
+    /// Maybe in an ideal world, this code could help someone else get through this problem easier.
+    /// </summary>
+    /// <remarks>
+    ///     1. Book end inputs. [1,2,3] --> [0, 1, 2, 3, 4]
+    ///     2. There are fundamentally 2 cases.
+    ///         a. If all numbers are positive
+    ///             i. Count number of hurdles
+    ///                 1. if 2k hurdles; k >=2, merge any 2 non-consecutive hurdles
+    ///                 2. 2k_1, k>=1 ,
+    ///                     a. if 1 simple hurdle, cut
+    ///                 3. None, merge nonconsecutive
+    ///         b. If not, reverse the oriented pair that creates the most reversals. Keep going
+    /// </remarks>
+    /// <returns></returns>
+    private int HannenhaliPevzner()
+    {
+        var aExtended = BookEndPermutation(_a);
+        var bExtended = BookEndPermutation(_b);
+
+        return 0;
+    }
+    
+    private static int[] BookEndPermutation(int[] pi)
+    {
+        int[] extended = new int[pi.Length + 2];
+        extended[0] = 0;
+        extended[extended.Length - 1] = pi.Length + 1;
+        Array.Copy(pi, 0, extended, 1, pi.Length);
+        return extended;
+    }
+    
     public static void ReverseSubsequence(int[] s, int start, int end)
     {
         if (s == null) throw new ArgumentNullException(nameof(s));
