@@ -6,9 +6,12 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4B38DA6-0594-4BAE-80CD-863DEBF3ADD7}"
 	ProjectSection(SolutionItems) = preProject
 		Docs\API.md = Docs\API.md
-		Notes\KeywordsToEnumerate.md = Notes\KeywordsToEnumerate.md
-		Notes\PapersToUnderstand.md = Notes\PapersToUnderstand.md
 		README.md = README.md
+		Notes\RNACatalan.md = Notes\RNACatalan.md
+		Notes\Further Learning\PapersToUnderstand.md = Notes\Further Learning\PapersToUnderstand.md
+		Notes\Further Learning\KeywordsToEnumerate.md = Notes\Further Learning\KeywordsToEnumerate.md
+		Notes\MotzkinNumbers.md = Notes\MotzkinNumbers.md
+		Notes\MaximalMatchings.md = Notes\MaximalMatchings.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNAStore", "DNAStore\DNAStore.csproj", "{36B463CC-F993-4E42-AFB8-DAE09313115F}"
