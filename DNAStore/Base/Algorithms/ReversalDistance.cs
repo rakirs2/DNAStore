@@ -17,10 +17,9 @@ public class ReversalDistance
 
     /// <summary>
     ///     There are n^2 possible reversals at every iteration in this implementation.
-    ///     TODO: Hannenhali and Pevzner's clearer alg (hopefully?)
     /// </summary>
     /// <returns></returns>
-    private int Calculate()
+    private int CalculateNaive()
     {
         Queue<int[]> currentIteration = new();
         Queue<int[]> nextIteration = new();
@@ -57,9 +56,9 @@ public class ReversalDistance
         return -1;
     }
 
-    public static int Calculate(int[] a, int[] b)
+    public static int CalculateNaive(int[] a, int[] b)
     {
-        return new ReversalDistance(a, b).Calculate();
+        return new ReversalDistance(a, b).CalculateNaive();
     }
 
     /// <summary>
