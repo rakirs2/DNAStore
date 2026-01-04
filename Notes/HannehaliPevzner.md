@@ -45,4 +45,6 @@ Ok, the easiest way, score each iteration, score it, and then put it into a heap
                 h.push(currentReversalTarget, heurstic)
 ```
 
+The heuristic here can matter. All things being equal, this isn't a bad way to get a first guess for the problem
+
 ## Approach 2

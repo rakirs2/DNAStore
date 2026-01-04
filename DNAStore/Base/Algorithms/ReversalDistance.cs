@@ -56,9 +56,56 @@ public class ReversalDistance
         return -1;
     }
 
+    /// <summary>
+    ///     There are n^2 possible reversals at every iteration in this implementation.
+    /// </summary>
+    /// <returns></returns>
+    private int CalculateReversalsCorrectLocationHeuristic()
+    {
+        PriorityQueue<Tuple<int[], int>, int> tracker = new();
+        HashSet<int[]> traversed = new(new IntArrayComparer());
+
+        var maxPossible = -ScoreCorrectValues(_a, _b);
+        // Note: this is a min heap by def.
+        // I don't want to play games so score should account for this
+        tracker.Enqueue(new Tuple<int[], int>(_a, 0), ScoreCorrectValues(_a, _b));
+
+        while (tracker.Count != 0)
+        {
+            var tuple = tracker.Dequeue();
+            var current = tuple.Item1;
+            var currentCount = tuple.Item2;
+            if (current.SequenceEqual(_b)) return currentCount;
+            traversed.Add(current);
+
+            for (var i = 1; i <= current.Length; i++)
+            for (var j = 0; j + i <= current.Length; j++)
+            {
+                var other = (int[])current.Clone();
+                Array.Reverse(other, j, i);
+
+                if (!traversed.Contains(other) && currentCount <= maxPossible+1) tracker.Enqueue(new Tuple<int[], int>(other, currentCount + 1), ScoreCorrectValues(other, _b));
+            }
+        }
+
+        // This shouldn't be reached
+        return -1;
+    }
+
+    private static int ScoreCorrectValues(int[] a, int[] b)
+    {
+        return -CountSignedBreakpoints(a);
+    }
+    
     public static int CalculateNaive(int[] a, int[] b)
     {
         return new ReversalDistance(a, b).CalculateNaive();
+    }
+    
+    public static int CalculateHeuristic(int[] a, int[] b)
+    {
+        var rd = new ReversalDistance(a, b);
+        return  rd.CalculateReversalsCorrectLocationHeuristic();
     }
 
     /// <summary>

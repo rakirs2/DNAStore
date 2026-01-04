@@ -5,7 +5,7 @@ namespace DNAStoreTests.Base.Algorithms;
 [TestClass]
 public class BinarySearchTests
 {
-    private readonly List<int> _array = new() { 1, 2, 3, 4, 5 };
+    private readonly List<int> _array = [1, 2, 3, 4, 5];
 
     [TestMethod]
     public void ContainsValueTrue()
