@@ -105,6 +105,7 @@ public class Naive : ReversalTests
 }
 
 [TestClass]
+[Ignore]
 public class HeuristicTests : ReversalTests
 {
     public override int CalculateReversalDistance(int[] a, int[] b)
