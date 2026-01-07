@@ -3,7 +3,7 @@
 namespace DNAStoreTests.Base.DataStructures;
 
 [TestClass]
-public class TrieTests
+public class TrieTest
 {
     [TestMethod]
     public void TrieConstructionTest()

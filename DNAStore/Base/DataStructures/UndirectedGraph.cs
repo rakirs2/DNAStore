@@ -1,14 +1,45 @@
-﻿namespace DNAStore.Base.DataStructures;
+﻿using DNAStore.Base.Interfaces;
+
+namespace DNAStore.Base.DataStructures;
 
 /// <summary>
 ///     Simple undirected graph implementation.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class UndirectedGraph<T> : ICloneable, IEquatable<UndirectedGraph<T>> where T : notnull
+public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGraph<T>> where T : notnull
 {
     protected readonly SortedDictionary<T, HashSet<T>> EdgeList;
-    protected int NumEdges;
+    // TODO: tests for NumEdges
+    public int NumEdges { get; protected set; }
 
+    public int NumberOfConnectedComponents()
+    {
+        var untraversed = EdgeList.Keys.ToHashSet();
+        var connectedComponentCount = 0;
+        while (untraversed.Count > 0)
+        {
+            var current = untraversed.First();
+            untraversed.Remove(current);
+            connectedComponentCount++;
+            
+            var tracker = new Queue<T>();
+            tracker.Enqueue(current);
+            while (tracker.Count > 0)
+            {
+                var currentBfs = tracker.Dequeue();
+                untraversed.Remove(currentBfs);
+                foreach (var edge in EdgeList[currentBfs])
+                {
+                    if (!untraversed.Contains(edge)) continue;
+                    tracker.Enqueue(edge);
+                    
+                }
+            }
+        }
+        
+        return connectedComponentCount;
+    }
+    
     public UndirectedGraph(int numNodes, IComparer<T>? comparer = null)
     {
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
