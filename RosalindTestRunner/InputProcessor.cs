@@ -27,12 +27,12 @@ public static class InputProcessor
 
     internal class ExecutorRegistry
     {
-        public static Dictionary<string, IExecutor>? Map;
+        private static Dictionary<string, IExecutor> _map = null!;
 
         [ModuleInitializer]
         public static void Initialize()
         {
-            Map = Assembly.GetExecutingAssembly()
+            _map = Assembly.GetExecutingAssembly()
                 .GetTypes()
                 .Where(t => typeof(IExecutor).IsAssignableFrom(t) && !t.IsAbstract)
                 .Where(t => t.GetCustomAttribute<Executor>() != null)
@@ -42,9 +42,14 @@ public static class InputProcessor
                 );
         }
 
+        public static string[] GetExecutorNames()
+        {
+            return _map.Keys.ToArray();
+        }
+
         public static IExecutor Get(string name)
         {
-            return Map.TryGetValue(name, out var exe)
+            return _map.TryGetValue(name, out var exe)
                 ? exe
                 : new SequenceAnalysis(); // your fallback
         }
