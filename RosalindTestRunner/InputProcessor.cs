@@ -12,7 +12,7 @@ using DNAStore.Sequences.Types;
 
 namespace RosalindTestRunner;
 
-public static class InputProcessor
+public abstract class InputProcessor
 {
     public static IExecutor GetExecutor(string request)
     {
@@ -25,7 +25,7 @@ public static class InputProcessor
         File.WriteAllText(desktopPath + "/output.txt", filecontents);
     }
 
-    internal class ExecutorRegistry
+    internal abstract class ExecutorRegistry
     {
         private static Dictionary<string, IExecutor> _map = null!;
 
@@ -279,6 +279,29 @@ public static class InputProcessor
         protected override void CalculateResult()
         {
             Output = string.Join(' ', mainSequence.FindFirstPossibleSubSequence(subSequence));
+        }
+    }
+    
+    private class NumberOfConnectedComponents : BaseExecutor
+    {
+        private UndirectedGraph<int> _graph = null!;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter number of Nodes");
+            _graph = new UndirectedGraph<int>( int.Parse(Console.ReadLine()));
+            while (true)
+            {
+                var input = Console.ReadLine();
+                if (input == "done") break;
+                var formatted =input.Split(" ").Select(s => int.Parse(s)).ToList();
+                _graph.Insert(formatted[0], formatted[1]);
+            }
+            
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = _graph.NumberOfConnectedComponents().ToString();
         }
     }
 

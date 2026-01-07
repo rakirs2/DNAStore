@@ -3,7 +3,7 @@
 namespace DNAStoreTests.Base.DataStructures;
 
 [TestClass]
-public class BasePairDictionaryTests
+public class BasePairDictionaryTest
 {
     [TestMethod]
     public void Instantiation()
