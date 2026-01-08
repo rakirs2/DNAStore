@@ -58,10 +58,8 @@ public class RnaSequence : NucleotideSequence, IRna
     // TODO: there's apparently a way with a 2d table. Think it through
     public int NumberOfPerfectMatchingsCached(int modulo = 1000000)
     {
-        var cache = new Dictionary<string, long>();
-        
         if (string.IsNullOrEmpty(RawSequence)) return 1;
-        return (int) NumberOfPerfectMatchingsDynamicInternal(cache, modulo);
+        return (int) NumberOfPerfectMatchingsDynamicInternal(new Dictionary<string, long>(), modulo);
     }
 
     public BigInteger MaximumNumberOfMatchings()
@@ -87,14 +85,12 @@ public class RnaSequence : NucleotideSequence, IRna
     /// </remarks>
     public int MotzkinNumber(int modulus = 1000000)
     {
-        var cache = new Dictionary<string, long>();
-        return  (int)MotzkinNumberInternal(cache, modulus);
+        return  (int)MotzkinNumberInternal(new Dictionary<string, long>(), modulus);
     }
 
     public BigInteger NonCrossingsWithWobble(int minBondDist = 4)
     {
-        var cache = new Dictionary<string, BigInteger>();
-        return WobbleInternal(cache, minBondDist);
+        return WobbleInternal(new Dictionary<string, BigInteger>(), minBondDist);
     }
 
     private BigInteger WobbleInternal(Dictionary<string, BigInteger> cache, int wobbleDistance)
