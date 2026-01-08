@@ -76,17 +76,14 @@ public class RnaSequence : NucleotideSequence, IRna
         return  (Probability.Permutations((uint)gcMax, (uint)gcMin) * Probability.Permutations((uint)auMax, (uint)auMin));
     }
 
-    // TODO: there's apparently a way with a 2d table. Think it through
     public int MotzkinNumber(int modulus = 1000000)
     {
         var cache = new Dictionary<string, long>();
-        var valueWithoutTypeCasting = MotzkinNumberInternal(cache);
-        return  (int)(valueWithoutTypeCasting% modulus);
+        return  (int)MotzkinNumberInternal(cache, modulus);
     }
     
     private long MotzkinNumberInternal(Dictionary<string, long> cache, int modulus = 1000000)
     {
-        // That was sneaky. The first bp can be an unmatched one. 
         if(RawSequence.Length <=1) return 1;
         if(cache.TryGetValue(RawSequence, out var cached)) return cached;
         
@@ -96,11 +93,13 @@ public class RnaSequence : NucleotideSequence, IRna
         {
             if (!IsComplement(RawSequence[0], RawSequence[i])) continue;
             // Note: I initially wanted to reuse the original perfect matching code
-            // However, that increments by 2 and doesn't has additional considerations.
-            // TODO: this pattern doesn't work. There's a couple of alternatives.
-            var leftSide =  new RnaSequence(RawSequence[..(i - 1)]).MotzkinNumberInternal(cache, modulus);
+            // However, that increments by 2 and doesn't have additional considerations.
+            var leftSide =  new RnaSequence(RawSequence[1..(i)]).MotzkinNumberInternal(cache, modulus);
             var rightSide = new RnaSequence(RawSequence[(i+1)..]).MotzkinNumberInternal(cache, modulus);
-            count += leftSide * rightSide;
+            checked
+            {
+                count += leftSide*rightSide;
+            }
         }
         
         count %= modulus;
@@ -134,9 +133,7 @@ public class RnaSequence : NucleotideSequence, IRna
         dp[RawSequence] = total;
         return total % modulus;
     }
-
-    // TODO: refactor this for the function
-    // TODO: case sensitivity
+    
     public static bool IsComplement(char a, char b)
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||

@@ -102,11 +102,12 @@ public class RnaSequenceTest
         Assert.AreEqual(1, rnaSequence.MotzkinNumber());
     }
     
-    [Ignore]
     [TestMethod]
-    public void Given()
+    public void IsComplementTest()
     {
-        var rnaSequence = new RnaSequence("UUCCACAGUAACCCCCACCAAUGCAAGCAGUGCGACAAAACCAAAUAGGCUACGGCUGUGUUAGGUCAGAUAGAGUGAAAGGGCUUUUCCAAAACGAGACUGUGGGCUGAUUGCGAUUCCCGUCGUAUACUGACCGACGGCAUGUAUCGGUGUGUCUCAGGAAUGCGUCUUUGGCGUCUGCGAGACCCCUCUUGGACUAGCAGACCUACCCCUUUCUGUUGUACGGGUAACUCGGCAAGUGUAUUGACCGGCGACGCGGUAUCUCACUGACUGGAACGUUUGCGUUACGUAGACCCA");
-        Assert.AreEqual(1, rnaSequence.MotzkinNumber());
+       Assert.IsFalse(RnaSequence.IsComplement('A', 'T'));
+       Assert.IsTrue(RnaSequence.IsComplement('A', 'U'));
+       Assert.IsTrue(RnaSequence.IsComplement('C', 'G'));
+       Assert.IsFalse(RnaSequence.IsComplement(' ', '"'));
     }
 }
