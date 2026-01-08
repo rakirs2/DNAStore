@@ -49,4 +49,17 @@ public interface IRna : ISequence
     /// <param name="modulus"></param>
     /// <returns></returns>
     public int MotzkinNumber(int modulus);
+
+    /// <summary>
+    ///     Returns the total number of possible noncrossing  pairings given the constraint of a minimal bond distance
+    /// </summary>
+    /// <remarks>
+    ///     Note that wobble bonds G-U
+    ///     This is a Hydrogen bond. Intuitively, however, this feels incomplete? If we can H-Bond off of the G, it
+    ///     follows that AC could do the same. Heck, anything can HBond off of another BP given the right constraints.
+    ///     TODO: something to verify later.
+    /// </remarks>
+    /// <param name="minBondDist"></param>
+    /// <returns></returns>
+    public BigInteger NonCrossingsWithWobble(int minBondDist);
 }

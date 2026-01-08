@@ -58,10 +58,8 @@ public class RnaSequence : NucleotideSequence, IRna
     // TODO: there's apparently a way with a 2d table. Think it through
     public int NumberOfPerfectMatchingsCached(int modulo = 1000000)
     {
-        var cache = new Dictionary<string, long>();
-        
         if (string.IsNullOrEmpty(RawSequence)) return 1;
-        return (int) NumberOfPerfectMatchingsDynamicInternal(cache, modulo);
+        return (int) NumberOfPerfectMatchingsDynamicInternal(new Dictionary<string, long>(), modulo);
     }
 
     public BigInteger MaximumNumberOfMatchings()
@@ -87,11 +85,35 @@ public class RnaSequence : NucleotideSequence, IRna
     /// </remarks>
     public int MotzkinNumber(int modulus = 1000000)
     {
-        var cache = new Dictionary<string, long>();
-        return  (int)MotzkinNumberInternal(cache, modulus);
+        return  (int)MotzkinNumberInternal(new Dictionary<string, long>(), modulus);
     }
 
-    
+    public BigInteger NonCrossingsWithWobble(int minBondDist = 4)
+    {
+        return WobbleInternal(new Dictionary<string, BigInteger>(), minBondDist);
+    }
+
+    private BigInteger WobbleInternal(Dictionary<string, BigInteger> cache, int wobbleDistance)
+    {
+        if (Length <= wobbleDistance) return 1;
+        if(cache.TryGetValue(RawSequence, out var cached)) return cached;
+        
+        // assume first doesn't get paired
+        // this covers "all the other cases" recursively, same as before
+        BigInteger count = new RnaSequence(RawSequence[1..]).WobbleInternal(cache, wobbleDistance);
+
+        for (var i = wobbleDistance; i < Length; i++)
+        {
+            if (!IsWobbleComplement(RawSequence[0], RawSequence[i])) continue;
+            var leftSide =  new RnaSequence(RawSequence[1..i]).WobbleInternal(cache, wobbleDistance);
+            var rightSide = new RnaSequence(RawSequence[(i+1)..]).WobbleInternal(cache, wobbleDistance);
+            count += leftSide *rightSide;
+        }
+        
+        cache[RawSequence] = count;
+        return cache[RawSequence];
+    }
+
     private long MotzkinNumberInternal(Dictionary<string, long> cache, int modulus = 1000000)
     {
         if(RawSequence.Length <=1) return 1;
@@ -138,14 +160,20 @@ public class RnaSequence : NucleotideSequence, IRna
             }
         }
 
-        dp[RawSequence] = total;
-        return total % modulus;
+        dp[RawSequence] = total % modulus;
+        return dp[RawSequence];
     }
     
     public static bool IsComplement(char a, char b)
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
                (a == 'C' && b == 'G') || (a == 'G' && b == 'C');
+    }
+    
+    public static bool IsWobbleComplement(char a, char b)
+    {
+        return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
+               (a == 'C' && b == 'G') || (a == 'G' && b == 'C') || (a == 'G' && b == 'U') || (a == 'U' && b == 'G');
     }
 
     public override bool IsBalanced()
