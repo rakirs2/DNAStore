@@ -76,17 +76,24 @@ public class RnaSequence : NucleotideSequence, IRna
         return  (Probability.Permutations((uint)gcMax, (uint)gcMin) * Probability.Permutations((uint)auMax, (uint)auMin));
     }
 
-    // TODO: there's apparently a way with a 2d table. Think it through
+    /// <inheritdoc/>
+    /// <remarks>
+    ///     You might ask, why have the internal numbers work with long while the public api returns an int.
+    ///     Motzkin numbers get out of hand very fast. They're almost certainly going to be handled with a modulus
+    ///     So the value is always going to be less than the modulus-- which was given as 10^6 in this problem.
+    ///
+    ///     The internal calculations, thus, also return a modulus. However, int.max * int.max is > than int.max.
+    ///     long handles this pretty easily and we can simply take the modulo after all of the necessary additions.
+    /// </remarks>
     public int MotzkinNumber(int modulus = 1000000)
     {
         var cache = new Dictionary<string, long>();
-        var valueWithoutTypeCasting = MotzkinNumberInternal(cache);
-        return  (int)(valueWithoutTypeCasting% modulus);
+        return  (int)MotzkinNumberInternal(cache, modulus);
     }
+
     
     private long MotzkinNumberInternal(Dictionary<string, long> cache, int modulus = 1000000)
     {
-        // That was sneaky. The first bp can be an unmatched one. 
         if(RawSequence.Length <=1) return 1;
         if(cache.TryGetValue(RawSequence, out var cached)) return cached;
         
@@ -95,12 +102,12 @@ public class RnaSequence : NucleotideSequence, IRna
         for (var i = 1; i < Length; i++)
         {
             if (!IsComplement(RawSequence[0], RawSequence[i])) continue;
-            // Note: I initially wanted to reuse the original perfect matching code
-            // However, that increments by 2 and doesn't has additional considerations.
-            // TODO: this pattern doesn't work. There's a couple of alternatives.
-            var leftSide =  new RnaSequence(RawSequence[..(i - 1)]).MotzkinNumberInternal(cache, modulus);
+            // NB: for a day I need a laugh-- This bug using new RnaSequence(RawSequence[0..(i)]) instead of 
+            // new RnaSequence(RawSequence[1..(i)]) was particularly nasty. I wouldn't have found it as easily if not
+            // for experience.
+            var leftSide =  new RnaSequence(RawSequence[1..i]).MotzkinNumberInternal(cache, modulus);
             var rightSide = new RnaSequence(RawSequence[(i+1)..]).MotzkinNumberInternal(cache, modulus);
-            count += leftSide * rightSide;
+            count += leftSide*rightSide;
         }
         
         count %= modulus;
@@ -134,9 +141,7 @@ public class RnaSequence : NucleotideSequence, IRna
         dp[RawSequence] = total;
         return total % modulus;
     }
-
-    // TODO: refactor this for the function
-    // TODO: case sensitivity
+    
     public static bool IsComplement(char a, char b)
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
