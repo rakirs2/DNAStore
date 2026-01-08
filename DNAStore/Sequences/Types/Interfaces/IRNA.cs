@@ -49,4 +49,12 @@ public interface IRna : ISequence
     /// <param name="modulus"></param>
     /// <returns></returns>
     public int MotzkinNumber(int modulus);
+
+    /// <summary>
+    ///     Returns the total number of possible noncrossing  pairings given the constraint of wobble distances
+    /// </summary>
+    /// <param name="wobbleDist"></param>
+    /// <param name="modulus"></param>
+    /// <returns></returns>
+    public BigInteger NonCrossingsWithWobbleDistance(int wobbleDist);
 }

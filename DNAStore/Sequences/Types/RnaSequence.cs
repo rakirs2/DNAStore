@@ -91,7 +91,33 @@ public class RnaSequence : NucleotideSequence, IRna
         return  (int)MotzkinNumberInternal(cache, modulus);
     }
 
-    
+    public BigInteger NonCrossingsWithWobbleDistance(int wobbleDist = 4)
+    {
+        var cache = new Dictionary<string, BigInteger>();
+        return WobbleInternal(cache, wobbleDist);
+    }
+
+    private BigInteger WobbleInternal(Dictionary<string, BigInteger> cache, int wobbleDistance)
+    {
+        if (Length <= wobbleDistance) return 1;
+        if(cache.TryGetValue(RawSequence, out var cached)) return cached;
+        
+        // assume first doesn't get paired
+        // this covers "all the other cases" recursively, same as before
+        BigInteger count = new RnaSequence(RawSequence[1..]).WobbleInternal(cache, wobbleDistance);
+
+        for (var i = wobbleDistance; i < Length; i++)
+        {
+            if (!IsWobbleComplement(RawSequence[0], RawSequence[i])) continue;
+            var leftSide =  new RnaSequence(RawSequence[1..i]).WobbleInternal(cache, wobbleDistance);
+            var rightSide = new RnaSequence(RawSequence[(i+1)..]).WobbleInternal(cache, wobbleDistance);
+            count += leftSide *rightSide;
+        }
+        
+        cache[RawSequence] = count;
+        return cache[RawSequence];
+    }
+
     private long MotzkinNumberInternal(Dictionary<string, long> cache, int modulus = 1000000)
     {
         if(RawSequence.Length <=1) return 1;
@@ -138,6 +164,7 @@ public class RnaSequence : NucleotideSequence, IRna
             }
         }
 
+        // TODO; only return cached values
         dp[RawSequence] = total;
         return total % modulus;
     }
@@ -146,6 +173,12 @@ public class RnaSequence : NucleotideSequence, IRna
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
                (a == 'C' && b == 'G') || (a == 'G' && b == 'C');
+    }
+    
+    public static bool IsWobbleComplement(char a, char b)
+    {
+        return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
+               (a == 'C' && b == 'G') || (a == 'G' && b == 'C') || (a == 'G' && b == 'U') || (a == 'U' && b == 'G');
     }
 
     public override bool IsBalanced()

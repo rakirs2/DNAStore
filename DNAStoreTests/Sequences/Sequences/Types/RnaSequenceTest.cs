@@ -110,4 +110,61 @@ public class RnaSequenceTest
        Assert.IsTrue(RnaSequence.IsComplement('C', 'G'));
        Assert.IsFalse(RnaSequence.IsComplement(' ', '"'));
     }
+
+    [TestMethod]
+    public void WobbleDistanceLessThanSafe()
+    {
+        var seq = new RnaSequence("AUAU");
+        Assert.AreEqual(1, seq.NonCrossingsWithWobbleDistance());
+    }
+    
+    [TestMethod]
+    public void WobbleBaseCase()
+    {
+        var seq = new RnaSequence("AUAUU");
+        Assert.AreEqual(2, seq.NonCrossingsWithWobbleDistance());
+    }
+    
+    [TestMethod]
+    public void WobbleBaseCase2()
+    {
+        var seq = new RnaSequence("AUAUAU");
+        Assert.AreEqual(2, seq.NonCrossingsWithWobbleDistance());
+    }
+    
+    [TestMethod]
+    public void WobbleBaseCase3()
+    {
+        var seq = new RnaSequence("AUUUUU");
+        Assert.AreEqual(3, seq.NonCrossingsWithWobbleDistance());
+    }
+    
+    [TestMethod]
+    public void WobbleBaseCase4()
+    {
+        var seq = new RnaSequence("AUUUUUU");
+        Assert.AreEqual(4, seq.NonCrossingsWithWobbleDistance());
+    }
+    
+    [TestMethod]
+    public void WobbleBaseCase5()
+    {
+        var seq = new RnaSequence("AAAAAAAAA");
+        Assert.AreEqual(1, seq.NonCrossingsWithWobbleDistance());
+    }
+    
+    [TestMethod]
+    public void WobbleBaseCase6()
+    {
+        var seq = new RnaSequence("AUCGAUCG");
+        Assert.AreEqual(4, seq.NonCrossingsWithWobbleDistance());
+    }
+
+    
+    [TestMethod]
+    public void WobbleGiven()
+    {
+        var seq = new RnaSequence("AUGCUAGUACGGAGCGAGUCUAGCGAGCGAUGUCGUGAGUACUAUAUAUGCGCAUAAGCCACGU");
+        Assert.AreEqual(284850219977421, seq.NonCrossingsWithWobbleDistance());
+    }
 }
