@@ -1002,6 +1002,25 @@ public abstract class InputProcessor
         }
     }
 
+    private class DeBrujinString : BaseExecutor
+    {
+        private readonly DeBrujin deBrujin = new();
+        private IEnumerable<string> text;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var location = Console.ReadLine();
+            if (location != null) text = File.ReadLines(location);
+        }
+
+        protected override void CalculateResult()
+        {
+            foreach (var item in text) deBrujin.GenerateFromString(item);
+            Output = deBrujin.GetEdgeList();
+        }
+    }
+
     private class PossibleErrorCorrections : BaseExecutor
     {
         private List<DnaSequence>? _dnaSequence;
