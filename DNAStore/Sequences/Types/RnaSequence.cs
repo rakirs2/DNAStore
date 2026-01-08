@@ -91,10 +91,10 @@ public class RnaSequence : NucleotideSequence, IRna
         return  (int)MotzkinNumberInternal(cache, modulus);
     }
 
-    public BigInteger NonCrossingsWithWobbleDistance(int wobbleDist = 4)
+    public BigInteger NonCrossingsWithWobble(int minBondDist = 4)
     {
         var cache = new Dictionary<string, BigInteger>();
-        return WobbleInternal(cache, wobbleDist);
+        return WobbleInternal(cache, minBondDist);
     }
 
     private BigInteger WobbleInternal(Dictionary<string, BigInteger> cache, int wobbleDistance)
