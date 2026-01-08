@@ -164,9 +164,8 @@ public class RnaSequence : NucleotideSequence, IRna
             }
         }
 
-        // TODO; only return cached values
-        dp[RawSequence] = total;
-        return total % modulus;
+        dp[RawSequence] = total % modulus;
+        return dp[RawSequence];
     }
     
     public static bool IsComplement(char a, char b)
