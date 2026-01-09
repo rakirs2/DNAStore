@@ -4,6 +4,7 @@ using MathNet.Numerics.Distributions;
 
 namespace DNAStore.BioMath;
 
+// TODO: Split into probability and combinatorics
 public static class Probability
 {
     public static int NumberOfSets(int i)
@@ -233,5 +234,29 @@ public static class Probability
     {
         var b = new Bernoulli(percentage);
         return b.Probability(k);
+    }
+    
+    /// <summary>
+    /// Returns likelihood of sharing genes given a probability
+    /// </summary>
+    /// <remarks>
+    /// This is just a binomial CDF underneath the hood. A couple of points worth remembering
+    ///     1. This needs to be reversed. 2 ways to do it. Flip 'x' in the CDF calc or subtract from 1
+    ///     2. Log space, per Durbin et al. in BSA is a really common trick. There's a lot of reasons for doing it
+    ///        but the most important is just calculation flexibility and capability-- especially when dealing with
+    ///        extreme numbers
+    ///     3. A fun little detour-- why does numerics use double for a discrete value?
+    ///        More than enough precision with better perf
+    /// </remarks>
+    /// <param name="n"></param>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    public static double[] LikelihoodOfSharingGenes(int n, double p = 0.5)
+    {
+        var output = new double[n];
+        for (var i = 0; i < n; i++)
+            output[i] =  Math.Round(Math.Log10(Binomial.CDF(p, n, n-i-1)), 3);
+        
+        return output;
     }
 }

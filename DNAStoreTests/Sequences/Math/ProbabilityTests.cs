@@ -130,4 +130,15 @@ public class ProbabilityTests
     {
         Assert.AreEqual(42, Probability.CombinationsLargerThan(6, 3));
     }
+
+    [TestMethod]
+    public void LikelihoodOfSharingGenesTest()
+    {
+        var expected = new[] { 0.000, -0.004, -0.024, -0.082, -0.206, -0.424, -0.765, -1.262, -1.969, -3.010 };
+        var output = Probability.LikelihoodOfSharingGenes(10);
+        for (var i = 0; i < expected.Length; i++)
+        {
+            Assert.AreEqual(expected[i], output[i], 1E-2);
+        }
+    }
 }
