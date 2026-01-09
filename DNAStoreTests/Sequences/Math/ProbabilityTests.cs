@@ -145,8 +145,8 @@ public class ProbabilityTests
     [TestMethod]
     public void CountingDiseaseCarriers()
     {
-        Assert.AreEqual(.532, Probability.CountingOddsOfAtLeastOneRecessiveAllele(.1), 1E-3);
-        Assert.AreEqual(.75, Probability.CountingOddsOfAtLeastOneRecessiveAllele(.25), 1E-3);
-        Assert.AreEqual(.914, Probability.CountingOddsOfAtLeastOneRecessiveAllele(.5), 1E-3);
+        Assert.AreEqual(.532, Probability.CarrierProbability(.1), 1E-3);
+        Assert.AreEqual(.75, Probability.CarrierProbability(.25), 1E-3);
+        Assert.AreEqual(.914, Probability.CarrierProbability(.5), 1E-3);
     }
 }

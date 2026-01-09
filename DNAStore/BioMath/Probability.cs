@@ -267,14 +267,22 @@ public static class Probability
     /// <remarks>
     ///     Key here is understanding hardy weinberg formula:
     ///     p^2 + 2pq + q^2 = 1;
-    ///     
+    ///     homozygous dominant, heterozygous (carrier), homozygous recessive
+    /// 
+    ///     p + q = 1
     ///     we're given q^2;
-    ///     From there, it's just math
+    ///
+    ///     q = sqrt(q^2)
+    ///     p = 1-q
+    ///
+    ///     what's the percentage of being a carrier?
+    ///     2pq + q^2
     /// </remarks>
     /// <param name="qSquared">percent homozygous recessive</param>
     /// <returns></returns>
-    public static double CountingOddsOfAtLeastOneRecessiveAllele(double qSquared)
+    public static double CarrierProbability(double qSquared)
     {
-        return 2 * Math.Sqrt(qSquared) - qSquared;
+        var q = Math.Sqrt(qSquared);
+        return 2 * (1-q)*q + qSquared;
     }
 }
