@@ -155,9 +155,43 @@ public class ReversalDistance
     public static int ExactUnsignedReversalSort(int[] reversals,  int[] order)
     {
         var sorted = ConvertWithGivenOrder(reversals, order);
-        var minReversals = ReversalsWithTheLeastBreakPoints(sorted, out var values);
+        if (CountUnsignedBreakpoints(sorted) == 0)
+            return 0;
         
-        return 0;
+        var minReversals = ReversalsWithTheLeastBreakPoints(sorted, out var candidates);
+        var current = candidates[0];
+        var depth = 1;
+        while (CountUnsignedBreakpoints(current) > 0)
+        {
+            var tempValues = new List<int[]>();
+            var tempBestReversals = minReversals;
+            foreach (var candidate in candidates)
+            {
+                var currentBest = ReversalsWithTheLeastBreakPoints(candidate, out var tempCandidates);
+                if (currentBest == tempBestReversals)
+                {
+                    //merge the lists
+                    foreach (var temp in tempCandidates)
+                    {
+                        tempValues.Add(temp);
+                    }
+                }
+                else if (currentBest < tempBestReversals)
+                {
+                    if (currentBest == 0)
+                        return depth + 1;
+                     tempValues = tempCandidates;
+                     tempBestReversals = currentBest;
+                }
+            }
+            
+            current = tempValues[0];
+            candidates = tempValues;
+            minReversals = tempBestReversals;
+            depth++;
+        }
+
+        return depth;
     }
 
     public static int ReversalsWithTheLeastBreakPoints(int[] input, out List<int[]> values)

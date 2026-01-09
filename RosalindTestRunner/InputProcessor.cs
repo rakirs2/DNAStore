@@ -140,6 +140,40 @@ public abstract class InputProcessor
         }
     }
 
+    private class UnsignedReversalDistances : BaseExecutor
+    {
+        private List<Tuple<int[], int[]>> values = new List<Tuple<int[], int[]>>();
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter the sequences");
+            while (true)
+            {
+                var current = Console.ReadLine();
+                if (current.Equals("done"))
+                    break;
+                var a = Console.ReadLine().Split(" ")
+                    .Select(s => int.Parse(s))
+                    .ToArray();
+                var b = Console.ReadLine().Split(" ")
+                    .Select(s => int.Parse(s))
+                    .ToArray();
+                values.Add(new Tuple<int[], int[]>(a, b));
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var revCounts = new List<int>();
+            foreach (var pair in values)
+            {
+                revCounts.Add(ReversalDistance.ExactUnsignedReversalSort(pair.Item1, pair.Item2));
+            }
+
+            Output = String.Join(" ", revCounts);
+        }
+    }
+
     private class HammingSequenceMatch : BaseExecutor
     {
         private SequenceMatchLocations? _matcher;
