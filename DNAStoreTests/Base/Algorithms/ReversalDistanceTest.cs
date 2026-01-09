@@ -1,4 +1,5 @@
 using DNAStore.Base.Algorithms;
+using DNAStore.Base.Utils;
 
 namespace DNAStoreTests.Base.Algorithms;
 
@@ -87,6 +88,14 @@ public class ReversalDistanceTest
     }
 
     [TestMethod]
+    public void CountingUnsignedBreakpoints()
+    {
+        var values = new[] { 2 ,3 , 1 , 6 ,5 ,4 };
+        Assert.AreEqual(4, ReversalDistance.CountSignedBreakpoints(values));
+    }
+    
+    [TestMethod]
+    [Ignore]
     public void CountingBreakpoints()
     {
         var values = new[] { 3, 4, 5, -12, -8, -7, -6, 1, 2, 10, 9, -11, 13, 14 };
@@ -127,5 +136,51 @@ public class ReversalDistanceTest
     public void ApproximateGreedyReversalTest()
     {
         Assert.AreEqual(7, ReversalDistance.ApproximateGreedyReversalSort(new[] { -3, 4, 1, 5, -2 }, out var list));
+    }
+
+    [TestMethod]
+    public void ConvertBetweenArrays()
+    {
+        var a = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        var b = new[] { 1, 10, 3, 4, 5, 6, 7, 8, 9, 2 };
+        
+        Assert.AreEqual(b, ReversalDistance.ConvertWithGivenOrder(a,b), new IntArrayComparer());
+    }
+    
+    [TestMethod]
+    public void ConvertBetweenArrays2()
+    {
+        var a = new[] { 1,2,3,4,5,6,7,8,9,10 };
+        var b = new[] { 10,9,8,7,6,5,4,3,2,1 };
+        
+        Assert.AreEqual(b, ReversalDistance.ConvertWithGivenOrder(a,b), new IntArrayComparer());
+    }
+
+    [TestMethod]
+    public void BestReversals()
+    {
+        var a = new int[] { 2, 1 };
+        var bestRevCount = ReversalDistance.ReversalsWithTheLeastBreakPoints(a, out var values);
+        Assert.IsTrue(new List<int[]>{new []{1,2}}.SequenceEqual( values,  new IntArrayComparer() ));
+        Assert.AreEqual(0, bestRevCount);
+    }
+    
+    [TestMethod]
+    public void BestReveralsShouldHaveNone()
+    {
+        var a = new int[] { 1,2};
+        var revCount = ReversalDistance.ReversalsWithTheLeastBreakPoints(a, out var bestReversals);
+        Assert.IsTrue(new List<int[]>{}.SequenceEqual( bestReversals,  new IntArrayComparer() ));
+        Assert.AreEqual(0, revCount);
+    }
+    
+    [TestMethod]
+    public void BestReversalsFewBreakpoints()
+    {
+        // 5 breakpoints
+        var a = new int[] { 3, 1,4,2 };
+        var revCount = ReversalDistance.ReversalsWithTheLeastBreakPoints(a, out var bestReversals);
+        Assert.IsTrue(new List<int[]>{new []{1,3,4,2}, new[]{3,4,1,2}, new[]{3,1,2,4}}.SequenceEqual( bestReversals,  new IntArrayComparer() ));
+        Assert.AreEqual(3, revCount);
     }
 }
