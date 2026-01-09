@@ -14,6 +14,7 @@ public class ReversalDistance
         _a = a;
         _b = b;
     }
+    
 
     /// <summary>
     ///     There are n^2 possible reversals at every iteration in this implementation.
@@ -62,6 +63,20 @@ public class ReversalDistance
         return new ReversalDistance(a, b).Calculate();
     }
 
+    public static int CompareTwoArrays(List<int> a, List<int> target)
+    {
+        var breaks = 0;
+        for (int i = 1; i < a.Count-1; i++)
+        {
+            if(Math.Abs(target[target.FindIndex(a[i]))]- target[a.FindIndex(i+1)])!=1) breaks++;
+        }
+
+        return breaks;
+        //     return [
+        //     i + 1 for i in range(len(s) - 1) if abs(t.index(s[i]) - t.index(s[i + 1])) != 1
+        // ]
+    }
+    
     /// <summary>
     ///     Really simple definition. if the n+1st term is lt the nth term
     /// </summary>
@@ -161,6 +176,10 @@ public class ReversalDistance
         var minReversals = ReversalsWithTheLeastBreakPoints(sorted, out var candidates);
         var current = candidates[0];
         var depth = 1;
+        
+        if (minReversals == 0)
+            return depth;
+        
         while (CountUnsignedBreakpoints(current) > 0)
         {
             var tempValues = new List<int[]>();
@@ -191,7 +210,7 @@ public class ReversalDistance
             depth++;
         }
 
-        return depth;
+        return -1;
     }
 
     public static int ReversalsWithTheLeastBreakPoints(int[] input, out List<int[]> values)
