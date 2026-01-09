@@ -259,4 +259,30 @@ public static class Probability
         
         return output;
     }
+    
+    /// <summary>
+    ///     Returns odds of having at least 1 recessive allele
+    ///     // TODO: consider adding a Hardy Weinberg class/calculator that can take in distributions
+    /// </summary>
+    /// <remarks>
+    ///     Key here is understanding hardy weinberg formula:
+    ///     p^2 + 2pq + q^2 = 1;
+    ///     homozygous dominant, heterozygous (carrier), homozygous recessive
+    /// 
+    ///     p + q = 1
+    ///     we're given q^2;
+    ///
+    ///     q = sqrt(q^2)
+    ///     p = 1-q
+    ///
+    ///     what's the percentage of being a carrier?
+    ///     2pq + q^2
+    /// </remarks>
+    /// <param name="qSquared">percent homozygous recessive</param>
+    /// <returns></returns>
+    public static double CarrierProbability(double qSquared)
+    {
+        var q = Math.Sqrt(qSquared);
+        return 2 * (1-q)*q + qSquared;
+    }
 }

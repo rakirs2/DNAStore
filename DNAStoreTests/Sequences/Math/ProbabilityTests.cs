@@ -141,4 +141,12 @@ public class ProbabilityTests
             Assert.AreEqual(expected[i], output[i], 1E-2);
         }
     }
+
+    [TestMethod]
+    public void CountingDiseaseCarriers()
+    {
+        Assert.AreEqual(.532, Probability.CarrierProbability(.1), 1E-3);
+        Assert.AreEqual(.75, Probability.CarrierProbability(.25), 1E-3);
+        Assert.AreEqual(.914, Probability.CarrierProbability(.5), 1E-3);
+    }
 }
