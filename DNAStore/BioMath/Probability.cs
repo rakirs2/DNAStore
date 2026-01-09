@@ -261,7 +261,8 @@ public static class Probability
     }
     
     /// <summary>
-    ///     Returns odds of 
+    ///     Returns odds of having at least 1 recessive allele
+    ///     // TODO: consider adding a Hardy Weinberg class/calculator that can take in distributions
     /// </summary>
     /// <remarks>
     ///     Key here is understanding hardy weinberg formula:
