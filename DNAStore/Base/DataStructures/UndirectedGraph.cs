@@ -9,37 +9,7 @@ namespace DNAStore.Base.DataStructures;
 public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGraph<T>> where T : notnull
 {
     protected readonly SortedDictionary<T, HashSet<T>> EdgeList;
-    // TODO: tests for NumEdges
-    public int NumEdges { get; protected set; }
 
-    public int NumberOfConnectedComponents()
-    {
-        var untraversed = EdgeList.Keys.ToHashSet();
-        var connectedComponentCount = 0;
-        while (untraversed.Count > 0)
-        {
-            var current = untraversed.First();
-            untraversed.Remove(current);
-            connectedComponentCount++;
-            
-            var tracker = new Queue<T>();
-            tracker.Enqueue(current);
-            while (tracker.Count > 0)
-            {
-                var currentBfs = tracker.Dequeue();
-                untraversed.Remove(currentBfs);
-                foreach (var edge in EdgeList[currentBfs])
-                {
-                    if (!untraversed.Contains(edge)) continue;
-                    tracker.Enqueue(edge);
-                    
-                }
-            }
-        }
-        
-        return connectedComponentCount;
-    }
-    
     public UndirectedGraph(int numNodes, IComparer<T>? comparer = null)
     {
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
@@ -58,8 +28,6 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
 
-    public int NumNodes { get; }
-
     public object Clone()
     {
         return MemberwiseClone();
@@ -69,6 +37,11 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     {
         return other != null && Equals(other);
     }
+
+    // TODO: tests for NumEdges
+    public int NumEdges { get; protected set; }
+
+    public int NumNodes { get; }
 
     public virtual void Insert(T start, T end)
     {
@@ -105,6 +78,33 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         // every node that doesn't have a value is an unconnected node
         // so we need to find the total number of unconnected nodes
         return NumNodes - NumEdges - 1; // -1 because a tree with n nodes has n-1 edges
+    }
+
+    public int NumberOfConnectedComponents()
+    {
+        var untraversed = EdgeList.Keys.ToHashSet();
+        var connectedComponentCount = 0;
+        while (untraversed.Count > 0)
+        {
+            var current = untraversed.First();
+            untraversed.Remove(current);
+            connectedComponentCount++;
+
+            var tracker = new Queue<T>();
+            tracker.Enqueue(current);
+            while (tracker.Count > 0)
+            {
+                var currentBfs = tracker.Dequeue();
+                untraversed.Remove(currentBfs);
+                foreach (var edge in EdgeList[currentBfs])
+                {
+                    if (!untraversed.Contains(edge)) continue;
+                    tracker.Enqueue(edge);
+                }
+            }
+        }
+
+        return connectedComponentCount;
     }
 
 

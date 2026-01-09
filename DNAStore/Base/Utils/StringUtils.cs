@@ -5,6 +5,8 @@ namespace DNAStore.Base.Utils;
 
 public static class StringUtils
 {
+    private static readonly Lazy<Random> _random = new();
+
     /// <summary>
     ///     Swaps the characters of the passed in string
     /// </summary>
@@ -77,7 +79,7 @@ public static class StringUtils
 
     public static int LevenshteinDistance(string a, string b)
     {
-        return LevenshteinDistanceInternal(a, b, out var _);
+        return LevenshteinDistanceInternal(a, b, out _);
     }
 
     /// <summary>
@@ -154,16 +156,12 @@ public static class StringUtils
         var ahoCorasick = new AhoCorasick(keywords);
         return ahoCorasick.Search(sequence).ToList();
     }
-    
+
     // TODO: not a  big deal but rethink the signature here.
     public static string GenerateRandomString(int length, List<char> valid)
     {
         var result = new StringBuilder(length);
-        for (var i = 0; i < length; i++)
-        {
-            result.Append(valid[_random.Value.Next(valid.Count)]);
-        }
+        for (var i = 0; i < length; i++) result.Append(valid[_random.Value.Next(valid.Count)]);
         return result.ToString();
     }
-    private static readonly Lazy<Random> _random = new();
 }

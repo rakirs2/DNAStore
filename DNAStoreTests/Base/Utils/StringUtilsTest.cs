@@ -99,7 +99,7 @@ public class StringUtilsTest
     [TestMethod]
     public void GenerateRandomString()
     {
-        var valid = new List<char>() { 'a', 'b' };
+        var valid = new List<char> { 'a', 'b' };
         var count = 5;
         var output = StringUtils.GenerateRandomString(count, valid);
         Assert.IsFalse(output.Contains('c'));

@@ -33,29 +33,29 @@ public class UndirectedGraphTest
     {
         // TODO: there should be a better way to do this
         var graph = new UndirectedGraph<int>(12);
-        graph.Insert(1 ,2);
-        graph.Insert(1 ,5);
-        graph.Insert(5 ,9);
-        graph.Insert(5 ,10);
-        graph.Insert(9 ,10);
-        graph.Insert(3 ,4);
-        graph.Insert(3 ,7);
-        graph.Insert(3 ,8);
-        graph.Insert(4 ,8);
-        graph.Insert(7 ,11);
-        graph.Insert(8 ,11);
+        graph.Insert(1, 2);
+        graph.Insert(1, 5);
+        graph.Insert(5, 9);
+        graph.Insert(5, 10);
+        graph.Insert(9, 10);
+        graph.Insert(3, 4);
+        graph.Insert(3, 7);
+        graph.Insert(3, 8);
+        graph.Insert(4, 8);
+        graph.Insert(7, 11);
+        graph.Insert(8, 11);
         graph.Insert(11, 12);
-        graph.Insert(8 ,12);
+        graph.Insert(8, 12);
         Assert.AreEqual(3, graph.NumberOfConnectedComponents());
     }
-    
+
     [TestMethod]
     public void NumberOfConnectedComponentsNone()
     {
         var graph = new UndirectedGraph<int>(0);
         Assert.AreEqual(0, graph.NumberOfConnectedComponents());
     }
-    
+
     [TestMethod]
     public void NumberOfConnectedComponentsBase()
     {

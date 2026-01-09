@@ -1,5 +1,4 @@
-﻿using DNAStore.BioMath;
-using DNAStore.Sequences.Exceptions;
+﻿using DNAStore.Sequences.Exceptions;
 using DNAStore.Sequences.Types;
 
 namespace DNAStoreTests.Sequences.Sequences.Types;
