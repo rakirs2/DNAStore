@@ -259,4 +259,21 @@ public static class Probability
         
         return output;
     }
+    
+    /// <summary>
+    ///     Returns odds of 
+    /// </summary>
+    /// <remarks>
+    ///     Key here is understanding hardy weinberg formula:
+    ///     p^2 + 2pq + q^2 = 1;
+    ///     
+    ///     we're given q^2;
+    ///     From there, it's just math
+    /// </remarks>
+    /// <param name="qSquared">percent homozygous recessive</param>
+    /// <returns></returns>
+    public static double CountingOddsOfAtLeastOneRecessiveAllele(double qSquared)
+    {
+        return 2 * Math.Sqrt(qSquared) - qSquared;
+    }
 }
