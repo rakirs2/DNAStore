@@ -138,7 +138,7 @@ public class ProbabilityTests
         var output = Probability.LikelihoodOfSharingGenes(10);
         for (int i = 0; i < expected.Length; i++)
         {
-            Assert.AreEqual(expected[i], output[i], 10E-3);
+            Assert.AreEqual(expected[i], output[i], 1E-2);
         }
     }
 }
