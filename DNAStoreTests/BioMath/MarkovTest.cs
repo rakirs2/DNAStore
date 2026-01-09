@@ -58,4 +58,16 @@ public class MarkovTest
         var output = Markov.PathOutcomeProbability(outcome, sigma, hiddenPath, states, emission);
         Assert.AreEqual(1.93157070893e-28, output, 1E-31);
     }
+
+    [TestMethod]
+    public void ViterbiAlgorithm()
+    {
+        var x = "xyxzzxyxyy";
+        var sigma = new char[] { 'x', 'y', 'z' };
+        var states = new char[] { 'A', 'B' };
+        var transmission = new double[2, 2] { { .641, .359 }, { .729, .271} };
+        var emission = new double[2, 3] { {  0.117 ,  0.691,   0.192    }, {0.097   ,0.42    ,0.483 } };
+        var hiddenPath = Markov.ViterbiAlgorithm(x, sigma, states, transmission, emission);
+        Assert.AreEqual("AAABBAAAAA", hiddenPath);
+    }
 }
