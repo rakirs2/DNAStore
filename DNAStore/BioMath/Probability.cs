@@ -285,4 +285,24 @@ public static class Probability
         var q = Math.Sqrt(qSquared);
         return 2 * (1-q)*q + qSquared;
     }
+
+    /// <summary>
+    ///     Determines odds of a female being a carrier.
+    /// </summary>
+    /// <remarks>
+    ///     We are given q; we can find p = (1-q)
+    ///     How do we  account for the allele being on the X chromosome and "only females"
+    ///
+    ///     P(carrier | female) = P(carrier AND female)/ P(female)
+    ///     P(female) = 1/2
+    ///     carrier AND female = 1/2 * 2pq= pq
+    ///     Probability = 2pq
+    /// </remarks>
+    /// <param name="q"></param>
+    /// <returns></returns>
+    public static double SexLinkedInheritance(double q)
+    {
+        var p = 1 - q;
+        return 2 * p * q;
+    }
 }

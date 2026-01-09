@@ -1,7 +1,7 @@
 ﻿using DNAStore.Base.Utils;
 using DNAStore.BioMath;
 
-namespace DNAStoreTests.Sequences.Math;
+namespace DNAStoreTests.BioMath;
 
 [TestClass]
 public class ProbabilityTests
@@ -148,5 +148,26 @@ public class ProbabilityTests
         Assert.AreEqual(.532, Probability.CarrierProbability(.1), 1E-3);
         Assert.AreEqual(.75, Probability.CarrierProbability(.25), 1E-3);
         Assert.AreEqual(.914, Probability.CarrierProbability(.5), 1E-3);
+    }
+    
+    [TestMethod]
+    public void SexLinkedInheritance()
+    {
+        Assert.AreEqual(.18, Probability.SexLinkedInheritance(.1), 1E-3);
+        Assert.AreEqual(.5, Probability.SexLinkedInheritance(.5), 1E-3);
+        Assert.AreEqual(.32, Probability.SexLinkedInheritance(.8), 1E-3);
+    }
+    
+    [TestMethod]
+    public void SexLinkedInheritance2()
+    {
+        var given = new double[] { 0.00224699773808,0.0140465601036,0.131723897261,0.153308097097,0.293833008998,0.306150690399,0.331294784082,0.368824591984,0.420058427768,0.478241537377,0.518000420914,0.627482003244,0.641516565784,0.651012800033,0.728459738643,0.856002319515,0.924873420646,0.96996669229};
+        var output = new List<double>();
+        foreach(var q in given)
+        {
+            output.Add(Math.Round(Probability.SexLinkedInheritance(q), 3));
+        }
+        
+        var o = string.Join(" ", output.ToArray());
     }
 }
