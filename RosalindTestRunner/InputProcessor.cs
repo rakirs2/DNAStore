@@ -116,7 +116,8 @@ public abstract class InputProcessor
             Console.WriteLine($"Calculation took: {_stopwatch.ElapsedMilliseconds}ms");
         }
     }
-     private class PatternAndDistance : BaseExecutor
+
+    private class PatternAndDistance : BaseExecutor
     {
         private string _pattern;
         private List<Sequence> _sequences;
@@ -281,22 +282,22 @@ public abstract class InputProcessor
             Output = string.Join(' ', mainSequence.FindFirstPossibleSubSequence(subSequence));
         }
     }
-    
+
     private class NumberOfConnectedComponents : BaseExecutor
     {
         private UndirectedGraph<int> _graph = null!;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter number of Nodes");
-            _graph = new UndirectedGraph<int>( int.Parse(Console.ReadLine()));
+            _graph = new UndirectedGraph<int>(int.Parse(Console.ReadLine()));
             while (true)
             {
                 var input = Console.ReadLine();
                 if (input == "done") break;
-                var formatted =input.Split(" ").Select(s => int.Parse(s)).ToList();
+                var formatted = input.Split(" ").Select(s => int.Parse(s)).ToList();
                 _graph.Insert(formatted[0], formatted[1]);
             }
-            
         }
 
         protected override void CalculateResult()
@@ -351,14 +352,14 @@ public abstract class InputProcessor
 
     private class MatchesReverseComplement : BaseExecutor
     {
-        List<DnaSequence> _sequences = new List<DnaSequence>();
+        private readonly List<DnaSequence> _sequences = new();
 
         protected override void GetInputs()
         {
             var input = "";
             while (true)
             {
-                input= Console.ReadLine();
+                input = Console.ReadLine();
                 if (input.Equals("done"))
                     break;
                 _sequences.Add(new DnaSequence(input));
@@ -369,17 +370,13 @@ public abstract class InputProcessor
         {
             var count = 0;
             foreach (var sequence in _sequences)
-            {
-                if (sequence.RawSequence ==sequence.GetReverseComplement().ToString())
-                {
+                if (sequence.RawSequence == sequence.GetReverseComplement().ToString())
                     count++;
-                }
-            }
-            
+
             Output = count.ToString();
         }
     }
-    
+
     private class GetSignedPermutations : BaseExecutor
     {
         private int a;
@@ -912,7 +909,7 @@ public abstract class InputProcessor
         {
         }
     }
-    
+
     private class RandomStringProbability : BaseExecutor
     {
         private List<double> gcPercentages;

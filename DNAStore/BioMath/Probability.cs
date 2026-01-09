@@ -89,22 +89,16 @@ public static class Probability
     public static BigInteger CombinationsUpTo(uint n, uint r, int modulus = 1000000)
     {
         BigInteger total = 0;
-        for (var i = 0; i <= r; i++)
-        {
-            total += Combinations(n, (uint)i);
-        }
+        for (var i = 0; i <= r; i++) total += Combinations(n, (uint)i);
         return total % modulus;
     }
-    
+
     // TODO: consider implementing a "pascal triangle" and a "pascal's row"
     // TODO: maybe combinatorics should be separated out from probability?
     public static BigInteger CombinationsLargerThan(uint n, uint r, int modulus = 1000000)
     {
         BigInteger total = 0;
-        for (var i = r; i <=n; i++)
-        {
-            total += Combinations(n, (uint)i);
-        }
+        for (var i = r; i <= n; i++) total += Combinations(n, i);
         return total % modulus;
     }
 

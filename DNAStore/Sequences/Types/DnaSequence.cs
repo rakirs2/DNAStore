@@ -356,21 +356,20 @@ public class DnaSequence : NucleotideSequence, IDna
 
         return true;
     }
-    
+
     public static DnaSequence GenerateRandom(int length)
     {
-        return new DnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllDNAMarkers.ToList() ));
+        return new DnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllDNAMarkers.ToList()));
     }
 
     public static DnaSequence GenerateRandomGapped(int length)
     {
-        return new DnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllDNAMarkersGapped.ToList() ));
+        return new DnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllDNAMarkersGapped.ToList()));
     }
-    
+
     public override bool IsBalanced()
     {
         return Counts['A'] == Counts['T'] &&
                Counts['C'] == Counts['G'];
     }
-
 }

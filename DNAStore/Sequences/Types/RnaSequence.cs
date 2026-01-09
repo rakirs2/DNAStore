@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using System.Runtime.InteropServices.JavaScript;
 using DNAStore.Base.Utils;
 using DNAStore.BioMath;
 using DNAStore.Sequences.Types.Interfaces;
@@ -13,7 +12,6 @@ public class RnaSequence : NucleotideSequence, IRna
 
     public RnaSequence(string rawSequence) : base(rawSequence)
     {
-        
     }
 
     public RnaSequence(string rawSequence, string name) : base(rawSequence, name)
@@ -23,17 +21,6 @@ public class RnaSequence : NucleotideSequence, IRna
     protected override HashSet<char> Pyrimidines => pyrimidines;
 
     protected override HashSet<char> Purines => purines;
-    
-    // TODO: need one that only has one stop
-    public static RnaSequence GenerateRandom(int length)
-    {
-        return new RnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkers.ToList() ));
-    }
-
-    public static RnaSequence GenerateRandomGapped(int length)
-    {
-        return new RnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkersGapped.ToList() ));
-    }
 
     public string GetExpectedProteinString()
     {
@@ -52,40 +39,38 @@ public class RnaSequence : NucleotideSequence, IRna
         var auFreq = Probability.Factorial((uint)Counts.GetFrequency('A'));
 
         return gcFreq * auFreq;
-
     }
 
     // TODO: there's apparently a way with a 2d table. Think it through
     public int NumberOfPerfectMatchingsCached(int modulo = 1000000)
     {
         if (string.IsNullOrEmpty(RawSequence)) return 1;
-        return (int) NumberOfPerfectMatchingsDynamicInternal(new Dictionary<string, long>(), modulo);
+        return (int)NumberOfPerfectMatchingsDynamicInternal(new Dictionary<string, long>(), modulo);
     }
 
     public BigInteger MaximumNumberOfMatchings()
     {
-        var auMin = Math.Min(Counts.GetFrequency('A'), Counts.GetFrequency('U')) ;
+        var auMin = Math.Min(Counts.GetFrequency('A'), Counts.GetFrequency('U'));
         var gcMin = Math.Min(Counts.GetFrequency('G'), Counts.GetFrequency('C'));
-        var auMax = Math.Max(Counts.GetFrequency('A'), Counts.GetFrequency('U')) ;
+        var auMax = Math.Max(Counts.GetFrequency('A'), Counts.GetFrequency('U'));
         var gcMax = Math.Max(Counts.GetFrequency('G'), Counts.GetFrequency('C'));
-        
+
         // how many edges can we have-- the minimum of the values
         // how many permutations-- the maximum of the values
-        return  (Probability.Permutations((uint)gcMax, (uint)gcMin) * Probability.Permutations((uint)auMax, (uint)auMin));
+        return Probability.Permutations((uint)gcMax, (uint)gcMin) * Probability.Permutations((uint)auMax, (uint)auMin);
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     /// <remarks>
     ///     You might ask, why have the internal numbers work with long while the public api returns an int.
     ///     Motzkin numbers get out of hand very fast. They're almost certainly going to be handled with a modulus
     ///     So the value is always going to be less than the modulus-- which was given as 10^6 in this problem.
-    ///
     ///     The internal calculations, thus, also return a modulus. However, int.max * int.max is > than int.max.
     ///     long handles this pretty easily and we can simply take the modulo after all of the necessary additions.
     /// </remarks>
     public int MotzkinNumber(int modulus = 1000000)
     {
-        return  (int)MotzkinNumberInternal(new Dictionary<string, long>(), modulus);
+        return (int)MotzkinNumberInternal(new Dictionary<string, long>(), modulus);
     }
 
     public BigInteger NonCrossingsWithWobble(int minBondDist = 4)
@@ -93,32 +78,43 @@ public class RnaSequence : NucleotideSequence, IRna
         return WobbleInternal(new Dictionary<string, BigInteger>(), minBondDist);
     }
 
+    // TODO: need one that only has one stop
+    public static RnaSequence GenerateRandom(int length)
+    {
+        return new RnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkers.ToList()));
+    }
+
+    public static RnaSequence GenerateRandomGapped(int length)
+    {
+        return new RnaSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkersGapped.ToList()));
+    }
+
     private BigInteger WobbleInternal(Dictionary<string, BigInteger> cache, int wobbleDistance)
     {
         if (Length <= wobbleDistance) return 1;
-        if(cache.TryGetValue(RawSequence, out var cached)) return cached;
-        
+        if (cache.TryGetValue(RawSequence, out var cached)) return cached;
+
         // assume first doesn't get paired
         // this covers "all the other cases" recursively, same as before
-        BigInteger count = new RnaSequence(RawSequence[1..]).WobbleInternal(cache, wobbleDistance);
+        var count = new RnaSequence(RawSequence[1..]).WobbleInternal(cache, wobbleDistance);
 
         for (var i = wobbleDistance; i < Length; i++)
         {
             if (!IsWobbleComplement(RawSequence[0], RawSequence[i])) continue;
-            var leftSide =  new RnaSequence(RawSequence[1..i]).WobbleInternal(cache, wobbleDistance);
-            var rightSide = new RnaSequence(RawSequence[(i+1)..]).WobbleInternal(cache, wobbleDistance);
-            count += leftSide *rightSide;
+            var leftSide = new RnaSequence(RawSequence[1..i]).WobbleInternal(cache, wobbleDistance);
+            var rightSide = new RnaSequence(RawSequence[(i + 1)..]).WobbleInternal(cache, wobbleDistance);
+            count += leftSide * rightSide;
         }
-        
+
         cache[RawSequence] = count;
         return cache[RawSequence];
     }
 
     private long MotzkinNumberInternal(Dictionary<string, long> cache, int modulus = 1000000)
     {
-        if(RawSequence.Length <=1) return 1;
-        if(cache.TryGetValue(RawSequence, out var cached)) return cached;
-        
+        if (RawSequence.Length <= 1) return 1;
+        if (cache.TryGetValue(RawSequence, out var cached)) return cached;
+
         // Ok, so now from that new starting place, get the known amounts
         var count = new RnaSequence(RawSequence[1..]).MotzkinNumberInternal(cache);
         for (var i = 1; i < Length; i++)
@@ -127,11 +123,11 @@ public class RnaSequence : NucleotideSequence, IRna
             // NB: for a day I need a laugh-- This bug using new RnaSequence(RawSequence[0..(i)]) instead of 
             // new RnaSequence(RawSequence[1..(i)]) was particularly nasty. I wouldn't have found it as easily if not
             // for experience.
-            var leftSide =  new RnaSequence(RawSequence[1..i]).MotzkinNumberInternal(cache, modulus);
-            var rightSide = new RnaSequence(RawSequence[(i+1)..]).MotzkinNumberInternal(cache, modulus);
-            count += leftSide*rightSide;
+            var leftSide = new RnaSequence(RawSequence[1..i]).MotzkinNumberInternal(cache, modulus);
+            var rightSide = new RnaSequence(RawSequence[(i + 1)..]).MotzkinNumberInternal(cache, modulus);
+            count += leftSide * rightSide;
         }
-        
+
         count %= modulus;
         cache[RawSequence] = count;
         return cache[RawSequence];
@@ -145,31 +141,30 @@ public class RnaSequence : NucleotideSequence, IRna
 
         long total = 0;
         var first = RawSequence[0];
-        
+
         // We assume that there's some pivot point where we split the graph. This marks the "crossing" line.
         // this must be made from an odd index to an even index. 
         for (var k = 1; k < RawSequence.Length; k += 2)
         {
             if (!IsComplement(first, RawSequence[k])) continue;
-            var left = new RnaSequence(RawSequence.Substring(1, k -1));
-            var right = new RnaSequence(RawSequence.Substring(k+1));
+            var left = new RnaSequence(RawSequence.Substring(1, k - 1));
+            var right = new RnaSequence(RawSequence.Substring(k + 1));
 
             if (left.IsBalanced())
-            {
-                total += left.NumberOfPerfectMatchingsDynamicInternal(dp) * right.NumberOfPerfectMatchingsDynamicInternal(dp) %  modulus;
-            }
+                total += left.NumberOfPerfectMatchingsDynamicInternal(dp) *
+                    right.NumberOfPerfectMatchingsDynamicInternal(dp) % modulus;
         }
 
         dp[RawSequence] = total % modulus;
         return dp[RawSequence];
     }
-    
+
     public static bool IsComplement(char a, char b)
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||
                (a == 'C' && b == 'G') || (a == 'G' && b == 'C');
     }
-    
+
     public static bool IsWobbleComplement(char a, char b)
     {
         return (a == 'A' && b == 'U') || (a == 'U' && b == 'A') ||

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
 using System.Text;
 using DNAStore.Base.DataStructures;
 using DNAStore.Base.Utils;
@@ -116,7 +115,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
         return indices;
     }
 
-    
+
     public bool ContainsString(string stringToMatch, int distance)
     {
         for (var i = 0; i < Length - stringToMatch.Length + 1; i++)
@@ -147,15 +146,14 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
 
     public static ISequence GenerateRandom(int length)
     {
-        return new Sequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllAlphabetical.ToList() ));
+        return new Sequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllAlphabetical.ToList()));
     }
 
     public static ISequence GenerateRandomGapped(int length)
     {
-        return new Sequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllAlphabetical.ToList() ));
-
+        return new Sequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllAlphabetical.ToList()));
     }
-    
+
 
     public IEnumerable<string> GetKmerEnumerator(int k)
     {
@@ -299,7 +297,7 @@ public class Sequence : ISequence, IComparable, IEnumerable<char>
     public char this[int index] => RawSequence[index];
 
     public string this[Range range] => RawSequence[range];
-    
+
     public string Substring(int i)
     {
         return RawSequence.Substring(i);

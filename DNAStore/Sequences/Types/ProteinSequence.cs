@@ -113,14 +113,15 @@ public class ProteinSequence : Sequence, IProtein
 
         return result.ToString();
     }
-    
+
     public static ProteinSequence GenerateRandom(int length)
     {
-        return new ProteinSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkers.ToList() ));
+        return new ProteinSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkers.ToList()));
     }
 
     public static ProteinSequence GenerateRandomGapped(int length)
     {
-        return new ProteinSequence(StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkersGapped.ToList() ));
+        return new ProteinSequence(
+            StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkersGapped.ToList()));
     }
 }

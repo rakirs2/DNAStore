@@ -1,5 +1,4 @@
-﻿using DNAStore.BioMath;
-using DNAStore.Sequences.IO;
+﻿using DNAStore.Sequences.IO;
 using DNAStore.Sequences.Types;
 
 namespace DNAStoreTests.Sequences.IO;

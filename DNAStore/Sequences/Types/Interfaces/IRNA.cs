@@ -28,23 +28,23 @@ public interface IRna : ISequence
     /// </remarks>
     /// <returns></returns>
     public BigInteger NumberOfPerfectMatchings();
-    
+
     /// <summary>
-    /// Implementation of above that's dynamically programmed rather than a basic math calculation
+    ///     Implementation of above that's dynamically programmed rather than a basic math calculation
     /// </summary>
     /// <param name="modulo"></param>
     /// <returns></returns>
     public int NumberOfPerfectMatchingsCached(int modulo);
-    
+
     /// <summary>
-    /// Maxiumum number of matchings
+    ///     Maxiumum number of matchings
     /// </summary>
     /// <param name="modulo"></param>
     /// <returns></returns>
     public BigInteger MaximumNumberOfMatchings();
-    
+
     /// <summary>
-    /// Total number of perfect matchings for a given string modulus
+    ///     Total number of perfect matchings for a given string modulus
     /// </summary>
     /// <param name="modulus"></param>
     /// <returns></returns>

@@ -38,8 +38,9 @@ public class SequenceHelpers
         { 'U', 'A', 'C', 'G', 'N' };
 
 
-    public static readonly HashSet<char> AllAlphabetical = new HashSet<char>(
+    public static readonly HashSet<char> AllAlphabetical = new(
         Enumerable.Range('A', 'Z' - 'A' + 1).Select(i => (char)i));
+
     public static readonly HashSet<char> AllAlphabeticalGapped = AllAlphabetical.ToList().Append('-').ToHashSet();
 
 
@@ -48,7 +49,7 @@ public class SequenceHelpers
 
     public static readonly HashSet<char> AllDNAMarkers = new(CaseInsensitiveCharComparer.Shared)
         { 'T', 'A', 'C', 'G', 'N' };
-    
+
     public static readonly HashSet<char> AllDNAMarkersGapped = new(CaseInsensitiveCharComparer.Shared)
         { 'T', 'A', 'C', 'G', 'N', '-' };
 
@@ -147,6 +148,7 @@ public class SequenceHelpers
 
     public static readonly HashSet<char> PossibleProteins = ProteinCodesToRNA.Keys.ToHashSet();
     public static readonly HashSet<char> PossibleProteinsGapped = ProteinCodesToRNA.Keys.Append('-').ToHashSet();
+
     public static Dictionary<string, string> DNAToProteinCode = new()
     {
         { "TTT", "F" }, { "TTC", "F" },

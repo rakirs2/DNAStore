@@ -12,6 +12,8 @@ namespace DNAStore.Base.DataStructures;
 public class BasePairDictionary : IBasePairDictionary
 {
     private readonly Dictionary<char, long> _dictionary = new(CaseInsensitiveCharComparer.Shared);
+
+    public long this[char key] => GetFrequency(key);
     public long Count { get; private set; }
 
     public char HighestFrequencyBasePair { get; private set; }
@@ -35,8 +37,6 @@ public class BasePairDictionary : IBasePairDictionary
     {
         return _dictionary.GetValueOrDefault(c, 0);
     }
-
-    public long this[char key] => GetFrequency(key);
 
     public override string ToString()
     {
