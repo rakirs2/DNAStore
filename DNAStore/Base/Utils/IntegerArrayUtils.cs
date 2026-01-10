@@ -34,7 +34,8 @@ public static class IntegerArrayUtils
     
     /// <summary>
     ///     Really simple definition. if the n+1st term is lt the nth term
-    ///     // TODO; consider unsigned def
+    ///     // TODO: Rething this/reread Bergeron
+    ///     // TODO: consider unsigned def
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
