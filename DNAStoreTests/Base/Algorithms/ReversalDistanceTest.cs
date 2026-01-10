@@ -98,4 +98,13 @@ public class ReversalDistanceTest
     {
         Assert.AreEqual(7, ReversalDistance.ApproximateGreedyReversalSort(new[] { -3, 4, 1, 5, -2 }, out var list));
     }
+
+    [TestMethod]
+    public void ParksHandlesBaseCase()
+    {
+        var start = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        var target = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        
+        Assert.AreEqual(0, ReversalDistance.CalculateParksGreedyExact(start, target));
+    }
 }

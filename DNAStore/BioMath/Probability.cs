@@ -219,7 +219,7 @@ public static class Probability
         var perms = GetPermutations(values, highest);
         // post process adding positives and negatives
 
-        var output = new HashSet<int[]>(new IntArrayComparer());
+        var output = new HashSet<int[]>(IntArrayComparer.Shared);
         foreach (var perm in perms)
         {
             var tempOutput = new HashSet<int[]>();

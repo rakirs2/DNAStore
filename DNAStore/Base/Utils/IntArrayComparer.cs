@@ -24,4 +24,10 @@ public class IntArrayComparer : IEqualityComparer<int[]>
             return hash;
         }
     }
+
+    private IntArrayComparer()
+    {
+    }
+
+    public static IntArrayComparer Shared = new IntArrayComparer();
 }

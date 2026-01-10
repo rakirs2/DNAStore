@@ -26,7 +26,7 @@ public class ReversalDistance
         Queue<int[]> currentIteration = new();
         Queue<int[]> nextIteration = new();
 
-        HashSet<int[]> traversed = new(new IntArrayComparer());
+        HashSet<int[]> traversed = new(IntArrayComparer.Shared);
         currentIteration.Enqueue(_a);
         var currentDepth = 0;
 
@@ -58,9 +58,28 @@ public class ReversalDistance
         return -1;
     }
 
+    private int ParksGreedyExactAlgorithm()
+    {
+        HashSet<int[]> traversed = new HashSet<int[]>(IntArrayComparer.Shared);
+        var depth = 0;
+        traversed.Add(_a);
+        while (!traversed.Contains(_b))
+        {
+            // Ok, now we calculat
+            // keep adding values
+            depth++;
+        }
+        return depth;
+    }
+    
     public static int Calculate(int[] a, int[] b)
     {
         return new ReversalDistance(a, b).Calculate();
+    }
+    
+    public static int CalculateParksGreedyExact(int[] a, int[] b)
+    {
+        return new ReversalDistance(a, b).ParksGreedyExactAlgorithm();
     }
 
     /// <summary>
