@@ -1,3 +1,4 @@
+using System.Transactions;
 using DNAStore.Base.Utils;
 
 namespace DNAStore.Base.Algorithms;
@@ -101,7 +102,7 @@ public class ReversalDistance
             {
                 // greedily find the right index 
                 var j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
-                ReverseSubsequence(reversals, i - 1, j);
+                IntegerArrayUtils.ReverseSubsequence(reversals, i - 1, j);
                 var temp = (int[])reversals.Clone();
                 order.Add(temp);
                 // Force the value here to be positive, could just call the function on the index but no need
@@ -115,19 +116,6 @@ public class ReversalDistance
             }
 
         return order.Count;
-    }
-
-    public static void ReverseSubsequence(int[] s, int start, int end)
-    {
-        if (s == null) throw new ArgumentNullException(nameof(s));
-
-        int left = start, right = end;
-        while (left <= right)
-        {
-            (s[left], s[right]) = (-s[right], -s[left]);
-            left++;
-            right--;
-        }
     }
 
     public static string ToReversalString(int[] values)

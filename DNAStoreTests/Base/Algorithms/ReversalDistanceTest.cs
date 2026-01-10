@@ -94,36 +94,6 @@ public class ReversalDistanceTest
     }
 
     [TestMethod]
-    public void InPlaceReversal()
-    {
-        var values = new[] { 1, 2, 3, 4 };
-        ReversalDistance.ReverseSubsequence(values, 0, 3);
-        Assert.IsTrue(values.SequenceEqual(new[] { -4, -3, -2, -1 }));
-    }
-
-    [TestMethod]
-    public void InPlaceReversalOddElement()
-    {
-        var values = new[] { -3, +4, +1, +5, -2 };
-        ReversalDistance.ReverseSubsequence(values, 0, 2);
-        Assert.IsTrue(values.SequenceEqual(new[] { -1, -4, 3, 5, -2 }));
-    }
-
-    [TestMethod]
-    public void InPlaceReversalOdd()
-    {
-        var values = new[] { 1, 2, 3, 4 };
-        ReversalDistance.ReverseSubsequence(values, 0, 3);
-        Assert.IsTrue(values.SequenceEqual(new[] { -4, -3, -2, -1 }));
-    }
-
-    [TestMethod]
-    public void InPlaceReversalNull()
-    {
-        Assert.ThrowsExactly<ArgumentNullException>(() => ReversalDistance.ReverseSubsequence(null, 0, 3));
-    }
-
-    [TestMethod]
     public void ApproximateGreedyReversalTest()
     {
         Assert.AreEqual(7, ReversalDistance.ApproximateGreedyReversalSort(new[] { -3, 4, 1, 5, -2 }, out var list));
