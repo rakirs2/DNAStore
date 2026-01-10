@@ -85,14 +85,7 @@ public class ReversalDistanceTest
         var j = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         Assert.AreEqual(0, ReversalDistance.Calculate(g, h));
     }
-
-    [TestMethod]
-    public void CountingBreakpoints()
-    {
-        var values = new[] { 3, 4, 5, -12, -8, -7, -6, 1, 2, 10, 9, -11, 13, 14 };
-        Assert.AreEqual(8, ReversalDistance.CountSignedBreakpoints(values));
-    }
-
+    
     [TestMethod]
     public void ApproximateGreedyReversalTest()
     {

@@ -82,26 +82,7 @@ public class ReversalDistance
         return new ReversalDistance(a, b).ParksGreedyExactAlgorithm();
     }
 
-    /// <summary>
-    ///     Really simple definition. if the n+1st term is lt the nth term
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
-    public static int CountSignedBreakpoints(int[] p)
-    {
-        var extendedP = new List<int> { 0 };
-        extendedP.AddRange(p);
-        // Force add a last element
-        extendedP.Add(p.Length + 1);
-
-        var breakpoints = 0;
-
-        for (var i = 0; i < extendedP.Count - 1; i++)
-            if (extendedP[i + 1] - extendedP[i] != 1)
-                breakpoints++;
-
-        return breakpoints;
-    }
+    
 
     /// <summary>
     ///     Basic Greedy Reversal sort. The order is completely optional. It exists because the problem required it

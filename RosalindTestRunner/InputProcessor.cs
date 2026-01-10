@@ -414,7 +414,7 @@ public abstract class InputProcessor
 
         protected override void CalculateResult()
         {
-            Output = ReversalDistance.CountSignedBreakpoints(a).ToString();
+            Output = IntegerArrayUtils.CountSignedBreakpoints(a).ToString();
         }
     }
 

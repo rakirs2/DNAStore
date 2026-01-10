@@ -69,4 +69,11 @@ public class IntegerArrayUtilsTest
     {
         Assert.ThrowsExactly<ArgumentNullException>(() => IntegerArrayUtils.ReverseSubsequence(null, 0, 3));
     }
+    
+    [TestMethod]
+    public void CountingBreakpoints()
+    {
+        var values = new[] { 3, 4, 5, -12, -8, -7, -6, 1, 2, 10, 9, -11, 13, 14 };
+        Assert.AreEqual(8, IntegerArrayUtils.CountSignedBreakpoints(values));
+    }
 }

@@ -31,4 +31,26 @@ public static class IntegerArrayUtils
             right--;
         }
     }
+    
+    /// <summary>
+    ///     Really simple definition. if the n+1st term is lt the nth term
+    ///     // TODO; consider unsigned def
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    public static int CountSignedBreakpoints(int[] p)
+    {
+        var extendedP = new List<int> { 0 };
+        extendedP.AddRange(p);
+        // Force add a last element
+        extendedP.Add(p.Length + 1);
+
+        var breakpoints = 0;
+
+        for (var i = 0; i < extendedP.Count - 1; i++)
+            if (extendedP[i + 1] - extendedP[i] != 1)
+                breakpoints++;
+
+        return breakpoints;
+    }
 }
