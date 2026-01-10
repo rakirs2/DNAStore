@@ -63,18 +63,21 @@ public class ReversalDistance
         return new ReversalDistance(a, b).Calculate();
     }
 
-    public static int CompareTwoArrays(List<int> a, List<int> target)
+    public static int CompareTwoArrays(int[] a, int[]target)
     {
+        var aList = a.ToList();
+        var targetList = target.ToList();
         var breaks = 0;
-        for (int i = 1; i < a.Count-1; i++)
+        for (int i = 1; i < aList.Count-1; i++)
         {
-            if(Math.Abs(target[target.FindIndex(a[i]))]- target[a.FindIndex(i+1)])!=1) breaks++;
+            // I can never remember this
+            if(Math.Abs(targetList.IndexOf(aList[i])- targetList.IndexOf(aList[i+1]) )!=1 )
+            {
+                breaks++;
+            }
         }
 
         return breaks;
-        //     return [
-        //     i + 1 for i in range(len(s) - 1) if abs(t.index(s[i]) - t.index(s[i + 1])) != 1
-        // ]
     }
     
     /// <summary>
@@ -88,13 +91,13 @@ public class ReversalDistance
         extendedP.AddRange(p);
         // Force add a last element
         extendedP.Add(p.Length + 1);
-
+    
         var breakpoints = 0;
-
+    
         for (var i = 0; i < extendedP.Count - 1; i++)
             if (Math.Abs(extendedP[i + 1] - extendedP[i]) != 1)
                 breakpoints++;
-
+    
         return breakpoints;
     }
     
@@ -169,24 +172,24 @@ public class ReversalDistance
     /// <returns></returns>
     public static int ExactUnsignedReversalSort(int[] reversals,  int[] order)
     {
-        var sorted = ConvertWithGivenOrder(reversals, order);
-        if (CountUnsignedBreakpoints(sorted) == 0)
+        // var sorted = ConvertWithGivenOrder(reversals, order);
+        if (CompareTwoArrays(reversals, order) == 0)
             return 0;
         
-        var minReversals = ReversalsWithTheLeastBreakPoints(sorted, out var candidates);
+        var minReversals = ReversalsWithTheLeastBreakPoints(reversals, out var candidates, order);
         var current = candidates[0];
         var depth = 1;
         
         if (minReversals == 0)
             return depth;
         
-        while (CountUnsignedBreakpoints(current) > 0)
+        while (CompareTwoArrays(current, order) > 0)
         {
             var tempValues = new List<int[]>();
             var tempBestReversals = minReversals;
             foreach (var candidate in candidates)
             {
-                var currentBest = ReversalsWithTheLeastBreakPoints(candidate, out var tempCandidates);
+                var currentBest = ReversalsWithTheLeastBreakPoints(candidate, out var tempCandidates, order);
                 if (currentBest == tempBestReversals)
                 {
                     //merge the lists
@@ -213,16 +216,16 @@ public class ReversalDistance
         return -1;
     }
 
-    public static int ReversalsWithTheLeastBreakPoints(int[] input, out List<int[]> values)
+    public static int ReversalsWithTheLeastBreakPoints(int[] input, out List<int[]> values, int[] target)
     {
-        var max = CountUnsignedBreakpoints(input);
+        var max = CompareTwoArrays(input, target);
         values = new List<int[]>();
         for (int i = 0; i < input.Length-1; i++)
         {
             for (int j = i + 1; j < input.Length; j++)
             {
                 ReverseSubsequenceUnsigned(input, i, j);
-                var tempBreakPoints = CountUnsignedBreakpoints(input);
+                var tempBreakPoints = CompareTwoArrays(input, target);
                 if (tempBreakPoints < max)
                 {
                     values = new List<int[]>();
