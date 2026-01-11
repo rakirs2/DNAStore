@@ -414,7 +414,7 @@ public abstract class InputProcessor
 
         protected override void CalculateResult()
         {
-            Output = IntegerArrayUtils.CountSignedBreakpoints(a).ToString();
+            Output = SyntenyHelper.CountSignedBreakpoints(a).ToString();
         }
     }
 
@@ -501,6 +501,36 @@ public abstract class InputProcessor
         {
             var neighbors = _input.DNeighborhood(_d);
             Output = string.Join("\n", neighbors);
+        }
+    }
+    
+    private class ReversalDistance : BaseExecutor
+    {
+        private List<Tuple<int[], int[]>> _sequences = new();
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the blocks to reverse");
+            while (true)
+            {
+                var control = Console.ReadLine();
+                if (control.Equals("done")) break;
+                Console.WriteLine("First Sequence");
+                var first = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
+                Console.WriteLine("TargetSequence");
+                var target = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
+                _sequences.Add(new Tuple<int[], int[]>(first, target));
+            }
+  
+        }
+
+        protected override void CalculateResult()
+        {
+            var output = new List<int>();
+            foreach (var val in _sequences)
+            {
+                output.Add(DNAStore.Base.Algorithms.ReversalDistance.CalculateParksGreedyExact(val.Item1, val.Item2));
+            }
+            Output = string.Join(" ", output);
         }
     }
 
@@ -1060,33 +1090,6 @@ public abstract class InputProcessor
         {
             var commonMotifs = _dnaSequences.MedianString(_kmerLength);
             Output = commonMotifs[0];
-        }
-    }
-
-    private class ApproximateGreedyReversal : BaseExecutor
-    {
-        private int[] a;
-
-        protected override void GetInputs()
-        {
-            Console.WriteLine("Enter reversals to be analyzed");
-            a = Console.ReadLine().Trim('(', ')')
-                .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToArray();
-        }
-
-        protected override void CalculateResult()
-        {
-            ReversalDistance.ApproximateGreedyReversalSort(a, out var list);
-            var sb = new StringBuilder();
-            for (var i = 0; i < list.Count; i++)
-            {
-                sb.Append(ReversalDistance.ToReversalString(list[i]));
-                if (i != list.Count - 1) sb.Append('\n');
-            }
-
-            Output = sb.ToString();
         }
     }
 

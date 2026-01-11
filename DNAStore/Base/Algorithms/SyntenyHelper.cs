@@ -1,8 +1,8 @@
-namespace DNAStore.Base.Utils;
+using DNAStore.Base.Utils;
 
-///     TODO: It might be possible to combine all of these.
-///     TODO: It also might be worth putting this in a separate class/putting them in the algorithms folder
-public static class IntegerArrayUtils
+namespace DNAStore.Base.Algorithms;
+
+public static class SyntenyHelper
 {
     /// <summary>
     /// Returns the number of unsigned breakpoints.
@@ -37,12 +37,54 @@ public static class IntegerArrayUtils
         }
     }
     
-    public static int MinimumalBreakPointReversals(int[] current, int[] target, out HashSet<int[]> candidates)
+    /// <summary>
+    ///     Generates the set of candidates, the number of minimal breakpoint reversals in the next gen
+    ///     If target is not specified, generates the default set.
+    /// </summary>
+    /// <remarks>
+    ///     This is a potentially silly design. Minimal Breakpoints should return whatever is given as an input.
+    ///     If the caller puts the "correct" string, this returns the minimal breakpoints from the standard sequence.
+    ///     Hopefully this is always 1.
+    ///
+    ///     If the caller doesn't add a target, we go ahead and run this against the default sequence.
+    ///     TODO: verify this/see if I can prove that.
+    /// </remarks>
+    /// <param name="current"></param>
+    /// <param name="candidates"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public static int MinimumalBreakPointReversals(int[] current,  out HashSet<int[]> candidates, int[] target = null)
     {
-        candidates = new HashSet<int[]>(IntArrayComparer.Shared) { };
-        var reversalMax = FindUnsignedBreakPointsWithTarget(current, target);
+        if (target == null)
+        {
+            target = new int[current.Length];
+            for (int i = 0; i < current.Length; i++)
+                target[i] = i + 1;
+        }
         
-        return 0;
+        candidates = new HashSet<int[]>(IntArrayComparer.Shared) { };
+        
+        // Technically, this should be strictly decreasing. however, we will use int.Max for now
+        var reversalMax = int.MaxValue;
+        foreach (var candidate in AllPossibleReversals(current))
+        {
+            // 3 possibilities, candidate has more bp, equal bp, or less bp than the current value
+            var numBreakPoints = FindUnsignedBreakPointsWithTarget(candidate, target);
+            if (numBreakPoints > reversalMax)
+            {
+                continue;
+            }
+            
+            if (numBreakPoints < reversalMax)
+            {
+                reversalMax = numBreakPoints;
+                candidates = new HashSet<int[]>(IntArrayComparer.Shared);
+            }
+            
+            candidates.Add(candidate);
+        }
+        
+        return reversalMax;
     }
     
     public static void ReverseSubsequence(int[] s, int start, int end, bool signed = true)

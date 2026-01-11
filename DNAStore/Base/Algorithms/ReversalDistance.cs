@@ -1,3 +1,4 @@
+using System.Diagnostics.SymbolStore;
 using System.Transactions;
 using DNAStore.Base.Utils;
 
@@ -57,16 +58,58 @@ public class ReversalDistance
         // This shouldn't be reached
         return -1;
     }
-
+    // TODO: Hannenhali and Pevzner for signed
+    
+    
+    /// <summary>
+    /// Euna Parks Greedy Exact Algorithm
+    /// </summary>
+    /// <remarks>
+    /// Her implementation is loosely pseudocoded as follows:
+    ///     1. Take all possible reversals
+    ///     2. Get the Set of reversals with the smallest bp count
+    ///     3. Greedily keep going with the set until you have the absolute smallest count and reiterate
+    ///
+    /// This was really cool. How can we prove that this is strictly decreasing.
+    /// </remarks>
+    /// <see>
+    /// Park, Euna, "Exact and Approximation Algorithms for Computing Reversal Distances in Genome Rearrangement" (2008). Master's Projects. 104.
+    /// DOI: https://doi.org/10.31979/etd.qm9e-d3gt
+    /// https://scholarworks.sjsu.edu/etd_projects/104 
+    /// </see>
+    /// <returns></returns>
     private int ParksGreedyExactAlgorithm()
     {
+        // TODO: consider throwing if any values are signed
+        // TODO: consider uints
         HashSet<int[]> traversed = new HashSet<int[]>(IntArrayComparer.Shared);
+        Queue<int[]> currentIteration = new();
         var depth = 0;
         traversed.Add(_a);
+        currentIteration.Enqueue(_a);
         while (!traversed.Contains(_b))
         {
-            // Ok, now we calculat
-            // keep adding values
+            // Go ahead and BFS here
+            var nextIteration = new Queue<int[]>();
+            var nextGenMinBp = int.MaxValue;
+            foreach (var candidate in currentIteration)
+            {
+                var currentBp = SyntenyHelper.MinimumalBreakPointReversals(candidate, out var nextGenCandidates, _b);
+                if (currentBp > nextGenMinBp)
+                    continue;
+                if (currentBp < nextGenMinBp)
+                {
+                    nextGenMinBp = currentBp;    
+                    nextIteration.Clear();
+                }
+                
+                foreach (var nextGen in nextGenCandidates)
+                {
+                    nextIteration.Enqueue(nextGen);
+                    traversed.Add(nextGen);
+                }
+            }
+            currentIteration = nextIteration;
             depth++;
         }
         return depth;
@@ -81,9 +124,7 @@ public class ReversalDistance
     {
         return new ReversalDistance(a, b).ParksGreedyExactAlgorithm();
     }
-
     
-
     /// <summary>
     ///     Basic Greedy Reversal sort. The order is completely optional. It exists because the problem required it
     /// </summary>
@@ -102,7 +143,7 @@ public class ReversalDistance
             {
                 // greedily find the right index 
                 var j = Array.FindIndex(reversals, x => Math.Abs(x) == i);
-                IntegerArrayUtils.ReverseSubsequence(reversals, i - 1, j);
+                SyntenyHelper.ReverseSubsequence(reversals, i - 1, j);
                 var temp = (int[])reversals.Clone();
                 order.Add(temp);
                 // Force the value here to be positive, could just call the function on the index but no need
