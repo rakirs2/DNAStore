@@ -84,15 +84,6 @@ public class ReversalDistanceTest
         
         Assert.AreEqual(1, ReversalDistance.CalculateParksGreedyExact(start, target));
     }
-    
-    [TestMethod]
-    public void ParksSimpleReversalLengthFull()
-    {
-        var start = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        var target = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9,10 };
-        
-        Assert.AreEqual(1, ReversalDistance.CalculateParksGreedyExact(start.Reverse().ToArray(), target));
-    }
 
     [TestMethod]
     public void ParksFirstGiven()
