@@ -60,29 +60,6 @@ public class ReversalDistanceTest
         var b = new[] { 1, 2, 3, 4, 5, 6, 7, 8 };
         Assert.AreEqual(3, ReversalDistance.Calculate(a, b));
     }
-
-    // [TestMethod]
-    // [Ignore("Currently unable to run this locally due to memory.")]
-    // public void GivenTests()
-    // {
-    //     var a = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    //     var b = new[] { 3, 1, 5, 2, 7, 4, 9, 6, 10, 8 };
-    //     Assert.AreEqual(9, ReversalDistance.Calculate(a, b));
-    //
-    //     var c = new[] { 3, 10, 8, 2, 5, 4, 7, 1, 6, 9 };
-    //     var d = new[] { 5, 2, 3, 1, 7, 4, 10, 8, 6, 9 };
-    //     Assert.AreEqual(6, ReversalDistance.Calculate(c, d));
-    //
-    //
-    //
-    //     var g = new[] { 3, 9, 10, 4, 1, 8, 6, 7, 5, 2 };
-    //     var h = new[] { 2, 9, 8, 5, 1, 7, 3, 4, 6, 10 };
-    //     Assert.AreEqual(7, ReversalDistance.Calculate(g, h));
-    //
-    //     var i = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    //     var j = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    //     Assert.AreEqual(0, ReversalDistance.Calculate(g, h));
-    // }
     
     [TestMethod]
     public void ApproximateGreedyReversalTest()
