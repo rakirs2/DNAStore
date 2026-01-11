@@ -503,37 +503,38 @@ public abstract class InputProcessor
             Output = string.Join("\n", neighbors);
         }
     }
-    
+
     private class ReversalDistanceWithReversals : BaseExecutor
     {
         private Tuple<int[], int[]> _sequences = null!;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the blocks to reverse");
- 
-                Console.WriteLine("First Sequence");
-                var first = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
-                Console.WriteLine("TargetSequence");
-                var target = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
-                _sequences = new Tuple<int[], int[]>(first, target);
-  
+
+            Console.WriteLine("First Sequence");
+            var first = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
+            Console.WriteLine("TargetSequence");
+            var target = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
+            _sequences = new Tuple<int[], int[]>(first, target);
         }
 
         protected override void CalculateResult()
         {
-            var count = ReversalDistance.CalculateGreedy(_sequences.Item1, _sequences.Item2, out List<Tuple<int, int>> reversals);
+            var count = ReversalDistance.CalculateGreedy(_sequences.Item1, _sequences.Item2, out var reversals);
             var sb = new StringBuilder();
             sb.Append(count);
             sb.Append('\n');
-            foreach(var rev in reversals)
-                sb.Append((rev.Item1 +1).ToString() + ' ' + (rev.Item2 +1).ToString() + '\n');
+            foreach (var rev in reversals)
+                sb.Append((rev.Item1 + 1).ToString() + ' ' + (rev.Item2 + 1) + '\n');
             Output = sb.ToString();
         }
     }
-    
+
     private class ReversalDistanceExecutor : BaseExecutor
     {
-        private List<Tuple<int[], int[]>> _sequences = new();
+        private readonly List<Tuple<int[], int[]>> _sequences = new();
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the blocks to reverse");
@@ -547,16 +548,13 @@ public abstract class InputProcessor
                 var target = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
                 _sequences.Add(new Tuple<int[], int[]>(first, target));
             }
-  
         }
 
         protected override void CalculateResult()
         {
             var output = new List<int>();
             foreach (var val in _sequences)
-            {
-                output.Add(DNAStore.Base.Algorithms.ReversalDistance.CalculateGreedy(val.Item1, val.Item2, out List<Tuple<int, int>> reversals));
-            }
+                output.Add(ReversalDistance.CalculateGreedy(val.Item1, val.Item2, out var reversals));
             Output = string.Join(" ", output);
         }
     }
