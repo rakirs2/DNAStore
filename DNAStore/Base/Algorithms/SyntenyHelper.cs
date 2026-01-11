@@ -24,15 +24,23 @@ public static class SyntenyHelper
         return bp;
     }
 
+    /// <summary>
+    /// Nondestructively generates all possible reversals for the given array. The step of taking the clone of the input
+    /// ensures that we don't have to deal with mutations during the iteration.
+    /// </summary>
+    /// <param name="current"></param>
+    /// <param name="signed"></param>
+    /// <returns></returns>
     public static IEnumerable<int[]> AllPossibleReversals(int[] current, bool signed = false)
     {
-        for (int i = 0; i < current.Length - 1; i++)
+        var temp = (int[])current.Clone();
+        for (int i = 0; i < temp.Length - 1; i++)
         {
-            for (int j = i+1; j < current.Length; j++)
+            for (int j = i+1; j < temp.Length; j++)
             {
-                ReverseSubsequence(current, i, j, signed);
-                yield return (int[]) current.Clone();
-                ReverseSubsequence(current, i, j, signed);
+                ReverseSubsequence(temp, i, j, signed);
+                yield return (int[]) temp.Clone();
+                ReverseSubsequence(temp, i, j, signed);
             }
         }
     }
