@@ -136,10 +136,7 @@ public class ProbabilityTests
     {
         var expected = new[] { 0.000, -0.004, -0.024, -0.082, -0.206, -0.424, -0.765, -1.262, -1.969, -3.010 };
         var output = Probability.LikelihoodOfSharingGenes(10);
-        for (var i = 0; i < expected.Length; i++)
-        {
-            Assert.AreEqual(expected[i], output[i], 1E-2);
-        }
+        for (var i = 0; i < expected.Length; i++) Assert.AreEqual(expected[i], output[i], 1E-2);
     }
 
     [TestMethod]
@@ -149,7 +146,7 @@ public class ProbabilityTests
         Assert.AreEqual(.75, Probability.CarrierProbability(.25), 1E-3);
         Assert.AreEqual(.914, Probability.CarrierProbability(.5), 1E-3);
     }
-    
+
     [TestMethod]
     public void SexLinkedInheritance()
     {

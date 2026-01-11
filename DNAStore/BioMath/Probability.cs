@@ -235,18 +235,18 @@ public static class Probability
         var b = new Bernoulli(percentage);
         return b.Probability(k);
     }
-    
+
     /// <summary>
-    /// Returns likelihood of sharing genes given a probability
+    ///     Returns likelihood of sharing genes given a probability
     /// </summary>
     /// <remarks>
-    /// This is just a binomial CDF underneath the hood. A couple of points worth remembering
+    ///     This is just a binomial CDF underneath the hood. A couple of points worth remembering
     ///     1. This needs to be reversed. 2 ways to do it. Flip 'x' in the CDF calc or subtract from 1
     ///     2. Log space, per Durbin et al. in BSA is a really common trick. There's a lot of reasons for doing it
-    ///        but the most important is just calculation flexibility and capability-- especially when dealing with
-    ///        extreme numbers
+    ///     but the most important is just calculation flexibility and capability-- especially when dealing with
+    ///     extreme numbers
     ///     3. A fun little detour-- why does numerics use double for a discrete value?
-    ///        More than enough precision with better perf
+    ///     More than enough precision with better perf
     /// </remarks>
     /// <param name="n"></param>
     /// <param name="p"></param>
@@ -255,11 +255,11 @@ public static class Probability
     {
         var output = new double[n];
         for (var i = 0; i < n; i++)
-            output[i] =  Math.Round(Math.Log10(Binomial.CDF(p, n, n-i-1)), 3);
-        
+            output[i] = Math.Round(Math.Log10(Binomial.CDF(p, n, n - i - 1)), 3);
+
         return output;
     }
-    
+
     /// <summary>
     ///     Returns odds of having at least 1 recessive allele
     ///     // TODO: consider adding a Hardy Weinberg class/calculator that can take in distributions
@@ -268,13 +268,10 @@ public static class Probability
     ///     Key here is understanding hardy weinberg formula:
     ///     p^2 + 2pq + q^2 = 1;
     ///     homozygous dominant, heterozygous (carrier), homozygous recessive
-    /// 
     ///     p + q = 1
     ///     we're given q^2;
-    ///
     ///     q = sqrt(q^2)
     ///     p = 1-q
-    ///
     ///     what's the percentage of being a carrier?
     ///     2pq + q^2
     /// </remarks>
@@ -283,7 +280,7 @@ public static class Probability
     public static double CarrierProbability(double qSquared)
     {
         var q = Math.Sqrt(qSquared);
-        return 2 * (1-q)*q + qSquared;
+        return 2 * (1 - q) * q + qSquared;
     }
 
     /// <summary>
@@ -292,7 +289,6 @@ public static class Probability
     /// <remarks>
     ///     We are given q; we can find p = (1-q)
     ///     How do we  account for the allele being on the X chromosome and "only females"
-    ///
     ///     P(carrier | female) = P(carrier AND female)/ P(female)
     ///     P(female) = 1/2
     ///     carrier AND female = 1/2 * 2pq= pq

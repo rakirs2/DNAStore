@@ -2,6 +2,12 @@ namespace DNAStore.Base.Utils;
 
 public class IntArrayComparer : IEqualityComparer<int[]>
 {
+    public static IntArrayComparer Shared = new();
+
+    private IntArrayComparer()
+    {
+    }
+
     public bool Equals(int[] x, int[] y)
     {
         // Check for reference equality first for performance
@@ -24,10 +30,4 @@ public class IntArrayComparer : IEqualityComparer<int[]>
             return hash;
         }
     }
-
-    private IntArrayComparer()
-    {
-    }
-
-    public static IntArrayComparer Shared = new IntArrayComparer();
 }
