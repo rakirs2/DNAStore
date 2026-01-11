@@ -123,7 +123,7 @@ public class ReversalDistanceTest
     public void ParksReversalFourthGiven()
     {
         var a = new[] { 3, 9, 10, 4, 1, 8, 6, 7, 5, 2 };
-        var b = new[] { 2, 9, 8, 5, 1, 7, 3, 4, 6, 10 };
+        var b = new[] { 2, 9, 8, 5, 1, 7, 3, 4, 6, 10 }; 
         Assert.AreEqual(7, ReversalDistance.CalculateParksGreedyExact(a, b));
     }
 }
