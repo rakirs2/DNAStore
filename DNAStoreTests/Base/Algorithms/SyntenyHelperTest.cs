@@ -1,7 +1,7 @@
 using DNAStore.Base.Algorithms;
 using DNAStore.Base.Utils;
 
-namespace DNAStoreTests.Base.Utils;
+namespace DNAStoreTests.Base.Algorithms;
 
 [TestClass]
 public class SyntenyHelperTest
@@ -82,15 +82,21 @@ public class SyntenyHelperTest
     public void ReversalsIterator()
     {
         var values = new int[] { 1, 2, 3 };
-        var expected = new HashSet<int[]>( IntArrayComparer.Shared)
+        var expected = new List<int[]>
         {
             new[] { 2,1,3 },
             new[]{3,2,1},
             new[]{1,3,2}
         };
-        var allPossible = new HashSet<int[]>(SyntenyHelper.AllPossibleReversals(values), IntArrayComparer.Shared);
+
+        var reversals  = SyntenyHelper.AllPossibleReversals(values);
+        var allPossible = new List<int[]>();
+        foreach (var reversal in reversals)
+        {
+            allPossible.Add(reversal.Item1);
+        }
         Assert.AreEqual(3, allPossible.Count);
-        Assert.IsTrue(allPossible.SetEquals(expected));
+        Assert.IsTrue(allPossible.SequenceEqual(expected, IntArrayComparer.Shared));
     }
 
     [TestMethod]
@@ -98,13 +104,18 @@ public class SyntenyHelperTest
     {
         // 3 bp in current
         var current = new int[] { 3,1,4,2 };
-        var expected = new HashSet<int[]>( IntArrayComparer.Shared)
+        var expected = new List<int[]>
         {
             new[] {3,4,1, 2 },
         };
 
         var actual = SyntenyHelper.MinimumalBreakPointReversals(current, out var candidates);
-        Assert.IsTrue(expected.SetEquals(candidates));
+        var allPossible = new List<int[]>();
+        foreach (var candidate in candidates)
+        {
+            allPossible.Add(candidate.Item1);
+        }
+        Assert.IsTrue(expected.SequenceEqual(allPossible, IntArrayComparer.Shared));
         Assert.AreEqual(1, actual);
     }
 }

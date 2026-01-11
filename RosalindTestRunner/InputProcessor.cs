@@ -504,7 +504,34 @@ public abstract class InputProcessor
         }
     }
     
-    private class ReversalDistance : BaseExecutor
+    private class ReversalDistanceWithReversals : BaseExecutor
+    {
+        private Tuple<int[], int[]> _sequences = null!;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the blocks to reverse");
+ 
+                Console.WriteLine("First Sequence");
+                var first = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
+                Console.WriteLine("TargetSequence");
+                var target = Console.ReadLine().Split(" ").Select(s => int.Parse(s)).ToArray();
+                _sequences = new Tuple<int[], int[]>(first, target);
+  
+        }
+
+        protected override void CalculateResult()
+        {
+            var count = ReversalDistance.CalculateGreedy(_sequences.Item1, _sequences.Item2, out List<Tuple<int, int>> reversals);
+            var sb = new StringBuilder();
+            sb.Append(count);
+            sb.Append('\n');
+            foreach(var rev in reversals)
+                sb.Append((rev.Item1 +1).ToString() + ' ' + (rev.Item2 +1).ToString() + '\n');
+            Output = sb.ToString();
+        }
+    }
+    
+    private class ReversalDistanceExecutor : BaseExecutor
     {
         private List<Tuple<int[], int[]>> _sequences = new();
         protected override void GetInputs()
@@ -528,7 +555,7 @@ public abstract class InputProcessor
             var output = new List<int>();
             foreach (var val in _sequences)
             {
-                output.Add(DNAStore.Base.Algorithms.ReversalDistance.CalculateParksGreedyExact(val.Item1, val.Item2));
+                output.Add(DNAStore.Base.Algorithms.ReversalDistance.CalculateGreedy(val.Item1, val.Item2, out List<Tuple<int, int>> reversals));
             }
             Output = string.Join(" ", output);
         }

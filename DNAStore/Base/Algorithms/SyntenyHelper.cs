@@ -31,7 +31,7 @@ public static class SyntenyHelper
     /// <param name="current"></param>
     /// <param name="signed"></param>
     /// <returns></returns>
-    public static IEnumerable<int[]> AllPossibleReversals(int[] current, bool signed = false)
+    public static IEnumerable<Tuple<int[], int, int>> AllPossibleReversals(int[] current, bool signed = false)
     {
         var temp = (int[])current.Clone();
         for (int i = 0; i < temp.Length - 1; i++)
@@ -39,7 +39,8 @@ public static class SyntenyHelper
             for (int j = i+1; j < temp.Length; j++)
             {
                 ReverseSubsequence(temp, i, j, signed);
-                yield return (int[]) temp.Clone();
+                var seq = (int[]) temp.Clone();
+                yield return new (seq, i, j);
                 ReverseSubsequence(temp, i, j, signed);
             }
         }
@@ -55,13 +56,12 @@ public static class SyntenyHelper
     ///     Hopefully this is always 1.
     ///
     ///     If the caller doesn't add a target, we go ahead and run this against the default sequence.
-    ///     TODO: verify this/see if I can prove that.
     /// </remarks>
     /// <param name="current"></param>
     /// <param name="candidates"></param>
     /// <param name="target"></param>
     /// <returns></returns>
-    public static int MinimumalBreakPointReversals(int[] current,  out HashSet<int[]> candidates, int[] target = null)
+    public static int MinimumalBreakPointReversals(int[] current,  out List<Tuple< int[], int, int>> candidates, int[] target = null)
     {
         if (target == null)
         {
@@ -69,15 +69,15 @@ public static class SyntenyHelper
             for (int i = 0; i < current.Length; i++)
                 target[i] = i + 1;
         }
-        
-        candidates = new HashSet<int[]>(IntArrayComparer.Shared) { };
+
+        candidates = new List<Tuple<int[], int, int>> ();
         
         // Technically, this should be strictly decreasing. however, we will use int.Max for now
         var reversalMax = int.MaxValue;
         foreach (var candidate in AllPossibleReversals(current))
         {
             // 3 possibilities, candidate has more bp, equal bp, or less bp than the current value
-            var numBreakPoints = FindUnsignedBreakPointsWithTarget(candidate, target);
+            var numBreakPoints = FindUnsignedBreakPointsWithTarget(candidate.Item1, target);
             if (numBreakPoints > reversalMax)
             {
                 continue;
@@ -86,7 +86,7 @@ public static class SyntenyHelper
             if (numBreakPoints < reversalMax)
             {
                 reversalMax = numBreakPoints;
-                candidates = new HashSet<int[]>(IntArrayComparer.Shared);
+                candidates.Clear();
             }
             
             candidates.Add(candidate);
