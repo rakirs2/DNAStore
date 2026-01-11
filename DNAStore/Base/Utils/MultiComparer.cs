@@ -15,9 +15,9 @@ public class MultiComparer
     private static void BasicErrorChecking(int[] values)
     {
         if (values == null)
-            throw new ArgumentNullException("Arguemnt can't be null");
+            throw new ArgumentNullException("Argument can't be null");
 
-        if (values.Length == 0) throw new ArgumentException("Array cannot beempty.", nameof(values));
+        if (values.Length == 0) throw new ArgumentException("Array cannot be empty.", nameof(values));
     }
 
     public static int Max(params int[] values)
