@@ -103,7 +103,7 @@ public class ProbabilityTests
     [TestMethod]
     public void SignedPermutations()
     {
-        var results = new HashSet<int[]>(new IntArrayComparer());
+        var results = new HashSet<int[]>(IntArrayComparer.Shared);
         Probability.GenerateSignedPermutations(new[] { 1, 2 }, 0, results);
     }
 

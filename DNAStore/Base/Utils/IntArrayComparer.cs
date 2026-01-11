@@ -15,8 +15,8 @@ public class IntArrayComparer : IEqualityComparer<int[]>
     public int GetHashCode(int[] obj)
     {
         if (obj is null) return 0;
-
-        // some prime number hash
+        // TODO: FNV-1a hash exists -- might be worth reading up on it at some point
+        // making some prime number hash
         unchecked
         {
             var hash = 17;
@@ -24,4 +24,10 @@ public class IntArrayComparer : IEqualityComparer<int[]>
             return hash;
         }
     }
+
+    private IntArrayComparer()
+    {
+    }
+
+    public static IntArrayComparer Shared = new IntArrayComparer();
 }
