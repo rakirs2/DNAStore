@@ -62,4 +62,12 @@ public class UndirectedGraphTest
         var graph = new UndirectedGraph<int>(1);
         Assert.AreEqual(1, graph.NumberOfConnectedComponents());
     }
+
+    [TestMethod]
+    public void SimpleGraphConnectedness()
+    {
+        var graph = new UndirectedGraph<int>(2);
+        graph.Insert(1, 2);
+        Assert.IsTrue( graph.AreConnected(1,2));
+    }
 }

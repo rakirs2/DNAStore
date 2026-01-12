@@ -72,8 +72,8 @@ public static class Sorters<T> where T : IComparable<T>
 
     public static T[] Merge2SortedArrays(T[] a, T[] b)
     {
-        if (a == null || a.Length == 0) return b;
-        if (b == null || b.Length == 0) return a;
+        if (a.Length == 0) return b;
+        if (b.Length == 0) return a;
 
         var result = new T[a.Length + b.Length];
         MergeRecursiveHelper(a, b, result, 0, 0, 0);
@@ -85,7 +85,6 @@ public static class Sorters<T> where T : IComparable<T>
         // Base case: If all elements from both arrays have been processed
         if (i >= arr1.Length && j >= arr2.Length) return;
 
-        // If all elements from arr1 have been processed, append remaining from arr2
         if (i >= arr1.Length)
         {
             result[k] = arr2[j];
@@ -93,7 +92,6 @@ public static class Sorters<T> where T : IComparable<T>
             return;
         }
 
-        // If all elements from arr2 have been processed, append remaining from arr1
         if (j >= arr2.Length)
         {
             result[k] = arr1[i];
@@ -101,7 +99,6 @@ public static class Sorters<T> where T : IComparable<T>
             return;
         }
 
-        // Compare elements and place the smaller one into the result array
         if (arr1[i].CompareTo(arr2[j]) <= 0)
         {
             result[k] = arr1[i];
