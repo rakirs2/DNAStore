@@ -617,6 +617,28 @@ public abstract class InputProcessor
         }
     }
 
+    
+    private class PossibleProteinSequences : BaseExecutor
+    {
+        private DnaSequence _dna;
+        private ProteinSequence _protein;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string downloadsPath = Path.Combine(homeDirectory, "Downloads");
+            var text = File.ReadLines(Path.Combine(downloadsPath,Console.ReadLine())).ToArray();
+            _dna = new DnaSequence(text[0]);
+            _protein = new ProteinSequence(text[1]);
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = string.Join('\n', ProteinSequence.PossiblePerfectEncodings(_protein, _dna));
+        }
+    }
+    
     private class HeapSorter : BaseExecutor
     {
         private int[] _values;

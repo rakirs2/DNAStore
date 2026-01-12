@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Text;
+using System.Xml;
 using Bio;
 using DNAStore.Base.Utils;
 using DNAStore.Sequences.Exceptions;
@@ -123,5 +124,32 @@ public class ProteinSequence : Sequence, IProtein
     {
         return new ProteinSequence(
             StringUtils.GenerateRandomString(length, SequenceHelpers.AllRNAMarkersGapped.ToList()));
+    }
+
+    public static string[] PossiblePerfectEncodings(ProteinSequence protein, DnaSequence dna)
+    {
+        var output = new List<string>();
+        var pLength = (int) protein.Length;
+        var rc = dna.GetReverseComplement();
+        foreach (var sub in dna.GetKmerEnumerator(pLength * 3))
+        {
+            var dnaSequence = new DnaSequence(sub);
+            var rnaSequence = dnaSequence.TranscribeToRNA();
+            var proteinSequence = rnaSequence.GetExpectedProteinString();
+            if (proteinSequence.Equals(protein.RawSequence))
+            {
+                output.Add(sub);
+            }
+
+            var rcSequence = dnaSequence.GetReverseComplement();
+            rnaSequence = rcSequence.TranscribeToRNA();
+            proteinSequence = rnaSequence.GetExpectedProteinString();
+            if (proteinSequence.Equals(protein.RawSequence))
+            {
+                output.Add(sub);
+            }
+        }
+        
+        return output.ToArray();
     }
 }
