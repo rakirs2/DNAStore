@@ -617,6 +617,54 @@ public abstract class InputProcessor
         }
     }
 
+    private class HeapSorter : BaseExecutor
+    {
+        private int[] _values;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string downloadsPath = Path.Combine(homeDirectory, "Downloads");
+            var text = File.ReadLines(Path.Combine(downloadsPath,Console.ReadLine())).ToArray();
+            
+            _values = text[1]
+                .Split(" ") // Split the string by the delimiter
+                .Select(int.Parse) // Convert each substring to an integer
+                .ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = string.Join(' ', Sorters<int>.HeapSortMin(_values));
+        }
+    }
+    
+    private class HeapSorterKSmallest : BaseExecutor
+    {
+        private int[] _values;
+        private int _smallest;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string downloadsPath = Path.Combine(homeDirectory, "Downloads");
+            var text = File.ReadLines(Path.Combine(downloadsPath,Console.ReadLine())).ToArray();
+
+            _smallest = int.Parse(text[2]);
+            _values = text[1]
+                .Split(" ") // Split the string by the delimiter
+                .Select(int.Parse) // Convert each substring to an integer
+                .ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = string.Join(' ', Sorters<int>.HeapSortMin(_values, _smallest));
+        }
+    }
+    
     private class HammingFuzzyMatchWithComplement : BaseExecutor
     {
         private string? _input;
