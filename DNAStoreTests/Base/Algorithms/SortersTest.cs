@@ -28,4 +28,20 @@ public class SortersTest
         var inversions = Sorters<int>.InPlaceMergeSort(ref a);
         Assert.AreEqual(2, inversions);
     }
+
+    [TestMethod]
+    public void SimpleHeapSortTest()
+    {
+        var a = new[] { -6, 1, 15, 8, 10 };
+        var sorted = Sorters<int>.HeapSortMin(a);
+        Assert.IsTrue(sorted.SequenceEqual(new []{ -6, 1, 8, 10, 15}));
+    }
+    
+    [TestMethod]
+    public void SimpleHeapSortKMax3Test()
+    {
+        var a = new[] { -6, 1, 15, 8, 10 };
+        var sorted = Sorters<int>.HeapSortMin(a, 3);
+        Assert.IsTrue(sorted.SequenceEqual(new []{-6, 1, 8}));
+    }
 }
