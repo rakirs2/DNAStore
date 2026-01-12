@@ -110,28 +110,26 @@ public static class Sorters<T> where T : IComparable<T>
             MergeRecursiveHelper(arr1, arr2, result, i, j + 1, k + 1);
         }
     }
-    
+
     // TODO: maybe move this to an int sorter class
     // TODO: how to add a d priority interface?
-    public static List<int> HeapSortMin(IEnumerable<int> values, int? max = null )
+    public static List<int> HeapSortMin(IEnumerable<int> values, int? max = null)
     {
         var heap = new PriorityQueue<int, int>();
         foreach (var value in values)
-        {
             // TODO: if this ever gets reused, clean this up
             // we're dealing with min heap, we want max
             heap.Enqueue(value, value);
-        }
 
         var outputList = new List<int>();
         var howMany = max ?? heap.Count;
-        int i = 0;
-        while (i < howMany )
+        var i = 0;
+        while (i < howMany)
         {
             outputList.Add(heap.Dequeue());
             i++;
         }
-        
+
         return outputList;
     }
 }

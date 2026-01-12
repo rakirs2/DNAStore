@@ -101,9 +101,9 @@ public class ProteinSequenceTest
         {
             "ATGGCC",
             "GGCCAT",
-            "ATGGCC",
+            "ATGGCC"
         };
-        
-        Assert.IsTrue(Enumerable.SequenceEqual(strings, expected));
+
+        Assert.IsTrue(strings.SequenceEqual(expected));
     }
 }
