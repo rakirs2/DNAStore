@@ -398,6 +398,40 @@ public abstract class InputProcessor
             Output = output;
         }
     }
+    
+    private class BFSDirectedNodeDepth : BaseExecutor
+    {
+        private DirectedGraph<int> _graph = null!;
+        private int _nodeCount;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Enter the graph size");
+            _nodeCount = int.Parse(Console.ReadLine());
+            _graph = new DirectedGraph<int>(_nodeCount);
+            var input = "";
+            while (true)
+            {
+                input = Console.ReadLine();
+                if (input.Equals("done"))
+                {
+                    break;
+                }
+                var values = input.Split(" ").Select(s => int.Parse(s)).ToList();
+                _graph.Insert(values[0], values[1]);
+            }
+        }
+
+        protected override void CalculateResult()
+        {
+            var output = new int[_nodeCount];
+            for (int i = 0; i < _nodeCount; i++)
+            {
+                output[i] = _graph.BreadthFirstSearchIterative(1,i+1);
+            }
+            Output = string.Join(" ", output);
+        }
+    }
 
     private class CountBreakPoints : BaseExecutor
     {

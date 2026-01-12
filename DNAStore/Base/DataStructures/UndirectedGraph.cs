@@ -4,6 +4,7 @@ namespace DNAStore.Base.DataStructures;
 
 /// <summary>
 ///     Simple undirected graph implementation.
+///     // TODO: reconsider implementation/structure here.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGraph<T>> where T : notnull
@@ -18,20 +19,12 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         NumNodes = numNodes;
     }
 
-    public UndirectedGraph()
-    {
-        EdgeList = new SortedDictionary<T, HashSet<T>>();
-    }
-
     public UndirectedGraph(IComparer<T>? comparer = null)
     {
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
 
-    public object Clone()
-    {
-        return MemberwiseClone();
-    }
+    public object Clone() => MemberwiseClone();
 
     bool IEquatable<UndirectedGraph<T>>.Equals(UndirectedGraph<T>? other)
     {
@@ -41,6 +34,7 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     // TODO: tests for NumEdges
     public int NumEdges { get; protected set; }
 
+    // TODO: tests for NumNodes
     public int NumNodes { get; }
 
     public virtual void Insert(T start, T end)
@@ -68,16 +62,57 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     ///     This should return an edge list with no counts
     /// </summary>
     /// <returns></returns>
-    public Dictionary<T, HashSet<T>> GetEdgeList()
-    {
-        return EdgeList.ToDictionary();
-    }
+    public Dictionary<T, HashSet<T>> GetEdgeList() => EdgeList.ToDictionary();
 
     public int EdgesToMakeTree()
     {
         // every node that doesn't have a value is an unconnected node
         // so we need to find the total number of unconnected nodes
         return NumNodes - NumEdges - 1; // -1 because a tree with n nodes has n-1 edges
+    }
+    
+    public bool AreConnected(T start, T end)
+    {
+        if (!EdgeList.TryGetValue(start, out _) || !EdgeList.TryGetValue(end, out _))
+            throw new InvalidOperationException();
+        return BreadthFirstSearchIterative( start,  end)> 0;
+    }
+    
+    public int BreadthFirstSearchIterative(T start, T end)
+    {
+        if (start.Equals(end))
+            return 0;
+        
+        Queue<T> current = new Queue<T>();
+        Queue<T> next = new Queue<T>();
+        HashSet<T> traversed = new HashSet<T>();
+        current.Enqueue(start);
+        var depth = 0;
+        while (current.Count > 0)
+        {
+            var currentNode = current.Dequeue();
+            traversed.Add(currentNode);
+            if (currentNode.Equals(end))
+            {
+                return depth;
+            }
+
+            foreach (var node in EdgeList[currentNode])
+            {
+                if(!traversed.Contains(node))
+                    next.Enqueue(node);
+            }
+
+            if (current.Count == 0)
+            {
+                current = next;
+                next = new Queue<T>();
+                depth++;
+            }
+
+        }
+
+        return -1;
     }
 
     public int NumberOfConnectedComponents()
@@ -108,10 +143,7 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     }
 
 
-    private bool Equals(UndirectedGraph<T> other)
-    {
-        return GraphEquality(this, other);
-    }
+    private bool Equals(UndirectedGraph<T> other) => GraphEquality(this, other);
 
     public override bool Equals(object? obj)
     {
@@ -123,10 +155,7 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         return obj.GetType() == GetType() && Equals((UndirectedGraph<T>)obj);
     }
 
-    public override int GetHashCode()
-    {
-        return EdgeList.GetHashCode();
-    }
+    public override int GetHashCode() => EdgeList.GetHashCode();
 
     private static bool GraphEquality(UndirectedGraph<T> first, UndirectedGraph<T> other)
     {
