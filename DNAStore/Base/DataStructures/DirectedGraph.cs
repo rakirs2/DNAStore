@@ -7,17 +7,15 @@ namespace DNAStore.Base.DataStructures;
 /// <typeparam name="T"></typeparam>
 public class DirectedGraph<T> : UndirectedGraph<T>
 {
-    public DirectedGraph(): base()
+    public DirectedGraph() : base()
     {
-        
-    }
-    
-    public DirectedGraph(int nodes): base(nodes)
-    {
-        
     }
 
-public override void Insert(T start, T end)
+    public DirectedGraph(int nodes) : base(nodes)
+    {
+    }
+
+    public override void Insert(T start, T end)
     {
         if (EdgeList.TryGetValue(start, out var value))
             value.Add(end);

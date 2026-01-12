@@ -68,6 +68,6 @@ public class UndirectedGraphTest
     {
         var graph = new UndirectedGraph<int>(2);
         graph.Insert(1, 2);
-        Assert.IsTrue( graph.AreConnected(1,2));
+        Assert.IsTrue(graph.AreConnected(1, 2));
     }
 }
