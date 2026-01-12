@@ -7,7 +7,7 @@ namespace DNAStore.Base.DataStructures;
 /// <typeparam name="T"></typeparam>
 public class DirectedGraph<T> : UndirectedGraph<T>
 {
-    public DirectedGraph() : base()
+    public DirectedGraph()
     {
     }
 

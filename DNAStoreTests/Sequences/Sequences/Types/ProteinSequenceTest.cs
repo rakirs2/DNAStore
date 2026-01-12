@@ -90,4 +90,20 @@ public class ProteinSequenceTest
         Assert.ThrowsExactly<MassSpecExceptions.InvalidMassException>(() =>
             ProteinSequence.InferFromPrefixWeights(0.00, weights));
     }
+
+    [TestMethod]
+    public void FindCodingSequencesFromDNA()
+    {
+        var protein = new ProteinSequence("MA");
+        var dna = new DnaSequence("ATGGCCATGGCCCCCAGAACTGAGATCAATAGTACCCGTATTAACGGGTGA");
+        var strings = ProteinSequence.PossiblePerfectEncodings(protein, dna);
+        var expected = new List<string>
+        {
+            "ATGGCC",
+            "GGCCAT",
+            "ATGGCC"
+        };
+
+        Assert.IsTrue(strings.SequenceEqual(expected));
+    }
 }

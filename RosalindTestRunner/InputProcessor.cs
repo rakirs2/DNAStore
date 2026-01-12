@@ -617,6 +617,28 @@ public abstract class InputProcessor
         }
     }
 
+
+    private class PossibleProteinSequences : BaseExecutor
+    {
+        private DnaSequence _dna;
+        private ProteinSequence _protein;
+
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var downloadsPath = Path.Combine(homeDirectory, "Downloads");
+            var text = File.ReadLines(Path.Combine(downloadsPath, Console.ReadLine())).ToArray();
+            _dna = new DnaSequence(text[0]);
+            _protein = new ProteinSequence(text[1]);
+        }
+
+        protected override void CalculateResult()
+        {
+            Output = string.Join('\n', ProteinSequence.PossiblePerfectEncodings(_protein, _dna));
+        }
+    }
+
     private class HeapSorter : BaseExecutor
     {
         private int[] _values;
@@ -624,10 +646,10 @@ public abstract class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string downloadsPath = Path.Combine(homeDirectory, "Downloads");
-            var text = File.ReadLines(Path.Combine(downloadsPath,Console.ReadLine())).ToArray();
-            
+            var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var downloadsPath = Path.Combine(homeDirectory, "Downloads");
+            var text = File.ReadLines(Path.Combine(downloadsPath, Console.ReadLine())).ToArray();
+
             _values = text[1]
                 .Split(" ") // Split the string by the delimiter
                 .Select(int.Parse) // Convert each substring to an integer
@@ -639,18 +661,18 @@ public abstract class InputProcessor
             Output = string.Join(' ', Sorters<int>.HeapSortMin(_values));
         }
     }
-    
+
     private class HeapSorterKSmallest : BaseExecutor
     {
-        private int[] _values;
         private int _smallest;
+        private int[] _values;
 
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            string homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string downloadsPath = Path.Combine(homeDirectory, "Downloads");
-            var text = File.ReadLines(Path.Combine(downloadsPath,Console.ReadLine())).ToArray();
+            var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var downloadsPath = Path.Combine(homeDirectory, "Downloads");
+            var text = File.ReadLines(Path.Combine(downloadsPath, Console.ReadLine())).ToArray();
 
             _smallest = int.Parse(text[2]);
             _values = text[1]
@@ -664,7 +686,7 @@ public abstract class InputProcessor
             Output = string.Join(' ', Sorters<int>.HeapSortMin(_values, _smallest));
         }
     }
-    
+
     private class HammingFuzzyMatchWithComplement : BaseExecutor
     {
         private string? _input;
