@@ -398,7 +398,7 @@ public abstract class InputProcessor
             Output = output;
         }
     }
-    
+
     private class BFSDirectedNodeDepth : BaseExecutor
     {
         private DirectedGraph<int> _graph = null!;
@@ -413,10 +413,7 @@ public abstract class InputProcessor
             while (true)
             {
                 input = Console.ReadLine();
-                if (input.Equals("done"))
-                {
-                    break;
-                }
+                if (input.Equals("done")) break;
                 var values = input.Split(" ").Select(s => int.Parse(s)).ToList();
                 _graph.Insert(values[0], values[1]);
             }
@@ -425,10 +422,7 @@ public abstract class InputProcessor
         protected override void CalculateResult()
         {
             var output = new int[_nodeCount];
-            for (int i = 0; i < _nodeCount; i++)
-            {
-                output[i] = _graph.BreadthFirstSearchIterative(1,i+1);
-            }
+            for (var i = 0; i < _nodeCount; i++) output[i] = _graph.BreadthFirstSearchIterative(1, i + 1);
             Output = string.Join(" ", output);
         }
     }
