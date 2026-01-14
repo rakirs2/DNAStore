@@ -34,11 +34,9 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     {
         return other != null && Equals(other);
     }
-
-    // TODO: tests for NumEdges
+    
     public int NumEdges { get; protected set; }
-
-    // TODO: tests for NumNodes
+    
     public int NumNodes { get; set; }
 
     public virtual void Insert(T start, T end)
