@@ -29,6 +29,7 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         return MemberwiseClone();
     }
 
+    
     bool IEquatable<UndirectedGraph<T>>.Equals(UndirectedGraph<T>? other)
     {
         return other != null && Equals(other);
@@ -38,22 +39,27 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     public int NumEdges { get; protected set; }
 
     // TODO: tests for NumNodes
-    public int NumNodes { get; }
+    public int NumNodes { get; set; }
 
     public virtual void Insert(T start, T end)
     {
+        EnsureNode(start);
+        EnsureNode(end);
+        
         if (EdgeList.TryGetValue(start, out var value))
-            value.Add(end);
-        else
-            EdgeList[start] = [end];
+        {
+            // By definition, we force any addition to be connected both ways
+            if (value.Add(end))
+            {
+                NumEdges++;
+            }
+        }
 
-        if (EdgeList.TryGetValue(end, out var value1))
-            value1.Add(start);
-        else
-            EdgeList[end] = [start];
-
-        // TODO: Currently, this implementation does not check for duplicate edges.
-        NumEdges++;
+        // need to add both ways
+        if (EdgeList.TryGetValue(end, out  value))
+        {
+            value.Add(start);
+        }
     }
 
     public void Remove(T item)
@@ -163,6 +169,14 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         return EdgeList.GetHashCode();
     }
 
+    // TODO: consider making this return
+    protected void EnsureNode(T item)
+    {
+        if (EdgeList.TryGetValue(item, out _)) return;
+        EdgeList.Add(item, []);
+        NumNodes++;
+    }
+    
     private static bool GraphEquality(UndirectedGraph<T> first, UndirectedGraph<T> other)
     {
         return first.GetEdgeList().Count == other.GetEdgeList().Count &&

@@ -1444,29 +1444,6 @@ public abstract class InputProcessor
         }
     }
 
-    private class OverlapGraphExecutor : BaseExecutor
-    {
-        private IList<Fasta>? _fastas;
-        private OverlapGraph? _overlapGraph;
-
-        protected override void GetInputs()
-        {
-            Console.WriteLine("Please input path to file");
-            var location = Console.ReadLine();
-            if (location != null) _fastas = FastaParser.Read(location);
-        }
-
-        protected override void CalculateResult()
-        {
-            _overlapGraph = new OverlapGraph(_fastas, 3);
-            var sb = new StringBuilder();
-            foreach (var tuple in _overlapGraph.GetOverlaps())
-                sb.Append(tuple.Item1.Name + " " + tuple.Item2.Name);
-            Output = sb.ToString();
-        }
-    }
-
-
     private class PercentDominant : BaseExecutor
     {
         private uint k;

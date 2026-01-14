@@ -70,4 +70,25 @@ public class UndirectedGraphTest
         graph.Insert(1, 2);
         Assert.IsTrue(graph.AreConnected(1, 2));
     }
+    
+    [TestMethod]
+    public void InsertingEdgeOnEmptyGraph()
+    {
+        var graph = new UndirectedGraph<int>();
+        graph.Insert(4, 6);
+        Assert.AreEqual(1, graph.NumEdges);
+        Assert.AreEqual(2, graph.NumNodes);
+    }
+    
+    [TestMethod]
+    public void DoubleInsertGraph()
+    {
+        var graph = new UndirectedGraph<int>();
+        graph.Insert(4, 6);
+        Assert.AreEqual(1, graph.NumEdges);
+        Assert.AreEqual(2, graph.NumNodes);
+        graph.Insert(4, 6);
+        Assert.AreEqual(1, graph.NumEdges);
+        Assert.AreEqual(2, graph.NumNodes);
+    }
 }

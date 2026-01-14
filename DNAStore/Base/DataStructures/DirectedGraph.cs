@@ -15,13 +15,19 @@ public class DirectedGraph<T> : UndirectedGraph<T>
     {
     }
 
+    // TODO: this has a bug. We need to insert the nodes for both here.
+    // TODO: consider using the actual node vs the values. For now it's a very minute difference.
     public override void Insert(T start, T end)
     {
-        if (EdgeList.TryGetValue(start, out var value))
-            value.Add(end);
-        else
-            EdgeList[start] = [end];
+        EnsureNode(start);
+        EnsureNode(end);
 
-        NumEdges++;
+        if (EdgeList.TryGetValue(start, out var value))
+        {
+            if (value.Add(end))
+            {
+                NumEdges++;
+            }
+        }
     }
 }
