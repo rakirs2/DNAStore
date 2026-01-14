@@ -24,6 +24,12 @@ public abstract class InputProcessor
         var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         File.WriteAllText(desktopPath + "/output.txt", filecontents);
     }
+    
+    private static string GetMacDownloads()
+    {
+        var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        return Path.Combine(homeDirectory, "Downloads");
+    }
 
     internal abstract class ExecutorRegistry
     {
@@ -626,9 +632,8 @@ public abstract class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var downloadsPath = Path.Combine(homeDirectory, "Downloads");
-            var text = File.ReadLines(Path.Combine(downloadsPath, Console.ReadLine())).ToArray();
+
+            var text = File.ReadLines(Path.Combine(GetMacDownloads(), Console.ReadLine())).ToArray();
             _dna = new DnaSequence(text[0]);
             _protein = new ProteinSequence(text[1]);
         }
@@ -639,6 +644,28 @@ public abstract class InputProcessor
         }
     }
 
+    private class OverlapGraphEdges : BaseExecutor
+    {
+        private string[] _reads;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please input path to file");
+            _reads = File.ReadLines(Path.Combine(GetMacDownloads(), Console.ReadLine())).ToArray();
+        }
+
+        protected override void CalculateResult()
+        {
+            var og = new OverlapGraph();
+            foreach (var read in _reads)
+            {
+                og.Insert(read);
+            }
+
+            var edges = og.ReadToReadEdgeList().AllEdges();
+            Output = string.Join('\n', edges);
+        }
+    }
+
     private class HeapSorter : BaseExecutor
     {
         private int[] _values;
@@ -646,9 +673,7 @@ public abstract class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var downloadsPath = Path.Combine(homeDirectory, "Downloads");
-            var text = File.ReadLines(Path.Combine(downloadsPath, Console.ReadLine())).ToArray();
+            var text = File.ReadLines(Path.Combine(GetMacDownloads(), Console.ReadLine())).ToArray();
 
             _values = text[1]
                 .Split(" ") // Split the string by the delimiter
@@ -670,9 +695,7 @@ public abstract class InputProcessor
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
-            var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var downloadsPath = Path.Combine(homeDirectory, "Downloads");
-            var text = File.ReadLines(Path.Combine(downloadsPath, Console.ReadLine())).ToArray();
+            var text = File.ReadLines(Path.Combine(GetMacDownloads(), Console.ReadLine())).ToArray();
 
             _smallest = int.Parse(text[2]);
             _values = text[1]
@@ -878,7 +901,7 @@ public abstract class InputProcessor
                 inputs.Add(new Tuple<int, int>(temp[0], temp[1]));
             }
         }
-
+        
         protected override void CalculateResult()
         {
             foreach (var input in inputs) _undirectedGraph.Insert(input.Item1, input.Item2);

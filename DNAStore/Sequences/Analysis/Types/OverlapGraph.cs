@@ -18,9 +18,7 @@ public class OverlapGraph :  IOverlapGraph
     {
         MatchLength = matchLength;
         foreach (var read in reads)
-        {
             Insert(read);
-        }
     }
 
     public void Insert(string read)
@@ -29,7 +27,30 @@ public class OverlapGraph :  IOverlapGraph
         _underlyingGraph.Insert(read[..^MatchLength], read[MatchLength..]);
         ReadCounts.Add(read);
     }
+
+    public DirectedGraph<string> ReadToReadEdgeList()
+    {
+        var output = new DirectedGraph<string>();
+        foreach (var read in ReadCounts.Keys)
+        {
+            var possibleStarts = _underlyingGraph[read[..^MatchLength]];
+            foreach (var secondRead in ReadCounts.Keys)
+            {
+                if (read.Equals(secondRead))
+                    continue;
+                foreach (var possibleStart in possibleStarts)
+                {
+                    if (secondRead.StartsWith(possibleStart))
+                    {
+                        output.Insert(read, secondRead);
+                    }
+                }
+            }
+        }
+
+        return output;
+    }
     
     public int MatchLength { get; }
-    public AddOnlyCounter<string, int> ReadCounts { get; }
+    public AddOnlyCounter<string, int> ReadCounts { get; } = new AddOnlyCounter<string, int>();
 }

@@ -1,4 +1,5 @@
-﻿using DNAStore.Base.Interfaces;
+﻿using System.Xml;
+using DNAStore.Base.Interfaces;
 
 namespace DNAStore.Base.DataStructures;
 
@@ -29,21 +30,27 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         return MemberwiseClone();
     }
 
-    
+
     bool IEquatable<UndirectedGraph<T>>.Equals(UndirectedGraph<T>? other)
     {
         return other != null && Equals(other);
     }
-    
+
+    public HashSet<T> this[T key]
+    {
+        get => EdgeList[key];
+        set => EdgeList[key] = value;
+    }
+
     public int NumEdges { get; protected set; }
-    
+
     public int NumNodes { get; set; }
 
     public virtual void Insert(T start, T end)
     {
         EnsureNode(start);
         EnsureNode(end);
-        
+
         if (EdgeList.TryGetValue(start, out var value))
         {
             // By definition, we force any addition to be connected both ways
@@ -54,7 +61,7 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         }
 
         // need to add both ways
-        if (EdgeList.TryGetValue(end, out  value))
+        if (EdgeList.TryGetValue(end, out value))
         {
             value.Add(start);
         }
@@ -174,10 +181,25 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         EdgeList.Add(item, []);
         NumNodes++;
     }
-    
+
     private static bool GraphEquality(UndirectedGraph<T> first, UndirectedGraph<T> other)
     {
-        return first.GetEdgeList().Count == other.GetEdgeList().Count &&
-               !first.GetEdgeList().Except(other.GetEdgeList()).Any();
+        var firstEdgeList = first.GetEdgeList();
+        var otherEdgeList = other.GetEdgeList();
+        return firstEdgeList.Count == otherEdgeList.Count &&
+               !firstEdgeList.Except(otherEdgeList).Any();
     }
+
+    public List<string> AllEdges()
+    {
+        var output = new List<string>();
+        foreach (var kvp in EdgeList)
+        {
+            foreach (var edge in kvp.Value)
+                output.Add($"{kvp.Key} -> {edge}");
+        }
+        
+        return output;
+    }
+
 }

@@ -9,7 +9,7 @@ public class AddOnlyCounter<TKey, TCount>: ICounter<TKey, TCount> where TCount :
 
     public AddOnlyCounter()
     {
-        HighestFrequency = default(TKey);
+        HighestFrequency = default;
     }
     
     public int Count { get; private set; }
@@ -40,4 +40,7 @@ public class AddOnlyCounter<TKey, TCount>: ICounter<TKey, TCount> where TCount :
         }
         Count++;
     }
+
+    // TODO: figure this out cleaner, it's fine for now
+    public List<TKey> Keys  => _dictionary.Keys.ToList();
 }

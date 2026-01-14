@@ -4,7 +4,7 @@ namespace DNAStore.Base.DataStructures;
 
 public class DeBrujin
 {
-    private readonly UndirectedGraph<string> _underlying;
+    private readonly DirectedGraph<string> _underlying;
 
     public DeBrujin()
     {
