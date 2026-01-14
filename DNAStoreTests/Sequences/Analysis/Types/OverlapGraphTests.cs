@@ -20,19 +20,6 @@ public class OverlapGraphTests
         temp.Insert("ABCD");
         
     }
-
-    [TestMethod]
-    public void SimpleOverlapTests()
-    {
-        var temp = new OverlapGraph();
-        temp.Insert("ABCD");
-        temp.Insert("BCDA");
-        var actual = temp.ReadToReadEdgeList();
-        var expected = new DirectedGraph<string> { };
-        expected.Insert("ABCD", "BCDA");
-        
-        // TODO: assert
-    }
     
     [TestMethod]
     public void GivenOverlapTests()
