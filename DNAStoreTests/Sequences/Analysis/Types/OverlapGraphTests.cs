@@ -7,7 +7,16 @@ namespace DNAStoreTests.Sequences.Analysis.Types;
 public class OverlapGraphTests
 {
     [TestMethod]
-    public void OverlapGraphTest()
+    public void SimpleConstruction()
     {
+        Assert.IsNotNull(new OverlapGraph());
+    }
+    
+    [TestMethod]
+    public void AddingARead()
+    {
+        var temp = new OverlapGraph();
+        temp.Insert("ABCD");
+        
     }
 }

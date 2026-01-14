@@ -19,4 +19,12 @@ public interface ITrie
     /// </summary>
     /// <returns></returns>
     public bool Search(string wordToSearch);
+    
+    /// <summary>
+    /// Returns all words of prefix + length 1
+    /// TODO: generalize depth
+    /// </summary>
+    /// <param name="wordToSearch"></param>
+    /// <returns></returns>
+    public HashSet<string> GetWordsWithPrefix(string wordToSearch);
 }

@@ -1,6 +1,5 @@
 ﻿namespace DNAStore.Base.Interfaces;
 
-// Should be input only for now
 public interface IBasePairDictionary
 {
     public long Count { get; }
