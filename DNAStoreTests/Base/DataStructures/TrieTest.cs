@@ -31,4 +31,30 @@ public class TrieTest
         Assert.IsTrue(simpleTrie.Search("abc"));
         Assert.IsFalse(simpleTrie.Search("abcde"));
     }
+
+    [TestMethod]
+    public void KeyNotFound()
+    {
+        var simpleTrie = new Trie();
+        simpleTrie.AddWord("ab");
+        simpleTrie.AddWord("abc");
+        simpleTrie.AddWord("abcd");
+        Assert.ThrowsExactly<KeyNotFoundException>(()=>simpleTrie.GetWordsWithPrefix("dbcd"));
+    }
+    
+    [TestMethod]
+    public void GetListOfWordsWithPrefix()
+    {
+        var simpleTrie = new Trie();
+        simpleTrie.AddWord("spade");
+        simpleTrie.AddWord("spada");
+        simpleTrie.AddWord("spadl");
+        simpleTrie.AddWord("spacl");
+        var expected = new HashSet<string>()
+        {
+            "spade", "spada", "spadl"
+        };
+        var actual = simpleTrie.GetWordsWithPrefix("spad");
+        Assert.IsTrue(expected.SetEquals(actual));
+    }
 }

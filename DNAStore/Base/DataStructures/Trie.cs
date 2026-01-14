@@ -2,6 +2,7 @@
 
 namespace DNAStore.Base.DataStructures;
 
+// TODO: need a suffix Trie
 public class Trie : ITrie
 {
     private readonly TrieNode root;
@@ -41,6 +42,27 @@ public class Trie : ITrie
         }
 
         return temp.IsTerminus;
+    }
+
+    public HashSet<string> GetWordsWithPrefix(string wordToSearch)
+    {
+        var currentNode = root;
+        foreach (var c in wordToSearch)
+        {
+            if (!currentNode.Children.ContainsKey(c))
+                throw new KeyNotFoundException("Trie Doesn't contain the value");
+            currentNode = currentNode.Children[c];
+        }
+        var output =  new List<string>();
+        foreach (var c in currentNode.Children)
+        {
+            if (c.Value.IsTerminus)
+            {
+                output.Add(wordToSearch + c.Key);
+            }
+        }
+
+        return output.ToHashSet();
     }
 
     public int MaxStringLength { get; private set; }

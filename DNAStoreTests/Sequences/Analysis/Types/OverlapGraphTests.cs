@@ -1,4 +1,5 @@
-﻿using DNAStore.Sequences.Analysis.Types;
+﻿using DNAStore.Base.DataStructures;
+using DNAStore.Sequences.Analysis.Types;
 using DNAStore.Sequences.IO;
 
 namespace DNAStoreTests.Sequences.Analysis.Types;
@@ -6,13 +7,37 @@ namespace DNAStoreTests.Sequences.Analysis.Types;
 [TestClass]
 public class OverlapGraphTests
 {
-    private readonly string _filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        "../../../../DNAStoreTests/Sequences/TestData/OverlapFastas.fasta");
-
     [TestMethod]
-    public void OverlapGraphTest()
+    public void SimpleConstruction()
     {
-        var result = new OverlapGraph(FastaParser.Read(_filePath), 3);
-        Assert.AreEqual(3, result.GetOverlaps().Count());
+        Assert.IsNotNull(new OverlapGraph());
+    }
+    
+    [TestMethod]
+    public void AddingARead()
+    {
+        var temp = new OverlapGraph();
+        temp.Insert("ABCD");
+        
+    }
+    
+    [TestMethod]
+    public void GivenOverlapTests()
+    {
+        var temp = new OverlapGraph();
+        temp.Insert("ATGCG");
+        temp.Insert("GCATG");
+        temp.Insert("CATGC");
+        temp.Insert("AGGCA");
+        temp.Insert("GGCAT");
+        var actual = temp.ReadToReadEdgeList().AllEdges();
+        var expected = new List<string>
+        {
+            "AGGCA -> GGCAT",
+            "CATGC -> ATGCG",
+            "GCATG -> CATGC",
+            "GGCAT -> GCATG"
+        };
+        Assert.IsTrue(actual.SequenceEqual(expected));
     }
 }

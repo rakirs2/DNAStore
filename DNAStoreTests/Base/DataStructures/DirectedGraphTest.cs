@@ -38,4 +38,25 @@ public class DirectedGraphTest
         Assert.AreEqual(3, graph.BreadthFirstSearchIterative(1, 5));
         Assert.AreEqual(2, graph.BreadthFirstSearchIterative(1, 6));
     }
+
+    [TestMethod]
+    public void InsertingEdgeOnEmptyGraph()
+    {
+        var graph = new DirectedGraph<int>();
+        graph.Insert(4, 6);
+        Assert.AreEqual(1, graph.NumEdges);
+        Assert.AreEqual(2, graph.NumNodes);
+    }
+    
+    [TestMethod]
+    public void DoubleInsertGraph()
+    {
+        var graph = new DirectedGraph<int>();
+        graph.Insert(4, 6);
+        Assert.AreEqual(1, graph.NumEdges);
+        Assert.AreEqual(2, graph.NumNodes);
+        graph.Insert(4, 6);
+        Assert.AreEqual(1, graph.NumEdges);
+        Assert.AreEqual(2, graph.NumNodes);
+    }
 }

@@ -1,35 +1,56 @@
-﻿using DNAStore.Sequences.Analysis.Interfaces;
-using DNAStore.Sequences.IO;
-
+﻿using DNAStore.Base.DataStructures;
+using DNAStore.Sequences.Analysis.Interfaces;
 namespace DNAStore.Sequences.Analysis.Types;
 
-public class OverlapGraph : IOverlapGraph
+public class OverlapGraph :  IOverlapGraph
 {
-    private readonly List<Tuple<Fasta, Fasta>> _overlaps = new();
-
-    public OverlapGraph(IList<Fasta> fastas, int matchLength)
+    // Naive implementation for now. We keep track of prefixes and suffixes of the connection.
+    // TODO: this should probably be replaced with a Trie.
+    // The underlying graph only keeps track of the starts and
+    private readonly DirectedGraph<string> _underlyingGraph = new DirectedGraph<string>();
+    private readonly Trie _trie = new Trie();
+    public OverlapGraph(int matchLength =1)
     {
-        Number = fastas.Count;
         MatchLength = matchLength;
-
-        // can't match with itself
-        for (var i = 0; i < Number - 1; i++)
-        for (var j = i + 1; j < Number; j++)
-        {
-            // there are two possible matches
-            if (fastas[i].RawSequence[..MatchLength].Equals(fastas[j].RawSequence[^MatchLength..]))
-                _overlaps.Add(new Tuple<Fasta, Fasta>(fastas[j], fastas[i]));
-
-            if (fastas[j].RawSequence[..MatchLength].Equals(fastas[i].RawSequence[^MatchLength..]))
-                _overlaps.Add(new Tuple<Fasta, Fasta>(fastas[i], fastas[j]));
-        }
     }
-
-    public int Number { get; }
-    public int MatchLength { get; }
-
-    public List<Tuple<Fasta, Fasta>> GetOverlaps()
+    
+    public OverlapGraph(IEnumerable<string> reads, int matchLength =1)
     {
-        return _overlaps;
+        MatchLength = matchLength;
+        foreach (var read in reads)
+            Insert(read);
     }
+
+    public void Insert(string read)
+    {
+        _trie.AddWord(read);
+        _underlyingGraph.Insert(read[..^MatchLength], read[MatchLength..]);
+        ReadCounts.Add(read);
+    }
+
+    public DirectedGraph<string> ReadToReadEdgeList()
+    {
+        var output = new DirectedGraph<string>();
+        foreach (var read in ReadCounts.Keys)
+        {
+            var possibleStarts = _underlyingGraph[read[..^MatchLength]];
+            foreach (var secondRead in ReadCounts.Keys)
+            {
+                if (read.Equals(secondRead))
+                    continue;
+                foreach (var possibleStart in possibleStarts)
+                {
+                    if (secondRead.StartsWith(possibleStart))
+                    {
+                        output.Insert(read, secondRead);
+                    }
+                }
+            }
+        }
+
+        return output;
+    }
+    
+    public int MatchLength { get; }
+    public AddOnlyCounter<string, int> ReadCounts { get; } = new AddOnlyCounter<string, int>();
 }
