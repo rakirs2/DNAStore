@@ -1,6 +1,4 @@
-﻿using DNAStore.Base.DataStructures;
-using DNAStore.Sequences.Analysis.Types;
-using DNAStore.Sequences.IO;
+﻿using DNAStore.Sequences.Analysis.Types;
 
 namespace DNAStoreTests.Sequences.Analysis.Types;
 
@@ -12,15 +10,14 @@ public class OverlapGraphTests
     {
         Assert.IsNotNull(new OverlapGraph());
     }
-    
+
     [TestMethod]
     public void AddingARead()
     {
         var temp = new OverlapGraph();
         temp.Insert("ABCD");
-        
     }
-    
+
     [TestMethod]
     public void GivenOverlapTests()
     {

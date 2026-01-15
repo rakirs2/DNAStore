@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using DNAStore.Base.Interfaces;
+﻿using DNAStore.Base.Interfaces;
 
 namespace DNAStore.Base.DataStructures;
 
@@ -25,6 +24,12 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         EdgeList = new SortedDictionary<T, HashSet<T>>(comparer ?? Comparer<T>.Default);
     }
 
+    public HashSet<T> this[T key]
+    {
+        get => EdgeList[key];
+        set => EdgeList[key] = value;
+    }
+
     public object Clone()
     {
         return MemberwiseClone();
@@ -34,12 +39,6 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     bool IEquatable<UndirectedGraph<T>>.Equals(UndirectedGraph<T>? other)
     {
         return other != null && Equals(other);
-    }
-
-    public HashSet<T> this[T key]
-    {
-        get => EdgeList[key];
-        set => EdgeList[key] = value;
     }
 
     public int NumEdges { get; protected set; }
@@ -52,19 +51,12 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
         EnsureNode(end);
 
         if (EdgeList.TryGetValue(start, out var value))
-        {
             // By definition, we force any addition to be connected both ways
             if (value.Add(end))
-            {
                 NumEdges++;
-            }
-        }
 
         // need to add both ways
-        if (EdgeList.TryGetValue(end, out value))
-        {
-            value.Add(start);
-        }
+        if (EdgeList.TryGetValue(end, out value)) value.Add(start);
     }
 
     public void Remove(T item)
@@ -194,12 +186,9 @@ public class UndirectedGraph<T> : ICloneable, IGraph<T>, IEquatable<UndirectedGr
     {
         var output = new List<string>();
         foreach (var kvp in EdgeList)
-        {
-            foreach (var edge in kvp.Value)
-                output.Add($"{kvp.Key} -> {edge}");
-        }
-        
+        foreach (var edge in kvp.Value)
+            output.Add($"{kvp.Key} -> {edge}");
+
         return output;
     }
-
 }

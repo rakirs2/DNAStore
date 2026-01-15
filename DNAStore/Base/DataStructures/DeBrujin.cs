@@ -35,7 +35,7 @@ public class DeBrujin
 
         return string.Join('\n', output);
     }
-    
+
     public string GetEdgeListAlternate()
     {
         var temp = _underlying.GetEdgeList();
@@ -45,7 +45,7 @@ public class DeBrujin
             var sb = new StringBuilder();
             sb.Append(kvp.Key);
             sb.Append(" -> ");
-            if(kvp.Value.Count == 0) continue;
+            if (kvp.Value.Count == 0) continue;
             sb.Append(string.Join(",", kvp.Value));
             output.Add(sb.ToString());
         }

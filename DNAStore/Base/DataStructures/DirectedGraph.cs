@@ -23,11 +23,7 @@ public class DirectedGraph<T> : UndirectedGraph<T>
         EnsureNode(end);
 
         if (EdgeList.TryGetValue(start, out var value))
-        {
             if (value.Add(end))
-            {
                 NumEdges++;
-            }
-        }
     }
 }

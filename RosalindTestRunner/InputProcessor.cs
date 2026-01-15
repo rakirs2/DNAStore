@@ -24,7 +24,7 @@ public abstract class InputProcessor
         var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         File.WriteAllText(desktopPath + "/output.txt", filecontents);
     }
-    
+
     private static string GetMacDownloads()
     {
         var homeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -205,23 +205,21 @@ public abstract class InputProcessor
     {
         private string _input;
         private int _kmerLength;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please enter the string");
             _input = Console.ReadLine();
 
             Console.WriteLine("Please enter the length of the Kmer");
-            _kmerLength= int.Parse(Console.ReadLine());
+            _kmerLength = int.Parse(Console.ReadLine());
         }
 
         protected override void CalculateResult()
         {
             var db = new DeBrujin();
-            var seq = new Sequence(_input); 
-            foreach (var kmer in seq.GetKmerEnumerator(_kmerLength))
-            {
-                db.AddSequence(kmer[..^1], kmer[1..]);
-            }
+            var seq = new Sequence(_input);
+            foreach (var kmer in seq.GetKmerEnumerator(_kmerLength)) db.AddSequence(kmer[..^1], kmer[1..]);
 
             Output = db.GetEdgeListAlternate();
         }
@@ -673,6 +671,7 @@ public abstract class InputProcessor
     private class OverlapGraphEdges : BaseExecutor
     {
         private string[] _reads;
+
         protected override void GetInputs()
         {
             Console.WriteLine("Please input path to file");
@@ -682,10 +681,7 @@ public abstract class InputProcessor
         protected override void CalculateResult()
         {
             var og = new OverlapGraph();
-            foreach (var read in _reads)
-            {
-                og.Insert(read);
-            }
+            foreach (var read in _reads) og.Insert(read);
 
             var edges = og.ReadToReadEdgeList().AllEdges();
             Output = string.Join('\n', edges);
@@ -927,7 +923,7 @@ public abstract class InputProcessor
                 inputs.Add(new Tuple<int, int>(temp[0], temp[1]));
             }
         }
-        
+
         protected override void CalculateResult()
         {
             foreach (var input in inputs) _undirectedGraph.Insert(input.Item1, input.Item2);

@@ -47,7 +47,7 @@ public class DirectedGraphTest
         Assert.AreEqual(1, graph.NumEdges);
         Assert.AreEqual(2, graph.NumNodes);
     }
-    
+
     [TestMethod]
     public void DoubleInsertGraph()
     {
