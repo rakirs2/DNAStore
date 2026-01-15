@@ -8,7 +8,6 @@ namespace DNAStore.Base.DataStructures;
 ///     A basic counter for the total number of base pairs on a given sequence.
 ///     Also tracks total number of bps in the class
 ///     and a protein dictionary for others
-///
 ///     // TODO: eventually merge this with basic counter
 ///     // TODO: figure out how to handle different counts/what I want that behavior to look like
 /// </summary>

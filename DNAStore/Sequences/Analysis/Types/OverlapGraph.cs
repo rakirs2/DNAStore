@@ -1,26 +1,32 @@
 ﻿using DNAStore.Base.DataStructures;
 using DNAStore.Sequences.Analysis.Interfaces;
+
 namespace DNAStore.Sequences.Analysis.Types;
 
 // TODO: merge this appropriately with deBrujin
-public class OverlapGraph :  IOverlapGraph
+public class OverlapGraph : IOverlapGraph
 {
+    private readonly Trie _trie = new();
+
     // Naive implementation for now. We keep track of prefixes and suffixes of the connection.
     // TODO: this should probably be replaced with a Trie.
     // The underlying graph only keeps track of the starts and
-    private readonly DirectedGraph<string> _underlyingGraph = new DirectedGraph<string>();
-    private readonly Trie _trie = new Trie();
-    public OverlapGraph(int matchLength =1)
+    private readonly DirectedGraph<string> _underlyingGraph = new();
+
+    public OverlapGraph(int matchLength = 1)
     {
         MatchLength = matchLength;
     }
-    
-    public OverlapGraph(IEnumerable<string> reads, int matchLength =1)
+
+    public OverlapGraph(IEnumerable<string> reads, int matchLength = 1)
     {
         MatchLength = matchLength;
         foreach (var read in reads)
             Insert(read);
     }
+
+    public int MatchLength { get; }
+    public AddOnlyCounter<string, int> ReadCounts { get; } = new();
 
     public void Insert(string read)
     {
@@ -40,18 +46,11 @@ public class OverlapGraph :  IOverlapGraph
                 if (read.Equals(secondRead))
                     continue;
                 foreach (var possibleStart in possibleStarts)
-                {
                     if (secondRead.StartsWith(possibleStart))
-                    {
                         output.Insert(read, secondRead);
-                    }
-                }
             }
         }
 
         return output;
     }
-    
-    public int MatchLength { get; }
-    public AddOnlyCounter<string, int> ReadCounts { get; } = new AddOnlyCounter<string, int>();
 }

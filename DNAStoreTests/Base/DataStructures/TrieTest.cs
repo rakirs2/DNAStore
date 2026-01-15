@@ -39,9 +39,9 @@ public class TrieTest
         simpleTrie.AddWord("ab");
         simpleTrie.AddWord("abc");
         simpleTrie.AddWord("abcd");
-        Assert.ThrowsExactly<KeyNotFoundException>(()=>simpleTrie.GetWordsWithPrefix("dbcd"));
+        Assert.ThrowsExactly<KeyNotFoundException>(() => simpleTrie.GetWordsWithPrefix("dbcd"));
     }
-    
+
     [TestMethod]
     public void GetListOfWordsWithPrefix()
     {
@@ -50,7 +50,7 @@ public class TrieTest
         simpleTrie.AddWord("spada");
         simpleTrie.AddWord("spadl");
         simpleTrie.AddWord("spacl");
-        var expected = new HashSet<string>()
+        var expected = new HashSet<string>
         {
             "spade", "spada", "spadl"
         };

@@ -100,12 +100,12 @@ public static class StringUtils
     ///     GABCDE_
     ///     Distance 2
     ///     TODO: for tomorrow. I messed this up somewhere
-    ///     <remarks>
-    ///         <param name="a"></param>
-    ///         <param name="b"></param>
-    ///         <param name="a_gapped"></param>
-    ///         <param name="b_gapped"></param>
-    ///         <returns></returns>
+    /// </remarks>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="a_gapped"></param>
+    /// <param name="b_gapped"></param>
+    /// <returns></returns>
     public static int NeedlemanWunsch(string a, string b, out string a_gapped, out string b_gapped)
     {
         var retVal = LevenshteinDistanceInternal(a, b, out var d);

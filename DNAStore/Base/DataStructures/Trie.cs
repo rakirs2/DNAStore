@@ -53,14 +53,11 @@ public class Trie : ITrie
                 throw new KeyNotFoundException("Trie Doesn't contain the value");
             currentNode = currentNode.Children[c];
         }
-        var output =  new List<string>();
+
+        var output = new List<string>();
         foreach (var c in currentNode.Children)
-        {
             if (c.Value.IsTerminus)
-            {
                 output.Add(wordToSearch + c.Key);
-            }
-        }
 
         return output.ToHashSet();
     }
