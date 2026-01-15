@@ -2,6 +2,7 @@
 using DNAStore.Sequences.Analysis.Interfaces;
 namespace DNAStore.Sequences.Analysis.Types;
 
+// TODO: merge this appropriately with deBrujin
 public class OverlapGraph :  IOverlapGraph
 {
     // Naive implementation for now. We keep track of prefixes and suffixes of the connection.

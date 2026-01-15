@@ -201,6 +201,32 @@ public abstract class InputProcessor
         }
     }
 
+    private class DeBrujinFromString : BaseExecutor
+    {
+        private string _input;
+        private int _kmerLength;
+        protected override void GetInputs()
+        {
+            Console.WriteLine("Please enter the string");
+            _input = Console.ReadLine();
+
+            Console.WriteLine("Please enter the length of the Kmer");
+            _kmerLength= int.Parse(Console.ReadLine());
+        }
+
+        protected override void CalculateResult()
+        {
+            var db = new DeBrujin();
+            var seq = new Sequence(_input); 
+            foreach (var kmer in seq.GetKmerEnumerator(_kmerLength))
+            {
+                db.AddSequence(kmer[..^1], kmer[1..]);
+            }
+
+            Output = db.GetEdgeListAlternate();
+        }
+    }
+
     private class TransitionTransversionRatio : BaseExecutor
     {
         private DnaSequence _a;
